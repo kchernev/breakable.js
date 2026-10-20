@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Field recording of an open-air market heard from across a wide stone square: a steady, low, indistinct murmur of many people far away with no clear words, footsteps on cobblestones, the wooden wheels of a handcart rolling over cobbles, now and then a horse's hooves clopping slowly past, and far away the light tapping of a blacksmith's hammer on an anvil. Calm and even from start to end. No music, no modern sounds.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, clear speech, words, shouting, cheering, applause, gasps, crowd reactions, laughter, announcer, instruments, street musicians, bells, engines, traffic, cars",
+  "duration": 40,
+  "seed": 99930,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63c4/PhwgVeXFbiftY2PswQM3l_H9Vaywd8.flac"
+}

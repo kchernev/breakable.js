@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "An old farmyard cast-iron pitcher hand pump bolted on top of a short square timber post. The post is a thick square wooden post, about 15 cm square and 75 cm tall, standing upright on the ground, in weathered, sun-bleached silver-grey to light grey-brown wood with open grain and fine checks, with a flat top. On it the pump: a squat cylindrical cast-iron body with a flared rim and a cap, a short downturned spout sticking out to the front over empty air, and a long curved cast-iron lever handle rising up and back from the top, ending in a round knob. Dull black iron with patches of orange-brown rust and worn grey edges. Thick, sturdy parts. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1024,
+      "height": 1536
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:10:00.438Z",
+  "url": "https://v3b.fal.media/files/b/0aae635a/dKd3ZpyyYe1V9VFGWexrT_jsnplaw6.png"
+}

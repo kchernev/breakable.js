@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Footsteps of a person in boots walking on a wet asphalt street with shallow puddles at a steady pace: each step a firm heel tap with a small watery splash, clear separate steps with short gaps of silence. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, rain",
+  "duration": 8,
+  "seed": 920560,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6358/Eb8mcb_H0sf-1A5UDWDR2_cA1wK8zC.flac"
+}

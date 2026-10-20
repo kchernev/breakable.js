@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A few hens in a farmyard suddenly startled: loud panicked squawking and cackling, wings flapping hard, then agitated clucking slowly settling down. Outdoors, close. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 4,
+  "seed": 333621,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6362/jeYp1scfJSGoxiIFKXZse_YNm9aLkj.flac"
+}

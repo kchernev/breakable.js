@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "An East Asian street-food hawker cart, about 1.9 m long and 2.2 m tall to the top of its canopy: a waist-high wooden cabinet body with plain painted panels in faded red-brown, a brushed stainless-steel counter top with a round cooking well holding a wok, two lidded stainless-steel stock pots and a low steel rail along the counter edge. A pair of large spoked bicycle-type wheels on one axle at one end, two short wooden legs and a pair of push handles at the other end, so it stands level. Above it a small flat canopy of faded red canvas on four thin steel poles rising from the corners of the counter, with a plain cloth valance around its edge, and one bare round light bulb hanging under the middle of the canopy. Plain unprinted cloth and panels: no signs, no characters, no pictures. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1024,
+      "height": 1024
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:09:00.153Z",
+  "url": "https://v3b.fal.media/files/b/0aae6353/jcvUZczjn8dCb43faXgjg_NChEd8Q7.png"
+}

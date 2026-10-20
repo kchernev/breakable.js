@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Bullets hitting dry dirt ground one at a time, about a second apart: each a soft, muffled thud and a short spray of sand and soil. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, gunshots, gunfire, rifle",
+  "duration": 8,
+  "seed": 358520,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae9c53/o38bPcaifdsyym7fB7fn6_nVEfZd2R.flac"
+}

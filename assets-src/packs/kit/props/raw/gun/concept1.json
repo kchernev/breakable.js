@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "A fictional light machine gun of no real model or maker, lying level, 1 m long overall. From the front: a stout slotted muzzle brake on the end of a heavy steel barrel; the barrel inside a round ventilated barrel shroud, a steel tube 5 cm across and 35 cm long with rows of round cooling holes along it, and a simple front sight post standing on its front end; behind the shroud a long rectangular steel receiver with flat sides, a few rivets and a small charging handle on its left side; along the top of the receiver a flat accessory rail with a simple raised rear aperture sight with protective ears at its back end; under the receiver, ahead of the trigger, a large straight box magazine 20 cm long, angled a little forward; behind the magazine a black ribbed pistol grip with a trigger and a trigger guard; at the back a solid fixed stock with a straight top line, ending in a black rubber butt pad. The receiver, the shroud, the stock and the magazine are painted a dull olive-drab green, the paint worn through to dark bare steel along the edges and where hands hold it, with scuffs and a little grime; the barrel, the muzzle brake, the rail and the sights are dark gunmetal steel. Thick, sturdy, well-proportioned parts, nothing thin or spindly. The muzzle points to the left of the picture; it is seen from its left side, a little from above. Plain paint: no markings, no stencils, no stickers, no serial numbers. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1536,
+      "height": 1024
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-16T12:38:08.839Z",
+  "url": "https://v3b.fal.media/files/b/0aae9c42/US5pPdB-Jz89fLQp2PMGm_rfH9sUgz.png"
+}

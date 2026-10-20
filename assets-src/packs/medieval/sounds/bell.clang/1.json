@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A huge, heavy bronze bell dropped from a height onto cobblestones: a violent crash of heavy metal on stone with a deep thud, then a harsh, buzzing, out-of-tune clanking as the cracked bell rocks and rolls on the stones, its dull ring dying quickly. Outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, chimes, wind chimes, several bells, carillon, peal, tune, organ, choir, gong, electronic tone, church bell, bell toll, clean ringing tone, long sustain",
+  "duration": 4,
+  "seed": 370091,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63b2/qv9qmSCGNlvJhwHuzmC_a_3FkEY4pe.flac"
+}

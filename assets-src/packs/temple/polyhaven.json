@@ -1,0 +1,216 @@
+{
+  "marble_rock_02": {
+    "use": "bedrock patches in the ground, scenery rocks",
+    "tile_m": [
+      2.002,
+      2.002
+    ],
+    "colour_mean": [
+      0.776,
+      0.699,
+      0.604
+    ],
+    "authors": {
+      "Amal Kumar": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/marble_rock_02",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_rock_02/marble_rock_02_diff_1k.png",
+        "md5": "9ef6b582b89ee6e1e452182566a967a0",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_rock_02/marble_rock_02_nor_gl_1k.png",
+        "md5": "2daf01a9d50c01ab9693b08eebcf6858",
+        "webp_quality": 90
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_rock_02/marble_rock_02_arm_1k.png",
+        "md5": "a192afa8cbf66d28dc2cb0c111a824ed",
+        "webp_quality": 90
+      }
+    }
+  },
+  "marble_rock_01": {
+    "use": "the design's first pick for bedrock: greyer, darker, strong black cracks",
+    "tile_m": [
+      2.002,
+      2.002
+    ],
+    "colour_mean": [
+      0.592,
+      0.541,
+      0.475
+    ],
+    "authors": {
+      "Amal Kumar": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/marble_rock_01",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_rock_01/marble_rock_01_diff_1k.png",
+        "md5": "1c16aaac1472249b9532c3519ff912ee",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_rock_01/marble_rock_01_nor_gl_1k.png",
+        "md5": "91f968cd121762c238ce6f7b0afd6598",
+        "webp_quality": 90
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_rock_01/marble_rock_01_arm_1k.png",
+        "md5": "e9839c02b24b46ba68fa55ff139af903",
+        "webp_quality": 90
+      }
+    }
+  },
+  "marble_cliff_01": {
+    "use": "the sea cliffs",
+    "tile_m": [
+      4.299,
+      4.299
+    ],
+    "colour_mean": [
+      0.676,
+      0.56,
+      0.458
+    ],
+    "authors": {
+      "Amal Kumar": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/marble_cliff_01",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_cliff_01/marble_cliff_01_diff_1k.png",
+        "md5": "747b3140ba69d62bc13c2dad15fde9bc",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_cliff_01/marble_cliff_01_nor_gl_1k.png",
+        "md5": "8662d554055702da3a3ac1f49b76691b",
+        "webp_quality": 90
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_cliff_01/marble_cliff_01_arm_1k.png",
+        "md5": "ea8f55733d598beb266329644c3523a9",
+        "webp_quality": 90
+      }
+    }
+  },
+  "marble_cliff_03": {
+    "use": "the design's first pick for the cliffs: orange-tan, blocky strata",
+    "tile_m": [
+      5.748,
+      5.748
+    ],
+    "colour_mean": [
+      0.608,
+      0.491,
+      0.356
+    ],
+    "authors": {
+      "Amal Kumar": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/marble_cliff_03",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_cliff_03/marble_cliff_03_diff_1k.png",
+        "md5": "28f821aef78c66803628a8ae52b14263",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_cliff_03/marble_cliff_03_nor_gl_1k.png",
+        "md5": "5eeedc1c5a5d6706aa2037baea1931da",
+        "webp_quality": 90
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/marble_cliff_03/marble_cliff_03_arm_1k.png",
+        "md5": "8efb04ce5d517a195afa2bb33b64cfa7",
+        "webp_quality": 90
+      }
+    }
+  },
+  "rough_wood": {
+    "use": "timber (rafters, tie beams, wall plates)",
+    "tile_m": [
+      0.5,
+      0.5
+    ],
+    "colour_mean": [
+      0.417,
+      0.384,
+      0.342
+    ],
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/rough_wood",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/rough_wood/rough_wood_diff_1k.png",
+        "md5": "8941463b7e0864e07c3127426ecafc4e",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/rough_wood/rough_wood_nor_gl_1k.png",
+        "md5": "81f9ca07bf2aceab03888336e279e529",
+        "webp_quality": 90
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/rough_wood/rough_wood_arm_1k.png",
+        "md5": "9c84f14655e9a5fe0e1c9f99b6c9784e",
+        "webp_quality": 90
+      }
+    }
+  },
+  "bark_willow_02": {
+    "use": "bark (olive and cypress trunks and limbs)",
+    "tile_m": [
+      2.15,
+      2.15
+    ],
+    "colour_mean": [
+      0.519,
+      0.463,
+      0.409
+    ],
+    "authors": {
+      "Charlotte Baglioni": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/bark_willow_02",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/bark_willow_02/bark_willow_02_diff_1k.png",
+        "md5": "3bb43d7852336a0d45467b7e9293dd13",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/bark_willow_02/bark_willow_02_nor_gl_1k.png",
+        "md5": "026b3469e0d50d5e66c65b30d46e53c4",
+        "webp_quality": 82
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/bark_willow_02/bark_willow_02_arm_1k.png",
+        "md5": "43e4470dee9db1309a34bd537d6f4439",
+        "webp_quality": 90
+      }
+    }
+  },
+  "pizzo_pernice_puresky_1k": {
+    "authors": {
+      "Andreas Mischok": "Original",
+      "Jarod Guest": "Sky edits"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/pizzo_pernice_puresky",
+    "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/pizzo_pernice_puresky_1k.hdr",
+    "md5": "d6376bb76af551042326300efca40e29"
+  }
+}

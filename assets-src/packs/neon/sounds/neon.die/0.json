@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A neon sign shorting out and dying: its electric buzz stutters and crackles angrily for half a second, then a sharp electrical pop as the tube fails, and the hum cuts out to silence. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, laser, sci-fi, blaster, gunshot",
+  "duration": 2,
+  "seed": 806550,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefdae/c8B4vRdmiOqJI923urS1g_ewHWHWD4.flac"
+}

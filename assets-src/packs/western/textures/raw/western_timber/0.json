@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the face of an old rough-sawn timber beam, bleached by decades of desert sun: silver-grey to grey-brown wood with the grain running perfectly straight from the top edge to the bottom edge, raised grain ridges where the soft wood has eroded, long narrow weathering checks and cracks along the grain, fuzzy torn fibres, two or three small dark knots, a few old nail holes with small rust stains. One continuous piece of wood: no board gaps, no joints, no paint, no edges. The frame shows a 1 m × 1 m patch. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1536,
+    "height": 1536
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:09:24.218Z",
+  "url": "https://v3b.fal.media/files/b/0aae6355/BpehGDcVVfax84unnQBAd_v6Z6xSjS.png"
+}

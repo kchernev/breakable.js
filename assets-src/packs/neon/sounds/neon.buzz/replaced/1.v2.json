@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "An old neon sign buzzing loudly up close: a constant, gritty electric buzz with a slight crackle, like a faulty fluorescent tube light. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, rain, wind, drone music",
+  "duration": 8,
+  "seed": 801681,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63b5/WMn5TihyTRGj-QLTz-vEf_4CUqBvQt.flac"
+}

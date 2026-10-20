@@ -1,0 +1,14 @@
+{
+  "made": "mixed locally from other takes of this pack (mix-sounds.mjs)",
+  "layers": [
+    {
+      "from": "hawk.cry:1",
+      "at": 0,
+      "gain": 1,
+      "rate": 1,
+      "filter": "highpass=f=350:poles=2,highpass=f=350:poles=2"
+    }
+  ],
+  "duration": 4,
+  "url": "https://v3b.fal.media/files/b/0aae641f/ggvlZFruj0fs_kekiy9m9_hawk.cry-4.flac"
+}

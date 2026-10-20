@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A fluorescent light fitting struck and failing: a short sharp glassy pop as the tube bursts, a tiny electric tick, and a faint tinkle of glass, then silence. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, laser, sci-fi, blaster, gunshot",
+  "duration": 1.5,
+  "seed": 803221,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefdb1/8r1ZgU1WyP51T15G5GmCe_v2AXDMwn.flac"
+}

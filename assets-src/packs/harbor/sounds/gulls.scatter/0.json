@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A flock of seagulls suddenly taking flight together in alarm: a burst of many wings flapping, loud screeching alarm cries, the flock moving away overhead and fading, outdoors by the sea. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, explosion, gunshot, bang",
+  "duration": 5,
+  "seed": 639180,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6353/v1L0BrPPP4OtuHFwG5jUP_UttB8rh1.flac"
+}

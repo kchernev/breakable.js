@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A tree branch snapping off and a leafy tree crown thrashing: a crisp, woody crack, then a rush of rustling leaves and twigs whipping and shaking. Outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2,
+  "seed": 164192,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae639f/n4YV55zGAXOptv9GPA4NG_LMDRthEN.flac"
+}

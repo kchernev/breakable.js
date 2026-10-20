@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "An ancient Greek terracotta storage amphora about 1.05 m tall, standing upright: a tall ovoid body, widest at the shoulder and tapering smoothly down to a short solid toe knob with a small flat end it stands on; a narrow cylindrical neck with a thick rounded rim; two strong vertical loop handles of round section from the top of the neck down to the shoulder, one on each side. Plain unpainted orange-buff fired clay, slightly mottled with paler dusty patches, with three thin dark brown painted bands around the shoulder and the widest part of the belly; a little worn and chipped at the rim. No figures, no pictures, no patterns besides the bands, no letters, no stamps. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1024,
+      "height": 1536
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:15:42.215Z",
+  "url": "https://v3b.fal.media/files/b/0aae637c/qxMugCYJK0QzBNP60XkUr_hx1fpokv.png"
+}

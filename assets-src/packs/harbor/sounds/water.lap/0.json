@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Small waves lapping and sloshing against a concrete harbour wall and its rubber fenders, close: gentle irregular slaps, gurgles and wet splashes, steady, nothing else. Field recording, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 22,
+  "seed": 819490,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6353/EcoX8BzCMq-1kSpdms7wr_sCAuDhVs.flac"
+}

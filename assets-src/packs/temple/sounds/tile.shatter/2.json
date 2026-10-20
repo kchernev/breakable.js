@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A stack of terracotta clay roof tiles smashing onto stone: a sharp, dry ceramic crack and crash like a clay flowerpot breaking, thick fired clay shards clattering and skittering. Brittle, dry and earthy. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, glass, glass shattering, tinkling, ringing, metal",
+  "duration": 2,
+  "seed": 4162,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae639e/mqKRpM3_KYY_gwciWZ_Zk_RCu9PXwh.flac"
+}

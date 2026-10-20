@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Electrical sparks from a broken live cable: a short burst of sharp crackling arcs, snapping pops and a sizzling hiss, then it cuts out. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, laser, sci-fi, blaster, gunshot",
+  "duration": 1.5,
+  "seed": 434733,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6357/8mklfeZrKz6-faoqvj975_mZxcTajx.flac"
+}

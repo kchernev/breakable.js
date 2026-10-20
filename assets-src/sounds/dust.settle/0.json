@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Dust and fine debris settling after a collapse: a soft hiss of sand and tiny pebbles trickling down, quiet. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 5,
+  "seed": 912000,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c4/Yaw7reuqB1HUR6y4yxrCq_H1aMuza8.flac"
+}

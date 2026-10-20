@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A huge bronze church bell falling from a tower and crashing onto a cobblestone square: one loud, harsh, dissonant metallic clang with a heavy dull thud, the cracked bell rattling and rocking on the stones, then a short, sour, wobbling ring that dies away quickly. Outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, chimes, wind chimes, several bells, carillon, peal, tune, organ, choir, gong, electronic tone",
+  "duration": 4,
+  "seed": 369091,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6360/asLVI2O_34e6uG1Q0jJZG_gRCzewVP.flac"
+}

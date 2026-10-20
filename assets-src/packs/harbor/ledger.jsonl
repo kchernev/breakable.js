@@ -1,0 +1,99 @@
+{"by": "sounds", "what": "sound take ambience.harbor:0 (45 s, seed 557970)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take chain.rattle:0 (3 s, seed 351640)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take chain.rattle:1 (3 s, seed 351641)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.boom:0 (3.5 s, seed 97270)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.boom:1 (3.5 s, seed 97271)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.boom:2 (3.5 s, seed 97272)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.boom:3 (3.5 s, seed 97273)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.clang:0 (2 s, seed 764450)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.clang:1 (2 s, seed 764451)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.clang:2 (2 s, seed 764452)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.clang:3 (2 s, seed 764453)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.collapse:0 (7 s, seed 680330)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.collapse:1 (7 s, seed 680331)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.collapse:2 (7 s, seed 680332)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.groan:0 (4 s, seed 623330)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.groan:1 (4 s, seed 623331)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.groan:2 (4 s, seed 623332)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take drum.bonk:0 (2 s, seed 728750)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take drum.bonk:1 (2 s, seed 728751)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take drum.bonk:2 (2 s, seed 728752)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take gulls.call:0 (4 s, seed 983820)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take gulls.call:1 (4 s, seed 983821)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take gulls.call:2 (4 s, seed 983822)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take gulls.scatter:0 (5 s, seed 639180)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take gulls.scatter:1 (5 s, seed 639181)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take sheet.tear:0 (2.5 s, seed 853360)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take sheet.tear:1 (2.5 s, seed 853361)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take sheet.tear:2 (2.5 s, seed 853362)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take ship.horn:0 (9 s, seed 495820)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take ship.horn:1 (9 s, seed 495821)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take steps.metal:0 (8 s, seed 314490)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take steps.wet:0 (8 s, seed 920560)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take water.lap:0 (22 s, seed 819490)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take water.splash:0 (4 s, seed 734770)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take water.splash:1 (4 s, seed 734771)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take water.splash:2 (4 s, seed 734772)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "props", "what": "prop concept drum:0", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.06, "at": "2026-10-14"}
+{"by": "props", "what": "prop concept yard_tractor:0", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.06, "at": "2026-10-14"}
+{"by": "props", "what": "prop concept forklift:0", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.06, "at": "2026-10-14"}
+{"by": "props", "what": "prop concept reel:0", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.06, "at": "2026-10-14"}
+{"at": "2026-10-14T20:10:00.532Z", "by": "textures", "what": "texture image harbor_container:0 (1536x1536, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "note": "cost is an estimate", "costUSD": 0.25}
+{"at": "2026-10-14T20:10:04.991Z", "by": "textures", "what": "texture image harbor_pallet_wood:0 (1024x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "note": "cost is an estimate", "costUSD": 0.17}
+{"at": "2026-10-14T20:10:27.301Z", "by": "textures", "what": "texture image harbor_roller_door:0 (1024x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "note": "cost is an estimate", "costUSD": 0.17}
+{"at": "2026-10-14T20:10:03.498Z", "by": "textures", "what": "texture image harbor_steel_painted:0 (1024x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "note": "cost is an estimate", "costUSD": 0.17}
+{"at": "2026-10-14T20:10:09.767Z", "by": "textures", "what": "texture image harbor_yard_concrete:0 (2048x2048, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "note": "cost is an estimate", "costUSD": 0.4}
+{"by": "props", "what": "prop 3D model forklift (Tripo P2, detailed PBR texture)", "endpoint": "tripo3d/p2/image-to-3d", "costUSD": 1.2, "at": "2026-10-14"}
+{"by": "props", "what": "prop 3D model yard_tractor (Tripo P2, detailed PBR texture)", "endpoint": "tripo3d/p2/image-to-3d", "costUSD": 1.2, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.groan:1 redo (new prompt, seed 624331)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "sound take container.groan:2 redo (new prompt, seed 624332)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of ambience.harbor:0 (45 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.09, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of chain.rattle:0 (3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of chain.rattle:1 (3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.boom:0 (3.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.boom:1 (3.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.boom:2 (3.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.boom:3 (3.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.clang:0 (2 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.clang:1 (2 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.clang:2 (2 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.clang:3 (2 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.collapse:0 (7 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.02, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.collapse:1 (7 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.02, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.collapse:2 (7 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.02, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.groan:0 (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.groan:1 (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.groan:2 (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of drum.bonk:0 (2 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of drum.bonk:1 (2 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of drum.bonk:2 (2 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of gulls.call:0 (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of gulls.call:1 (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of gulls.call:2 (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of gulls.scatter:0 (5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of gulls.scatter:1 (5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of sheet.tear:0 (2.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of sheet.tear:1 (2.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of sheet.tear:2 (2.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of ship.horn:0 (9 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.02, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of ship.horn:1 (9 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.02, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of steps.metal:0 (8 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.02, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of steps.wet:0 (8 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.02, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of water.lap:0 (22 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.05, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of water.splash:0 (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of water.splash:1 (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of water.splash:2 (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "props", "what": "prop 3D model drum (Tripo P2, detailed PBR texture)", "endpoint": "tripo3d/p2/image-to-3d", "costUSD": 1.2, "at": "2026-10-14"}
+{"by": "props", "what": "prop 3D model reel (Tripo P2, detailed PBR texture)", "endpoint": "tripo3d/p2/image-to-3d", "costUSD": 1.2, "at": "2026-10-14"}
+{"at": "2026-10-14T20:20:52.766Z", "by": "textures", "what": "texture image harbor_cladding:0 (1536x1536, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "note": "cost is an estimate", "costUSD": 0.25}
+{"by": "sounds", "what": "sound take container.groan:0 redo (new prompt, seed 624330)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.groan:1 redo (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.groan:2 redo (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"by": "sounds", "what": "audio QA of container.groan:0 redo (4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01, "at": "2026-10-14"}
+{"at": "2026-10-16T16:48:35Z", "by": "ground", "what": "texture image: harbor_gravel take 0 (1024x1024, high): the crushed stone under the yard's slabs", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "note": "cost is an estimate", "costUSD": 0.25}
+{"at": "2026-10-19", "by": "phase-f harbor", "what": "sound take fuel.leak:0 (10 s, seed 966920)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-19", "by": "phase-f harbor", "what": "sound take fuel.leak:1 (10 s, seed 966921)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-19", "by": "phase-f harbor", "what": "sound take drum.leak:0 (8 s, seed 607720)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-19", "by": "phase-f harbor", "what": "sound take fuel.ignite:0 (4 s, seed 1550)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-19", "by": "phase-f harbor", "what": "sound take fuel.ignite:1 (4 s, seed 1551)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-19", "by": "phase-f harbor", "what": "sound take fuel.ignite:2 (4 s, seed 1552)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Massive stone blocks shifting under a heavy load: a deep, low, slow scrape and grind of stone on stone, a dull creak and crack, grit and small chips trickling down. Slow and ominous, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 889641,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae639d/tb2918eWseAy42gf84nOF_2Rjquw5C.flac"
+}

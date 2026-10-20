@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the dressed face of an ancient Greek building block of poros limestone, seen straight on: one continuous stone face filling the whole frame, with no joints, no mortar, no block edges and no seams. Pale cream to warm ochre porous shelly limestone: many small irregular holes and pores from 1 to 10 mm, a few small fossil shell fragments, faint fine claw-chisel tooling marks, soft weathering that has rounded the pores, gentle mottling of honey-ochre, buff and light grey, a few tiny dark lichen specks. Uniform density over the whole frame, no single large hole or stain. The frame shows a 1.5 m × 1.5 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1536,
+    "height": 1536
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:19:31.510Z",
+  "url": "https://v3b.fal.media/files/b/0aae6391/DdEV1gM4CgUVkrHIU4GxP_4IeqprMh.png"
+}

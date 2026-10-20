@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A glowing neon glass tube smashing: a hollow glassy pop as the tube bursts, then thin glass shards tinkling down for half a second, with a crackling electrical fizz as the live wires short out. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, laser, sci-fi, blaster, gunshot",
+  "duration": 2,
+  "seed": 46903,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63ad/puPW8jnU21HIeef7O_hDB_hdckcMay.flac"
+}

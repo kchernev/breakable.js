@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Field recording of steam escaping steadily from a street vent grate at night: a soft, constant hiss of steam with a faint low rumble from below and a few water drips, close-up. Constant from start to end. No music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, rain, wind gusts, whistle, kettle, train",
+  "duration": 10,
+  "seed": 636860,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63f3/2qJ2d6P8OI0dLTrxPR-nD_1ynHzGUM.flac"
+}

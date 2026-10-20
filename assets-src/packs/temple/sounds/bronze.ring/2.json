@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A single small hard pellet striking a large hollow bronze statue: one sharp bright metallic ping, then a deep, warm, resonant hum that rings on like a big bronze bell struck softly, slowly wavering and fading away. One strike only, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, gunshot, gunfire, explosion, several bells, church bell, chimes, gong roll, cymbal, falling, clatter",
+  "duration": 4,
+  "seed": 214372,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefe33/OZsWJvHcMAWZ5lYRsm7gj_AMP33aJ3.flac"
+}

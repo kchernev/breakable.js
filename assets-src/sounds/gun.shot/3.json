@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A single shot from a military assault rifle, heard from the shooter's position outdoors: one loud, sharp, punchy and dry report, a hard crack with a deep thump and a metallic clack of the action. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, echo, reverb, explosion, several shots, burst",
+  "duration": 1,
+  "seed": 923353,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae9c91/V7-GJRH5Yi-t5wDh9dk-i_0VPYDETM.flac"
+}

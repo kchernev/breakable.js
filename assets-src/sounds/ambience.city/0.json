@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "New York City street ambience on a calm afternoon: distant traffic hum, a far car horn now and then, pigeons, faint wind between buildings. Field recording, no voices, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 45,
+  "seed": 607560,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c5/ZyYvG6QAstm4YMdi1P1V3_MQsMjt1d.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "An empty steel shipping container dropped flat onto concrete: one huge, deep, hollow metallic boom, the big empty steel box resonating like a giant steel drum and ringing low as it dies away, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3.5,
+  "seed": 97270,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6354/go2OmXNXtGfXTijSEhz2Y_XQBiB6vB.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A heavy chunk of brick wall crashing down onto a street: a deep heavy thud as it smashes apart into crumbling bricks and dust. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 706953,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c0/OWzonqiXC5EFy8qvxETTj_T1WSgfge.flac"
+}

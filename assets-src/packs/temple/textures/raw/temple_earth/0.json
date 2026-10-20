@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of a fresh vertical cut through the dry stony soil of a Mediterranean limestone hilltop, seen straight on: compact, crumbly, sun-dried terra rossa earth in warm reddish ochre, rust brown and tan, densely mixed with small angular pale grey and cream limestone pebbles and grit from 2 mm to 3 cm and a few stones up to 8 cm, fine dry root threads, small crumbs and clods, a pale dusty coating in places. Evenly mixed over the whole frame: no layers or bands, no grass, no large rocks, no holes. The frame shows a 1 m × 1 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-16T16:48:01.402Z",
+  "url": "https://v3b.fal.media/files/b/0aaea21c/NbLNZzFnJK-gOZAWk4Vxk_ORLBD0fY.png"
+}

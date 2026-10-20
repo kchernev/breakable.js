@@ -1,0 +1,9 @@
+{"at": "2026-10-15T00:51:09.294Z", "by": "kit", "what": "prop concept launcher take 1 (1536x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.041}
+{"at": "2026-10-15T00:51:09.308Z", "by": "kit", "what": "prop concept rocket take 1 (1536x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.041}
+{"at": "2026-10-15T00:51:10.957Z", "by": "kit", "what": "prop concept rocket take 0 (1536x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.041}
+{"at": "2026-10-15T00:51:12.571Z", "by": "kit", "what": "prop concept launcher take 0 (1536x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.041}
+{"at": "2026-10-15T00:53:50.262Z", "by": "kit", "what": "prop model rocket (Tripo P2 image-to-3D from concept1, detailed PBR textures, face_limit 12000)", "endpoint": "tripo3d/p2/image-to-3d", "costUSD": 1.2}
+{"at": "2026-10-15T00:54:17.548Z", "by": "kit", "what": "prop model launcher (Tripo P2 image-to-3D from concept0, detailed PBR textures, face_limit 30000)", "endpoint": "tripo3d/p2/image-to-3d", "costUSD": 1.2}
+{"at": "2026-10-16T12:38:07.028Z", "by": "gunmodel", "what": "prop concept gun take 0 (1536x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.041}
+{"at": "2026-10-16T12:38:07.318Z", "by": "gunmodel", "what": "prop concept gun take 1 (1536x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.041}
+{"at": "2026-10-16T12:40:42.364Z", "by": "gunmodel", "what": "prop model gun (Tripo P2 image-to-3D from concept1, detailed PBR textures, face_limit 30000)", "endpoint": "tripo3d/p2/image-to-3d", "costUSD": 1.2}

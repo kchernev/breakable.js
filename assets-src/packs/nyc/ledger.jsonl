@@ -1,0 +1,5 @@
+{"by": "sounds", "what": "sound take pigeons.scatter:0 (3.5 s, seed 950460)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-19"}
+{"by": "sounds", "what": "sound take pigeons.scatter:1 (3.5 s, seed 950461)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-19"}
+{"by": "sounds", "what": "sound take ac.hiss:0 (3 s, seed 523580)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-19"}
+{"by": "sounds", "what": "sound take lamp.short:0 (1.5 s, seed 136450)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-19"}
+{"by": "sounds", "what": "sound take water.leak:0 (8 s, seed 652810)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376, "at": "2026-10-19"}

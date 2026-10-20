@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A street lamp struck and shorting out: a sharp electric pop as the bulb bursts, a crackling fizz of sparks for half a second and a light tinkle of glass, then silence. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, explosion, gunshot, thunder, buzzing hum",
+  "duration": 1.5,
+  "seed": 136450,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefe09/cdjq41ngkkulD7GfAncvp_0zIFvYG6.flac"
+}

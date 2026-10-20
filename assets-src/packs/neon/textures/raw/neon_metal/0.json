@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of weathered painted sheet steel, a flat panel seen straight on: very light grey enamel paint, slightly glossy, with light grime, a few small chipped spots showing orange-brown rust with short rust streaks running down from them, scuffs, and a few thin bright scratches through to bare metal. Mostly clean, intact light grey paint. No panel seams, no rivets, no bolts, no edges, no dents. The frame shows a 1 m × 1 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:09:27.111Z",
+  "url": "https://v3b.fal.media/files/b/0aae6356/2NJXNiaVthDsOWznejjiF_BB0rXsEP.png"
+}

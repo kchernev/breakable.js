@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Broken pieces of terracotta clay roof tile sliding off and dropping onto stone paving: dry, clicky clay clinks and knocks and a short rattle of small shards. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, glass, glass shattering, tinkling, ringing, metal",
+  "duration": 2,
+  "seed": 878922,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae639e/o_R9tzXITHGvdHqzs2aNG_8Eb9o77d.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A heavy stone block falling from a great height and plunging into deep sea water: a deep booming plunge and a big heavy splash, spray raining back onto the water, then waves sloshing against rocks. Outdoors by the sea. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, seagulls, birds, boat, engine, rain",
+  "duration": 5,
+  "seed": 940930,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63db/juYqVq9eNDGs99XOhoelt_V6f4vRLi.flac"
+}

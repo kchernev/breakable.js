@@ -1,0 +1,123 @@
+{
+ "ac.hiss": {
+  "src": [
+   "ac.hiss/0.mp3"
+  ],
+  "duration": [
+   1.29
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 4,
+   "volume": 0.9,
+   "voices": 2,
+   "cooldown": 0.3,
+   "pitch": [
+    0.92,
+    1.08
+   ],
+   "reverb": 0.3
+  }
+ },
+ "lamp.short": {
+  "src": [
+   "lamp.short/0.mp3"
+  ],
+  "duration": [
+   1.448
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 4,
+   "volume": 1,
+   "voices": 2,
+   "cooldown": 0.15,
+   "pitch": [
+    0.85,
+    1.15
+   ],
+   "reverb": 0.3
+  }
+ },
+ "pigeons.scatter": {
+  "src": [
+   "pigeons.scatter/0.mp3",
+   "pigeons.scatter/1.mp3"
+  ],
+  "duration": [
+   3.5,
+   3.5
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 10,
+   "rolloff": 0.8,
+   "volume": 0.7,
+   "voices": 1,
+   "cooldown": 4,
+   "spacing": 60,
+   "reverb": 0.35
+  }
+ },
+ "steps.metal": {
+  "src": [
+   "steps.metal/0.mp3",
+   "steps.metal/1.mp3",
+   "steps.metal/2.mp3",
+   "steps.metal/3.mp3",
+   "steps.metal/4.mp3",
+   "steps.metal/5.mp3",
+   "steps.metal/6.mp3",
+   "steps.metal/7.mp3",
+   "steps.metal/8.mp3",
+   "steps.metal/9.mp3"
+  ],
+  "duration": [
+   0.392,
+   0.392,
+   0.392,
+   0.392,
+   0.392,
+   0.392,
+   0.392,
+   0.313,
+   0.392,
+   0.392
+  ],
+  "kind": "slice",
+  "space": "head",
+  "play": {
+   "volume": 0.24,
+   "voices": 2,
+   "pitch": [
+    0.95,
+    1.05
+   ],
+   "reverb": 0.15
+  }
+ },
+ "water.leak": {
+  "src": [
+   "water.leak/0.mp3"
+  ],
+  "duration": [
+   5.84
+  ],
+  "kind": "loop",
+  "space": "world",
+  "play": {
+   "near": 4,
+   "rolloff": 1,
+   "volume": 0.35,
+   "voices": 2,
+   "reverb": 0.2,
+   "pitch": [
+    0.95,
+    1.05
+   ]
+  }
+ }
+}

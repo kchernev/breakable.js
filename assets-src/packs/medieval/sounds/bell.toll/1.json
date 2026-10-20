@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "One single strike of a large old bronze church bell hanging in a stone bell tower, heard from the town square below: a deep, rich metallic bong with a clear low hum note and bright shimmering, beating overtones, then a long, slow ringing hum fading away. Outdoors, a soft echo off stone walls. Only one strike. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, chimes, wind chimes, several bells, carillon, peal, tune, organ, choir, gong, electronic tone",
+  "duration": 8,
+  "seed": 251191,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae635f/4t0-1Oyven-dy-wqD-P1Q_9Ro6zLxR.flac"
+}

@@ -1,0 +1,8 @@
+{"at":"2026-10-14T20:10:17.832Z","endpoint":"openai/gpt-image-2.5/flare/text-to-image","prop":"drum","take":0}
+{"at":"2026-10-14T20:10:19.475Z","endpoint":"openai/gpt-image-2.5/flare/text-to-image","prop":"yard_tractor","take":0}
+{"at":"2026-10-14T20:10:22.760Z","endpoint":"openai/gpt-image-2.5/flare/text-to-image","prop":"forklift","take":0}
+{"at":"2026-10-14T20:10:26.034Z","endpoint":"openai/gpt-image-2.5/flare/text-to-image","prop":"reel","take":0}
+{"at":"2026-10-14T20:13:39.552Z","endpoint":"tripo3d/p2/image-to-3d","prop":"forklift"}
+{"at":"2026-10-14T20:13:39.658Z","endpoint":"tripo3d/p2/image-to-3d","prop":"yard_tractor"}
+{"at":"2026-10-14T20:16:35.594Z","endpoint":"tripo3d/p2/image-to-3d","prop":"drum"}
+{"at":"2026-10-14T20:16:40.934Z","endpoint":"tripo3d/p2/image-to-3d","prop":"reel"}

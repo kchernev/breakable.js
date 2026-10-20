@@ -1,0 +1,108 @@
+{"at":"2026-10-16T12:40:36.777Z","by":"gunsounds","what":"sound take bullet.brick:0 (8 s, seed 64280, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:36.284Z","by":"gunsounds","what":"sound take bullet.concrete:0 (8 s, seed 850020, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:41.170Z","by":"gunsounds","what":"sound take bullet.dirt:0 (8 s, seed 358520, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:55.886Z","by":"gunsounds","what":"sound take bullet.glass:0 (8 s, seed 381030, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:37.914Z","by":"gunsounds","what":"sound take bullet.metal:0 (8 s, seed 883860, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:50.403Z","by":"gunsounds","what":"sound take bullet.ricochet:0 (1.5 s, seed 986200, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:49.522Z","by":"gunsounds","what":"sound take bullet.ricochet:1 (1.5 s, seed 986201, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:52.473Z","by":"gunsounds","what":"sound take bullet.ricochet:2 (1.5 s, seed 986202, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:40.353Z","by":"gunsounds","what":"sound take bullet.wood:0 (8 s, seed 75380, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:33.467Z","by":"gunsounds","what":"sound take casing.drop:0 (8 s, seed 396570, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:34.794Z","by":"gunsounds","what":"sound take casing.drop:1 (8 s, seed 396571, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:30.145Z","by":"gunsounds","what":"sound take gun.empty:0 (1 s, seed 353200, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:31.099Z","by":"gunsounds","what":"sound take gun.empty:1 (1 s, seed 353201, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:16.977Z","by":"gunsounds","what":"sound take gun.reload:0 (2.5 s, seed 441100, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:21.777Z","by":"gunsounds","what":"sound take gun.reload:1 (2.5 s, seed 441101, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:20.287Z","by":"gunsounds","what":"sound take gun.shot:0 (10 s, seed 923350, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:00.954Z","by":"gunsounds","what":"sound take gun.shot:1 (10 s, seed 923351, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:08.806Z","by":"gunsounds","what":"sound take gun.tail:0 (3 s, seed 152050, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:18.874Z","by":"gunsounds","what":"sound take gun.tail:1 (3 s, seed 152051, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:40:20.288Z","by":"gunsounds","what":"sound take gun.tail:2 (3 s, seed 152052, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:46:36.180Z","by":"gunsounds","what":"audio QA gun.tail:1 (qa-sounds, 3 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:46:36.185Z","by":"gunsounds","what":"audio QA gun.shot:0 (qa-sounds, 10 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:46:36.186Z","by":"gunsounds","what":"audio QA gun.shot:1 (qa-sounds, 10 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:46:36.187Z","by":"gunsounds","what":"audio QA gun.reload:0 (qa-sounds, 2.5 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:46:36.191Z","by":"gunsounds","what":"audio QA gun.tail:0 (qa-sounds, 3 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:46:36.191Z","by":"gunsounds","what":"audio QA gun.tail:2 (qa-sounds, 3 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:46:36.191Z","by":"gunsounds","what":"audio QA gun.reload:1 (qa-sounds, 2.5 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:46:36.192Z","by":"gunsounds","what":"audio QA gun.empty:0 (qa-sounds, 1 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:46:36.192Z","by":"gunsounds","what":"audio QA gun.empty:1 (qa-sounds, 1 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:46:36.192Z","by":"gunsounds","what":"audio QA casing.drop:0 (qa-sounds, 8 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:46:36.192Z","by":"gunsounds","what":"audio QA casing.drop:1 (qa-sounds, 8 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:46:36.192Z","by":"gunsounds","what":"audio QA bullet.brick:0 (qa-sounds, 8 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:46:36.193Z","by":"gunsounds","what":"audio QA bullet.concrete:0 (qa-sounds, 8 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:46:36.193Z","by":"gunsounds","what":"audio QA bullet.metal:0 (qa-sounds, 8 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:46:36.193Z","by":"gunsounds","what":"audio QA bullet.wood:0 (qa-sounds, 8 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:46:36.194Z","by":"gunsounds","what":"audio QA bullet.glass:0 (qa-sounds, 8 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:46:36.194Z","by":"gunsounds","what":"audio QA bullet.dirt:0 (qa-sounds, 8 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:46:36.194Z","by":"gunsounds","what":"audio QA bullet.ricochet:1 (qa-sounds, 1.5 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:46:36.194Z","by":"gunsounds","what":"audio QA bullet.ricochet:0 (qa-sounds, 1.5 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:46:36.194Z","by":"gunsounds","what":"audio QA bullet.ricochet:2 (qa-sounds, 1.5 s, round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:48:50.490Z","by":"gunsounds","what":"sound take gun.shot:0 (1 s, seed 924350, round 2: new prompts)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:48:51.981Z","by":"gunsounds","what":"sound take gun.shot:1 (1 s, seed 924351, round 2: new prompts)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:49:00.753Z","by":"gunsounds","what":"sound take gun.tail:0 (2.5 s, seed 153050, round 2: new prompts)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:50:04.500Z","by":"gunsounds","what":"audio QA gun.shot:0 (qa-sounds, 1 s, round 2)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:50:04.501Z","by":"gunsounds","what":"audio QA gun.shot:1 (qa-sounds, 1 s, round 2)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:50:04.502Z","by":"gunsounds","what":"audio QA gun.tail:0 (qa-sounds, 2.5 s, round 2)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:51:14.315Z","by":"gunsounds","what":"sound take bullet.brick:1 (8 s, seed 64281, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:16.173Z","by":"gunsounds","what":"sound take bullet.concrete:1 (8 s, seed 850021, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:25.192Z","by":"gunsounds","what":"sound take bullet.dirt:1 (8 s, seed 358521, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:23.437Z","by":"gunsounds","what":"sound take bullet.glass:1 (8 s, seed 381031, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:18.740Z","by":"gunsounds","what":"sound take bullet.metal:0 (8 s, seed 884860, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:21.839Z","by":"gunsounds","what":"sound take bullet.metal:1 (8 s, seed 883861, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:01.314Z","by":"gunsounds","what":"sound take gun.shot:2 (1 s, seed 923352, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:50:59.753Z","by":"gunsounds","what":"sound take gun.shot:3 (1 s, seed 923353, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:03.203Z","by":"gunsounds","what":"sound take gun.shot:4 (1 s, seed 923354, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:26.213Z","by":"gunsounds","what":"sound take gun.shot:5 (1 s, seed 923355, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:07.862Z","by":"gunsounds","what":"sound take gun.shot:6 (1 s, seed 923356, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:04.636Z","by":"gunsounds","what":"sound take gun.shot:7 (1 s, seed 923357, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:08.943Z","by":"gunsounds","what":"sound take gun.tail:1 (2.5 s, seed 153051, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:51:12.348Z","by":"gunsounds","what":"sound take gun.tail:2 (2.5 s, seed 153052, round 3)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at": "2026-10-16T12:52:22.000Z", "by": "gunsounds", "what": "audio QA gun.shot:2 (qa-sounds, 1 s, round 3; lost: the run was cut off before it saved its answers)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-16T12:52:22.000Z", "by": "gunsounds", "what": "audio QA gun.shot:3 (qa-sounds, 1 s, round 3; lost: the run was cut off before it saved its answers)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-16T12:52:22.000Z", "by": "gunsounds", "what": "audio QA gun.shot:4 (qa-sounds, 1 s, round 3; lost: the run was cut off before it saved its answers)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-16T12:52:22.000Z", "by": "gunsounds", "what": "audio QA gun.shot:5 (qa-sounds, 1 s, round 3; lost: the run was cut off before it saved its answers)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-16T12:52:22.000Z", "by": "gunsounds", "what": "audio QA gun.shot:6 (qa-sounds, 1 s, round 3; lost: the run was cut off before it saved its answers)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-16T12:52:22.000Z", "by": "gunsounds", "what": "audio QA gun.shot:7 (qa-sounds, 1 s, round 3; lost: the run was cut off before it saved its answers)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at":"2026-10-16T12:55:16.679Z","by":"gunsounds","what":"audio QA gun.tail:1 (qa-sounds, 2.5 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:55:16.680Z","by":"gunsounds","what":"audio QA gun.tail:2 (qa-sounds, 2.5 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:55:16.680Z","by":"gunsounds","what":"audio QA bullet.metal:0 (qa-sounds, 8 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:55:16.680Z","by":"gunsounds","what":"audio QA gun.shot:3 (qa-sounds, 1 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:55:16.680Z","by":"gunsounds","what":"audio QA gun.shot:2 (qa-sounds, 1 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:55:16.680Z","by":"gunsounds","what":"audio QA gun.shot:4 (qa-sounds, 1 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:55:16.680Z","by":"gunsounds","what":"audio QA gun.shot:5 (qa-sounds, 1 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:55:16.680Z","by":"gunsounds","what":"audio QA gun.shot:6 (qa-sounds, 1 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:55:16.680Z","by":"gunsounds","what":"audio QA gun.shot:7 (qa-sounds, 1 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T12:55:16.681Z","by":"gunsounds","what":"audio QA bullet.concrete:1 (qa-sounds, 8 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:55:16.681Z","by":"gunsounds","what":"audio QA bullet.brick:1 (qa-sounds, 8 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:55:16.681Z","by":"gunsounds","what":"audio QA bullet.metal:1 (qa-sounds, 8 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:55:16.681Z","by":"gunsounds","what":"audio QA bullet.glass:1 (qa-sounds, 8 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:55:16.681Z","by":"gunsounds","what":"audio QA bullet.dirt:1 (qa-sounds, 8 s, round 3)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:55:55.568Z","by":"gunsounds","what":"sound take bullet.dirt:1 (8 s, seed 359521, round 4: redo)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:56:21.214Z","by":"gunsounds","what":"audio QA bullet.dirt:1 (qa-sounds, 8 s, round 4)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:56:43.448Z","by":"gunsounds","what":"sound take bullet.dirt:1 (8 s, seed 360521, round 5: redo, new prompt)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:57:02.497Z","by":"gunsounds","what":"audio QA bullet.dirt:1 (qa-sounds, 8 s, round 5)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T12:59:20.424Z","by":"gunsounds","what":"sound take bullet.ricochet:0 (1.5 s, seed 987200, round 6: redo, quiet in mono)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T12:59:44.418Z","by":"gunsounds","what":"audio QA bullet.ricochet:0 (qa-sounds, 1.5 s, round 6)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T13:00:18.658Z","by":"gunsounds","what":"audio QA of the finished bullet.brick (its 8 files joined, 7.5 s)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T13:00:30.256Z","by":"gunsounds","what":"audio QA of the finished casing.drop (its 14 files joined, 12.7 s)","endpoint":"fal-ai/audio-understanding","costUSD":0.03}
+{"at":"2026-10-16T13:00:49.981Z","by":"gunsounds","what":"audio QA of the finished gun.shot (its 8 files joined, 10.8 s)","endpoint":"fal-ai/audio-understanding","costUSD":0.03}
+{"at":"2026-10-16T13:01:04.465Z","by":"gunsounds","what":"audio QA of the finished gun.tail (its 3 files joined, 8.7 s)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T13:01:16.166Z","by":"gunsounds","what":"audio QA of the finished bullet.concrete (its 9 files joined, 8.4 s)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T13:01:31.309Z","by":"gunsounds","what":"audio QA of the finished bullet.metal (its 5 files joined, 4.7 s)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T13:01:49.386Z","by":"gunsounds","what":"audio QA of the finished bullet.wood (its 5 files joined, 4.6 s)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T13:02:08.781Z","by":"gunsounds","what":"audio QA of the finished bullet.glass (its 8 files joined, 7.3 s)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T13:02:20.592Z","by":"gunsounds","what":"audio QA of the finished bullet.dirt (its 12 files joined, 10.9 s)","endpoint":"fal-ai/audio-understanding","costUSD":0.03}
+{"at":"2026-10-16T13:02:37.520Z","by":"gunsounds","what":"audio QA of the finished bullet.ricochet (its 3 files joined, 6.3 s)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T14:06:25.808Z","by":"gunsounds","what":"sound take bullet.metal:0 (8 s, seed 885860, fix round)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T14:06:24.955Z","by":"gunsounds","what":"sound take bullet.wood:1 (8 s, seed 75381, fix round)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-16T14:07:10.888Z","by":"gunsounds","what":"audio QA bullet.metal:0 (qa-sounds, 8 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T14:07:10.888Z","by":"gunsounds","what":"audio QA bullet.wood:1 (qa-sounds, 8 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T14:21:22.285Z","by":"gunsounds","what":"audio QA of the finished gun.empty (its 2 files joined, 1.9 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T14:21:37.152Z","by":"gunsounds","what":"audio QA of the finished bullet.metal (its 10 files joined, 9.2 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T14:21:53.586Z","by":"gunsounds","what":"audio QA of the finished gun.reload (its 2 files joined, 5.0 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T14:22:05.369Z","by":"gunsounds","what":"audio QA of the finished bullet.wood (its 9 files joined, 7.9 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T14:22:20.407Z","by":"gunsounds","what":"audio QA of the finished gun.tail (its 3 files joined, 8.5 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-16T14:24:21.918Z","by":"gunsounds","what":"audio QA of metal-before (5 files of bullet.metal joined, 4.8 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T14:24:30.661Z","by":"gunsounds","what":"audio QA of metal-newtake (5 files of bullet.metal joined, 4.6 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-16T14:24:59.235Z","by":"gunsounds","what":"audio QA of metal-all (10 files of bullet.metal joined, 9.2 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "An empty steel oil drum knocked over onto concrete: one hollow, resonant metal bong, then a short rolling rumble as it rolls a little and stops. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2,
+  "seed": 728751,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6355/4w2SPKrRawN1HDBzIUrwS_1BWEuShj.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "The echo after a burst of gunfire in a city street, heard from where the shooter stands: only the reverberation, a low rolling rumble with slapback reflections from the buildings, decaying smoothly into silence. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, gunshots, gunfire, rifle shots, close crack, burst",
+  "duration": 2.5,
+  "seed": 153051,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae9c92/UUtQ8htjLrxFhMsmvlCM8_OKFaS74o.flac"
+}

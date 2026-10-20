@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of an old New York City brick wall painted cream off-white: running bond brickwork (each course offset by exactly half a brick) with slightly recessed mortar joints about 1 cm wide, bricks and mortar all painted over with the same cream paint. The paint is old and unevenly worn: most bricks are still fully painted, some have irregular worn and flaked patches of different sizes anywhere on their faces and along random edges showing the red brick underneath, a few have larger bare areas; faint grime and dirt streaks. Standard bricks 21.5 cm long and 6.5 cm tall. The frame shows a 2.7 m × 2.7 m area: 12 bricks across each course and 40 courses from top to bottom, perfectly straight, level and evenly spaced like a regular grid. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 2048,
+    "height": 2048
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T18:37:12.542Z",
+  "url": "https://v3b.fal.media/files/b/0aae612c/fdNNj6_SJKMBJs-gvK_9q_maokwItx.png"
+}

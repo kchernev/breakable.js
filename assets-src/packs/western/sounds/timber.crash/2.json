@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Heavy wooden beams and a pile of planks crashing down onto dry packed dirt: a deep, heavy wooden thud, then boards clattering, bouncing and settling with a little grit. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 461032,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae634b/VOpgVwBHMZRRQCZoM5Qr5_wY926NHr.flac"
+}

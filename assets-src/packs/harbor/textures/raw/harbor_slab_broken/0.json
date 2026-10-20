@@ -1,0 +1,15 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of freshly fractured concrete seen straight on: rough grey cement paste with exposed, broken gravel aggregate of mixed sizes (5 to 25 mm, grey, beige and dark stones, some split through), sand grains, small air voids and pits, faint orange-brown rust staining in a few spots. The frame shows a 1 m \u00d7 1 m patch. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T18:24:56.878Z",
+  "url": "https://v3b.fal.media/files/b/0aae60e2/mKcO_CIDXPLPpOjDDlycF_mng37Frl.png",
+  "note": "A copy of the base pack's gen_concrete_broken take 0 (assets-src/textures/raw/gen_concrete_broken/0.png): textures.py paints the reinforcement's bar ends into it. Not a generation of its own."
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A bullet ricocheting off stone: a sharp ping and a high whining whistle flying away, fading quickly. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, gunshots, gunfire",
+  "duration": 1.5,
+  "seed": 987200,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae9cc3/IFIsoZfMwCgFrbAbjuyYv_8vjrlAdp.flac"
+}

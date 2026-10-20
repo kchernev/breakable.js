@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A rocket whooshing past very close at high speed: a fast doppler whoosh with rushing jet hiss passing by and away. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 756071,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60ba/HTrMnKmvQc7wqjIn-MEbY_56P8eggo.flac"
+}

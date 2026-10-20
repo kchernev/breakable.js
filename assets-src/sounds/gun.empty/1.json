@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A rifle trigger pulled on an empty chamber: one single dry, small, sharp metallic click of the hammer, then silence. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 1,
+  "seed": 353201,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae9c52/zhsIaNU45kZKF3nPOTzmn_MO0dvsK6.flac"
+}

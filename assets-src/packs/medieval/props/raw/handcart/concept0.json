@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "An empty medieval two-wheeled wooden market handcart, parked level: a flat rectangular bed of oak planks about 1.4 m long and 0.9 m wide with low plank sides about 25 cm high on the left, right and front, open at the back; two long straight square-section shafts run along under the bed and stick out about 1 m past its front as handles, ending in rounded grips; two large wooden wheels about 1 m across, one on each side under the middle of the bed, each with eight thick spokes, a turned wooden hub and a dark iron tyre; a pair of short wooden legs under the front of the bed so it stands level. Weathered silver-brown oak, dark iron nails and straps at the corners. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1536,
+      "height": 1024
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:10:25.375Z",
+  "url": "https://v3b.fal.media/files/b/0aae635b/DAKd-LwPifbeLtS6ptpFD_dQ0KXxoz.png"
+}

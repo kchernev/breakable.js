@@ -1,0 +1,142 @@
+{
+  "ambience.city:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6356/CpTeZwLawsR5aOEWiNhwS_ZSo1khi1.flac",
+    "answer": "1. HEAR: A continuous, low, distant city hum and traffic roar; a faint, far-off train rumble throughout.\n2. PROBLEMS: none.\n3. SCORE: 9"
+  },
+  "rain.awning:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6356/m9vAQ8uD9uyZYphvGPJUb_nImySgWs.flac",
+    "answer": "1. HEAR: (0:00-0:14) Dense, hollow drumming of heavy rain on a taut tarp, with a steady splash of water runoff.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "neon.buzz:1": {
+    "url": "https://v3b.fal.media/files/b/0aae63f8/UQCY8-E4ArWVQMAuQQGx2_neon.buzz-1.flac",
+    "answer": "OWN CHECK (synthesized; asked whether it reads as a neon sign buzz): \"a continuous electrical hum, gritty and buzzy... resembles the ballast of a large fluorescent light fixture or the low-frequency buzz of a large neon sign up close\"; \"would work instantly\"; no clicks, glitches or looping artifacts; \"a very well-designed synthetic sound... or a perfectly isolated recording\".\nSCORE: 9"
+  },
+  "neon.buzz:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63f8/VRdBUMpkorpYsNDQjQwEE_neon.buzz-0.flac",
+    "answer": "OWN CHECK (synthesized; asked whether it reads as a neon sign buzz, three versions): 1st, mostly core: \"a transformer, too low and smooth, no sizzle\", 4/10. 2nd, loud sizzle pulsing at 100 Hz: \"a two-stroke engine\", 1/10. 3rd (this one): \"the loud, aggressive buzz of a large fluorescent light ballast... a very large, powerful or malfunctioning neon sign, perfect for a gritty cyberpunk setting\"; no clicks or glitches; \"obviously synthetic: perfectly steady\".\nSCORE: 7"
+  },
+  "rain.awning:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6356/XiGPNPqsbxshytWH9Hk1C_bTJaCsPJ.flac",
+    "answer": "1. HEAR: From 0:00, heavy rain drums on a plastic tarp, with water pouring off the edge onto pavement.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "ambience.rain:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63ad/AqFEXGGl_IzQJvB6TFcVs_3ntUSMPk.flac",
+    "answer": "1. HEAR: 0:00-0:31: A constant, heavy patter of rain mixed with louder, distinct drips.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "neon.break:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6356/63YGNLGh7C0t_peNtAvWD_3W7IYUUR.flac",
+    "answer": "HEAR: 0.0s: Hollow pop. 0.1s: Spray of glass tinkles. 0.2s: Electrical crackle and fizz.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "neon.break:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6356/JpGSBzQ-xyDH0XMxkrYwe_O1mvWuJ1.flac",
+    "answer": "HEAR: A sharp, hollow glass pop (0.0s), followed by a quick spray of tinkling glass and a crackling electrical fizz (0.1s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "neon.break:2": {
+    "url": "https://v3b.fal.media/files/b/0aae63ad/N02-y5LbKQYS3x2XsPG-2_tbNdQXXS.flac",
+    "answer": "HEAR: A sharp crack (0s), followed by a brief tinkle of falling glass shards (0-0.5s).\nPROBLEMS: The sound lacks the requested hollow pop and electrical fizz.\nSCORE: 4"
+  },
+  "neon.break:3": {
+    "url": "https://v3b.fal.media/files/b/0aae63ad/puPW8jnU21HIeef7O_hDB_hdckcMay.flac",
+    "answer": "1. HEAR: A hollow glass pop, then tinkling shards (0.5s) and a crackling electrical fizz.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "neon.break:4": {
+    "url": "https://v3b.fal.media/files/b/0aae6356/RkduLrNY0VcDwIdYhc3_3_mdeHuaDj.flac",
+    "answer": "1. HEAR: A glassy crack (0s), then a shower of tinkling glass and an electrical crackle/fizz (0.1s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "spark.zap:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6356/fHkHK4mFTeEE_-JO6PlAX_7Yn2vdYc.flac",
+    "answer": "1. HEAR: 0:00 A sharp, short burst of electrical crackling, popping, and sizzling hiss.\n2. PROBLEMS: None.\n3. SCORE: 10"
+  },
+  "spark.zap:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/LJdDAYDWiTjlKDCW78HSp_VkQWCpKt.flac",
+    "answer": "HEAR: 0s: A short burst of sharp electrical crackles, pops, and a sizzle, ending abruptly.\nPROBLEMS: none\n10"
+  },
+  "spark.zap:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/eqm0PJWcFvU8piBee2GSY_ydmkQhQE.flac",
+    "answer": "1. HEAR: (0s) A short burst of sharp electrical crackles, pops, and a sizzling hiss that abruptly cuts out.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "spark.zap:3": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/8mklfeZrKz6-faoqvj975_mZxcTajx.flac",
+    "answer": "1. HEAR: 0s: A short burst of sharp electrical crackles, pops, and a sizzle. 1s: Abrupt silence.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "shutter.rattle:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/XQ4MJhwCx_EdyxvQhhM51_SAg8CI5M.flac",
+    "answer": "1. HEAR: (0.0s) A loud, sharp metallic crash, followed by the intense rattling and clattering of metal slats (2.0s) as they settle.\n2. PROBLEMS: None.\n3. SCORE: 10"
+  },
+  "shutter.rattle:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/m_63uPlzRyDUCx1dYMolh_MyTXlsZt.flac",
+    "answer": "1. HEAR: 0.0s: A loud, sharp metallic crash, followed immediately by chaotic rattling and shaking of thin metal, which quickly settles.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "shutter.rattle:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/gPyMo2KHtZ_XXpwJ2Zs15_4gRCz6OQ.flac",
+    "answer": "1. HEAR: 0s: A loud, sharp metallic crash. 0-4s: The rattling and shaking of metal slats, slowly settling.\n2. PROBLEMS: none.\n3. SCORE: 10."
+  },
+  "shutter.rattle:3": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/uPcqeP3lAS2aT-fCNmZnv_FcWmjCoL.flac",
+    "answer": "1. HEAR: 0s: Loud, rattling metallic crash. 0.5s: Violent clattering and shaking of slats. 3s: Settling.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "sheetmetal.impact:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/IJfH56Q9Jd4xE68759hAt_kgnlzK5o.flac",
+    "answer": "1. HEAR: 0.0s: A hollow, tinny bang followed immediately by a short, buzzy rattle.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "sheetmetal.impact:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/aHndlRwvIj2aU5stuDSjB_eJLxMwG0.flac",
+    "answer": "HEAR: A hollow tinny bang (0.0s) followed immediately by a short, buzzy rattle.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "sheetmetal.impact:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/Wx4kuoX6oyvXIRmM8_YHm_nCkvXPCo.flac",
+    "answer": "1. HEAR: 0.0s: A hollow, tinny bang followed immediately by a short, buzzy rattle.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "sheetmetal.impact:3": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/MTETLmbRn4JRNuhlS5d22_yVngxidH.flac",
+    "answer": "HEAR: 0.0s: A hollow, tinny metal bang with a short, high-frequency rattle.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "tile.break:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/50oTAO1nTFXIUn1ILuWMA_b1sSDmvC.flac",
+    "answer": "1. HEAR: A sharp crack, followed immediately by a shower of brittle shattering and skittering shards.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "tile.break:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/fY8UYZwfnaUbHcBs1zoyD_jgsOkmB7.flac",
+    "answer": "1. HEAR: A sharp crack followed by the brief shatter and tinkle of small, brittle pieces.\n2. PROBLEMS: none.\n3. SCORE: 9"
+  },
+  "tile.break:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/lzgzDTGf0cso2IxUCGD0O_CH5qfnE0.flac",
+    "answer": "1. HEAR: 0s: A sharp crack and a shower of shattering ceramic. 1s: Small chips skitter and settle.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "tile.break:3": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/58rEgIb92W6YrdY-KuFSb_PcCnlKkR.flac",
+    "answer": "1. HEAR: A sharp crack and shatter (0.0s), a shower of shards (0.1s), and debris skittering (0.5s).\n2. PROBLEMS: none.\n3. SCORE: 10."
+  },
+  "splash.debris:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/Av8gHGDOZzszpgDirdXaW_0GhUn5aq.flac",
+    "answer": "1. HEAR: 0.0s: A heavy, gritty splash and thud. 0.2s: Lighter water spattering.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "splash.debris:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6357/x4a3CwHgm4k_RGv1b72-j_pbUZmo8E.flac",
+    "answer": "1. HEAR: 0.0s: A heavy, gritty thud and a wet splash. 0.1s: Water drops spattering.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "splash.debris:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6358/A-aFTFpjIPZMN3qLWpKT8_LD0GFcKr.flac",
+    "answer": "HEAR: A gritty thud and heavy splash (0.1s), followed by water spattering down (0.5s-1.5s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "steps.wet:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6358/Eb8mcb_H0sf-1A5UDWDR2_cA1wK8zC.flac",
+    "answer": "1. HEAR: 0s-10s: A steady sequence of boot steps on wet pavement, each with a firm tap and a small splash.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "alarm.bell:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6358/31Sr5QDjGiyc127yC7kjl_MbBFghJ3.flac",
+    "answer": "HEAR: 0:00 - 0:13 A continuous, fast, harsh ringing of a metallic alarm bell.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "alarm.bell:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6358/cHpt3Mwkhp682Waoadvvy_1YMlp5ot.flac",
+    "answer": "1. HEAR: (0s-7s) A continuous, fast, harsh metallic ringing of an alarm bell.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "transformer.blow:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63ad/ab6EwpH_cHMKIDzk3zsNO_XLs4eHZO.flac",
+    "answer": "1. HEAR: A loud bang (0:00), a fierce electric crackle (0:00-0:02), and a hum winding down to silence (0:02-0:04).\n2. PROBLEMS: None.\n3. SCORE: 10"
+  },
+  "steam.hiss:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63f3/2qJ2d6P8OI0dLTrxPR-nD_1ynHzGUM.flac",
+    "answer": "HEAR: A constant, soft hiss of steam with a faint low rumble and occasional water drips throughout.\nPROBLEMS: none\nSCORE: 10"
+  }
+}

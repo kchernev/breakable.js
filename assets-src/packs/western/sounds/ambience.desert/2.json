@@ -1,0 +1,14 @@
+{
+  "made": "mixed locally from other takes of this pack (mix-sounds.mjs)",
+  "layers": [
+    {
+      "from": "ambience.desert:1",
+      "at": 0,
+      "gain": 1,
+      "rate": 1,
+      "filter": "highpass=f=90:poles=2,highshelf=f=2200:g=7"
+    }
+  ],
+  "duration": 45,
+  "url": "https://v3b.fal.media/files/b/0aae641e/hBfeSQqaL-Hl_kmzPm_zW_ambience.desert-2.flac"
+}

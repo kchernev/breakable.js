@@ -1,0 +1,170 @@
+{
+  "ambience.desert:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/3E9-YUWkK8qxQ43Wzasb5_KaXjQ0Gh.flac",
+    "answer": "1. HEAR: 0:00 - 0:28: A constant, low-frequency rumble of distant traffic, mixed with a light, steady wind and some dry scrub rustling.\n2. PROBLEMS: The dominant sound is a low rumble that is clearly distant road traffic, which is explicitly excluded. No cicadas are present.\n3. SCORE: 3"
+  },
+  "ambience.desert:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/bGxJFqOMl-4KF34NHIMZr_tznf7GhK.flac",
+    "answer": "HEAR: (0:00) A steady, low breeze, with a soft hiss of blowing sand and a very faint high drone.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "sign.creak:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/nI5wDJzcfTITlQtjy_50F_ZWfhz5H9.flac",
+    "answer": "HEAR: Dry, rusty metal creak (0s), another creak (1s), a soft wood knock (2s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "sign.creak:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/kuF-z559iPcChsMutPl-l_fBxuX6SL.flac",
+    "answer": "HEAR: Rhythmic iron creaks and squeaks (0:00-0:03), then a single soft wooden knock (0:03).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "sign.creak:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/ZzPz8144LWUVNfXok7DpO_79xZAm3j.flac",
+    "answer": "1. HEAR: A dry iron creak (0:00), a second creak (0:01), a soft wood knock (0:02), and a final creak.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "windmill.loop:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/EQanE693RzKWhnKFjeSGe_04ujfajx.flac",
+    "answer": "1. HEAR: 0s-15s: A steady, repeating cycle of a low clank, a high squeak, and a light metallic rattle.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "windmill.loop:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/iwfECKjRjlgapTDS-Lrqs_1Wtdim1t.flac",
+    "answer": "1. HEAR: 0:00-0:15: A slow, rhythmic clank and squeak, with a light metallic rattle.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "hawk.cry:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/VTc0F0BwlPXllBJe8H2sj_KzG4UItL.flac",
+    "answer": "HEAR: 0:00-0:02: A single, descending, raspy hawk screech with a faint echo.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "hawk.cry:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/JMmw0N9nhr7UmaJIOnKIK_EL2wK9aE.flac",
+    "answer": "HEAR: 0:00 A single, distant, descending hawk screech with a faint echo.\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "hawk.cry:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/Kpze-TVf8-5ZdJcFNPn4O_oH5WKNDH.flac",
+    "answer": "1. HEAR: 0:00 A single, distant, descending hawk screech with a long echo.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "bell.toll:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/4ShM37Pe-66V-TCwf3T8V_juszWzSB.flac",
+    "answer": "HEAR: 0:00 A single, bright bell strike, followed by a long, resonant hum that slowly fades.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bell.toll:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/ARfUMXdzSEWwnqWdvecP9_hLgcWLWC.flac",
+    "answer": "HEAR: 0s: Bright metallic clang. 0-12s: Resonant ringing hum fades out.\nPROBLEMS: None.\nSCORE: 10"
+  },
+  "bell.toll:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634a/Fjc1sChJX0wc4ePpgN7AF_klBOUDCo.flac",
+    "answer": "1. HEAR: A single, bright bell clang, followed by a long, resonant hum that slowly fades.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "birds.flush:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/DKSHoeGYmNo42bDTi9Uan_fnQjFWMz.flac",
+    "answer": "HEAR: 0s: A short, sharp burst of loud crinkling and rattling.\nPROBLEMS: Sounds like a bag of chips or a plastic wrapper being crumpled, not birds.\nSCORE: 1"
+  },
+  "wood.splinter:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/dgufrqfDYcSeD1QVxfCnb_4XtJ5ICI.flac",
+    "answer": "HEAR: 0.0s: A sharp, dry crack of wood snapping, with a very brief tail of splintering fibres.\nPROBLEMS: none\nSCORE: 9"
+  },
+  "birds.flush:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/7pYpdmIUQvE_SagMZRwFi_yO9Tqh0s.flac",
+    "answer": "1. HEAR: An abrupt, dense burst of fluttering and flapping wings with a slight initial clatter (0.0s), which quickly fades away (0.5s-1.5s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "wood.splinter:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/TxI-Ixw8rPT2IW30Fr2Q6_DP6krrHv.flac",
+    "answer": "HEAR: (0.0s) A sharp, dry wood crack, followed by splintering and a metallic tearing sound.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "wood.splinter:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/BEk4it649b95YKDZdXHnA_WagkSoJT.flac",
+    "answer": "HEAR: 0.0s: A very sharp, dry crack, followed by a faint, high-frequency clink.\nPROBLEMS: none\nSCORE: 7"
+  },
+  "wood.splinter:3": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/UUvKTnyfMvKN_LXy2yLZe_yCdpUvjJ.flac",
+    "answer": "1. HEAR: 0.0s: A sharp, dry CRACK, followed by the tearing, splintering of wood fibers and a high-pitched metallic screech.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "timber.crash:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634c/R0hovzRWt4blTVcW0dG-h_DUnpXa89.flac",
+    "answer": "HEAR: (0s) A deep, heavy wooden thud, immediately followed by the clatter and bounce of multiple planks settling with a gritty texture.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "timber.crash:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/kX0YLT0X7v1a1FvmjU16l_9RgUjdlS.flac",
+    "answer": "1. HEAR: (0:00) A deep, heavy wooden thud, (0:01) followed by planks clattering, bouncing, and settling with grit.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "timber.crash:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/VOpgVwBHMZRRQCZoM5Qr5_wY926NHr.flac",
+    "answer": "HEAR: 0.0s: Deep heavy wood thud, 0.2s: wooden planks clatter and bounce, 1.0s: gritty settling.\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "timber.creak:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63b2/J0lDBcWgHwj2eGxo8zA6K_pNJpZkiX.flac",
+    "answer": "1. HEAR: 0-2s: A deep, slow wooden groan begins. 2-4s: The groan intensifies, adding higher-pitched stressed creaks and cracks.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "timber.creak:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/rUvNnzLgoObCtEEYKxMGO_MfLbfzG3.flac",
+    "answer": "HEAR: (0s) A sharp click of a latch, (1s) a short wooden creak of a door opening, (3s) a final click.\nPROBLEMS: none\nSCORE: 2"
+  },
+  "timber.creak:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/ZTylWRtigHMhABymrkTe8_7LfiGaEf.flac",
+    "answer": "HEAR: Sharp wood crack (0s), low groan (2s), high-pitched squeal (3s), more cracking (4s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "tin.impact:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63b1/41KJH8YlYbWnjGyMgyy-x_dmh5cKO4.flac",
+    "answer": "HEAR: A loud, sharp metallic impact (0.0s), followed by a resonant, wobbling warble that quickly dies away (0.1s-2s).\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "tin.impact:1": {
+    "url": "https://v3b.fal.media/files/b/0aae63b1/TVJn7eEAsfEdMhDYeR3R4_yHAlS6ei.flac",
+    "answer": "HEAR: (0:00) A loud, sharp metallic impact, followed by a resonant, wobbling ring that quickly fades.\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "tin.impact:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634c/mLFtq6b__X48DKu82kx4u_xdaXRebt.flac",
+    "answer": "HEAR: (0.0s) A sharp metallic clatter and rattle, followed by (0.1s) a short, low wobbling flutter.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "tin.impact:3": {
+    "url": "https://v3b.fal.media/files/b/0aae634c/9QfM6u391W7qazYvi0XBj_I4WgqbGs.flac",
+    "answer": "HEAR: (0.0s) A sharp metallic clatter, followed by (0.1s) a brief, wobbling sheet metal flutter.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "tin.crash:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63b2/n4hpT2YW3T5tLxlVyii8Y_YtyHCmKY.flac",
+    "answer": "HEAR: 0.5s: A single, loud, percussive bang with a deep, short echo.\nPROBLEMS: none\nSCORE: 2"
+  },
+  "adobe.break:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634d/nWxLQei0OowrSvGoj1y3E_YWPZBq7S.flac",
+    "answer": "HEAR: A continuous, light crackling and rustling, like a small fire or dry leaves.\nPROBLEMS: none\nSCORE: 2"
+  },
+  "tin.crash:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634c/WpGaUK11-4ihWk4vfIgw-_EMC8TvZo.flac",
+    "answer": "1. HEAR: 0:00-0:01: A single, sharp crumple and tear of thick paper.\n2. PROBLEMS: none\n3. SCORE: 1"
+  },
+  "tin.crash:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634c/1kP7hKNf7azp_SfKGGjkR_ks2HUIF2.flac",
+    "answer": "HEAR: (0s) A sudden, loud metallic crash, followed by the messy (0-2s) clatter and rattle of falling metal sheets.\nPROBLEMS: none\nSCORE: 6"
+  },
+  "adobe.break:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634d/mYDaPoYL4rvRWXmNiVZfe_A1bg8gDE.flac",
+    "answer": "HEAR: 0s: A heavy, dull CRUNCH followed by a cascade of crumbling, sandy earth.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "adobe.break:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634d/eV7quo1Kn54FJ75kEsCPQ_lKHBXCug.flac",
+    "answer": "HEAR: (0.0s) A heavy, dull crunch, followed by (0.2s) a pour of crumbling, sandy earth.\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "steps.dirt:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634d/ES9VQaPXmZrjcNaJnBrVU_SQsuWwWu.flac",
+    "answer": "1. HEAR: 0:00-8:00: A sequence of single footsteps on a gritty, sandy surface at a steady walking pace.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "tin.crash:4": {
+    "url": "https://v3b.fal.media/files/b/0aae6404/B89qOBJF8gK0NIYd1N7i5_tin.crash-4.flac",
+    "answer": "1. HEAR: 0:00: A loud metallic bang, then a rapid series of heavy sheet metal crashes with deep wobbling and ringing.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "tin.crash:3": {
+    "url": "https://v3b.fal.media/files/b/0aae6404/mS1toW7rbaazKE-kvw2sv_tin.crash-3.flac",
+    "answer": "1. HEAR: (0:00) A single, loud, sharp metallic impact and crash with a short ring-out.\n2. PROBLEMS: none\n3. SCORE: 2"
+  },
+  "hawk.cry:3": {
+    "url": "https://v3b.fal.media/files/b/0aae641f/43ch4UUdU8YqFsep-duh6_hawk.cry-3.flac",
+    "answer": "HEAR: 0-3s: A single, harsh, descending hawk screech with a faint, spacious echo.\nPROBLEMS: The cry sounds more like it's at a medium distance rather than \"far away.\"\nSCORE: 8"
+  },
+  "ambience.desert:2": {
+    "url": "https://v3b.fal.media/files/b/0aae641e/hBfeSQqaL-Hl_kmzPm_zW_ambience.desert-2.flac",
+    "answer": "HEAR: 0:00-0:29 Steady dry wind, a soft hiss of grit, and a faint, high, distant drone.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "hawk.cry:5": {
+    "url": "https://v3b.fal.media/files/b/0aae641f/0B3WffIq4EniWcIKh3N3I_hawk.cry-5.flac",
+    "answer": "HEAR: 0:00-0:03: A single, distant, descending hawk screech with a faint echo.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "hawk.cry:4": {
+    "url": "https://v3b.fal.media/files/b/0aae641f/ggvlZFruj0fs_kekiy9m9_hawk.cry-4.flac",
+    "answer": "HEAR: 0s: A distant, descending red-tailed hawk screech with a faint echo.\nPROBLEMS: none\nSCORE: 10"
+  }
+}

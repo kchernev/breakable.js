@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A thin hollow sheet-metal box falling onto wet pavement: one hollow tinny bang with a short buzzy rattle of the panel. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 1.5,
+  "seed": 360371,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6357/aHndlRwvIj2aU5stuDSjB_eJLxMwG0.flac"
+}

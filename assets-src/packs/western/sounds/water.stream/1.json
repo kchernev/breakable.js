@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A thin, steady jet of water falling from a height of several metres and splashing onto dry, packed dirt outdoors: a continuous soft pattering and spattering where it lands, the water hissing a little. Steady and unchanging from start to end. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, rain, river, waterfall, tap, sink, bathtub, toilet, bubbles, underwater",
+  "duration": 10,
+  "seed": 495981,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefe1b/GyXFmdKJCEURIrw_YJfVy_KMlRlHHi.flac"
+}

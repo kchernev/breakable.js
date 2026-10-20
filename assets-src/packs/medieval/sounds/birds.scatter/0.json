@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A flock of pigeons startled off a rooftop all at once: a sudden loud burst of many wings flapping and clapping as they take off, flying up and away and fading out. Outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, cooing, chirping, birdsong",
+  "duration": 3.5,
+  "seed": 208030,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6361/m0G8KGl6SYFqXFBk7Q0C3_G6LSdLcz.flac"
+}

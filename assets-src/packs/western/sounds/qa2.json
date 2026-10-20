@@ -1,0 +1,72 @@
+{
+  "timber.creak:1": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/rUvNnzLgoObCtEEYKxMGO_MfLbfzG3.flac",
+    "question": "Listen carefully. Which is this closest to? (a) a big old wooden building or heavy timber beams creaking and groaning under strain; (b) a door opening, a hinge or a latch clicking; (c) something else. First describe what you hear in one line with timings, then give the letter, then a score 1-10 for how well it would work in a game as a wooden building straining before it collapses.",
+    "answer": "A sharp latch-like click (0.0s) is followed by the short, deep groan of a wooden hinge (0.2s).\n\n(b) a door opening, a hinge or a latch clicking\n\n**Score:** 4/10. The groan has the right woody, straining quality, but the initial sharp click and the short duration make it sound like a small, single event (like a heavy door or a trapdoor) rather than a large building groaning under immense, continuous pressure. It lacks the scale and complexity needed for a pre-collapse warning."
+  },
+  "adobe.break:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634d/nWxLQei0OowrSvGoj1y3E_YWPZBq7S.flac",
+    "question": "Listen carefully. Which is this closest to? (a) a thick mud-brick or earthen wall breaking: a heavy crunch and dry earth crumbling down; (b) a fire crackling or dry leaves rustling; (c) something else. First describe what you hear in one line with timings, then give the letter, then a score 1-10 for how well it would work in a game as an earthen wall being broken.",
+    "answer": "Here is an analysis of the audio:\n\nA sharp crackle (0:00-0:01) is followed by the sound of dry, granular material crumbling and settling (0:01-0:03).\n\n(a)\n\n**Score:** 8/10. The sound is excellent for conveying a dry, brittle, earthen structure breaking and crumbling. It would work perfectly for an adobe wall or a collapsing sandbank. It loses a couple of points only because it lacks a deep, low-frequency \"thud\" that you might expect from a very *thick* or *heavy* wall, but the texture is spot on."
+  },
+  "timber.creak:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63b2/J0lDBcWgHwj2eGxo8zA6K_pNJpZkiX.flac",
+    "question": "Listen carefully. Which is this closest to? (a) a big old wooden building or heavy timber beams creaking and groaning under strain; (b) a door opening, a hinge or a latch clicking; (c) something else. First describe what you hear in one line with timings, then give the letter, then a score 1-10 for how well it would work in a game as a wooden building straining before it collapses.",
+    "answer": "Of course. Here is an analysis of the audio:\n\nA deep, groaning creak of heavy wood under strain (0:00), ending with a final sharp crack (0:03).\n\n(a)\n\n**Score:** 9/10. This sound is excellent for this purpose. It has a wonderful, deep resonance that conveys immense weight and tension, and the final crack is a perfect audio cue that a critical structural point has just failed, signaling imminent collapse."
+  },
+  "wood.splinter:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/dgufrqfDYcSeD1QVxfCnb_4XtJ5ICI.flac",
+    "question": "Listen carefully. Which is this closest to? (a) wooden boards or a post snapping and splintering, with a clear crack; (b) a fire crackling or twigs crackling, with no clear snap; (c) something else. First describe what you hear in one line with timings, then give the letter, then a score 1-10 for how well it would work in a game as old wooden boards breaking.",
+    "answer": "A short burst of sharp, crackling sounds (0:00).\n\n(b) a fire crackling or twigs crackling, with no clear snap\n\n**Score:** 8/10. This would work very well as the high-frequency detail of old, dry wooden boards shattering or splintering, for instance, when a crate is smashed. It lacks the deep, low-end \"crack\" of a large, single board snapping under weight, but it's excellent for the splintering texture."
+  },
+  "birds.flush:0": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/DKSHoeGYmNo42bDTi9Uan_fnQjFWMz.flac",
+    "question": "Listen carefully. Which is this closest to? (a) a flock of birds suddenly taking off, wings flapping; (b) plastic, paper or a wrapper being crumpled; (c) something else. First describe what you hear in one line with timings, then give the letter, then a score 1-10 for how well it would work in a game as pigeons or doves flying off a roof.",
+    "answer": "A short, sharp burst of crinkling and crackling, like something being quickly crumpled (0:00-0:02).\n\n(b)\n\n1/10. The sound is far too sharp, high-pitched, and crinkly; it completely lacks the lower-frequency \"whoosh\" and rhythmic flapping characteristic of bird wings."
+  },
+  "tin.crash:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634c/1kP7hKNf7azp_SfKGGjkR_ks2HUIF2.flac",
+    "question": "Listen carefully. Which is this closest to? (a) sheets of corrugated metal roofing crashing down, banging and rattling, clearly metallic; (b) paper, plastic or foil being crumpled; (c) something else. First describe what you hear in one line with timings, then give the letter, then a score 1-10 for how well it would work in a game as a tin roof crashing down.",
+    "answer": "Here is an analysis of the audio:\n\nA brief rustling and crinkling sound (0:00) is followed by a loud, hollow thud (0:01).\n\n(b)\n\n1/10"
+  },
+  "tin.impact:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63b1/41KJH8YlYbWnjGyMgyy-x_dmh5cKO4.flac",
+    "question": "What material is the object that makes this sound? Choose one: metal, plastic, wood, paper or foil, stone, other. Then say in one line how big and heavy the object sounds and whether it rings, and give a score 1-10 for how well it would work in a game as a loose sheet of corrugated steel roofing landing on dry ground.",
+    "answer": "**Metal**\n\nThe object sounds like a large, moderately heavy sheet that rings briefly upon impact.\n\n**Game Score:** 9/10"
+  },
+  "tin.impact:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634c/mLFtq6b__X48DKu82kx4u_xdaXRebt.flac",
+    "question": "Listen carefully. Which is this closest to? (a) a thin sheet of metal roofing hitting the ground: a clearly metallic clatter or clang, with some ringing or wobble of sheet metal; (b) paper, plastic or foil being crumpled or shaken; (c) something else. First describe what you hear in one line with timings, then give the letter, then a score 1-10 for how well it would work in a game as a piece of tin roof landing on the ground.",
+    "answer": "A short burst of crinkling and rustling, like paper or foil being crumpled (0:00-0:02).\n\n(b)\n\n1/10"
+  },
+  "tin.impact:1": {
+    "url": "https://v3b.fal.media/files/b/0aae63b1/TVJn7eEAsfEdMhDYeR3R4_yHAlS6ei.flac",
+    "question": "What material is the object that makes this sound? Choose one: metal, plastic, wood, paper or foil, stone, other. Then say in one line how big and heavy the object sounds and whether it rings, and give a score 1-10 for how well it would work in a game as a loose sheet of corrugated steel roofing landing on dry ground.",
+    "answer": "Metal.\n\nThe object sounds like a large, moderately heavy sheet that rings briefly upon impact.\n\n**Score:** 9/10"
+  },
+  "tin.impact:3": {
+    "url": "https://v3b.fal.media/files/b/0aae634c/9QfM6u391W7qazYvi0XBj_I4WgqbGs.flac",
+    "question": "Listen carefully. Which is this closest to? (a) a thin sheet of metal roofing hitting the ground: a clearly metallic clatter or clang, with some ringing or wobble of sheet metal; (b) paper, plastic or foil being crumpled or shaken; (c) something else. First describe what you hear in one line with timings, then give the letter, then a score 1-10 for how well it would work in a game as a piece of tin roof landing on the ground.",
+    "answer": "A short, crisp rustling and crumpling sound, lasting from 0.0s to 0.7s.\n(b)\n1/10"
+  },
+  "tin.crash:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63b2/n4hpT2YW3T5tLxlVyii8Y_YtyHCmKY.flac",
+    "question": "What is happening in this sound, and what material is making it? Choose the material: metal, wood, stone, plastic, paper or foil, an explosion, other. Then say in one line whether it is one hit or several, and give a score 1-10 for how well it would work in a game as a roof of corrugated steel sheets tearing off and crashing to the ground.",
+    "answer": "Based on the sound, something large and heavy has been destroyed or has crashed with great force, possibly involving an explosion followed by debris hitting the ground.\n\n**Material:** An explosion\n\nThis is one primary impact followed by the sound of crashing debris.\n\n**Game Score (1-10):** 3/10. The sound has the right weight and impact for a crash, but it lacks the distinct high-frequency screech of tearing metal and the specific clattering and ringing of many thin steel sheets hitting the ground."
+  },
+  "timber.creak:2": {
+    "url": "https://v3b.fal.media/files/b/0aae634b/ZTylWRtigHMhABymrkTe8_7LfiGaEf.flac",
+    "question": "Listen carefully. Which is this closest to? (a) a big old wooden building or heavy timber beams creaking and groaning under strain; (b) a door opening, a hinge or a latch clicking; (c) something else. First describe what you hear in one line with timings, then give the letter, then a score 1-10 for how well it would work in a game as a wooden building straining before it collapses.",
+    "answer": "A sharp click is followed by a low, wooden creak (0:00-1:00).\n\n(b)\n\n4/10. The creaking has the right wooden texture, but the initial sharp click sounds distinctly like a mechanical latch, which detracts from the illusion of a large building straining under its own weight."
+  },
+  "tin.crash:3": {
+    "url": "https://v3b.fal.media/files/b/0aae63d3/Dg9XKmRXAktFnZ8vKN0iu_tin.crash-3.flac",
+    "question": "What is happening in this sound, and what material is making it? Choose the material: metal, wood, stone, plastic, paper or foil, an explosion, other. Then say in one line whether it is one hit or several, and give a score 1-10 for how well it would work in a game as a roof of corrugated steel sheets tearing off and crashing to the ground.",
+    "answer": "This sound appears to be a large metal object or structure breaking and crashing to the ground.\n\n**Material:** Metal\n\nIt is a sequence of several hits and impacts.\n\n**Game Score:** 9/10"
+  },
+  "tin.crash:4": {
+    "url": "https://v3b.fal.media/files/b/0aae63df/n1QbTHNOdBjf7BquKxnur_tin.crash-4.flac",
+    "question": "What is happening in this sound, and what material is making it? Choose the material: metal, wood, stone, plastic, paper or foil, an explosion, other. Then say in one line whether it is one hit or several, and give a score 1-10 for how well it would work in a game as a roof of corrugated steel sheets tearing off and crashing to the ground.",
+    "answer": "This sound is of a large metal object being forcefully torn apart and crashing down.\n\nMaterial: **metal**\n\nThis sound consists of several distinct hits and impacts.\n\nGame sound score: **9/10**"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A handful of small stones and brick chips scattering across pavement: a quick pattering, rattling clatter. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2,
+  "seed": 435030,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c0/3-qZYnvWEUNob27kin3iB_TY0XJTFV.flac"
+}

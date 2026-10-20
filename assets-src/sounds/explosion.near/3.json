@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Massive close-range explosion of a rocket hitting a brick building: deep sub-bass boom and sharp crack, then bricks and debris crumbling and raining down onto a city street, outdoor echo. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 6,
+  "seed": 586003,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60ba/0BvDj0l2izjKUX0kCPe3q_D4yRx1J3.flac"
+}

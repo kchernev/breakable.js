@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A heavy iron fire escape staircase crashing onto a street: a loud metallic crash with clanging, banging and rattling steel. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3.5,
+  "seed": 162251,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c3/exWy0wA_g0vSbXwvpqmCI_KspAV8vN.flac"
+}

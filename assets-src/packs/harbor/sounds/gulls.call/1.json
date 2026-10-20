@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A single herring gull calling while flying overhead by the sea: two or three loud laughing cries, clear, outdoors, no other birds. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 4,
+  "seed": 983821,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6353/HdwsV3HeCprXJ-rJXv4ok_jgmYjxTz.flac"
+}

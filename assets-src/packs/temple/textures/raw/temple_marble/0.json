@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the weathered outer surface of an ancient Greek temple built of white Pentelic marble, seen straight on: one continuous dressed marble face filling the whole frame, with no joints, no block edges, no carving, no fluting, no mouldings and no cracks across it. Warm white to ivory marble softly eroded by centuries of sun and rain: a fine sugary granular surface with tiny pits and pores, very faint thin pale grey veins, a light honey-ochre and golden patina in soft irregular cloudy patches and faint short vertical rain streaks, small shallow chips and flaked spots, a few tiny dark grey lichen specks and pale grey weathering spots. All of it evenly spread over the whole frame: no single large stain, hole or feature. The frame shows a 1.2 m × 1.2 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1536,
+    "height": 1536
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:19:28.537Z",
+  "url": "https://v3b.fal.media/files/b/0aae6391/cg-DES3LJXXfovSlYV3P7_4TDbgb7j.png"
+}

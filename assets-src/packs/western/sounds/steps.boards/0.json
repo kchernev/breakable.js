@@ -1,0 +1,13 @@
+{
+  "made": "mixed locally from other takes of this pack (mix-sounds.mjs)",
+  "layers": [
+    {
+      "from": "steps.dirt:0",
+      "at": 0,
+      "gain": 1,
+      "rate": 0.94,
+      "filter": "highpass=f=60,lowpass=f=2400,equalizer=f=170:t=q:w=1.2:g=8,equalizer=f=480:t=q:w=2:g=5,aecho=0.8:0.6:6|11|17:0.35|0.25|0.15"
+    }
+  ],
+  "duration": 8.529
+}

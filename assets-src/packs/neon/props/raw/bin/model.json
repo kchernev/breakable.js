@@ -1,0 +1,48 @@
+{
+  "endpoint": "tripo3d/p2/image-to-3d",
+  "source": "concept0.png",
+  "input": {
+    "pbr": true,
+    "texture": true,
+    "texture_quality": "detailed",
+    "delight": true,
+    "export_uv": true,
+    "quad": false,
+    "face_limit": 30000,
+    "image_url": "https://v3b.fal.media/files/b/0aae63a6/D2hjpSc2MLpRql_bW_QRw_bin_concept0.png"
+  },
+  "seed": null,
+  "made": "2026-10-14T20:24:39.344Z",
+  "seconds": 128,
+  "output": {
+    "model_mesh": {
+      "url": "https://v3b.fal.media/files/b/0aae63b3/fGK6fSaWeIwrGjvLRaBxr_model.glb",
+      "content_type": "model/gltf-binary",
+      "file_name": "model.glb",
+      "file_size": 8668056
+    },
+    "model_urls": {
+      "glb": {
+        "url": "https://v3b.fal.media/files/b/0aae63b3/fGK6fSaWeIwrGjvLRaBxr_model.glb",
+        "content_type": "model/gltf-binary",
+        "file_name": "model.glb",
+        "file_size": 8668056
+      },
+      "fbx": null,
+      "base_model": null,
+      "pbr_model": {
+        "url": "https://v3b.fal.media/files/b/0aae63b3/fGK6fSaWeIwrGjvLRaBxr_model.glb",
+        "content_type": "model/gltf-binary",
+        "file_name": "model.glb",
+        "file_size": 8668056
+      }
+    },
+    "rendered_image": {
+      "url": "https://v3b.fal.media/files/b/0aae63b3/tH1MqsCEARh4Ks2FXDhMz_preview.png",
+      "content_type": "image/png",
+      "file_name": "preview.png",
+      "file_size": 188392
+    },
+    "task_id": "fdc11abc-c5f6-49f8-869f-a3039e66491a"
+  }
+}

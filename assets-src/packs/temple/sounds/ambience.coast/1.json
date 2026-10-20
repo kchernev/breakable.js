@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Field recording on a rocky hilltop high above the sea on a warm, sunny day: a soft warm breeze blowing in gentle gusts through dry grass and low shrubs, and far below the slow, distant wash of waves breaking on rocky cliffs. Very open and airy, steady and even from start to end. No voices, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, cicadas, insects, seagulls, birds, traffic, boats, engines, people, rain, thunder",
+  "duration": 45,
+  "seed": 381891,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae639c/If-L3l6Dd20Hfs7gpvb6G_iwAnfDrW.flac"
+}

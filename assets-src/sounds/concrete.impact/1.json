@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A heavy concrete slab slamming flat onto rubble: a massive dull thud with cracking and crumbling. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 631121,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c1/_StMGuK5_aK7DrXPpBuCi_d0TYaaSF.flac"
+}

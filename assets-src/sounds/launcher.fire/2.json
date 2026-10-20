@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Shoulder-fired rocket launcher firing, heard from the shooter's position: a hard punchy thump of the launch, then a fierce rushing whoosh of the rocket motor speeding away into the distance, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 544932,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60b9/qcgQLJ_bikuZykkvhe-1r_xgmyXGFq.flac"
+}

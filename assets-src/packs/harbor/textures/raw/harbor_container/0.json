@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the side wall of an old steel shipping container seen straight on: corrugated steel sheet with trapezoidal corrugations running vertically from top to bottom, perfectly straight, parallel and evenly spaced: flat outer crests and flat inner valleys of about the same width, joined by short sloping faces, about 3.5 cm deep. Seven full corrugations across the frame, one every 28.5 cm. The corrugations run straight through the top and bottom edges. Painted light neutral grey, almost white, with no colour cast; the paint faded, chalky and weathered by sea air: small rust spots and rust blooms at dents and along a few corrugation edges, thin rust-brown streaks and grey grime streaks running down from them, scuffs and scrapes, a few shallow dents. No markings, no text, no numbers, no logos, no stickers, no rails, no frame, no door hardware: only the corrugated sheet. The frame shows a 2 m × 2 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1536,
+    "height": 1536
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:10:00.532Z",
+  "url": "https://v3b.fal.media/files/b/0aae6359/KawaDgZcJHIqsaP86r31Y_3nc79Foj.png"
+}

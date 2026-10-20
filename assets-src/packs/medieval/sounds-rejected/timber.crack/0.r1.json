@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A thick old oak beam of a timber-framed house snapping under load: a loud, deep woody crack, fibrous splintering and tearing of the grain, then a short creak. Outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 456100,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6360/9IrYGmmIt5ckgzRgk9zIB_HbRpM4hA.flac"
+}

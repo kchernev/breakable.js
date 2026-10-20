@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Footsteps of a person in boots walking on dry, stony ground with loose gravel and dry grass at a steady pace, clear separate crunching steps with short gaps. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 8,
+  "seed": 774290,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6380/ifYRK0v8zt1pJvnmpppWr_wMxiFhJm.flac"
+}

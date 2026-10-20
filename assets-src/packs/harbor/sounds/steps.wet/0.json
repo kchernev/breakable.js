@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Footsteps of a person in work boots walking on damp concrete at a steady pace, clear separate steps with short gaps, a slightly wet gritty scuff on each step, no puddles. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 8,
+  "seed": 920560,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6355/b5-G3jlc-2hmW8Fob8LHf_UGVoHAmA.flac"
+}

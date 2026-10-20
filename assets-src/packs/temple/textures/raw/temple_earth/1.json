@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of a fresh vertical cut through dry, crumbly earth on a sunny Mediterranean hilltop, seen straight on: loose sun-dried soil in a soft warm ochre brown with a reddish tinge, broken into small rounded crumbs and clods of earth from a few millimetres to 4 cm, small dark gaps and pores between them, fine pale powdery dust settled in places, a few thin dry root threads, and only a few small pale pebbles here and there. Soft, matte and earthy, like dug soil dried by the sun: not stone, not gravel, no granite-like speckle. Evenly mixed over the whole frame: no layers or bands, no grass, no rocks, no holes. The frame shows a 1 m × 1 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-19T10:13:55.365Z",
+  "url": "https://v3b.fal.media/files/b/0aaefe20/bn42MCnYN_VGHxspvVxke_ppqg5vh3.png"
+}

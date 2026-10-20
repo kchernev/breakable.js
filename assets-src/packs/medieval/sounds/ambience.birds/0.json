@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Field recording of a small country town square on a calm summer evening: many songbirds nearby and far off, blackbirds and sparrows chirping, swallows twittering as they swoop overhead, a light breeze in the trees. Peaceful and even from start to end. No voices, no traffic, no music.",
+  "negative_prompt": "music, melody, instruments, human singing, speech, voices, talking, traffic, cars, engines, airplane, rooster, beeps, synthesizer",
+  "duration": 40,
+  "seed": 517930,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae635f/WKN3xaSve8lukB_uCUWsK_JHjZb6kX.flac"
+}

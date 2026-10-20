@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of an old sheet of corrugated galvanised iron roofing seen straight on: rounded corrugations running perfectly straight and vertical from the top edge to the bottom edge, evenly spaced, exactly 13 ridges across the frame (7.6 cm apart). Dull weathered grey zinc with a mottled white-grey bloom, scattered patches of orange-brown rust of different sizes, thin rust streaks running down the valleys, a horizontal row of roofing nails across the sheet with rust around each nail head. The corrugations show only as soft, faint shading. The frame shows a 1 m × 1 m patch. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1536,
+    "height": 1536
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:09:25.750Z",
+  "url": "https://v3b.fal.media/files/b/0aae6355/3d0v0FB82vhDfxotABEkj_LkKrwzb3.png"
+}

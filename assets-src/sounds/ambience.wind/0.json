@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Gentle wind blowing down an empty city street, soft gusts and an airy whoosh. Field recording, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 30,
+  "seed": 563690,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c6/GnufWrQUuFMZX38JYfogr_OmG7GVW0.flac"
+}

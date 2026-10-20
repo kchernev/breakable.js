@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Field recording on a quiet container port quay on a calm, grey, foggy morning: small waves lapping softly against a concrete quay wall, a low steady rumble of far-off port machinery and a distant ship engine idling, a faint breeze, seagulls only very far away and faint. Steady and even from start to end. No voices, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, car horns, sirens, reversing beepers, close bird calls",
+  "duration": 45,
+  "seed": 557970,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6353/zynzL-3thqw9SspZw38yl_wcgTCod6.flac"
+}

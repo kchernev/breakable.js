@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A stone colonnade toppling: heavy marble column drums and long stone beams crashing down onto stone paving one after another, deep booming thuds and sharp cracks, drums rolling and grinding, then a rumble and a trickle of rubble fading out. Outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 7,
+  "seed": 166952,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae639e/YqdNljAFdlp4_g1DeAOf7_WH10b5cj.flac"
+}

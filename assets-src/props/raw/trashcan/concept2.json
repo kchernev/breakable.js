@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "The classic New York City sidewalk litter basket: a round, open-top, slightly tapered steel basket painted dark green, about waist high, with thick solid horizontal steel hoops at the rolled top rim, around the middle and at the bottom, and a solid green band at the base. Its wall is a fine, dense diagonal woven wire mesh (small diamond openings about 3 cm across, thin wires), pressed tight against a full black plastic bin liner inside, so the basket reads as a solid, smooth-sided tapered drum with a fine green mesh pattern over black; nothing can be seen through it. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1024,
+      "height": 1024
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T19:08:18.408Z",
+  "url": "https://v3b.fal.media/files/b/0aae61e7/dZ5gjYT4nCDtay-xnS_kF_pUUAsuUZ.png"
+}

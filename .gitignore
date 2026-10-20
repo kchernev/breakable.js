@@ -1,0 +1,18 @@
+node_modules/
+dist/
+__pycache__/
+*.log
+.env
+.env.*
+.DS_Store
+
+# The raw generations behind public/ (about 940 MB) stay out of git, all but their notes (prompts,
+# seeds, picks, the ledgers of paid calls). They're attached to a GitHub release, one archive per
+# pack: `pnpm sources:fetch` puts them back (scripts/assets/sources.mjs). The worlds' check
+# screenshots beside them (review-*, fix-*, shots, phase-*) are kept locally only.
+assets-src/**
+!assets-src/**/
+!assets-src/**/*.json
+!assets-src/**/*.jsonl
+!assets-src/**/*.md
+release/

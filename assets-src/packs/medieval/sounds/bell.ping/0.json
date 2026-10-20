@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A single hard strike of a steel hammer on the lip of a large old bronze church bell hanging in a stone tower: an instant, sharp, bright metallic pang with a piercing ping, then the big bell humming and ringing on with shimmering overtones, fading away. Heard from the square below, outdoors, a soft echo off stone walls. Only one strike. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, chimes, wind chimes, several bells, carillon, peal, tune, organ, choir, gong, electronic tone, gunshot, gunfire, explosion, several strikes, hammering, anvil",
+  "duration": 4,
+  "seed": 2460,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefdcc/h54Jg10vXnuxjlndkqOjZ_iNptvP2j.flac"
+}

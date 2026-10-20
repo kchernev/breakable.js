@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of a single huge dressed face of warm honey-cream oolitic limestone (like Cotswold building stone), seen straight on: one continuous smooth-dressed stone surface filling the whole frame, with no joints, no mortar, no block edges, no seams and no cracks. Fine shallow parallel diagonal tooling marks from a claw chisel over the whole face, gentle mottled colour variation from pale cream to honey-ochre and light buff, tiny pits and sand-sized ooid grains, faint fossil shell specks, light weathering, a few small pale grey-green and yellow lichen spots. The frame shows a 1.5 m × 1.5 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:10:51.717Z",
+  "url": "https://v3b.fal.media/files/b/0aae635e/94hUu6U-rR8utQdoUpZ5o_fAbO4jSj.png"
+}

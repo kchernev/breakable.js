@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A single broken brick hitting asphalt pavement: one short hard knock with a little gravelly crumble. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 1.5,
+  "seed": 766595,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c0/naEC9Kr6OICeYbEcn03Bi_PepVWOOt.flac"
+}

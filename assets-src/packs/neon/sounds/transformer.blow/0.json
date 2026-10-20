@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "An electrical transformer box on a wall blowing out: a loud sharp bang of a short circuit, a fierce crackling electric arc for a second, then the hum of the electrics winding down to silence. Outdoors in a street. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, laser, sci-fi, blaster, gunshot",
+  "duration": 4,
+  "seed": 327820,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63ad/ab6EwpH_cHMKIDzk3zsNO_XLs4eHZO.flac"
+}

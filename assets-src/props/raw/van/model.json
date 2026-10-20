@@ -1,0 +1,100 @@
+{
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "source": "concept0_clean.png",
+  "input": {
+    "model_type": "standard",
+    "topology": "triangle",
+    "target_polycount": 30000,
+    "should_remesh": true,
+    "should_texture": true,
+    "enable_pbr": true,
+    "symmetry_mode": "auto",
+    "texture_prompt": "plain white painted cargo van, dark tinted glass, black plastic bumpers, black tyres, steel wheels",
+    "image_url": "https://v3b.fal.media/files/b/0aae619a/wI2etj525saQLyii-NbX0_van_concept0_clean.png"
+  },
+  "seed": 2002448716,
+  "made": "2026-10-14T18:58:39.365Z",
+  "seconds": 215,
+  "output": {
+    "animation_glb": null,
+    "animation_fbx": null,
+    "model_glb": {
+      "url": "https://v3b.fal.media/files/b/0aae61aa/jxISUJRWky63s01Cx1Tiy_model.glb",
+      "content_type": "model/gltf-binary",
+      "file_name": "model.glb",
+      "file_size": 10823160
+    },
+    "thumbnail": {
+      "url": "https://v3b.fal.media/files/b/0aae61ac/Q_cRprXbVLkUNzCe0FkUV_preview.png",
+      "content_type": "image/png",
+      "file_name": "preview.png",
+      "file_size": 61911
+    },
+    "model_urls": {
+      "glb": {
+        "url": "https://v3b.fal.media/files/b/0aae61aa/jxISUJRWky63s01Cx1Tiy_model.glb",
+        "content_type": "model/gltf-binary",
+        "file_name": "model.glb",
+        "file_size": 10823160
+      },
+      "fbx": {
+        "url": "https://v3b.fal.media/files/b/0aae61aa/8Rqw3SN7AaeFGxkSGrbSa_model.fbx",
+        "content_type": "application/octet-stream",
+        "file_name": "model.fbx",
+        "file_size": 10679500
+      },
+      "obj": {
+        "url": "https://v3b.fal.media/files/b/0aae61ab/VFemRt_EI47Wh8qpucx99_model.obj",
+        "content_type": "text/plain",
+        "file_name": "model.obj",
+        "file_size": 3125282
+      },
+      "usdz": {
+        "url": "https://v3b.fal.media/files/b/0aae61ab/SK6FSPgKYNMfN1hDL1i64_model.usdz",
+        "content_type": "model/vnd.usdz+zip",
+        "file_name": "model.usdz",
+        "file_size": 11436541
+      },
+      "blend": null,
+      "stl": {
+        "url": "https://v3b.fal.media/files/b/0aae61ac/ar7n4nYVH0nB7H8Vs2pQw_model.stl",
+        "content_type": "application/octet-stream",
+        "file_name": "model.stl",
+        "file_size": 1417884
+      }
+    },
+    "texture_urls": [
+      {
+        "base_color": {
+          "url": "https://v3b.fal.media/files/b/0aae61ad/vg3pFdEOGQ8UrBv61-N2A_texture_0.png",
+          "content_type": "image/png",
+          "file_name": "texture_0.png",
+          "file_size": 3421820
+        },
+        "metallic": {
+          "url": "https://v3b.fal.media/files/b/0aae61ae/WtFW3P8ikFxdpovNzNlKD_texture_0_metallic.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_metallic.png",
+          "file_size": 198354
+        },
+        "normal": {
+          "url": "https://v3b.fal.media/files/b/0aae61ae/Jiu78xDKizuhQfFiaf29c_texture_0_normal.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_normal.png",
+          "file_size": 4284564
+        },
+        "roughness": {
+          "url": "https://v3b.fal.media/files/b/0aae61af/-iw8n0EEdoJCuK5rSo1Vf_texture_0_roughness.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_roughness.png",
+          "file_size": 1224695
+        }
+      }
+    ],
+    "seed": 2002448716,
+    "rigged_character_glb": null,
+    "rigged_character_fbx": null,
+    "basic_animations": null,
+    "rig_task_id": null
+  }
+}

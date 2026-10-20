@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A corrugated tin roof tearing loose and crashing down: nails ripping out of wood, thin sheets of corrugated metal banging, crumpling and rattling together as they fall onto the ground. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 636911,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae634c/WpGaUK11-4ihWk4vfIgw-_EMC8TvZo.flac"
+}

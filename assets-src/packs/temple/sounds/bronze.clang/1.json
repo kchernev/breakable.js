@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A heavy bronze shield falling flat onto stone paving: one loud, deep, resonant metallic clang, then a long shimmering ring that wobbles and slowly dies away, a little bell-like. A single strike, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, chimes, several bells, church bell, gong roll, cymbal",
+  "duration": 3.5,
+  "seed": 65321,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae639f/IoKMxJY3chHwp57N7NdFN_DSK91jOY.flac"
+}

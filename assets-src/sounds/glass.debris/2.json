@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Small pieces of broken window glass dropping onto a concrete pavement: bright, glassy tinkling and clinking of shards, scattered. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 846642,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae616d/q332CR68nRnuckjS8TqB7_wbIHrLSV.flac"
+}

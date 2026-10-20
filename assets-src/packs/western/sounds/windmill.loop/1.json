@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "An old steel farm windmill turning steadily in the wind, heard from the foot of its tower: the slow clank of the iron pump rod at each stroke, a dry squeak of the ungreased gearbox, a light rattle of the sheet-metal tail vane. Steady and unchanging from start to end, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 12,
+  "seed": 114311,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae634a/iwfECKjRjlgapTDS-Lrqs_1Wtdim1t.flac"
+}

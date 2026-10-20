@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Huge steel structure under strain, starting at once: a slow, deep, drawn-out metallic groan of stressed steel bending, low moaning creaks, like a ship hull or a stack of steel containers twisting. Continuous, no impacts. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, impact, bang, hit, clang, slam, door, explosion",
+  "duration": 4,
+  "seed": 624331,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae639b/3Xt9dW3nHHLy6H7UV25Op_fIKX0Ltg.flac"
+}

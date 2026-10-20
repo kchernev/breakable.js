@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the freshly broken edge of packed desert dirt and sand, the crumbled fracture seen straight on: pale tan-ochre sandy soil broken into soft lumps and crumbs from 1 to 5 cm with small shadowed hollows between them, loose dry sand grains spilling over them, a few tiny pebbles. Dry and dusty, lighter and yellower than red earth. No plants, no roots, no large stones, no tool marks, even in colour from edge to edge. The frame shows a 1 m × 1 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1536,
+    "height": 1536
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-16T17:20:13.290Z",
+  "url": "https://v3b.fal.media/files/b/0aaea2de/2tZiYhklk2_D2ei7wO5aC_ZIOxhKPD.png"
+}

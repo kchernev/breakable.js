@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Reloading an assault rifle: the empty magazine pressed out with a click and pulled free, a full magazine pushed in and locked with a firm metallic snap, then the charging handle pulled back and let go with a sharp metallic clack. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 441101,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae9c51/t8LGPR3cAAm8vHKgFb9g5_keMGaxGU.flac"
+}

@@ -1,0 +1,345 @@
+{
+ "ambience.cicadas": {
+  "src": [
+   "ambience.cicadas/0.mp3"
+  ],
+  "duration": [
+   41
+  ],
+  "kind": "loop",
+  "space": "head",
+  "play": {
+   "bus": "ambience",
+   "volume": 0.32,
+   "voices": 1,
+   "reverb": 0
+  }
+ },
+ "ambience.coast": {
+  "src": [
+   "ambience.coast/0.mp3"
+  ],
+  "duration": [
+   41
+  ],
+  "kind": "loop",
+  "space": "head",
+  "play": {
+   "bus": "ambience",
+   "volume": 0.3,
+   "voices": 1,
+   "reverb": 0
+  }
+ },
+ "bay.echo": {
+  "src": [
+   "bay.echo/0.mp3",
+   "bay.echo/1.mp3"
+  ],
+  "duration": [
+   4.36,
+   4.115
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 160,
+   "rolloff": 0.6,
+   "volume": 1,
+   "voices": 1,
+   "reverb": 0.4
+  }
+ },
+ "birds.scatter": {
+  "src": [
+   "birds.scatter/0.mp3",
+   "birds.scatter/1.mp3"
+  ],
+  "duration": [
+   3.949,
+   3.312
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 10,
+   "volume": 0.6,
+   "voices": 1,
+   "cooldown": 25,
+   "spacing": 100,
+   "reverb": 0.3
+  }
+ },
+ "bronze.clang": {
+  "src": [
+   "bronze.clang/0.mp3",
+   "bronze.clang/1.mp3",
+   "bronze.clang/2.mp3"
+  ],
+  "duration": [
+   3.5,
+   3.5,
+   3.5
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "bus": "debris",
+   "near": 6,
+   "volume": 0.6,
+   "voices": 3,
+   "priority": 2
+  }
+ },
+ "bronze.ring": {
+  "src": [
+   "bronze.ring/0.mp3",
+   "bronze.ring/1.mp3",
+   "bronze.ring/2.mp3"
+  ],
+  "duration": [
+   3.949,
+   3.202,
+   3.423
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 8,
+   "volume": 0.3,
+   "voices": 2,
+   "priority": 2
+  }
+ },
+ "collapse.marble": {
+  "src": [
+   "collapse.marble/0.mp3",
+   "collapse.marble/1.mp3",
+   "collapse.marble/2.mp3"
+  ],
+  "duration": [
+   6.379,
+   6.961,
+   6.269
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 12,
+   "rolloff": 0.7,
+   "volume": 1,
+   "voices": 3,
+   "priority": 3,
+   "cooldown": 1.2,
+   "spacing": 10,
+   "reverb": 0.5
+  }
+ },
+ "foliage.break": {
+  "src": [
+   "foliage.break/0.mp3",
+   "foliage.break/1.mp3",
+   "foliage.break/2.mp3"
+  ],
+  "duration": [
+   1.909,
+   2,
+   1.929
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 4,
+   "volume": 0.55,
+   "voices": 3,
+   "cooldown": 0.2
+  }
+ },
+ "marble.break": {
+  "src": [
+   "marble.break/0.mp3",
+   "marble.break/1.mp3",
+   "marble.break/2.mp3",
+   "marble.break/3.mp3"
+  ],
+  "duration": [
+   2.415,
+   1.639,
+   1.849,
+   2.43
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 5,
+   "volume": 0.85,
+   "voices": 5,
+   "cooldown": 0.06,
+   "spacing": 2,
+   "pitch": [
+    0.88,
+    1.04
+   ]
+  }
+ },
+ "marble.impact.large": {
+  "src": [
+   "marble.impact.large/0.mp3",
+   "marble.impact.large/1.mp3",
+   "marble.impact.large/2.mp3",
+   "marble.impact.large/3.mp3"
+  ],
+  "duration": [
+   2.105,
+   2.09,
+   2.15,
+   2.786
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "bus": "debris",
+   "near": 6,
+   "volume": 0.85,
+   "voices": 4,
+   "priority": 3,
+   "pitch": [
+    0.85,
+    1.08
+   ]
+  }
+ },
+ "sea.splash": {
+  "src": [
+   "sea.splash/0.mp3",
+   "sea.splash/1.mp3"
+  ],
+  "duration": [
+   4.821,
+   5
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 40,
+   "rolloff": 0.5,
+   "volume": 0.7,
+   "voices": 3,
+   "cooldown": 0.5,
+   "spacing": 8,
+   "reverb": 0.5,
+   "pitch": [
+    0.85,
+    1.1
+   ]
+  }
+ },
+ "steps.gravel": {
+  "src": [
+   "steps.gravel/0.mp3",
+   "steps.gravel/1.mp3",
+   "steps.gravel/2.mp3",
+   "steps.gravel/3.mp3",
+   "steps.gravel/4.mp3",
+   "steps.gravel/5.mp3",
+   "steps.gravel/6.mp3",
+   "steps.gravel/7.mp3",
+   "steps.gravel/8.mp3",
+   "steps.gravel/9.mp3"
+  ],
+  "duration": [
+   0.261,
+   0.301,
+   0.34,
+   0.34,
+   0.34,
+   0.326,
+   0.34,
+   0.261,
+   0.316,
+   0.251
+  ],
+  "kind": "slice",
+  "space": "head",
+  "play": {
+   "volume": 0.32,
+   "voices": 2,
+   "pitch": [
+    0.95,
+    1.05
+   ],
+   "reverb": 0.1
+  }
+ },
+ "stone.grind": {
+  "src": [
+   "stone.grind/0.mp3",
+   "stone.grind/1.mp3",
+   "stone.grind/2.mp3"
+  ],
+  "duration": [
+   2.641,
+   2.726,
+   2.556
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "bus": "debris",
+   "near": 6,
+   "volume": 0.55,
+   "voices": 2,
+   "cooldown": 1.5,
+   "spacing": 10
+  }
+ },
+ "tile.debris": {
+  "src": [
+   "tile.debris/0.mp3",
+   "tile.debris/1.mp3",
+   "tile.debris/2.mp3"
+  ],
+  "duration": [
+   1.96,
+   2,
+   2
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "bus": "debris",
+   "near": 3,
+   "volume": 0.45,
+   "voices": 4,
+   "pitch": [
+    0.9,
+    1.15
+   ]
+  }
+ },
+ "tile.shatter": {
+  "src": [
+   "tile.shatter/0.mp3",
+   "tile.shatter/1.mp3",
+   "tile.shatter/2.mp3",
+   "tile.shatter/3.mp3"
+  ],
+  "duration": [
+   1.017,
+   1.188,
+   1.448,
+   1.889
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 4,
+   "volume": 0.75,
+   "voices": 5,
+   "pitch": [
+    0.9,
+    1.12
+   ]
+  }
+ }
+}

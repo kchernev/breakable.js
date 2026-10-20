@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of a packed, dry desert dirt road seen from directly above: pale tan-ochre compacted earth with a fine dusty surface, faint hairline cracks, tiny pebbles and gravel (1 to 3 cm, so very small in this frame) and grit spread evenly everywhere, a few tiny bits of dry straw, soft scuffs. No large stones, no wheel tracks, no tyre marks, no footprints, no puddles, no plants. The frame shows a 4 m × 4 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 2048,
+    "height": 2048
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:10:07.595Z",
+  "url": "https://v3b.fal.media/files/b/0aae6358/fDSd4XEi09pcq0GfmoIEP_udIQkCoN.png"
+}

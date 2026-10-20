@@ -1,0 +1,31 @@
+{
+  "made": "mixed locally from other takes of this pack (mix-sounds.mjs)",
+  "layers": [
+    {
+      "from": "tin.crash:0",
+      "at": 0,
+      "gain": 0.55,
+      "rate": 1
+    },
+    {
+      "from": "tin.impact:0",
+      "at": 0,
+      "gain": 1,
+      "rate": 0.9
+    },
+    {
+      "from": "tin.impact:1",
+      "at": 0.53,
+      "gain": 0.75,
+      "rate": 1.06
+    },
+    {
+      "from": "tin.impact:0",
+      "at": 1.25,
+      "gain": 0.5,
+      "rate": 1.18
+    }
+  ],
+  "duration": 3,
+  "url": "https://v3b.fal.media/files/b/0aae6404/mS1toW7rbaazKE-kvw2sv_tin.crash-3.flac"
+}

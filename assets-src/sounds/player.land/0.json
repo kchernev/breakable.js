@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A person landing from a jump onto pavement in boots: a single heavy thud with a scuff. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 1.5,
+  "seed": 75370,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c5/D0VELebkZApJ7WtvVR5B2_aWjfeSlZ.flac"
+}

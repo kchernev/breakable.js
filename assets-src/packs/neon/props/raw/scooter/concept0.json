@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "A small 125 cc step-through motor scooter of the kind parked in rows in East Asian city alleys: a smooth rounded front apron and leg shield, a flat floorboard, a long black vinyl seat over a rounded rear body, small 12-inch wheels with black tyres and plain grey steel rims, a round headlight in the handlebar cover, a small red tail light, two small round chrome mirrors on thin stalks, a short black exhaust on the right side. Body panels in faded pastel mint-green plastic with off-white trim, lightly scuffed. It stands upright on its centre stand, the front wheel pointing straight ahead. Plain panels: no stickers, no badges, no stripes, no lettering; a blank licence plate. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1536,
+      "height": 1024
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:08:55.001Z",
+  "url": "https://v3b.fal.media/files/b/0aae6353/dXBOrMzLJM7NcSV6Elunb_cjJWieP1.png"
+}

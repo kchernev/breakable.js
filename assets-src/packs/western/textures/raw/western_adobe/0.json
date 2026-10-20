@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of an old adobe wall in the desert: hand-smoothed earthen mud plaster, warm tan-ochre, gently uneven with soft trowel and hand marks, fine hairline shrinkage cracks, flecks of chopped straw and small pits all over, and three or four small rain-eroded patches scattered across the wall where the plaster has fallen away and the sun-dried mud bricks beneath show (brick faces about 40 cm × 10 cm, with thick mud joints). Gentle mottling, even in colour from top to bottom: no damp stains, no edges, no openings. The frame shows a 2 m × 2 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1536,
+    "height": 1536
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:09:27.982Z",
+  "url": "https://v3b.fal.media/files/b/0aae6355/JFiyDs4dXEvQ2c5oHTv6p_uZZcj14s.png"
+}

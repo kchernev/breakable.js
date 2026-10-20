@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A weathered wooden signboard hanging from two rusty iron hooks, swinging slowly in a gust of wind: dry squeaking creaks of rusted iron rubbing on iron, back and forth, and one soft hollow knock of wood. Outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 965342,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae634a/nI5wDJzcfTITlQtjy_50F_ZWfhz5H9.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "An old wooden shop sign hanging from an iron bracket on two rusty iron rings, knocked and swinging back and forth: three slow, squeaky, grinding creaks of the rusty rings on their hooks as it swings, with a faint hollow wooden knock, then slowing to a stop. Outdoors, close, a quiet street. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, door, footsteps, wind howling, chains, bells, voices",
+  "duration": 3.5,
+  "seed": 965340,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefdcb/pRAACOZXutAg9OmcvoFC7_jLpSUVOt.flac"
+}

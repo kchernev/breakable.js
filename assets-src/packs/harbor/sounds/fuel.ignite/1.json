@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Spilled fuel catching fire outdoors: a sudden deep soft whoomph as the vapour ignites, a rushing roar of flames flaring up high, then the fire burning on with a crackle. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, explosion, bang, gunshot, crack, debris",
+  "duration": 4,
+  "seed": 1551,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefdc7/845R01yGVEnqLjFZFPw27_PTbjeQ2p.flac"
+}

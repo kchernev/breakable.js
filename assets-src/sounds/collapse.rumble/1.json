@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A brick building facade collapsing: a long deep rumble of masonry crumbling and falling, a heavy avalanche of bricks and debris crashing down, fading out. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 7,
+  "seed": 839151,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c4/aHj8_GOouaGNQaWSXtX3S_Kvvv5cD3.flac"
+}

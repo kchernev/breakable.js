@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "A diesel counterbalance forklift truck, 3-tonne class, of a generic industrial design (no particular maker), about 3.6 m long with its forks, 1.25 m wide and 2.2 m tall. Compact body painted a dull, slightly faded red-orange, with a heavy rounded cast counterweight at the rear in the same colour. An open operator compartment with a black seat and a black steering wheel, no driver. Over it a black steel overhead guard on four thick square posts, its roof a few thick flat bars. At the front the mast fully lowered and upright: dark grey steel channels and carriage, and two long dark grey steel forks lowered almost to the ground, pointing straight ahead. A short exhaust pipe beside the guard. Big solid black rubber tyres, larger at the front, wheels straight. Worn paint with scuffs, chipped edges and a little grime. Plain paint: no decals, no warning stickers, no stripes. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1536,
+      "height": 1024
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:10:23.885Z",
+  "url": "https://v3b.fal.media/files/b/0aae635b/PYU4yBUZ83q9Z_W3HqGip_RBjvPEzy.png"
+}

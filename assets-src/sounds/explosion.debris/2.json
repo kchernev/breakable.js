@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Rubble raining down after an explosion: a shower of broken bricks, stones and small chunks falling and bouncing on asphalt, scattered heavy thuds and pattering clatter, fading out. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 5,
+  "seed": 26512,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60bb/l7cauHEz9R0nWZOun0Agr_Y69EF2t6.flac"
+}

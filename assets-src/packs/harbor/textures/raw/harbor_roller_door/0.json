@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of a galvanised steel roller shutter door curtain seen straight on: identical horizontal interlocking slats running straight from the left edge to the right edge, each slat about 8 cm tall with a gently rounded convex face and a narrow dark hinge groove between slats, all perfectly straight, parallel and evenly spaced. Dull matte zinc-grey galvanised steel, weathered: grime and dark dirt collected in the grooves, faint vertical dirt streaks, a few faint dents and scratches. No frame, no guide rails, no bottom bar, no handles, no locks, no markings. The frame shows a 1 m × 1 m area: 12 slats from top to bottom. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:10:27.301Z",
+  "url": "https://v3b.fal.media/files/b/0aae635c/pUV3lDYWWVYKeklKMl5ow_YkmD9Mqs.png"
+}

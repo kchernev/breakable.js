@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A thick oak beam snapping in two: one loud, sharp, woody crack at the very start, then fibrous splintering and tearing of the grain, fading out quickly. A single break, close-up, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2,
+  "seed": 457102,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63cd/6OPe1ApeR0mVlBSS-6zq4_6kmR0Lzw.flac"
+}

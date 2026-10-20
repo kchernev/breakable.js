@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Large limestone masonry blocks breaking apart: a heavy, deep, rocky crack like a boulder splitting, then big stone chunks crunching and grinding against each other and tumbling down. Weighty, low and solid, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, fire, crackling flames, frying, sizzling, rain",
+  "duration": 2.5,
+  "seed": 672190,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63b2/mgjS4VmZDrAbhXHwNGPrJ_quUipVCO.flac"
+}

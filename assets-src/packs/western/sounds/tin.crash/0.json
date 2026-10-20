@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Several large sheets of galvanized steel roofing torn off a building and crashing down onto the ground: loud metallic bangs and clangs one after another, the deep wobbling thunder of big flexing steel sheets, sheet metal ringing as it bounces and settles. Heavy and clearly metallic, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, paper, foil, plastic, crinkling, crumpling, rustling, wrapper",
+  "duration": 3,
+  "seed": 637910,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63b2/n4hpT2YW3T5tLxlVyii8Y_YtyHCmKY.flac"
+}

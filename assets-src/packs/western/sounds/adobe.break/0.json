@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A thick wall of sun-dried adobe mud bricks breaking apart: a dull, heavy, crumbling crunch, dry earth clods breaking and pouring down, sandy and dusty. Soft and earthy, no ringing. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 144570,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae634d/nWxLQei0OowrSvGoj1y3E_YWPZBq7S.flac"
+}

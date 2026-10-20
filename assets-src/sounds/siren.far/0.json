@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Distant police and fire truck sirens wailing far away across a city, echoing between buildings. Field recording, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices",
+  "duration": 25,
+  "seed": 387910,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c5/vX6nTfLlG8KG7Zfr2t7Md_Hu8KwXWs.flac"
+}

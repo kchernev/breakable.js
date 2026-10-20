@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Heavy steel chains and steel wire rope swinging and dropping onto a steel deck: loud jangling, rattling and clanking links, then settling. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 351641,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6355/fJ367Otq9ptAurK4CUFi-_DPCxWDIu.flac"
+}

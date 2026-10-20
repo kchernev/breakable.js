@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A single fired clay roof tile dropped onto cobblestones and smashing: one bright, hollow ceramic crack like a terracotta flower pot breaking, then a few shards skittering. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 1.5,
+  "seed": 223672,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6361/ojEhSXIKNCrEJMuumxHYY_4y2iDEeX.flac"
+}

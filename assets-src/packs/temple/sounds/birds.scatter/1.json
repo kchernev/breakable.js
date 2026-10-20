@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A flock of jackdaws and pigeons suddenly bursting into flight from the roof of a stone building: a loud flurry of many flapping wings and sharp alarmed jackdaw calls, the flock flying off and fading into the distance. Outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, explosion, gunshot, bang, seagulls",
+  "duration": 4,
+  "seed": 208031,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae639d/TmX9EfrqJmvSr1Mmiea6H_CjJiZ1HL.flac"
+}

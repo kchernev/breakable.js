@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Close-up of an old neon sign buzzing at night: a harsh, raspy 60 Hz electrical buzz rich in harmonics, like a failing fluorescent light ballast, with a thin high-pitched whine and a faint sizzling crackle. Constant and unchanging from start to end. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, rain, rumble, bass drone, wind, drone music",
+  "duration": 8,
+  "seed": 801680,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63ad/c7ua6jYXWTf87wABBh7BV_zslXgTKG.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A stack of steel shipping containers toppling over: huge hollow metallic booms as the heavy boxes slam onto concrete one after another, crunching and scraping steel, a last booming bounce, then rattling as it settles, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 7,
+  "seed": 680330,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6355/aJ8Ykzs76-lrxt_fdOYpL_qD6lLtxi.flac"
+}

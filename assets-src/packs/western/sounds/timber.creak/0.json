@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A large old timber-framed barn straining under a heavy load just before it collapses: deep, slow, low-pitched groaning of thick wooden beams bending, long stressed creaking of wood fibres, a few dry cracks of boards splitting. Big, heavy and ominous, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, door, hinge, latch, click, squeaky door",
+  "duration": 4,
+  "seed": 494920,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63b2/J0lDBcWgHwj2eGxo8zA6K_pNJpZkiX.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A corrugated steel roller shutter on a shop front struck hard by a blast wave: a loud rattling metallic crash, then the thin steel slats clattering and shaking in their side rails and settling. Outdoors in a street. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 854243,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6357/uPcqeP3lAS2aT-fCNmZnv_FcWmjCoL.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Field recording of open desert at hot midday: a dry, steady breeze breathing over sand and scrub, a soft hiss of blowing sand and grit, dry grass rustling, a faint high drone of cicadas far away. Wide, empty and still. No birds, no traffic, no voices, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, birds, birdsong, traffic, cars, engines, people",
+  "duration": 45,
+  "seed": 660460,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae634a/3E9-YUWkK8qxQ43Wzasb5_KaXjQ0Gh.flac"
+}

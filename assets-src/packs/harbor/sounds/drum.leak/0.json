@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A thin stream of oil trickling out of a small hole in a steel drum and pattering into a puddle on concrete: a soft steady trickle and patter, close. Continuous and even, no impacts. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, impact, bang, hit, clang, rain, tap water, bubbling pot",
+  "duration": 8,
+  "seed": 607720,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefdc6/483UPOU_SB_UCTpOw45KI_edp9zMXT.flac"
+}

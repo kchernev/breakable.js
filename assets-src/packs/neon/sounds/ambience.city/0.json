@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Field recording of a huge city at night heard from deep inside a narrow back alley: a distant, low, steady roar of traffic on wide avenues a few blocks away, the deep hum of the city, an elevated train rumbling far off, a faint car horn very far away. Calm, even and distant from start to end. No voices, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, rain, birds, pigeons, sirens, close cars, footsteps",
+  "duration": 45,
+  "seed": 607560,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6356/CpTeZwLawsR5aOEWiNhwS_ZSo1khi1.flac"
+}

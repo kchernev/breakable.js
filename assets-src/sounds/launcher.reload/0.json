@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Reloading a heavy military rocket launcher: a metal rocket sliding into a steel tube with a scrape, a solid heavy metallic clunk as it seats, then a latch snapping shut. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 81640,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6166/9rzWhlrs-yj5GMMztjca4_ZNsdDMuy.flac"
+}

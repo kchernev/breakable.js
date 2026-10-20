@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A brick wall cracking and breaking apart: a sharp loud crack followed by crumbling bricks and mortar. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 313393,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60bf/O4jfHC0P3VDG3MSlIhnUn_CPXDzBhA.flac"
+}

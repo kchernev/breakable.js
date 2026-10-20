@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Steady continuous roar and hiss of a small rocket motor burning, a constant rushing jet noise with crackle, sustained without change from start to end. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 8,
+  "seed": 208550,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60b9/nRq9e37tjK8gZGha21G_u_PI099dh1.flac"
+}

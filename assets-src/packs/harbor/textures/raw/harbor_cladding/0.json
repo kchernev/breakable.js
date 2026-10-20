@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the wall of an industrial warehouse clad in steel trapezoidal profile sheeting, seen straight on: narrow raised trapezoidal ribs running vertically from top to bottom, each about 4 cm wide on top and 3.5 cm high with sloping sides, one every 25 cm, separated by wide flat pans; all ribs perfectly straight, parallel and evenly spaced, running straight through the top and bottom edges. Six ribs across the frame. Factory-painted coating in light neutral grey, almost white, with no colour cast; weathered by sea air: chalky and faded, faint grey dirt streaks running down from the top, a few small dents, a few small scratches, very little rust. No fasteners, no screws, no joints, no markings, no text. The frame shows a 1.5 m × 1.5 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1536,
+    "height": 1536
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:20:52.766Z",
+  "url": "https://v3b.fal.media/files/b/0aae639a/HqnaPXEdzV1JJ6vWG5Yns_D1HzUwCg.png"
+}

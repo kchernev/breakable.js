@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of an exterior wall clad in small square glazed ceramic tiles, the cladding of an old apartment tower in a humid East Asian city. Square tiles 9.5 cm across with light grey cement grout joints 5 mm wide, laid in stack bond: every joint runs straight through in both directions, a perfectly straight, square, evenly spaced grid with no offset rows. The tiles are off-white with a faint satin glaze, each tile a slightly different very pale shade between warm white, very pale grey and very pale blue-grey, a few tiles a little darker; grime collected in the grout lines, faint vertical rain streaks of grey dirt running down across some tiles, one or two hairline-cracked tiles. Bright and low in contrast. The frame shows a 1.2 m × 1.2 m area: exactly 12 tiles across and 12 tiles from top to bottom. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1536,
+    "height": 1536
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:08:58.069Z",
+  "url": "https://v3b.fal.media/files/b/0aae6353/8p551-WT0eN3FdMBUs6-C_fV8FUf63.png"
+}

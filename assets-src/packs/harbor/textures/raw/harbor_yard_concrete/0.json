@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the heavy-duty concrete pavement of a container port yard seen from directly above: a regular grid of 4 × 4 square grey concrete slabs, each 4 m square, separated by straight, narrow sawn joints filled with dark sealant, all joints perfectly straight, parallel and evenly spaced. Smooth power-trowelled concrete, worn and weathered, wet after rain: darker damp patches and a few shallow puddles lying in slight dips (dark and smooth, no reflections), dark oil stains and drips, faint black tyre marks, scuffs and scrapes from container corners, a few fine hairline cracks, some slabs a little lighter or darker than others. No paint markings. The frame shows a 16 m × 16 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 2048,
+    "height": 2048
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:10:09.767Z",
+  "url": "https://v3b.fal.media/files/b/0aae6359/mzKF7Rhrr9QyFJV4iL9vh_tgVlXsdD.png"
+}

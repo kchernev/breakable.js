@@ -1,0 +1,122 @@
+{
+  "ambience.birds:0": {
+    "url": "https://v3b.fal.media/files/b/0aae635f/WKN3xaSve8lukB_uCUWsK_JHjZb6kX.flac",
+    "answer": "HEAR: (0:00-0:28) A constant, dense chorus of various songbirds, both near and distant, with varied chirps and melodic calls over a faint leafy rustle.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "ambience.market:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63c4/PhwgVeXFbiftY2PswQM3l_H9Vaywd8.flac",
+    "answer": "1. HEAR: (0-30) A constant, low, indistinct crowd murmur with continuous footsteps on a hard surface passing by.\n2. PROBLEMS: none\n3. SCORE: 6"
+  },
+  "bell.toll:0": {
+    "url": "https://v3b.fal.media/files/b/0aae635f/CIJvv4B1h2vYwxAejfgT3_9Tu0TBD8.flac",
+    "answer": "1. HEAR: 0s: A single deep bell strike with bright overtones, followed by a long, low hum that slowly fades.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "bell.toll:1": {
+    "url": "https://v3b.fal.media/files/b/0aae635f/4t0-1Oyven-dy-wqD-P1Q_9Ro6zLxR.flac",
+    "answer": "1. HEAR: A single deep, metallic bell strike (0s) followed by a long, humming decay with shimmering overtones (0-16s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "bell.toll:2": {
+    "url": "https://v3b.fal.media/files/b/0aae635f/_CVbQAPascnznDyndIqMH_xOGOyexr.flac",
+    "answer": "HEAR: 0s: A single, deep bell strike. 0-22s: A long, slow fade of a low hum and shimmering overtones.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bell.clang:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63b2/kYJg2Wm3wN8-TfKfu7hQW_YVsQNzKI.flac",
+    "answer": "1. HEAR: 0s: A single, clean, resonant bell strike with a very long, pure decay.\n2. PROBLEMS: none\n3. SCORE: 1"
+  },
+  "bell.clang:1": {
+    "url": "https://v3b.fal.media/files/b/0aae63b2/qv9qmSCGNlvJhwHuzmC_a_3FkEY4pe.flac",
+    "answer": "1. HEAR: (0s) A single, clean, resonant strike of a large bell, which rings out with a very long, clear decay.\n2. PROBLEMS: None.\n3. SCORE: 2"
+  },
+  "stone.break:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63b2/mgjS4VmZDrAbhXHwNGPrJ_quUipVCO.flac",
+    "answer": "1. HEAR: A heavy, deep rock crack (0s), then large, grinding stone chunks and debris tumbling (0.5s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "stone.break:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6360/yJKaVoqluYhii6ZiCIk4K_vx7f15ZZ.flac",
+    "answer": "1. HEAR: (0s) A sharp, stony crack, followed by (0.5s) a cascade of crunching, grinding rubble.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "stone.impact.large:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63c4/vrmHkXMZqgRqfGKJesbhB_7dnqSD1b.flac",
+    "answer": "HEAR: 0.0s: A deep, heavy thud mixed with a stony crunch, 0.3s: A short rattle of stone chips.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "stone.break:2": {
+    "url": "https://v3b.fal.media/files/b/0aae63c4/ntamdnY0jmo5r5kdvMW50_rU4zwOks.flac",
+    "answer": "HEAR: 0:00: Deep, heavy rock crack. 0:01: Stone chunks grind, crunch, and tumble down.\nPROBLEMS: none\n10"
+  },
+  "stone.impact.large:1": {
+    "url": "https://v3b.fal.media/files/b/0aae63b2/mzFERUyzRrfemtV-H1FyC_loAtQIFX.flac",
+    "answer": "HEAR: 0.0s: A deep, heavy THUD-CRUNCH, followed immediately by a short rattle of small debris.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "stone.impact.large:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6360/X0lO6Wck6M0fUtLGyqzmk_nwxH3Gvb.flac",
+    "answer": "1. HEAR: A deep thud and sharp crunch (0.0s), followed by a short rattle of small debris (0.1s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "timber.groan:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6360/zTgcdguYrnP038e81idjl_2REzn2Fd.flac",
+    "answer": "HEAR: (0:00) A deep, slow groan of heavy wood, followed by (0:02) sharp pops and squeaks of pegs, with (0:04) a faint trickle of fine debris.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "timber.groan:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6361/L7dGczWM9vRL7wsV9Z8Nu_utL83tNM.flac",
+    "answer": "HEAR: 0s: A sharp, percussive wood pop followed by a very short, lower groan.\nPROBLEMS: none\nSCORE: 3"
+  },
+  "tile.clatter:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6360/-AWb86QW5hx1Z89UDU1_H_rH8SHvH9.flac",
+    "answer": "1. HEAR: 0-2s: A scraping, rattling slide of tiles. 2s: A loud crash and clatter of shattering terracotta.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "tile.clatter:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6360/jEUZo166mjbm_4yh-pUuF_WFPqasIu.flac",
+    "answer": "1. HEAR: (0:00-0:02) A brief, dry rattling of small, hard objects being shaken together.\n2. PROBLEMS: none\n3. SCORE: 1"
+  },
+  "tile.clatter:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6360/76sRhudh_Hck3T1Jt7F-0_UJzCkyXM.flac",
+    "answer": "HEAR: A rattling, scraping cascade of tiles sliding (0-1s), then smashing onto a hard surface with scattering shards (1-3s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "tile.impact:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6361/IIyUR_DQljkW_726z1kfI_JCiV2ohA.flac",
+    "answer": "HEAR: (0.0s) A bright, hollow ceramic smash, followed by (0.2s) a few small shards skittering.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "tile.impact:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6361/ojEhSXIKNCrEJMuumxHYY_4y2iDEeX.flac",
+    "answer": "HEAR: (0.0s) A single hollow, ceramic crack, followed by (0.1s) a few light skittering shards.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "tile.impact:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6361/7ylJwJtwD4OyRPZINKUD__30jLnAdw.flac",
+    "answer": "HEAR: (0.0s) A sharp clatter of several small, hard pieces hitting a surface. (0.2s) A very brief, faint rattle.\nPROBLEMS: none\nSCORE: 4"
+  },
+  "tile.impact:3": {
+    "url": "https://v3b.fal.media/files/b/0aae6361/aJiGtFKdyopVWTInen4J6_kmnQNone.flac",
+    "answer": "HEAR: 0.0s: A single, bright ceramic smash, followed by a few light shards skittering.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "birds.scatter:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6361/m0G8KGl6SYFqXFBk7Q0C3_G6LSdLcz.flac",
+    "answer": "1. HEAR: 0:00 A sudden, explosive burst of many bird wings flapping, which quickly fades away.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "birds.scatter:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6361/1WIjPS27jn7ThlpocTWuF_XCJtJbzo.flac",
+    "answer": "1. HEAR: 0s: A sudden, loud burst of many wings flapping. 1-4s: The sound quickly fades as the flock flies away.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "chickens.startle:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6361/5W9xFi8Cgb26rP566xC82_P1ugGKJy.flac",
+    "answer": "1. HEAR: (0-4s) A continuous, high-pitched, and repetitive cackle, sounding like a cartoonish human imitation of a chicken.\n2. PROBLEMS: The sound is a comedic vocal performance, not the described realistic, panicked squawking, wing flapping, or settling down.\n3. SCORE: 2"
+  },
+  "chickens.startle:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6362/jeYp1scfJSGoxiIFKXZse_YNm9aLkj.flac",
+    "answer": "HEAR: (0-6s) A sudden burst of loud, panicked squawking, cackling, and frantic wing flapping from multiple hens.\nPROBLEMS: none\nSCORE: 8"
+  },
+  "steps.cobble:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6361/qjSG3YB7YR6X8KwzDTCqo_WMdCizbl.flac",
+    "answer": "HEAR: 0s: Left footstep (heel knock, scuff). 0.5s: Right footstep. Repeats at a steady pace.\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "timber.crack:1": {
+    "url": "https://v3b.fal.media/files/b/0aae63b2/OdPNlUagfK1a3ghjn_aEG_JHZ2pBih.flac",
+    "answer": "1. HEAR: Loud, sharp woody crack (0:00) followed by brief, fibrous tearing and splintering.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "timber.crack:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63b2/2uI9lZq7Cc4cvXutRw4Se_a1sDwOPl.flac",
+    "answer": "1. HEAR: (0.0s) A loud, sharp crack, followed by (0.1s) splintering wood that quickly fades.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "timber.crack:2": {
+    "url": "https://v3b.fal.media/files/b/0aae63cd/6OPe1ApeR0mVlBSS-6zq4_6kmR0Lzw.flac",
+    "answer": "HEAR: A loud, sharp wood crack (0.0s), followed by fibrous splintering and tearing (0.1s) that fades quickly.\nPROBLEMS: none\nSCORE: 10"
+  }
+}

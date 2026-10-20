@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of dry Mediterranean hilltop ground in late summer seen from directly above: sun-bleached straw-yellow and pale golden dry grass in low, sparse, flattened tufts, dry stalks and seed heads, small grey-green cushions of wild thyme, bare patches of pale ochre dusty soil between them, scattered small angular pale grey-white limestone pebbles and gravel from 1 to 6 cm, and a few small spots of pale grey bedrock no bigger than 30 cm showing through. Evenly mixed over the whole frame: no path, no large rock, no green lawn grass. The frame shows a 4 m × 4 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 2048,
+    "height": 2048
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:20:10.483Z",
+  "url": "https://v3b.fal.media/files/b/0aae6394/ASJgbi2stklbf_vSJcdFX_yJMj0zwD.png"
+}

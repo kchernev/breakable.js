@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Field recording of steady heavy rain at night in a narrow city back alley, close and enveloping: dense patter on wet asphalt and puddles, water running in a gutter and gushing from a drainpipe, heavy drips falling from ledges. The same intensity from start to end. No thunder, no voices, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, thunder, wind gusts, birds, cars, footsteps",
+  "duration": 45,
+  "seed": 995810,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6356/6IAA5VOdTDa5U8i9ccGg0_veXt0npa.flac"
+}

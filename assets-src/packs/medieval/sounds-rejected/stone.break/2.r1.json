@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Big limestone building blocks cracking and splitting apart: one deep, sharp stony crack, then crunching and grinding stone and the gritty crumbling of lime mortar and stone chips. Dry, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 671192,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6360/VPCzL087IFbqEMUeQfM6E_CmxkPY5N.flac"
+}

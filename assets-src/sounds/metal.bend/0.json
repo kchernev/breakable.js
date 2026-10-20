@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Old steel structure bending and tearing under heavy load: a deep metallic groan and creak, rivets popping, screeching metal. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 299270,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c4/-I1wnKFr0E5sNnUeHKO1x_DO8bEl5v.flac"
+}

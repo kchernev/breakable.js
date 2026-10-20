@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A heavy steel object falling off a quay into deep harbour water: a deep booming plunge and a big splash, then the spray raining back down and the water sloshing, close. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 4,
+  "seed": 734772,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6353/LZK8a5tIAru4X31_PrdhX_jocZPqPs.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A small flock of doves suddenly taking off from a tin roof all at once: a burst of loud fluttering wing flaps and wing claps, flying away and fading out quickly. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, cooing, chirping, birdsong",
+  "duration": 3,
+  "seed": 10651,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae634b/7pYpdmIUQvE_SagMZRwFi_yO9Tqh0s.flac"
+}

@@ -1,0 +1,437 @@
+{
+ "ambience.harbor": {
+  "src": [
+   "ambience.harbor/0.mp3"
+  ],
+  "duration": [
+   41
+  ],
+  "kind": "loop",
+  "space": "head",
+  "play": {
+   "bus": "ambience",
+   "volume": 0.3,
+   "voices": 1,
+   "reverb": 0
+  }
+ },
+ "chain.rattle": {
+  "src": [
+   "chain.rattle/0.mp3",
+   "chain.rattle/1.mp3"
+  ],
+  "duration": [
+   2.952,
+   2.766
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 5,
+   "volume": 0.6,
+   "voices": 2,
+   "cooldown": 0.5,
+   "spacing": 4,
+   "pitch": [
+    0.9,
+    1.1
+   ]
+  }
+ },
+ "container.boom": {
+  "src": [
+   "container.boom/0.mp3",
+   "container.boom/1.mp3",
+   "container.boom/2.mp3",
+   "container.boom/3.mp3"
+  ],
+  "duration": [
+   2.912,
+   3.498,
+   2.887,
+   3.252
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 8,
+   "rolloff": 0.8,
+   "volume": 0.85,
+   "voices": 3,
+   "priority": 3,
+   "reverb": 0.45,
+   "pitch": [
+    0.9,
+    1.08
+   ]
+  }
+ },
+ "container.clang": {
+  "src": [
+   "container.clang/0.mp3",
+   "container.clang/1.mp3",
+   "container.clang/2.mp3",
+   "container.clang/3.mp3"
+  ],
+  "duration": [
+   1.949,
+   1.478,
+   2,
+   1.163
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "bus": "debris",
+   "near": 4,
+   "volume": 0.5,
+   "voices": 4,
+   "pitch": [
+    0.85,
+    1.15
+   ]
+  }
+ },
+ "container.collapse": {
+  "src": [
+   "container.collapse/0.mp3",
+   "container.collapse/1.mp3",
+   "container.collapse/2.mp3"
+  ],
+  "duration": [
+   6.795,
+   6.144,
+   6.289
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 12,
+   "rolloff": 0.7,
+   "volume": 1,
+   "voices": 2,
+   "priority": 3,
+   "cooldown": 1.2,
+   "spacing": 12,
+   "reverb": 0.45
+  }
+ },
+ "container.groan": {
+  "src": [
+   "container.groan/0.mp3",
+   "container.groan/1.mp3",
+   "container.groan/2.mp3"
+  ],
+  "duration": [
+   3.914,
+   3.583,
+   3.829
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "bus": "debris",
+   "near": 8,
+   "volume": 0.65,
+   "voices": 2,
+   "cooldown": 1.2,
+   "spacing": 10,
+   "reverb": 0.4
+  }
+ },
+ "drum.bonk": {
+  "src": [
+   "drum.bonk/0.mp3",
+   "drum.bonk/1.mp3",
+   "drum.bonk/2.mp3"
+  ],
+  "duration": [
+   1.739,
+   1.914,
+   1.919
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "bus": "debris",
+   "near": 4,
+   "volume": 0.55,
+   "voices": 3,
+   "pitch": [
+    0.9,
+    1.1
+   ]
+  }
+ },
+ "drum.leak": {
+  "src": [
+   "drum.leak/0.mp3"
+  ],
+  "duration": [
+   5.84
+  ],
+  "kind": "loop",
+  "space": "world",
+  "play": {
+   "near": 2,
+   "rolloff": 1,
+   "volume": 0.4,
+   "voices": 3,
+   "reverb": 0.1,
+   "pitch": [
+    0.95,
+    1.05
+   ]
+  }
+ },
+ "fuel.ignite": {
+  "src": [
+   "fuel.ignite/0.mp3"
+  ],
+  "duration": [
+   2.275
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 10,
+   "rolloff": 0.8,
+   "volume": 0.9,
+   "voices": 2,
+   "priority": 2,
+   "reverb": 0.35,
+   "pitch": [
+    0.92,
+    1.05
+   ]
+  }
+ },
+ "fuel.leak": {
+  "src": [
+   "fuel.leak/0.mp3",
+   "fuel.leak/1.mp3"
+  ],
+  "duration": [
+   7.3,
+   7.3
+  ],
+  "kind": "loop",
+  "space": "world",
+  "play": {
+   "near": 3,
+   "rolloff": 1,
+   "volume": 0.5,
+   "voices": 3,
+   "reverb": 0.15,
+   "pitch": [
+    0.95,
+    1.05
+   ]
+  }
+ },
+ "gulls.call": {
+  "src": [
+   "gulls.call/0.mp3",
+   "gulls.call/1.mp3",
+   "gulls.call/2.mp3"
+  ],
+  "duration": [
+   4,
+   3.909,
+   3.879
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "bus": "ambience",
+   "near": 15,
+   "rolloff": 0.6,
+   "volume": 0.5,
+   "voices": 2,
+   "reverb": 0.35,
+   "pitch": [
+    0.92,
+    1.08
+   ]
+  }
+ },
+ "gulls.scatter": {
+  "src": [
+   "gulls.scatter/0.mp3",
+   "gulls.scatter/1.mp3"
+  ],
+  "duration": [
+   5,
+   5
+  ],
+  "kind": "shot",
+  "space": "head",
+  "play": {
+   "volume": 0.55,
+   "voices": 1,
+   "cooldown": 25,
+   "reverb": 0.2
+  }
+ },
+ "sheet.tear": {
+  "src": [
+   "sheet.tear/0.mp3",
+   "sheet.tear/1.mp3",
+   "sheet.tear/2.mp3"
+  ],
+  "duration": [
+   1.849,
+   1.463,
+   1.788
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 5,
+   "volume": 0.7,
+   "voices": 3,
+   "cooldown": 0.1,
+   "spacing": 3,
+   "pitch": [
+    0.9,
+    1.1
+   ]
+  }
+ },
+ "ship.horn": {
+  "src": [
+   "ship.horn/0.mp3",
+   "ship.horn/1.mp3"
+  ],
+  "duration": [
+   8.158,
+   8.384
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 200,
+   "rolloff": 0.3,
+   "volume": 0.45,
+   "voices": 2,
+   "priority": 2,
+   "reverb": 0.6,
+   "pitch": [
+    0.97,
+    1.03
+   ]
+  }
+ },
+ "steps.metal": {
+  "src": [
+   "steps.metal/0.mp3",
+   "steps.metal/1.mp3",
+   "steps.metal/2.mp3",
+   "steps.metal/3.mp3",
+   "steps.metal/4.mp3",
+   "steps.metal/5.mp3",
+   "steps.metal/6.mp3"
+  ],
+  "duration": [
+   0.286,
+   0.271,
+   0.34,
+   0.34,
+   0.34,
+   0.34,
+   0.34
+  ],
+  "kind": "slice",
+  "space": "head",
+  "play": {
+   "volume": 0.32,
+   "voices": 2,
+   "pitch": [
+    0.95,
+    1.05
+   ],
+   "reverb": 0.15
+  }
+ },
+ "steps.wet": {
+  "src": [
+   "steps.wet/0.mp3",
+   "steps.wet/1.mp3",
+   "steps.wet/2.mp3",
+   "steps.wet/3.mp3",
+   "steps.wet/4.mp3",
+   "steps.wet/5.mp3",
+   "steps.wet/6.mp3",
+   "steps.wet/7.mp3",
+   "steps.wet/8.mp3",
+   "steps.wet/9.mp3"
+  ],
+  "duration": [
+   0.34,
+   0.34,
+   0.34,
+   0.34,
+   0.34,
+   0.34,
+   0.34,
+   0.34,
+   0.34,
+   0.34
+  ],
+  "kind": "slice",
+  "space": "head",
+  "play": {
+   "volume": 0.3,
+   "voices": 2,
+   "pitch": [
+    0.95,
+    1.05
+   ],
+   "reverb": 0.15
+  }
+ },
+ "water.lap": {
+  "src": [
+   "water.lap/0.mp3"
+  ],
+  "duration": [
+   18
+  ],
+  "kind": "loop",
+  "space": "world",
+  "play": {
+   "bus": "ambience",
+   "near": 5,
+   "rolloff": 1,
+   "volume": 0.55,
+   "voices": 4,
+   "reverb": 0.1
+  }
+ },
+ "water.splash": {
+  "src": [
+   "water.splash/0.mp3",
+   "water.splash/1.mp3",
+   "water.splash/2.mp3"
+  ],
+  "duration": [
+   3.708,
+   3.814,
+   3.844
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 8,
+   "rolloff": 0.8,
+   "volume": 0.9,
+   "voices": 4,
+   "priority": 2,
+   "reverb": 0.3,
+   "pitch": [
+    0.9,
+    1.1
+   ]
+  }
+ }
+}

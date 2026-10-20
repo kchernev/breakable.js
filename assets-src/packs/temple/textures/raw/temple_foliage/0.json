@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the dense evergreen foliage of a Mediterranean olive tree filling the whole frame, seen close up straight on: a thick mass of small narrow lance-shaped leaves 3 to 6 cm long on fine twigs, overlapping in every direction, many showing their pale silvery undersides, with small deep dark gaps of shade between the leaf clumps. Muted grey-green, fairly light and neutral in colour; no flowers, no fruit, no sky showing through, no trunk and no large branches. Uniform density over the whole frame. The frame shows a 1 m × 1 m patch. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:20:03.013Z",
+  "url": "https://v3b.fal.media/files/b/0aae6395/GDSFBVZg0QYaTBrZ8B85a_nnWw3ZET.png"
+}

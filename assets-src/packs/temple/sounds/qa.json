@@ -1,0 +1,166 @@
+{
+  "birds.scatter:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6380/dikM1vFyhFkGgQCl64BcQ_zc3pMkqd.flac",
+    "answer": "HEAR: (0s) A sudden burst of sharp, alarmed jackdaw calls and a flurry of flapping wings. (1-4s) The flock sound quickly fades into the distance.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "ambience.cicadas:0": {
+    "url": "https://v3b.fal.media/files/b/0aae637f/bZQhG8Sb6codVO2BJdmwM_SbW5JIpt.flac",
+    "answer": "1. HEAR: (0:00-0:34) A loud, dense chorus of cicadas pulses and swells in slow waves, with a faint rustle of leaves.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "marble.impact.large:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6380/RzoBS0ZcZv9RSBDfR0TO2_1cTaT51R.flac",
+    "answer": "1. HEAR: 0.0s: A deep, heavy thud combined with a hard, sharp crack.\n2. PROBLEMS: none\n3. SCORE: 7"
+  },
+  "ambience.coast:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6380/8HCftc07WDkVN0i7Tv-cu_GzewSXDM.flac",
+    "answer": "1. HEAR: Throughout: A gentle, gusting breeze over a distant, soft wash of waves on a rocky shore.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "marble.break:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6380/Rt_EWvwpioo3nyqL0ljgN_AYjW9UAm.flac",
+    "answer": "1. HEAR: 0.0s: A single, sharp, brittle crack.\n2. PROBLEMS: none\n3. SCORE: 3"
+  },
+  "stone.grind:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6380/qDNjfvQbosZIN_iZHwGIh_7MWY9gJQ.flac",
+    "answer": "HEAR: (0:00) A deep, slow stone grind, with (0:04) a dull crack and trickling grit.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "collapse.marble:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6380/PcGs_HxG1cFboipi8AgOj_DMBEgC95.flac",
+    "answer": "HEAR: A sharp crack, then a rapid series of heavy stone crashes and thuds with grinding, fading into a rumble and trickle of debris.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "tile.shatter:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6380/27234VlU9MIxUI1szNsog_Ar1gPUJf.flac",
+    "answer": "1. HEAR: A sharp, brittle crack (0.0s), followed immediately by a short clatter and skitter of shards.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "tile.debris:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6380/2N9uEqC9y-uwcc2_dogi4_Txqnsc4Q.flac",
+    "answer": "HEAR: (0.1s) Several sharp, dry clinks, followed by (0.5s) a quick rattle of smaller shards.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bronze.clang:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6380/775AVOXOJTOLwDpcznlsZ_wkzCCL55.flac",
+    "answer": "1. HEAR: 0s: Loud, deep metallic clang, followed by a long, shimmering, wobbling ring that fades out.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "foliage.break:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6380/A4Lp7kHelZxYlhXHvnqb-_587Y37K3.flac",
+    "answer": "1. HEAR: (0s) A sharp, woody crack, immediately followed by the rustling rush of leaves and twigs.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "steps.gravel:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6380/ifYRK0v8zt1pJvnmpppWr_wMxiFhJm.flac",
+    "answer": "1. HEAR: 0s-5s: A series of steady, crunching footsteps on gravel and dry grass.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "ambience.coast:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639c/If-L3l6Dd20Hfs7gpvb6G_iwAnfDrW.flac",
+    "answer": "1. HEAR: A loud, constant, low-frequency engine hum is present from start to finish.\n2. PROBLEMS: The dominant sound is a loud boat engine, not a soft breeze or distant waves.\n3. SCORE: 1"
+  },
+  "ambience.cicadas:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639c/Bccs2MUsI1kY09R3IeHUa_sb1iSq7A.flac",
+    "answer": "1. HEAR: (0:00-0:34) A dense, pulsing chorus of cicadas with a faint, high-frequency rustle.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "marble.break:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639d/wqF4MgaXgdwHfOEliHz4y_be1TpmxY.flac",
+    "answer": "HEAR: A sharp, high-pitched crack (0.0s), followed immediately by a quick clatter of smaller debris.\nPROBLEMS: none\nSCORE: 4"
+  },
+  "birds.scatter:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639d/TmX9EfrqJmvSr1Mmiea6H_CjJiZ1HL.flac",
+    "answer": "1. HEAR: (0s) A sudden burst of sharp jackdaw calls and a flurry of wing flaps. (1s+) The sounds quickly fade into the distance as the flock flies away.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "marble.break:3": {
+    "url": "https://v3b.fal.media/files/b/0aae63c1/dW_BJwRAntW4bLLamaDL-_BGacHY7Y.flac",
+    "answer": "HEAR: A sharp, brittle crack (0:01), then a few light pieces clattering down (0:02).\nPROBLEMS: none\nSCORE: 3"
+  },
+  "marble.break:2": {
+    "url": "https://v3b.fal.media/files/b/0aae639d/N9jOh3uxjE7gFtm1kNU6l_mhRju2iG.flac",
+    "answer": "HEAR: (0.0s) A sharp, full-bodied CRACK of stone, followed by (0.4s) heavy debris thudding down and a final crumble.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "marble.impact.large:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639d/CyxYXm9CTGs9hXwIzo5nc_bVvjLhLE.flac",
+    "answer": "HEAR: A deep thud and sharp clack (0:00), followed by a short, heavy stone roll and grind (0:01).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "marble.impact.large:2": {
+    "url": "https://v3b.fal.media/files/b/0aae639d/YngQICx23GKwDmmHK1bjP_7ILbVFzQ.flac",
+    "answer": "HEAR: A deep, weighty thud and stone clack (0.0s), followed by a short, heavy stone grind and roll (0.2s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "marble.impact.large:3": {
+    "url": "https://v3b.fal.media/files/b/0aae639d/hmcfZ94yNi3TVNL3sPq2z_Xgz8RePi.flac",
+    "answer": "HEAR: (0.0s) A heavy thud combined with a sharp stone clack, followed by (0.2s) a short, low stone grind.\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "stone.grind:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639d/tb2918eWseAy42gf84nOF_2Rjquw5C.flac",
+    "answer": "HEAR: (0:00) A deep, low, slow stone scraping and grinding begins, (0:02) intensifies with a cracking texture, then (0:04) rumbles to a close.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "stone.grind:2": {
+    "url": "https://v3b.fal.media/files/b/0aae639d/9FMlLdM9cT6PgP0WgfQuH_qslEJxbk.flac",
+    "answer": "HEAR: (0:00) A deep, low scrape and grind of stone, with a dull crack and trickling grit (0:02).\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "collapse.marble:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639e/cmChccO8gUZeKW108_l9r_fpKspzID.flac",
+    "answer": "1. HEAR: Initial sharp cracks and booming thuds (0-2s), a sequence of heavy impacts with grinding (2-5s), then a rumble and trickle of rubble fading out (5-8s).\n2. PROBLEMS: none.\n3. SCORE: 10."
+  },
+  "collapse.marble:2": {
+    "url": "https://v3b.fal.media/files/b/0aae639e/YqdNljAFdlp4_g1DeAOf7_WH10b5cj.flac",
+    "answer": "1. 0s: A loud, sharp wooden creak. 1s: A heavy thud as a large door or hatch closes.\n2. none\n3. 1"
+  },
+  "tile.shatter:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639e/TzT0Z1D7chEubaTDiBrdM_7Z4iuYtA.flac",
+    "answer": "1. HEAR: (0.0s) A sharp, dry ceramic smash, followed by (0.2s) brittle clay shards clattering and skittering.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "tile.shatter:2": {
+    "url": "https://v3b.fal.media/files/b/0aae639e/mqKRpM3_KYY_gwciWZ_Zk_RCu9PXwh.flac",
+    "answer": "1. HEAR: 0:00 A sharp, brittle crack, followed by the clatter and skittering of shards.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "tile.shatter:3": {
+    "url": "https://v3b.fal.media/files/b/0aae639e/ld2-piWqxkGJg5_YSq5Nc_akiw8XZm.flac",
+    "answer": "1. HEAR: (0.0s) A sharp ceramic CRACK, followed by a heavier CRASH and the clatter of many dry shards.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "tile.debris:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639e/1w0Y-Tma5ZUd0LCF_XO-s_KQG8OLgY.flac",
+    "answer": "HEAR: (0.2s) A tight cluster of dry ceramic clinks and knocks, followed by a brief rattle.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "tile.debris:2": {
+    "url": "https://v3b.fal.media/files/b/0aae639e/o_R9tzXITHGvdHqzs2aNG_8Eb9o77d.flac",
+    "answer": "HEAR: (0.0s) A scrape, (0.5s) a couple of distinct clay clacks, and a final short rattle of small pieces.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bronze.clang:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639f/IoKMxJY3chHwp57N7NdFN_DSK91jOY.flac",
+    "answer": "HEAR: 0s: Deep metallic clang. 0s-7s: Long, shimmering, bell-like ring that wobbles and fades.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "foliage.break:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639f/asVtpNUKWx4e-LEYYboz0_kz3dbeuk.flac",
+    "answer": "1. HEAR: A sharp, woody crack (0s), followed by the whoosh and rustle of leaves and twigs.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "foliage.break:2": {
+    "url": "https://v3b.fal.media/files/b/0aae639f/n4YV55zGAXOptv9GPA4NG_LMDRthEN.flac",
+    "answer": "1. HEAR: (0s) A crisp wood snap, immediately followed by the rustle and thrashing of leaves and twigs.\n2. PROBLEMS: none\n3. 10"
+  },
+  "bronze.clang:2": {
+    "url": "https://v3b.fal.media/files/b/0aae639f/t3LnU4Xc_McPbZqz9NjTg_3cXS4mXK.flac",
+    "answer": "1. HEAR: 0.0s: A single, high-pitched, bell-like metallic strike with a long, shimmering decay.\n2. PROBLEMS: The sound is not \"heavy\" or \"deep\" as requested, sounding more like a bell than a shield.\n3. SCORE: 5"
+  },
+  "sea.splash:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63db/juYqVq9eNDGs99XOhoelt_V6f4vRLi.flac",
+    "answer": "1. HEAR: 0s: A deep, heavy plunge and splash. 1s: The sound of water settling with smaller splashes.\n2. PROBLEMS: none\n3. SCORE: 8"
+  },
+  "sea.splash:1": {
+    "url": "https://v3b.fal.media/files/b/0aae63dc/7HLKG7lVBXa5ziO8-6TzN_tTULijXQ.flac",
+    "answer": "HEAR: 0.5s: A deep, heavy splash and plunge, followed by water gurgling and sloshing.\nPROBLEMS: none\nSCORE: 7"
+  },
+  "bronze.ring:2": {
+    "url": "https://v3b.fal.media/files/b/0aaefe33/OZsWJvHcMAWZ5lYRsm7gj_AMP33aJ3.flac",
+    "answer": "HEAR: 0s: A single, deep, soft gong strike, which immediately rings out into a long, warm, resonant hum that slowly wavers and fades.\nPROBLEMS: none\nSCORE: 6"
+  },
+  "bronze.ring:1": {
+    "url": "https://v3b.fal.media/files/b/0aaefe33/QNa3C7K8YrKPbzCJKP66V_8En1AF62.flac",
+    "answer": "1. HEAR: 0:00: A sharp metallic ping, followed immediately by a deep, warm bronze bell hum that wavers and fades out by 0:08.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "bay.echo:1": {
+    "url": "https://v3b.fal.media/files/b/0aaefe34/YYo35sPMpyT92QbzDtEKv_ifZrbJ3z.flac",
+    "answer": "1. HEAR: 0:00 A soft, rolling, rattling echo of a rapid burst, fading out.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "bay.echo:0": {
+    "url": "https://v3b.fal.media/files/b/0aaefe40/90NmsBqIgprEtxEZPquDX_Z5kSaI1q.flac",
+    "answer": "HEAR: 0s: A sharp crack, followed by a long, rattling, distant echo fading out over 8 seconds.\nPROBLEMS: A loud, close initial crack; it's a single shot, not a burst of gunfire.\n4"
+  },
+  "bronze.ring:0": {
+    "url": "https://v3b.fal.media/files/b/0aaefe33/TRBgCYxj75afCbs59tWXy_P7mx9XAG.flac",
+    "answer": "1. HEAR: 0s: A sharp metallic ping, immediately followed by a deep, warm, resonant hum that slowly wavers and fades for ~8s.\n2. PROBLEMS: none\n3. SCORE: 10"
+  }
+}

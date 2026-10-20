@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Debris burning after an explosion: steady crackling flames and popping embers, close-up. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 15,
+  "seed": 611090,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c5/MITt5jdgXz2V12u7JbIDs_rwnhNWcA.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A large block of solid marble cracking and splitting apart: one sharp, hard, bright crack of stone breaking, chunks of stone breaking away and knocking down, a short crumble of grit. Outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 127890,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6380/Rt_EWvwpioo3nyqL0ljgN_AYjW9UAm.flac"
+}

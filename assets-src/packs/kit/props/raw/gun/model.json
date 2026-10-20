@@ -1,0 +1,48 @@
+{
+  "endpoint": "tripo3d/p2/image-to-3d",
+  "source": "concept1.png",
+  "input": {
+    "pbr": true,
+    "texture": true,
+    "texture_quality": "detailed",
+    "delight": true,
+    "export_uv": true,
+    "quad": false,
+    "face_limit": 30000,
+    "image_url": "https://v3b.fal.media/files/b/0aae9c46/Q9JIhRavdFL_e3s5a_ETx_gun_concept1.png"
+  },
+  "seed": null,
+  "made": "2026-10-16T12:40:45.304Z",
+  "seconds": 134,
+  "output": {
+    "model_mesh": {
+      "url": "https://v3b.fal.media/files/b/0aae9c53/LsCkAIqHYED6WXGqoWJtG_model.glb",
+      "content_type": "model/gltf-binary",
+      "file_name": "model.glb",
+      "file_size": 9792864
+    },
+    "model_urls": {
+      "glb": {
+        "url": "https://v3b.fal.media/files/b/0aae9c53/LsCkAIqHYED6WXGqoWJtG_model.glb",
+        "content_type": "model/gltf-binary",
+        "file_name": "model.glb",
+        "file_size": 9792864
+      },
+      "fbx": null,
+      "base_model": null,
+      "pbr_model": {
+        "url": "https://v3b.fal.media/files/b/0aae9c53/LsCkAIqHYED6WXGqoWJtG_model.glb",
+        "content_type": "model/gltf-binary",
+        "file_name": "model.glb",
+        "file_size": 9792864
+      }
+    },
+    "rendered_image": {
+      "url": "https://v3b.fal.media/files/b/0aae9c53/UuyJdTOgLnat7tULg1m3B_preview.png",
+      "content_type": "image/png",
+      "file_name": "preview.png",
+      "file_size": 80571
+    },
+    "task_id": "a4aaeb90-b5bb-446d-98ef-bdba4567f8cc"
+  }
+}

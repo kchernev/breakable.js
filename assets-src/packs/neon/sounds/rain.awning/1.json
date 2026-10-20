@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Field recording of heavy rain drumming on a taut plastic tarpaulin awning just overhead: dense, hollow pattering thuds on the stretched sheet, and a steady stream of water pouring off its edge onto the pavement below. Close-up, constant from start to end. No music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, thunder, wind",
+  "duration": 12,
+  "seed": 361891,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6356/m9vAQ8uD9uyZYphvGPJUb_nImySgWs.flac"
+}

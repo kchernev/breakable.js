@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "noEmit": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client", "node", "@webgpu/types"],
+    "paths": {
+      "three-avbd": ["./vendor/three-avbd/src/lib/index.ts"],
+      "three-avbd/advanced": ["./vendor/three-avbd/src/lib/advanced.ts"]
+    }
+  },
+  "include": ["src", "tests", "scripts"]
+}

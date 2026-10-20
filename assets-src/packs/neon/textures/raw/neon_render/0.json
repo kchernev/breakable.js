@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of an old painted cement render wall on a shophouse in a humid East Asian city: sand-cement render with a fine trowelled texture, painted a faded very light warm grey, almost white; the paint chalky and mottled, soft greyish damp patches, faint dark grey-green mould streaks trickling down from above, a few fine hairline cracks, two or three small patches where the paint has flaked off to bare grey cement. Bright and low in contrast. The frame shows a 2 m × 2 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:09:01.147Z",
+  "url": "https://v3b.fal.media/files/b/0aae6353/q_b2Via7gu4Bl4CV_dNeD_TyoGhauC.png"
+}

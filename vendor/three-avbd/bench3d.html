@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>AVBD 3D Benchmark</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f6f3ec;
+        --fg: #1f2328;
+        --muted: #5b6168;
+        --line: #d8d8d4;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #161618;
+          --fg: #ececee;
+          --muted: #9a9aa0;
+          --line: #333338;
+        }
+      }
+      body {
+        margin: 0;
+        padding: 24px 16px;
+        background: var(--bg);
+        color: var(--fg);
+        font: 14px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        font-variant-numeric: tabular-nums;
+      }
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 18px;
+        margin: 0 0 4px;
+      }
+      p {
+        color: var(--muted);
+        margin: 0 0 16px;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      button,
+      select {
+        font: inherit;
+        padding: 6px 12px;
+      }
+      #status {
+        color: var(--muted);
+        min-height: 1.5em;
+      }
+      .adapter {
+        color: var(--fg);
+      }
+      a {
+        color: inherit;
+      }
+      .error {
+        color: #d0463b;
+        text-align: left;
+        white-space: normal;
+      }
+      .table-wrap {
+        overflow-x: auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        text-align: right;
+        padding: 4px 10px;
+        border-bottom: 1px solid var(--line);
+        white-space: nowrap;
+      }
+      th:first-child,
+      td:first-child {
+        text-align: left;
+      }
+      nav.site {
+        margin: 0 0 20px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      nav.site a {
+        color: #b8503f;
+        text-decoration: none;
+        font-weight: 550;
+      }
+      nav.site a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav class="site">
+        <a href="/">3D demo</a> · <a href="2d.html">2D demo</a> · <a href="results.html">Results</a> ·
+        <a href="bench3d.html">Benchmark your GPU</a>
+      </nav>
+      <h1>AVBD 3D — GPU benchmark</h1>
+      <p>
+        Runs the whole 3D step (collision, colouring, solve) on this machine's GPU for a fixed scene suite, including
+        the paper's large scenes, and compares with the paper's RTX 4090 times. Close other GPU-heavy tabs and keep
+        this tab visible while it runs (hidden tabs are throttled). Small and paper-scale take about a minute; the
+        510k scene needs about 1.2 GB of GPU memory. To add this machine to the
+        <a href="results.html">results page</a>, download the results into <code>docs/data/bench3d/</code>.
+        <a href="bench.html">2D benchmark</a>
+      </p>
+      <div class="controls">
+        <label><input type="checkbox" name="tier" value="small" checked /> small</label>
+        <label><input type="checkbox" name="tier" value="paper" checked /> paper scale (110k, 34k)</label>
+        <label><input type="checkbox" name="tier" value="large" /> 510k</label>
+        <label><input type="checkbox" name="tier" value="steady" /> settled scenes</label>
+        <label>Machine <input id="machine" placeholder="e.g. MacBook Air M1" size="22" /></label>
+        <button id="run">Run benchmark</button>
+        <button id="download" disabled>Download results</button>
+        <button id="copy" disabled>Copy results</button>
+      </div>
+      <div id="status"></div>
+      <div id="results" class="table-wrap"></div>
+    </main>
+    <script type="module" src="/src/bench3d/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A wooden plank falling onto concrete: a hollow wooden knock and a short clatter. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 1.5,
+  "seed": 154241,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c2/9FpClTnOC7SBd0-v9WnlY_FNeb8us6.flac"
+}

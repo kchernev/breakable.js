@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "Two stacks of three identical empty stackable plastic crates, the kind used for vegetables and bottles at street markets, the two stacks standing end to end in one row (the row about 1.2 m long, 0.4 m deep and 0.95 m tall). Each crate about 60 cm long, 40 cm wide and 32 cm tall, moulded from hard glossy plastic with rounded vertical corner ribs, a thick top rim, a hand-hole in each short end and rows of small rectangular ventilation slots in every side wall. The left stack is all bright blue, the right stack all red. Neatly squared, each crate seated on the one below. The slots read as dark shadowed recesses: the stacks look solid and nothing can be seen through them. Slightly scuffed. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1536,
+      "height": 1024
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:08:54.806Z",
+  "url": "https://v3b.fal.media/files/b/0aae6353/8plhFXcVdvNNqheBiR2zm_X1JfOvd8.png"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A sheet of thin corrugated tin roofing dropped flat onto hard dry ground: one rattling metallic clatter with a short wobbling flutter of the thin sheet metal. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 1.5,
+  "seed": 845143,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae634c/9QfM6u391W7qazYvi0XBj_I4WgqbGs.flac"
+}

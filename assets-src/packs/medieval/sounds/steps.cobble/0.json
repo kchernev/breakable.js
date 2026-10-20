@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Footsteps of a person in leather boots walking on old rounded cobblestones at a steady pace: hard heel knocks with a little gritty scuff, clear separate steps with short gaps of silence between them. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 8,
+  "seed": 10430,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6361/qjSG3YB7YR6X8KwzDTCqo_WMdCizbl.flac"
+}

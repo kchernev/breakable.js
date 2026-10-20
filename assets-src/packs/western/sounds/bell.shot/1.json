@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A bullet striking a small bronze bell hanging in a chapel bell gable, outdoors: one sharp, bright metallic ping and clang of the struck bell, then its clear ringing hum slowly fading away. A single strike only. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, chimes, several bells, carillon, organ, gunshot, explosion",
+  "duration": 5,
+  "seed": 887021,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefe1c/rgWce0AraEtiF8BrRASiG_N97kD2Im.flac"
+}

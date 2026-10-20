@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A car alarm going off on a city street: a classic loud electronic car alarm cycling through its siren and whooping tones, outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices",
+  "duration": 12,
+  "seed": 36320,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c5/X8tSsUuO8RDSRXQHOaz-K_nbwXiJub.flac"
+}

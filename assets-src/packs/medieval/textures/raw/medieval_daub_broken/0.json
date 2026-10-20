@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of broken wattle-and-daub seen straight on: the crumbled inside of a medieval timber-frame wall panel. Crumbly brown-ochre clay daub mixed with lots of chopped golden straw fibres, broken lumps and clods, cracks and pores, clay dust; thin hazel wattle rods 2 to 3 cm thick with grey-brown bark, woven horizontally, showing through the clay in a few places. A few flakes of white lime plaster at most. The frame shows a 0.8 m × 0.8 m patch. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:10:55.204Z",
+  "url": "https://v3b.fal.media/files/b/0aae635e/0LxTV2GrdZIljZ8O0HuUm_m5GWoTpu.png"
+}

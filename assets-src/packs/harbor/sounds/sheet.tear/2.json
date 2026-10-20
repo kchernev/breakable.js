@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A corrugated steel wall panel ripped open by a blast: a harsh tearing screech of sheet metal, a crumpling crunch, then the torn sheet flapping and rattling. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 853362,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6356/ZFmfaWcri-7vhUyLlzLpD_reCOOndN.flac"
+}

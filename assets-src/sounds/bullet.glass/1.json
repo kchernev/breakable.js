@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Bullets punching through small panes of glass one at a time, about a second apart: each a sharp crack and a quick, small shatter of glass shards. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, gunshots, gunfire, rifle",
+  "duration": 8,
+  "seed": 381031,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae9c93/a7zTHq2CBSpIIgSHqKV19_rdUpmZkU.flac"
+}

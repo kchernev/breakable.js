@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the inside of broken brick masonry, a fracture surface seen straight on: crushed, freshly broken red-orange fired clay with a grainy, porous, sandy texture, angular chips and broken faces of brick of many sizes, embedded chunks and crumbs of grey-white lime mortar, brick dust. No wall pattern, no whole bricks, no mortar joints in rows. The frame shows a 1 m × 1 m patch. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T18:24:55.731Z",
+  "url": "https://v3b.fal.media/files/b/0aae60e2/bcjR6yt9pLWXbuzLJaHzF_9LoIcKIh.png"
+}

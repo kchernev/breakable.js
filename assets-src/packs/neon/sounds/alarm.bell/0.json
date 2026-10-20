@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "An electric burglar alarm bell on a shop wall ringing continuously: a loud, fast, harsh metallic trill of a hammer striking a steel gong, constant and unbroken from start to end, outdoors in a street. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, siren, church bell, chimes, car alarm",
+  "duration": 10,
+  "seed": 771270,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6358/31Sr5QDjGiyc127yC7kjl_MbBFghJ3.flac"
+}

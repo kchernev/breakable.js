@@ -1,0 +1,13 @@
+{
+  "model": "synthesized",
+  "script": "scripts/assets/packs/neon/prep-sounds.py",
+  "duration": 8,
+  "seed": 23,
+  "hum": -2,
+  "rattle": 0,
+  "sizzle": -6,
+  "gate": 1,
+  "crackle_rate": 2.2,
+  "crackle_level": 2.5,
+  "url": "https://v3b.fal.media/files/b/0aae63f8/UQCY8-E4ArWVQMAuQQGx2_neon.buzz-1.flac"
+}

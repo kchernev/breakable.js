@@ -1,0 +1,100 @@
+{
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "source": "concept0.png",
+  "input": {
+    "model_type": "standard",
+    "topology": "triangle",
+    "target_polycount": 10000,
+    "should_remesh": true,
+    "should_texture": true,
+    "enable_pbr": true,
+    "symmetry_mode": "auto",
+    "texture_prompt": "dark blue painted steel mail collection box, slightly worn paint, grey steel legs",
+    "image_url": "https://v3b.fal.media/files/b/0aae6198/rr--apYI5h5jI8sSIzTbW_mailbox_concept0.png"
+  },
+  "seed": 616935087,
+  "made": "2026-10-14T18:57:38.853Z",
+  "seconds": 171,
+  "output": {
+    "animation_glb": null,
+    "animation_fbx": null,
+    "model_glb": {
+      "url": "https://v3b.fal.media/files/b/0aae61a4/wxXBu_I3se_6YE4S2O5aD_model.glb",
+      "content_type": "model/gltf-binary",
+      "file_name": "model.glb",
+      "file_size": 5785188
+    },
+    "thumbnail": {
+      "url": "https://v3b.fal.media/files/b/0aae61a7/_ldM4yGa8cu7-MuYV9L69_preview.png",
+      "content_type": "image/png",
+      "file_name": "preview.png",
+      "file_size": 100588
+    },
+    "model_urls": {
+      "glb": {
+        "url": "https://v3b.fal.media/files/b/0aae61a4/wxXBu_I3se_6YE4S2O5aD_model.glb",
+        "content_type": "model/gltf-binary",
+        "file_name": "model.glb",
+        "file_size": 5785188
+      },
+      "fbx": {
+        "url": "https://v3b.fal.media/files/b/0aae61a4/9_uF_H3QeuviB0s1YIgrH_model.fbx",
+        "content_type": "application/octet-stream",
+        "file_name": "model.fbx",
+        "file_size": 6111084
+      },
+      "obj": {
+        "url": "https://v3b.fal.media/files/b/0aae61a5/PIQx9G5IEAgS_7XYs8-GO_model.obj",
+        "content_type": "text/plain",
+        "file_name": "model.obj",
+        "file_size": 866563
+      },
+      "usdz": {
+        "url": "https://v3b.fal.media/files/b/0aae61a5/hQ_i6xPfCf4g6AvTJ8__N_model.usdz",
+        "content_type": "model/vnd.usdz+zip",
+        "file_name": "model.usdz",
+        "file_size": 6238120
+      },
+      "blend": null,
+      "stl": {
+        "url": "https://v3b.fal.media/files/b/0aae61a6/mc64ERCVe_FycDarWXbql_model.stl",
+        "content_type": "application/octet-stream",
+        "file_name": "model.stl",
+        "file_size": 404484
+      }
+    },
+    "texture_urls": [
+      {
+        "base_color": {
+          "url": "https://v3b.fal.media/files/b/0aae61a7/RCoRk-uX8Ms2nq9NF_c8O_texture_0.png",
+          "content_type": "image/png",
+          "file_name": "texture_0.png",
+          "file_size": 3328226
+        },
+        "metallic": {
+          "url": "https://v3b.fal.media/files/b/0aae61a7/I5kCeisP3B9vMYFFM5bhk_texture_0_metallic.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_metallic.png",
+          "file_size": 25183
+        },
+        "normal": {
+          "url": "https://v3b.fal.media/files/b/0aae61a8/5NsxucavUUqXEwJGphfdB_texture_0_normal.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_normal.png",
+          "file_size": 2367730
+        },
+        "roughness": {
+          "url": "https://v3b.fal.media/files/b/0aae61a9/l-8N-sBaDKfgBbyB-cvdj_texture_0_roughness.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_roughness.png",
+          "file_size": 1197395
+        }
+      }
+    ],
+    "seed": 616935087,
+    "rigged_character_glb": null,
+    "rigged_character_fbx": null,
+    "basic_animations": null,
+    "rig_task_id": null
+  }
+}

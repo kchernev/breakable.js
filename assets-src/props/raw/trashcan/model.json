@@ -1,0 +1,100 @@
+{
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "source": "concept2.png",
+  "input": {
+    "model_type": "standard",
+    "topology": "triangle",
+    "target_polycount": 10000,
+    "should_remesh": true,
+    "should_texture": true,
+    "enable_pbr": true,
+    "symmetry_mode": "auto",
+    "texture_prompt": "dark green painted steel wire mesh litter basket with a black plastic liner bag inside",
+    "image_url": "https://v3b.fal.media/files/b/0aae61ea/mfI09MnQLL_6MVoffkFzl_trashcan_concept2.png"
+  },
+  "seed": 347120378,
+  "made": "2026-10-14T19:14:18.941Z",
+  "seconds": 351,
+  "output": {
+    "animation_glb": null,
+    "animation_fbx": null,
+    "model_glb": {
+      "url": "https://v3b.fal.media/files/b/0aae6206/wPzx_wWBb6thYwuH4xvjt_model.glb",
+      "content_type": "model/gltf-binary",
+      "file_name": "model.glb",
+      "file_size": 2509744
+    },
+    "thumbnail": {
+      "url": "https://v3b.fal.media/files/b/0aae620c/rmpmM35Gdpx9YpIo1_CfY_preview.png",
+      "content_type": "image/png",
+      "file_name": "preview.png",
+      "file_size": 258292
+    },
+    "model_urls": {
+      "glb": {
+        "url": "https://v3b.fal.media/files/b/0aae6206/wPzx_wWBb6thYwuH4xvjt_model.glb",
+        "content_type": "model/gltf-binary",
+        "file_name": "model.glb",
+        "file_size": 2509744
+      },
+      "fbx": {
+        "url": "https://v3b.fal.media/files/b/0aae6209/Uc061dwCUsi61l9An2KcQ_model.fbx",
+        "content_type": "application/octet-stream",
+        "file_name": "model.fbx",
+        "file_size": 2247484
+      },
+      "obj": {
+        "url": "https://v3b.fal.media/files/b/0aae620a/GcpDn9tksovXRjONPiCdo_model.obj",
+        "content_type": "text/plain",
+        "file_name": "model.obj",
+        "file_size": 359092
+      },
+      "usdz": {
+        "url": "https://v3b.fal.media/files/b/0aae6209/sMfrRo41NVvSXo0XhVIDu_model.usdz",
+        "content_type": "model/vnd.usdz+zip",
+        "file_name": "model.usdz",
+        "file_size": 2386573
+      },
+      "blend": null,
+      "stl": {
+        "url": "https://v3b.fal.media/files/b/0aae620b/9uSs9kFbrKYKcWN19SMWi_model.stl",
+        "content_type": "application/octet-stream",
+        "file_name": "model.stl",
+        "file_size": 149684
+      }
+    },
+    "texture_urls": [
+      {
+        "base_color": {
+          "url": "https://v3b.fal.media/files/b/0aae620c/590CbVXbqAJS1ZfoKbCYW_texture_0.png",
+          "content_type": "image/png",
+          "file_name": "texture_0.png",
+          "file_size": 774275
+        },
+        "metallic": {
+          "url": "https://v3b.fal.media/files/b/0aae620c/r1ysqlTUkQb0EDyyTPEvd_texture_0_metallic.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_metallic.png",
+          "file_size": 18436
+        },
+        "normal": {
+          "url": "https://v3b.fal.media/files/b/0aae620c/HwUpFms84rv8Y6lsUZrmt_texture_0_normal.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_normal.png",
+          "file_size": 745246
+        },
+        "roughness": {
+          "url": "https://v3b.fal.media/files/b/0aae620c/FA82HEB7AVdiAgAVS3WlV_texture_0_roughness.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_roughness.png",
+          "file_size": 287383
+        }
+      }
+    ],
+    "seed": 347120378,
+    "rigged_character_glb": null,
+    "rigged_character_fbx": null,
+    "basic_animations": null,
+    "rig_task_id": null
+  }
+}

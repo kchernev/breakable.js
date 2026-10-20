@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A flock of city pigeons startled off a building ledge all at once: a sudden loud burst of many wings clapping and flapping as they take off, the flock flying up and away and fading out. Outdoors in a city street. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, cooing, chirping, birdsong, traffic, car horns",
+  "duration": 3.5,
+  "seed": 950461,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefe09/8uq4zHFGtS-S83x-hDiTj_oiA2Kvpk.flac"
+}

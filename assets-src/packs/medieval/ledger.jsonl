@@ -1,0 +1,103 @@
+{"at": "2026-10-14T20:10:33Z", "by": "props", "what": "prop concept handcart take 0 (1536x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.041}
+{"at": "2026-10-14T20:10:33Z", "by": "props", "what": "prop concept basket take 0 (1024x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.053}
+{"at": "2026-10-14T20:10:33Z", "by": "props", "what": "prop concept barrel take 0 (1024x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.053}
+{"at": "2026-10-14T20:10:33Z", "by": "props", "what": "prop concept haywagon take 0 (1536x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.041}
+{"at": "2026-10-14T20:10:41.998Z", "by": "sounds", "what": "sound take ambience.birds:0 (40 s, seed 517930)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:42.195Z", "by": "sounds", "what": "sound take ambience.market:0 (40 s, seed 98930)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:41.596Z", "by": "sounds", "what": "sound take bell.toll:0 (8 s, seed 251190)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:41.984Z", "by": "sounds", "what": "sound take bell.toll:1 (8 s, seed 251191)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:41.263Z", "by": "sounds", "what": "sound take bell.toll:2 (8 s, seed 251192)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:40.679Z", "by": "sounds", "what": "sound take bell.clang:0 (4 s, seed 369090)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:43.391Z", "by": "sounds", "what": "sound take bell.clang:1 (4 s, seed 369091)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:43.966Z", "by": "sounds", "what": "sound take stone.break:0 (2.5 s, seed 671190)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:44.371Z", "by": "sounds", "what": "sound take stone.break:1 (2.5 s, seed 671191)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:45.035Z", "by": "sounds", "what": "sound take stone.break:2 (2.5 s, seed 671192)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:51.147Z", "by": "sounds", "what": "sound take stone.impact.large:0 (3 s, seed 766750)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:46.476Z", "by": "sounds", "what": "sound take stone.impact.large:1 (3 s, seed 766751)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:46.265Z", "by": "sounds", "what": "sound take stone.impact.large:2 (3 s, seed 766752)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:47.046Z", "by": "sounds", "what": "sound take timber.crack:0 (2.5 s, seed 456100)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:47.268Z", "by": "sounds", "what": "sound take timber.crack:1 (2.5 s, seed 456101)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:47.762Z", "by": "sounds", "what": "sound take timber.crack:2 (2.5 s, seed 456102)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:55.981Z", "by": "sounds", "what": "sound take timber.groan:0 (3.5 s, seed 530890)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:49.509Z", "by": "sounds", "what": "sound take timber.groan:1 (3.5 s, seed 530891)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:50.006Z", "by": "sounds", "what": "sound take tile.clatter:0 (3 s, seed 600120)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:50.268Z", "by": "sounds", "what": "sound take tile.clatter:1 (3 s, seed 600121)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:50.692Z", "by": "sounds", "what": "sound take tile.clatter:2 (3 s, seed 600122)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:52.195Z", "by": "sounds", "what": "sound take tile.impact:0 (1.5 s, seed 223670)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:52.622Z", "by": "sounds", "what": "sound take tile.impact:1 (1.5 s, seed 223671)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:52.885Z", "by": "sounds", "what": "sound take tile.impact:2 (1.5 s, seed 223672)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:53.328Z", "by": "sounds", "what": "sound take tile.impact:3 (1.5 s, seed 223673)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:54.305Z", "by": "sounds", "what": "sound take birds.scatter:0 (3.5 s, seed 208030)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:55.112Z", "by": "sounds", "what": "sound take birds.scatter:1 (3.5 s, seed 208031)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:55.473Z", "by": "sounds", "what": "sound take chickens.startle:0 (4 s, seed 333620)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:11:02.555Z", "by": "sounds", "what": "sound take chickens.startle:1 (4 s, seed 333621)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:10:56.420Z", "by": "sounds", "what": "sound take steps.cobble:0 (8 s, seed 10430)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:11:15.000Z", "by": "textures", "what": "texture image medieval_canvas:0 (1024x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.2}
+{"at": "2026-10-14T20:10:55.204Z", "by": "textures", "what": "texture image medieval_daub_broken:0 (1024x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.2}
+{"at": "2026-10-14T20:11:21.634Z", "by": "textures", "what": "texture image medieval_hay:0 (1024x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.2}
+{"at": "2026-10-14T20:10:51.717Z", "by": "textures", "what": "texture image medieval_limestone:0 (1024x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.2}
+{"at": "2026-10-14T20:10:56.479Z", "by": "textures", "what": "texture image medieval_limestone_broken:0 (1024x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.2}
+{"at": "2026-10-14T20:10:49.892Z", "by": "textures", "what": "texture image medieval_oak:0 (1024x1024, high)", "endpoint": "openai/gpt-image-2.5/flare/text-to-image", "costUSD": 0.2}
+{"at": "2026-10-14T20:19:54Z", "by": "props", "what": "prop 3D model handcart (image-to-3D, detailed PBR textures)", "endpoint": "tripo3d/p2/image-to-3d", "costUSD": 1.2}
+{"at": "2026-10-14T20:19:54Z", "by": "props", "what": "prop 3D model haywagon (image-to-3D, detailed PBR textures)", "endpoint": "tripo3d/p2/image-to-3d", "costUSD": 1.2}
+{"at": "2026-10-14T20:19:54Z", "by": "props", "what": "prop 3D model barrel (image-to-3D, detailed PBR textures)", "endpoint": "tripo3d/p2/image-to-3d", "costUSD": 1.2}
+{"at": "2026-10-14T20:19:54Z", "by": "props", "what": "prop 3D model basket (image-to-3D, detailed PBR textures)", "endpoint": "tripo3d/p2/image-to-3d", "costUSD": 1.2}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA ambience.birds:0 (qa-sounds, round 1, 40 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.08}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA ambience.market:0 (qa-sounds, round 1, 40 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.08}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA bell.toll:0 (qa-sounds, round 1, 8 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.02}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA bell.toll:1 (qa-sounds, round 1, 8 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.02}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA bell.toll:2 (qa-sounds, round 1, 8 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.02}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA bell.clang:0 (qa-sounds, round 1, 4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA bell.clang:1 (qa-sounds, round 1, 4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA stone.break:0 (qa-sounds, round 1, 2.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA stone.break:1 (qa-sounds, round 1, 2.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA stone.impact.large:0 (qa-sounds, round 1, 3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA stone.break:2 (qa-sounds, round 1, 2.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA stone.impact.large:1 (qa-sounds, round 1, 3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA stone.impact.large:2 (qa-sounds, round 1, 3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA timber.groan:1 (qa-sounds, round 1, 3.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA timber.groan:0 (qa-sounds, round 1, 3.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA tile.clatter:0 (qa-sounds, round 1, 3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA tile.clatter:1 (qa-sounds, round 1, 3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA tile.clatter:2 (qa-sounds, round 1, 3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA tile.impact:0 (qa-sounds, round 1, 1.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA tile.impact:2 (qa-sounds, round 1, 1.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA tile.impact:1 (qa-sounds, round 1, 1.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA tile.impact:3 (qa-sounds, round 1, 1.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA birds.scatter:0 (qa-sounds, round 1, 3.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA birds.scatter:1 (qa-sounds, round 1, 3.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA chickens.startle:0 (qa-sounds, round 1, 4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA chickens.startle:1 (qa-sounds, round 1, 4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:21:30.167Z", "by": "sounds", "what": "audio QA steps.cobble:0 (qa-sounds, round 1, 8 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.02}
+{"at": "2026-10-14T20:23:22.279Z", "by": "sounds", "what": "audio QA ambience.market:0 (targeted question, 40 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.08}
+{"at": "2026-10-14T20:23:22.279Z", "by": "sounds", "what": "audio QA stone.impact.large:0 (targeted question, 3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:23:22.279Z", "by": "sounds", "what": "audio QA stone.impact.large:1 (targeted question, 3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:24:24.818Z", "by": "sounds", "what": "sound take timber.crack:0 (2 s, seed 457100)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:24:26.189Z", "by": "sounds", "what": "sound take timber.crack:1 (2 s, seed 457101)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:24:23.190Z", "by": "sounds", "what": "sound take bell.clang:0 (4 s, seed 370090)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:24:24.729Z", "by": "sounds", "what": "sound take bell.clang:1 (4 s, seed 370091)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:24:24.815Z", "by": "sounds", "what": "sound take stone.break:0 (2.5 s, seed 672190)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:24:24.651Z", "by": "sounds", "what": "sound take stone.impact.large:1 (3 s, seed 767751)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:26:32.531Z", "by": "sounds", "what": "audio QA timber.crack:0 (qa-sounds, round 2, 2 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:26:32.531Z", "by": "sounds", "what": "audio QA timber.crack:1 (qa-sounds, round 2, 2 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:26:32.531Z", "by": "sounds", "what": "audio QA timber.crack:2 (qa-sounds, round 2, 2.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:26:32.531Z", "by": "sounds", "what": "audio QA bell.clang:0 (qa-sounds, round 2, 4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:26:32.531Z", "by": "sounds", "what": "audio QA bell.clang:1 (qa-sounds, round 2, 4 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:26:32.531Z", "by": "sounds", "what": "audio QA stone.break:0 (qa-sounds, round 2, 2.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:26:32.531Z", "by": "sounds", "what": "audio QA stone.impact.large:1 (qa-sounds, round 2, 3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:27:31.049Z", "by": "sounds", "what": "sound take ambience.market:0 (40 s, seed 99930)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:27:28.939Z", "by": "sounds", "what": "sound take stone.break:2 (2.5 s, seed 672192)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:27:30.407Z", "by": "sounds", "what": "sound take stone.impact.large:0 (3 s, seed 767750)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:28:38.901Z", "by": "sounds", "what": "audio QA ambience.market:0 (qa-sounds, round 3, 40 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.08}
+{"at": "2026-10-14T20:28:38.901Z", "by": "sounds", "what": "audio QA stone.break:2 (qa-sounds, round 3, 2.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:28:38.901Z", "by": "sounds", "what": "audio QA stone.impact.large:0 (qa-sounds, round 3, 3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:28:38.934Z", "by": "sounds", "what": "audio QA ambience.market:0 (targeted question, 40 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.08}
+{"at": "2026-10-14T20:29:01.266Z", "by": "sounds", "what": "sound take timber.crack:2 (2 s, seed 457102)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-14T20:30:28.197Z", "by": "sounds", "what": "audio QA timber.crack:2 (qa-sounds, round 4, 2 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:30:28.219Z", "by": "sounds", "what": "audio QA tile.clatter:1 (targeted question, 3 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:30:28.219Z", "by": "sounds", "what": "audio QA timber.groan:0 (targeted question, 3.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-14T20:30:28.219Z", "by": "sounds", "what": "audio QA stone.break:1 (targeted question, 2.5 s)", "endpoint": "fal-ai/audio-understanding", "costUSD": 0.01}
+{"at": "2026-10-19T09:59:31.630Z", "by": "phase-f reactions", "what": "sound take bell.ping:0 (4 s, seed 2460)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-19T09:59:19.587Z", "by": "phase-f reactions", "what": "sound take bell.ping:1 (4 s, seed 2461)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-19T09:59:14.797Z", "by": "phase-f reactions", "what": "sound take sign.creak:0 (3.5 s, seed 965340)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}
+{"at": "2026-10-19T09:59:17.880Z", "by": "phase-f reactions", "what": "sound take sign.creak:1 (3.5 s, seed 965341)", "endpoint": "fal-ai/stable-audio-3/medium/text-to-audio", "costUSD": 0.0376}

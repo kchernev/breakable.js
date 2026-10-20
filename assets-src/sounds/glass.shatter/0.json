@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A window pane shattering: a bright explosive crash of breaking glass with shards scattering and tinkling. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 664320,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c1/grpzwzjBxkFjtlW2l0Z5g_ovAIkiuy.flac"
+}

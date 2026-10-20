@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "An old wooden frame building straining under its own weight just before it gives way: long, low groaning creaks of timber beams, nails squealing as they pull out, a few boards cracking. Slow and ominous. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 493922,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae634b/ZTylWRtigHMhABymrkTe8_7LfiGaEf.flac"
+}

@@ -1,0 +1,52 @@
+{
+  "launcher": {
+    "file": "launcher.glb",
+    "muzzle": [
+      0.0,
+      0.0,
+      -0.6303
+    ],
+    "rear": [
+      0.0,
+      0.0,
+      0.4694
+    ],
+    "size": [
+      0.1629,
+      0.3595,
+      1.0997
+    ],
+    "triangles": 15839,
+    "description": "Fictional shoulder-fired launcher: olive-drab tube, worn paint, pistol and front grips, optical sight on the left."
+  },
+  "rocket": {
+    "file": "rocket.glb",
+    "size": [
+      0.1044,
+      0.1108,
+      0.75
+    ],
+    "triangles": 3959,
+    "description": "Fictional finned rocket: olive warhead with a pale yellow band, gunmetal motor, three fins."
+  },
+  "gun": {
+    "file": "gun.glb",
+    "muzzle": [
+      0.0,
+      0.0,
+      -0.6961
+    ],
+    "eject": [
+      0.0235,
+      0.009,
+      -0.185
+    ],
+    "size": [
+      0.0775,
+      0.3179,
+      0.9994
+    ],
+    "triangles": 24332,
+    "description": "Fictional light machine gun: olive-drab receiver, ventilated shroud and stock, ported muzzle brake, box magazine, rail with a rear aperture sight."
+  }
+}

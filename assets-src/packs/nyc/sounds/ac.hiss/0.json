@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A window air conditioner unit hit hard: a tinny metallic clank, then pressurised refrigerant gas hissing out of a punctured copper pipe, loud at first and dying away over two seconds as the fan rattles to a stop. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, explosion, gunshot, kettle, whistle, train, steam engine",
+  "duration": 3,
+  "seed": 523580,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefe0a/k6JzGNhuY2cMlwwdLRDkm_lJdgLU3h.flac"
+}

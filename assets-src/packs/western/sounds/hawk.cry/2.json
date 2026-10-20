@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A single red-tailed hawk crying once high over open desert: one long, harsh, raspy descending screech, heard from far away with a faint echo off distant cliffs, then silence. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, songbirds, chirping, many birds",
+  "duration": 4,
+  "seed": 677922,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae634a/Kpze-TVf8-5ZdJcFNPn4O_oH5WKNDH.flac"
+}

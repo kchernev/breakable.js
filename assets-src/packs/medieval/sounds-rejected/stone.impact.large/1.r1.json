@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A heavy cut stone block falling from a height and slamming onto a cobblestone square: a deep, heavy, weighty thud, a stony crunch as a corner breaks off, then a short rattle of stone chips. Bassy and heavy. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 766751,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6360/lo1ISlRKsOZHxofrRaA4-_D2buTHcV.flac"
+}

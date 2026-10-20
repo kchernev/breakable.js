@@ -1,0 +1,474 @@
+{
+  "launcher.fire:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60b9/JUX3a-nGkWHhNmVZfirBY_Q0Qx4ysK.flac",
+    "answer": "HEAR: A hard, punchy thump of the launch (0.0s), followed by a fierce rushing whoosh that fades quickly.\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "launcher.fire:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60b9/1GsIe4UIKMA1m647xBI-f_y40mBxqC.flac",
+    "answer": "1. HEAR: (0.0s) A hard, punchy thump, immediately followed by (0.1s) a fierce rocket whoosh that rapidly fades away.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "launcher.reload:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6166/9rzWhlrs-yj5GMMztjca4_ZNsdDMuy.flac",
+    "answer": "HEAR: A metallic scrape (0.0s), a heavy clunk as the object seats (0.6s), and a final latch click (0.8s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "launcher.fire:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60b9/qcgQLJ_bikuZykkvhe-1r_xgmyXGFq.flac",
+    "answer": "HEAR: 0s: A deep, punchy thump. 0.1s: A fierce, fiery whoosh that rapidly fades into the distance.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "rocket.loop:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60b9/nRq9e37tjK8gZGha21G_u_PI099dh1.flac",
+    "answer": "1. HEAR: 0s-9s: A steady, continuous roar, hiss, and crackle of a small rocket motor.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "launcher.reload:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60b9/DljglM9wzUG7E6N0OYsef_RnsBNJv3.flac",
+    "answer": "HEAR: Initial sharp click (0.0s), heavy metallic clunk (0.5s), final latching click (1.3s).\nPROBLEMS: none.\nSCORE: 7"
+  },
+  "rocket.loop:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60b9/Qptnor9cZNbZVwVT9-X8y_w6KBJ1DN.flac",
+    "answer": "1. HEAR: 0:00 - 0:04: A sustained, loud roar and hiss with crackling, consistent throughout.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "rocket.flyby:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60b9/TaRFaL_7g2CuUY8yJL06o_X0NbYrcA.flac",
+    "answer": "1. HEAR: (0.0s) A fast whoosh with a strong Doppler shift and jet hiss passes by and away.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "rocket.flyby:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60ba/HTrMnKmvQc7wqjIn-MEbY_56P8eggo.flac",
+    "answer": "1. HEAR: A rushing hiss approaches (0.0s), whooshes past with a fast Doppler shift (0.6s), and quickly recedes.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "explosion.near:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60ba/dNiEWyH8TvkOse2rLuTPJ_oPKPhHDD.flac",
+    "answer": "HEAR: (0s) A massive, deep explosion with a sharp crack, followed by (0.5s+) a shower of crumbling bricks and debris with a prominent outdoor echo.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "explosion.near:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60ba/x4LRHYb3o_MXolbB50pU5_i2msymuJ.flac",
+    "answer": "1. HEAR: 0s: A massive, deep explosion with a sharp crack. 0.5s+: Bricks and debris crumble and rain down with a long outdoor echo.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "explosion.near:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60ba/bkBLrh0JD6tbjTORlGUCY_swnIvDmc.flac",
+    "answer": "1. HEAR: 0s: A deep, powerful sub-bass boom and sharp crack, followed by bricks and debris crumbling and raining down with a long outdoor echo.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "explosion.near:3": {
+    "url": "https://v3b.fal.media/files/b/0aae60ba/0BvDj0l2izjKUX0kCPe3q_D4yRx1J3.flac",
+    "answer": "1. HEAR: 0s: Massive sub-bass boom and sharp crack. 0.5s+: Bricks and debris crumbling and raining down.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "explosion.far:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60ba/Bw9aNi6a3mxOFn53cVsCJ_pu0vbqQw.flac",
+    "answer": "1. HEAR: (0s) A deep, muffled boom, which (1s) rolls into a long, reverberant rumble.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "explosion.far:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60ba/FJ6Nk_wHeyTrJr2vnPNGH_gPmmgv3y.flac",
+    "answer": "HEAR: (0s) Deep, muffled boom, followed by (1s) a rolling echo and a long, rumbling tail.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "explosion.far:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60ba/Ycpyq-9JONBY6QpSV1vlA_If4jJQ3L.flac",
+    "answer": "1. HEAR: 0s: A deep, muffled boom, followed by rolling echoes and a long, low-frequency rumbling tail.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "explosion.debris:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60bb/kxNX73H4B7gOJ_fsI92AO_uS17NBNH.flac",
+    "answer": "HEAR: (0-1s) A crash and a shower of falling debris. (1-4s) A mix of heavy thuds and light pattering clatter from bouncing rocks and stones, fading out.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "explosion.debris:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60bb/NJBJokXbu3y_T4OulISpO_1SBaVZVe.flac",
+    "answer": "1. HEAR: A dense shower of falling rocks and bricks (0s), which thins out to scattered thuds and clatter (2s), then fades (4s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "explosion.debris:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60bb/l7cauHEz9R0nWZOun0Agr_Y69EF2t6.flac",
+    "answer": "1. HEAR: (0s) A heavy crackle and thud, followed by (0-5s) a shower of rocks and debris of various sizes clattering, thudding, and bouncing as they settle.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "brick.break:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60bc/j1nh-G49Y03oFYEcxfuB3_kfvWBKFP.flac",
+    "answer": "1. HEAR: A sharp, loud crack at 0s, followed by crumbling debris and mortar.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "brick.break:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60bc/VcpPb2WkhEJW5-p_l9P1O_BGmgg5Mj.flac",
+    "answer": "1. HEAR: 0s: A sharp, loud crack. 0s-: Crumbling, falling bricks and debris.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "brick.break:3": {
+    "url": "https://v3b.fal.media/files/b/0aae60bf/O4jfHC0P3VDG3MSlIhnUn_CPXDzBhA.flac",
+    "answer": "HEAR: A sharp crack (0s), followed by the sound of crumbling bricks and falling debris (0.1s-end).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "brick.break:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60bc/BVZ9EsKLS9F5TdeopbSiQ_F9xxObCA.flac",
+    "answer": "1. HEAR: 0:00 A sharp crack, followed by crumbling bricks and debris.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "brick.impact.small:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60bf/JV-tjH1P70d1zQWxizD2G_qPzWcGrh.flac",
+    "answer": "HEAR: A sharp, hard knock (0.0s) immediately followed by a short gravelly crumble (0.1s).\nPROBLEMS: none.\nSCORE: 10."
+  },
+  "brick.impact.small:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60bf/tQFjpj7Y2NZaieLPCydAn_puhPk4qw.flac",
+    "answer": "HEAR: (0.0s) Hard knock of a dense object on pavement, followed by a short, gritty crumble.\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "brick.impact.small:3": {
+    "url": "https://v3b.fal.media/files/b/0aae60bf/l0X-aUa3pI7GXb80Jxv57_bsOWrhbN.flac",
+    "answer": "HEAR: 0.0s: A short, hard knock. 0.1s: A brief, gravelly crumble and scrape.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "brick.impact.small:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60bf/xIyHTghHOmAqGQgoUU60E_2NpyN8GU.flac",
+    "answer": "HEAR: 0.0s: Hard thud. 0.1s: Brief gravelly debris crumble.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "brick.impact.small:4": {
+    "url": "https://v3b.fal.media/files/b/0aae60c0/pMBXoYR0JC65GIGjiZjFw_IWFUwlfB.flac",
+    "answer": "HEAR: Hard knock (0.0s), followed by a short, gritty crumble (0.1s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "brick.impact.small:5": {
+    "url": "https://v3b.fal.media/files/b/0aae60c0/naEC9Kr6OICeYbEcn03Bi_PepVWOOt.flac",
+    "answer": "HEAR: 0:00 Hard knock followed by a short, gravelly crumble.\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "brick.impact.large:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6166/ZPlvT5E3Px6XoNV1uHiHH_tUiNdhsb.flac",
+    "answer": "1. HEAR: 0.0s: Heavy, low thud. 0.2s: A loud crunch and shatter. 0.8s: Short debris rattle.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "brick.impact.large:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6168/gWHRU0d3l0dXbe3IUeHbY_OzwynDWs.flac",
+    "answer": "1. HEAR: 0.0s: A deep, heavy thud. 0.2s: Crunching of bricks breaking apart. 0.5s: A brief rattle of debris.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "brick.impact.large:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c0/dUgL80V6f0gDzmKCj2rdw_Vo28E50m.flac",
+    "answer": "HEAR: (0s) Sharp CRACK, (0.1s) deep heavy CRUMP, (0.2s+) crumbling bricks and dust.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "brick.impact.large:3": {
+    "url": "https://v3b.fal.media/files/b/0aae60c0/OWzonqiXC5EFy8qvxETTj_T1WSgfge.flac",
+    "answer": "1. HEAR: A sharp crack, followed by a deep thud (0.1s) and the sound of crumbling, scattering debris (0.5s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "brick.debris:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c0/3-qZYnvWEUNob27kin3iB_TY0XJTFV.flac",
+    "answer": "1. HEAR: (0.0s) A sharp clatter, then a quick patter and rattle of small pieces settling (0.1s - 0.4s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "brick.debris:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c0/ypJ3RVFnEZ0oM7Md1I313_qtRGNpmz.flac",
+    "answer": "1. HEAR: 0.0s: A quick, rattling clatter of small objects scattering and settling.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "brick.debris:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c0/QAr_lp6LocUeMIUhw07y9_WsqEJle4.flac",
+    "answer": "HEAR: (0.0s) A short, rattling clatter of small, hard objects scattering.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "brick.debris:3": {
+    "url": "https://v3b.fal.media/files/b/0aae60c0/d-ou0KK3J0Ozv4NaX1vrB_C94D1duw.flac",
+    "answer": "1. HEAR: 0:00 A short, sharp clatter and rattle of small, hard objects scattering.\n2. PROBLEMS: None.\n3. SCORE: 10"
+  },
+  "concrete.break:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c0/ULgGUgKg2POapGSG-kzi-_SHUdq9JV.flac",
+    "answer": "1. HEAR: A sharp, loud snap (0.0s) followed by a crunchy, crumbling break (0.1s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "concrete.break:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/6qWSzvYhqQsl9GBUkY0wI_HuGlXf1N.flac",
+    "answer": "1. HEAR: (0.0s) A loud, sharp snap, (0.2s) a heavy grinding crunch, (0.6s) crumbling debris.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "concrete.break:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/raTY2cOKXVp1ktBNE4Ogz_9oYgIGCM.flac",
+    "answer": "1. HEAR: A loud, sharp snap (0:00), followed immediately by a quick burst of cracking and crumbling debris (0:00-0:01).\n2. PROBLEMS: none\n3. SCORE: 9"
+  },
+  "concrete.impact:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/4tpZ04Em3ZmpD3sFTmCnF_LIZvinBr.flac",
+    "answer": "HEAR: 0s: A massive, dull thud. 0.1s: The crackle and crumble of debris.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "concrete.impact:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/_StMGuK5_aK7DrXPpBuCi_d0TYaaSF.flac",
+    "answer": "HEAR: 0.0s: A massive, deep thud. 0.1s: Followed by sharp cracks and crumbling debris.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "concrete.impact:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/WLvYn-SWx6qycV_lLdoo9_uLO3lnj5.flac",
+    "answer": "HEAR: A massive, bassy thud (0:00) with simultaneous cracking and a tail of crumbling rubble.\nPROBLEMS: none\n10"
+  },
+  "concrete.impact:3": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/CZDYyjzJ88La5aRtVT2vV_Ykk2kLka.flac",
+    "answer": "1. HEAR: (0.0s) A massive, dull slam, followed by a short, crunchy crumble.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "glass.shatter:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/grpzwzjBxkFjtlW2l0Z5g_ovAIkiuy.flac",
+    "answer": "HEAR: (0:00) A sharp, bright crash of shattering glass, followed by the tinkling of scattered shards.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "glass.shatter:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/Rf9VZrTAnspp8QUucKuVs_OigPIvsO.flac",
+    "answer": "1. HEAR: 0s: Bright, explosive glass crash, followed by scattering shards and tinkling.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "glass.shatter:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/jFfAN4NnepT8ljCtwEr-p_zTosuXHM.flac",
+    "answer": "HEAR: 0:00 A sharp crack, followed by an explosive crash and the tinkling of scattered shards.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "glass.shatter:3": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/NoNA97J__qDoy7FJLfwRb_1BmiM64F.flac",
+    "answer": "HEAR: (0.0) Sharp CRASH, (0.1) a cascade of shattering, (0.7) a few final tinkles.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "glass.shatter:4": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/18BiR--i7alSD8YVziSQ8_12Jt2zL6.flac",
+    "answer": "1. HEAR: (0s) A sharp, loud crash of breaking glass. (0.1s onward) A cascade of falling shards and tinkling.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "glass.debris:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c1/CcNBr0MqhhC5tmjZNgMvQ_yp8EcVbI.flac",
+    "answer": "1. HEAR: A quick, scattered cascade of bright, tinkling and clinking sounds.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "glass.debris:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c2/6bNJlM46SlP9LiDuIKjJC_eRvynLoI.flac",
+    "answer": "1. HEAR: (0s) A scattered fall of light, bright, tinkling glass shards, settling over two seconds.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "glass.debris:2": {
+    "url": "https://v3b.fal.media/files/b/0aae616d/q332CR68nRnuckjS8TqB7_wbIHrLSV.flac",
+    "answer": "HEAR: 0-1s: A cascade of bright, glassy shards hitting a hard surface, followed by a few stray tinkles.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "wood.break:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c2/1bvPr34C_GwJ881GR4VRc_RkY7Fqws.flac",
+    "answer": "HEAR: 0.0s: A sharp, percussive crack followed immediately by a splintering crunch.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "wood.break:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c2/dkLqMTkB-BYF9ylbCRLB6_5juu9M1g.flac",
+    "answer": "HEAR: (0:00) A sharp, loud crack followed immediately by a splintering, crunching sound.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "wood.break:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c2/49dqxWI1HNJfipIL5FRgg_iKbPvuOW.flac",
+    "answer": "HEAR: (0.0s) A sharp crack of wood, followed immediately by (0.1s) a splintering crunch.\nPROBLEMS: none\n10"
+  },
+  "wood.impact:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c2/aiknbSQWaZnUqT9xb9SGZ_QY1ODBDD.flac",
+    "answer": "HEAR: (0.0s) A hollow wooden knock, followed by a short clatter.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "wood.impact:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c2/9FpClTnOC7SBd0-v9WnlY_FNeb8us6.flac",
+    "answer": "HEAR: (0:00) A single, hollow wooden knock.\nPROBLEMS: none\nSCORE: 6"
+  },
+  "wood.impact:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c2/w8qljiT7b5UtBWSsttOVt_hnb2ezxg.flac",
+    "answer": "1. HEAR: (0.0s) A hollow wooden knock, followed immediately by (0.1s) a short, light clatter.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "metal.impact.small:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c2/bhGcgqQ6uX-7iNVb094pH_tJNzLDXt.flac",
+    "answer": "1. HEAR: 0.0s: A sharp, hard metallic clang with a very short ring.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "metal.impact.small:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c2/npXm77ElaarU4MxTzCBrp_x4kIwPZR.flac",
+    "answer": "1. HEAR: 0.0s: A sharp, metallic CLANG with a short, bright ring that fades out.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "metal.impact.small:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c2/TgqvcRplssoQ1iqYrjCA2_o2OWGPC2.flac",
+    "answer": "HEAR: 0.0s: A sharp, hard metallic clang. 0.1s: A short, high-pitched ring fades quickly.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "metal.impact.small:3": {
+    "url": "https://v3b.fal.media/files/b/0aae60c2/dK59WAOjx9-mXWfq5A6WM_ILCNauBu.flac",
+    "answer": "1. HEAR: 0.1s: Hard metallic clang with a short, high-pitched ring.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "metal.impact.large:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c3/exWy0wA_g0vSbXwvpqmCI_KspAV8vN.flac",
+    "answer": "1. HEAR: (0s) A loud, heavy metallic crash, followed by (0-3s) a cascade of clanging, banging, and rattling steel.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "metal.impact.large:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c3/3DW3-1gywi7H14nfTetku_Kn7cKnTy.flac",
+    "answer": "1. HEAR: 0s: A loud, heavy metallic crash followed by a quick succession of clanging, banging, and rattling.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "metal.bend:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c4/-I1wnKFr0E5sNnUeHKO1x_DO8bEl5v.flac",
+    "answer": "HEAR: (0s) Sharp metallic impact, followed by (1s) a deep groaning and screeching of stressed metal.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "metal.impact.large:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c3/Xs_PiF9IL__mJc08sLZNw_6rquHbbg.flac",
+    "answer": "HEAR: A loud, heavy metallic crash (0:00) followed by continued clanging, banging, and rattling steel.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "metal.bend:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c3/tuYVdaeuDZ0aDV5veQPzj_ZfvPihXA.flac",
+    "answer": "1. HEAR: (0:00) A deep metallic groan, followed by (0:02) high-pitched screeching and a (0:03) sharp pop.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "metal.bend:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c3/bmZEBt9WcntLuHrg_3cQS_sUaVMrSo.flac",
+    "answer": "1. HEAR: A deep, resonant metallic groan and creak (0:00) builds with a high-pitched screech and tearing sound (0:01).\n2. PROBLEMS: none\n3. SCORE: 9"
+  },
+  "collapse.rumble:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c4/_KhyN1WJgRect05fdAg8j_Bc98bkVA.flac",
+    "answer": "1. HEAR: A deep rumble of crumbling masonry, followed by a heavy crash of bricks and debris, then fading out.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "collapse.rumble:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c4/aHj8_GOouaGNQaWSXtX3S_Kvvv5cD3.flac",
+    "answer": "1. HEAR: 0s: Sharp crumbling, followed by a heavy avalanche of bricks and debris with a long fade.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "collapse.rumble:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c4/sGBljLd3T4HZ0v4gzsgbp_Bxyce633.flac",
+    "answer": "1. HEAR: (0-3s) A deep rumble of crumbling masonry grows into a heavy crash of bricks, then fades.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "structure.creak:0": {
+    "url": "https://v3b.fal.media/files/b/0aae616c/OcPWiABbXkuwsdRnWroWx_XuLal9CT.flac",
+    "answer": "1. HEAR: 0s: Deep, low grinding and rumbling. 0-4s: Stone scraping, mortar cracking, and trickling debris.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "structure.creak:1": {
+    "url": "https://v3b.fal.media/files/b/0aae616c/DeIBa7FxCbYL_IRWsD6GO_EzVvmgmu.flac",
+    "answer": "HEAR: (0:00) Deep, low grinding rumble. (0:02) Higher-pitched scraping and cracking. (0:04) A final trickle of debris.\nPROBLEMS: none\n10"
+  },
+  "structure.creak:2": {
+    "url": "https://v3b.fal.media/files/b/0aae60c4/nIBeoY0cqt6PO9IHb6Cch_lY0qzqxy.flac",
+    "answer": "1. HEAR: 0s-end: A deep, ominous grinding of stone with the simultaneous sound of small, trickling debris.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "dust.settle:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c4/Yaw7reuqB1HUR6y4yxrCq_H1aMuza8.flac",
+    "answer": "1. HEAR: 0:00-0:06: A soft, continuous hiss of fine sand and debris trickling.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "dust.settle:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c4/2J-4b8tMbxcsgQMhgx4FV_hP4lpKsl.flac",
+    "answer": "1. HEAR: 0:00-0:05: A soft, continuous hiss and trickle of sand-like debris.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "steps.asphalt:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c4/brOSYerkwqn31LsQfleSe_y795Qlye.flac",
+    "answer": "1. HEAR: 0-10s: A person wearing boots walks at a steady pace on a hard, gritty surface like asphalt.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "steps.rubble:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c5/C7GBznbE0fDxHFsUV3fqx_5KYjEQez.flac",
+    "answer": "1. HEAR: 0s - 6s: A series of eight steady, crunchy footsteps on a gravelly, rubble-like surface.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "player.land:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c5/D0VELebkZApJ7WtvVR5B2_aWjfeSlZ.flac",
+    "answer": "1. HEAR: 0.0s: A single heavy thud immediately followed by a short scuff.\n2. PROBLEMS: none\n3. 10"
+  },
+  "player.land:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c6/TjuJEADuvBST28g_23fC9_I0JrGTNc.flac",
+    "answer": "HEAR: 0.0s: A heavy thud followed by a very brief scuff.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "ambience.city:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c5/ZyYvG6QAstm4YMdi1P1V3_MQsMjt1d.flac",
+    "answer": "1. HEAR: 0:00 Distant traffic hum and bird chirps. 0:10 Closer car pass-by. 0:20 Pigeon coos. 0:35 Distant car horn.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "ambience.wind:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c6/GnufWrQUuFMZX38JYfogr_OmG7GVW0.flac",
+    "answer": "HEAR: 0:00-0:22 A continuous, low, rumbling wind with subtle, airy whooshes.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "alarm.car:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c5/X8tSsUuO8RDSRXQHOaz-K_nbwXiJub.flac",
+    "answer": "1. HEAR: 0:00 A car alarm cycles through its siren and whooping tones.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "alarm.car:1": {
+    "url": "https://v3b.fal.media/files/b/0aae60c5/5RFyVCIr2A_uwWSdk3WYL_O7YmRXvZ.flac",
+    "answer": "1. HEAR: 0:00-0:28 A car alarm cycles between a fast, high-pitched siren and a series of whooping tones.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "siren.far:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c5/vX6nTfLlG8KG7Zfr2t7Md_Hu8KwXWs.flac",
+    "answer": "1. HEAR: (0:00) A distant siren wails, echoing. (0:12) A second, different siren starts. (0:27) Multiple sirens overlap and move through the city.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "fire.loop:0": {
+    "url": "https://v3b.fal.media/files/b/0aae60c5/MITt5jdgXz2V12u7JbIDs_rwnhNWcA.flac",
+    "answer": "1. HEAR: 0:00 - Steady, close-up fire crackle with occasional sharp pops and snaps.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "gun.tail:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9c92/UUtQ8htjLrxFhMsmvlCM8_OKFaS74o.flac",
+    "answer": "HEAR: (0.0s) A loud gunshot crack. (0.1s) A complex, rumbling reverb tail with distinct slapback echoes, decaying.\nPROBLEMS: The initial gunshot is present, but the prompt requested only the echo.\nSCORE: 4"
+  },
+  "gun.shot:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9c84/oHwbOZdzZCZG0dmpHUrax_Kw8cxwps.flac",
+    "answer": "1. HEAR: 0.0s: A sharp, punchy gunshot with a low-end thump, immediately followed by a 0.1s: metallic action clack.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "gun.shot:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9c84/Wrx2SJBiTIOLt-jCfgn4R_baZF4hMi.flac",
+    "answer": "1. HEAR: 0.0s: A sharp crack and deep thump. 0.2s: The metallic clack of the action.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "gun.reload:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9c51/2n2KcsP1Kmr_NN_CqJfHJ_E7TkvYQP.flac",
+    "answer": "HEAR: (0.1s) Magazine release click. (1.0s) New magazine inserted with a firm snap. (1.8s) Charging handle pulled and released with a sharp clack.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "gun.tail:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9c85/4cCOs31Ox4FWKQw0Zy6ZQ_4bxFvUqW.flac",
+    "answer": "1. HEAR: (0.0s) A loud, sharp explosion, followed immediately by (0.1s) a low, rolling rumble and slapback echoes that decay into silence.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "gun.tail:2": {
+    "url": "https://v3b.fal.media/files/b/0aae9c92/uVR2-PgElLQBKohoZEb-k_jmqJSYf2.flac",
+    "answer": "1. HEAR: 0s: A loud gunshot crack. 0s-2s: A dense, rumbling reverberation with sharp slapback echoes, decaying into silence.\n2. PROBLEMS: The sound includes the initial gunshot crack, not just the reverberation as requested.\n3. SCORE: 4"
+  },
+  "gun.reload:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9c51/t8LGPR3cAAm8vHKgFb9g5_keMGaxGU.flac",
+    "answer": "HEAR: Click and scrape of mag out (0.5s), a firm clack of the new mag (1.0s), a sharp ch-chk of the bolt (1.8s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "gun.empty:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9c52/hB_0pFgjt_eW_uaAnFlZI_AbQelYxi.flac",
+    "answer": "HEAR: (0.0s) A single, sharp metallic click.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "gun.empty:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9c52/zhsIaNU45kZKF3nPOTzmn_MO0dvsK6.flac",
+    "answer": "1. HEAR: 0.1s: A single, sharp, dry metallic click.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "casing.drop:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9c53/PpOPzCw7QQSQtGiFwyMu0_peqKd0nm.flac",
+    "answer": "HEAR: A sequence of single, high metallic pings with brief rattles, spaced about one second apart.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "casing.drop:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9c53/41h3jzDsQEC2zk_ySAjMU_23VMKYvj.flac",
+    "answer": "HEAR: 0s: Bright metallic tink and bounce. 2s: Tink. 4s: Tink. 5s: Tink.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bullet.brick:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9c53/ArIxACWOHm7BgmivjFOzl_aev0lknm.flac",
+    "answer": "HEAR: 0s, 1.5s, 3s, 4.5s: Sharp, dry cracks with a brief gritty scatter.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bullet.concrete:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9c53/Q9l_JjLE_hNAjJTQI5fDw_4IdWKJX7.flac",
+    "answer": "1. HEAR: Five sharp stone impacts, each with a brief spray of grit, at 0:00, 1.5s, 3.0s, 4.5s, and 6.0s.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "bullet.metal:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9e56/uHuTYbEXs_j5rVXp0Gb3T_GiXKXwCh.flac",
+    "answer": "HEAR: 0-3s: Four sharp, bright metallic pings, one per second. 4s, 5.5s: Two duller, heavier metallic clanks.\nPROBLEMS: none\nSCORE: 7"
+  },
+  "bullet.wood:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9c53/gNqhEWVDGMwxEKZOJI1VB_ZD4Ch348.flac",
+    "answer": "1. HEAR: A series of six sharp wood impacts at 0s, 1.5s, 3s, 4.5s, 6s, and 7.5s.\n2. PROBLEMS: none\n3. SCORE: 7"
+  },
+  "bullet.glass:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9c54/xtyC7NHcO1aGoec9GgoyP_YWSsAn6L.flac",
+    "answer": "HEAR: 0s, 2s, 3s, 5s, 6s: A sharp crack followed by a small glass shatter.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bullet.dirt:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9c53/o38bPcaifdsyym7fB7fn6_nVEfZd2R.flac",
+    "answer": "1. HEAR: (0:00-6:30) Six soft, muffled thuds with a light debris spray, about 1.2 seconds apart.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "bullet.ricochet:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9c54/613hdTxbaTjUEag9Vyecr_z2Lh3S30.flac",
+    "answer": "HEAR: 0.0s: A sharp, metallic ping. 0.1s: A high whining whistle flies away and fades.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bullet.ricochet:0": {
+    "url": "https://v3b.fal.media/files/b/0aae9cc3/IFIsoZfMwCgFrbAbjuyYv_8vjrlAdp.flac",
+    "answer": "HEAR: A sharp ping (0.0s), then a high whining whistle that quickly fades (0.1s-0.8s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bullet.ricochet:2": {
+    "url": "https://v3b.fal.media/files/b/0aae9c54/wgfi9n6PpsGkqaB7uOOGz_sTPwEJS0.flac",
+    "answer": "HEAR: (0.0s) Sharp, high-frequency ping; (0.1s) High-pitched whistle that quickly fades out.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "gun.shot:3": {
+    "url": "https://v3b.fal.media/files/b/0aae9c91/V7-GJRH5Yi-t5wDh9dk-i_0VPYDETM.flac",
+    "answer": "HEAR: A sharp crack and thump (0.0s), followed by a metallic clack (0.1s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "gun.shot:2": {
+    "url": "https://v3b.fal.media/files/b/0aae9c91/QsIVlPw9oGroGr0Cq_8AC_vDSTucpE.flac",
+    "answer": "HEAR: (0.0s) A loud, sharp crack and low thump; (0.1s) a quick metallic clack of the action.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "gun.shot:4": {
+    "url": "https://v3b.fal.media/files/b/0aae9c92/VNul0e-ttOeaE2rJjxvJn_y9cu0NEE.flac",
+    "answer": "HEAR: 0.0s: Sharp crack and deep thump; 0.1s: Metallic clack.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "gun.shot:5": {
+    "url": "https://v3b.fal.media/files/b/0aae9c93/kTn2-1MfupH6ERJfkdwSG_0hYFI0EM.flac",
+    "answer": "1. HEAR: 0.0s: A sharp crack and deep thump of the shot; 0.1s: A metallic clack of the action.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "gun.shot:6": {
+    "url": "https://v3b.fal.media/files/b/0aae9c92/OGEPkyGZ2JvvJ2fmrA61F_RtwLYjiH.flac",
+    "answer": "HEAR: 0.0s: Sharp gunshot crack and thump. 0.1s: Metallic clack of the action.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "gun.shot:7": {
+    "url": "https://v3b.fal.media/files/b/0aae9c92/0mepBiNOCK4YWXCTpX_M3_DyieyJnR.flac",
+    "answer": "HEAR: 0.0s: Sharp crack and deep thump, followed by a metallic clack.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bullet.concrete:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9c93/A9-pDdgr_qdwpRjIac-oE_FG8QGnTI.flac",
+    "answer": "HEAR: A sequence of eight sharp, high-pitched snaps, roughly one second apart.\nPROBLEMS: none\nSCORE: 6"
+  },
+  "bullet.brick:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9c93/qBIbNytST0kwEoQuE_cvN_PF2gWXPn.flac",
+    "answer": "HEAR: (0s) Crack-shatter, (1.6s) crack-shatter, (3.2s) crack-shatter, (4.8s) crack-shatter.\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "bullet.metal:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9c93/gmrkapFJeUGhyXHEBewJS_i3tLtC7C.flac",
+    "answer": "HEAR: Six sharp metallic spangs at 0s, 1.5s, 3s, 4.5s, 6.5s, and 7.5s.\nPROBLEMS: none\nSCORE: 9"
+  },
+  "bullet.glass:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9c93/a7zTHq2CBSpIIgSHqKV19_rdUpmZkU.flac",
+    "answer": "HEAR: A sharp crack and glass shatter at 0s, 1s, 2s, 4s, and 5s.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bullet.dirt:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9cb4/1CaAiOW_FEnzR0D0afhjh_XK7scd5J.flac",
+    "answer": "HEAR: A series of soft thuds followed by debris patter, each about one second apart.\nPROBLEMS: none\nSCORE: 9"
+  },
+  "bullet.wood:1": {
+    "url": "https://v3b.fal.media/files/b/0aae9e56/pNiolmy-2D5KIIBQATdhJ_Q0aRDDiN.flac",
+    "answer": "1. HEAR: Four separate, dull thunks with wood splintering at 0s, 2s, 4s, and 6s.\n2. PROBLEMS: none\n3. SCORE: 9"
+  }
+}

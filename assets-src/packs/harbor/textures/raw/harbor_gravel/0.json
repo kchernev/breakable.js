@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of a compacted crushed-stone sub-base under a concrete pavement, seen from directly above: grey angular crushed granite aggregate, stones 10 to 40 mm with sharp broken edges in mid and dark greys with a few bluish and pale ones, packed with finer grit, sand and grey stone dust between them, a few larger stones up to 60 mm, slightly damp, dusty. Evenly spread, no soil, no plants, no larger rocks, no colour cast. The frame shows a 1 m × 1 m patch. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-16T16:48:35.212Z",
+  "url": "https://v3b.fal.media/files/b/0aaea220/fOrtNyWk2t1_H8DZtmCwv_JwM7i6Wb.png"
+}

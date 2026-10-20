@@ -1,0 +1,146 @@
+{
+  "gulls.call:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6353/F0JlwiCZgLQz9gtT4woP6_kkldygpb.flac",
+    "answer": "1. HEAR: 0:00 A short gull cry, followed by a longer laughing call sequence at 0:01.\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "gulls.call:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6353/HdwsV3HeCprXJ-rJXv4ok_jgmYjxTz.flac",
+    "answer": "HEAR: 0s: A loud gull cry. 1s: A second gull cry. 2s: A final, longer cry.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "gulls.call:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6353/baMWS_VnyAg3iUsYI6AZM_r5GHIxWA.flac",
+    "answer": "1. HEAR: (0s) Gull cry. (0.5s) Gull cry. (1.5s) Longer, wailing gull cry.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "gulls.scatter:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6353/v1L0BrPPP4OtuHFwG5jUP_UttB8rh1.flac",
+    "answer": "1. HEAR: A sudden burst of loud, panicked seagull screeching and wing flaps (0s), which quickly fade as the flock flies away overhead (1-7s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "water.lap:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6353/EcoX8BzCMq-1kSpdms7wr_sCAuDhVs.flac",
+    "answer": "HEAR: 0:00 gentle sloshing; 0:02 a larger splash; 0:05 gurgles and laps; 0:09 a wet slap.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "ambience.harbor:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6353/zynzL-3thqw9SspZw38yl_wcgTCod6.flac",
+    "answer": "1. HEAR: Low, steady rumble of a distant engine and soft water lapping throughout. Faint, distant bird-like sounds (e.g., 0:04).\n2. PROBLEMS: none\n3. SCORE: 9"
+  },
+  "gulls.scatter:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6354/l-MCYNhYMInCXD06QKt0N_hpLioV4i.flac",
+    "answer": "1. HEAR: 0s: A burst of screeching seagull alarm cries and flapping wings. The flock sounds remain present, then abruptly stop.\n2. PROBLEMS: none\n3. SCORE: 6"
+  },
+  "ship.horn:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6353/ZQQuuvp_kZjkYIOm5AeGl_qEE0Qv6a.flac",
+    "answer": "1. HEAR: 0:01 A deep foghorn blast for four seconds, followed by a long, rolling echo that fades.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "water.splash:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6353/rsdOQPQWlPP6qeozkQ0cZ_ojSB5T9l.flac",
+    "answer": "1. HEAR: 0s: Deep, booming plunge and a large splash, followed by spray and sloshing water.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "ship.horn:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6353/dmQ2MQitgggK6WzWWYRgH_a9EMsOsH.flac",
+    "answer": "1. HEAR: 0s: Deep, steady foghorn blast (4s). 4s: Long, rolling echo fades out.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "water.splash:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6353/uR2g4GD_xV08jCXFJInJf_hlRJITpq.flac",
+    "answer": "1. HEAR: 0.0s: A deep, heavy plunge and splash, followed by spray and sloshing water.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "water.splash:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6353/LZK8a5tIAru4X31_PrdhX_jocZPqPs.flac",
+    "answer": "1. HEAR: A deep, heavy plunge and large splash (0s), followed by spray and sloshing water (1-3s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "container.boom:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6354/go2OmXNXtGfXTijSEhz2Y_XQBiB6vB.flac",
+    "answer": "1. HEAR: (0:00) A huge, deep, hollow metallic boom, followed by a long, low ringing resonance.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "container.boom:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6354/hEquNeDZpCIDLajN8DDV4_BSjsdpLU.flac",
+    "answer": "1. HEAR: 0:00: A huge, deep, hollow metallic boom with a long, low ringing decay.\n2. PROBLEMS: None.\n3. SCORE: 10"
+  },
+  "container.clang:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6354/0tILZnkRoXWQI--lbyTtY_r9vE9bqN.flac",
+    "answer": "HEAR: 0.0s: Sharp, hollow metal clang with a short, wobbly rattle that quickly fades.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "container.boom:3": {
+    "url": "https://v3b.fal.media/files/b/0aae6354/yA3pbkIjmh1xlK-3X95Va_4N46sz5I.flac",
+    "answer": "HEAR: 0:00 A massive, deep, hollow metallic boom. 0:01 A long, low, resonant ring fades out.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "container.boom:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6354/qdeZ5BgzrFEfb7bqxx8Ra_O6xENbFe.flac",
+    "answer": "HEAR: 0s: A huge, hollow metallic boom, followed by a long, low ringing resonance.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "container.clang:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6354/Ch60PpmUregxUS4I3kXVX_hkCIBj27.flac",
+    "answer": "1. HEAR: 0.0s: A sharp, hollow sheet-metal clang followed by a wobbly rattle that fades out fast.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "container.clang:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6354/mRtRe6AG1aklsGqyW6kyc_CmqG9a4y.flac",
+    "answer": "HEAR: A sharp, hollow metal clang (0.0s), followed immediately by a short, wobbly rattle and ring that fades quickly (0.1s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "container.clang:3": {
+    "url": "https://v3b.fal.media/files/b/0aae6354/YSi3bk_gSJ2j2sdHhTg8L_sEieSNGs.flac",
+    "answer": "HEAR: A sharp, hollow metallic clang (0.0s) followed by a short, rattling ring that quickly fades (0.1-0.8s).\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "container.groan:0": {
+    "url": "https://v3b.fal.media/files/b/0aae63a1/tJwIRrP05miFKqaTfl_mc_ih14guqT.flac",
+    "answer": "HEAR: 0:00-0:07: A deep, continuous, and resonant metallic groan with higher-pitched creaks and squeals.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "container.groan:1": {
+    "url": "https://v3b.fal.media/files/b/0aae639b/3Xt9dW3nHHLy6H7UV25Op_fIKX0Ltg.flac",
+    "answer": "1. HEAR: 0s-end: A continuous, low, deep metallic groan and creaking of stressed metal.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "container.groan:2": {
+    "url": "https://v3b.fal.media/files/b/0aae639b/IZ6sLL-HuvN0Lxql8ENqG_wTUVD79T.flac",
+    "answer": "1. HEAR: 0-5s: A deep, continuous metallic groan of a large structure twisting under strain.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "container.collapse:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/aJ8Ykzs76-lrxt_fdOYpL_qD6lLtxi.flac",
+    "answer": "1. HEAR: (0s) A loud, hollow metallic slam and scrape. (2s) A second, similar slam and scrape.\n2. PROBLEMS: none\n3. SCORE: 9"
+  },
+  "container.collapse:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/pzM25ou6nrpgI3Lgf9tNd_4KEmpygF.flac",
+    "answer": "HEAR: A sequence of huge, hollow metallic bangs (0:00), scraping and crunching crashes (0:02), and a final boom with settling rattles (0:04).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "container.collapse:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/VADEGqFuZ6qYN14V-N6LW_N1vzEg5o.flac",
+    "answer": "1. HEAR: 0:00 A huge, hollow metallic slam, a second heavy impact, and a final sharp clank.\n2. PROBLEMS: none\n3. SCORE: 3"
+  },
+  "sheet.tear:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/QA8rNKjdSoWJtCXCDs6xH_fmMIxmJh.flac",
+    "answer": "1. HEAR: A harsh tearing screech (0-1s), a deep crumpling crunch (1-2s), then a brief rattle.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "sheet.tear:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/AEf2bk46__Ynq1wisGxPk_hoHi5Bna.flac",
+    "answer": "HEAR: A harsh, tearing screech (0s), a brief crumpling crunch (0.3s), then a metallic flapping and rattling tail (0.5s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "sheet.tear:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6356/ZFmfaWcri-7vhUyLlzLpD_reCOOndN.flac",
+    "answer": "HEAR: A harsh metallic rip and screech (0s), followed by a crumpling crunch and rattling (0.5s).\nPROBLEMS: none.\nSCORE: 10"
+  },
+  "chain.rattle:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/SG6ElCOoKeANVDnT_aqmd_TabiCs7K.flac",
+    "answer": "1. HEAR: 0.0s: A loud, heavy jangle and crash of metal chains. 0.5s: Continued clanking and rattling as the chains settle.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "chain.rattle:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/fJ367Otq9ptAurK4CUFi-_DPCxWDIu.flac",
+    "answer": "1. HEAR: (0-1s) A loud, complex jangle and clank of heavy chains dropping. (1-2s) Lighter rattling as they settle.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "drum.bonk:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/vwkD0aUpUCQnoqKb6lpmA_RTl3wdl4.flac",
+    "answer": "HEAR: A single, hollow metal impact and its short decay (0:00).\nPROBLEMS: none.\nSCORE: 5"
+  },
+  "drum.bonk:2": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/WRkBskTDAHHpAxmNuVThh_hhPjIpmC.flac",
+    "answer": "HEAR: (0.0s) A deep, resonant metal bong, followed by (0.2s) a short, clattering roll.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "drum.bonk:1": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/4w2SPKrRawN1HDBzIUrwS_1BWEuShj.flac",
+    "answer": "HEAR: A hollow, resonant metal impact (0s), followed by a short, rumbling metallic roll (0.2s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "steps.wet:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/b5-G3jlc-2hmW8Fob8LHf_UGVoHAmA.flac",
+    "answer": "1. HEAR: (0s-4s) A sequence of ten distinct, gritty footsteps, one after the other.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "steps.metal:0": {
+    "url": "https://v3b.fal.media/files/b/0aae6355/kH8gMAsjgcyHSBujBvfmp_Fdgvi1Ru.flac",
+    "answer": "HEAR: A sequence of six hollow metallic clank/crunch footsteps at a steady pace (0:00-0:05).\nPROBLEMS: none\nSCORE: 10"
+  }
+}

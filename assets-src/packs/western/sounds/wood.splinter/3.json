@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Dry, sun-baked old pine boards and a wooden post snapping apart: a sharp, dry crack, splintering and tearing wood fibres, rusty nails tearing out of the wood. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2,
+  "seed": 712713,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae634b/UUvKTnyfMvKN_LXy2yLZe_yCdpUvjJ.flac"
+}

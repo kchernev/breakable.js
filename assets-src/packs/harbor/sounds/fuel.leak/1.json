@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A steady stream of oil gushing out of a hole in the side of a big steel fuel tank: thick liquid glugging and gurgling out of the hole, running down the steel and splattering into a spreading puddle on concrete. Continuous and even, no impacts. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, impact, bang, hit, clang, drip, rain, tap water, bubbling pot",
+  "duration": 10,
+  "seed": 966921,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefdc6/jluwmEBbvoZnadb_tLBrI_TmS1enWl.flac"
+}

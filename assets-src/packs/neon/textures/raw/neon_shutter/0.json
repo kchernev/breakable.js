@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of a corrugated steel roller shutter on a shop front, seen straight on: horizontal interlocking slats, each 7.5 cm tall, each with a shallow rounded corrugation and a narrow dark seam where it hooks into the next; all slats perfectly horizontal, straight, parallel and evenly spaced, running right through the left and right edges. Dull light grey galvanised zinc with faded pale grey-green paint worn off in places, fine scratches and scuffs, grime collected along the seams, small orange-brown rust spots and short rust streaks at the seams. No lock, no handle, no bottom bar, no graffiti, no stickers. The frame shows a 1.2 m × 1.2 m area: exactly 16 slats from top to bottom. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:09:24.945Z",
+  "url": "https://v3b.fal.media/files/b/0aae6355/I4UWmT2zTB_lR7r01DoaF_ZK4i1qk8.png"
+}

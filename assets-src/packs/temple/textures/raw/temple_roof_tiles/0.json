@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the terracotta tiled roof of an ancient Greek temple seen from directly above, the camera looking straight down at the roof plane: large flat rectangular pan tiles with low raised rims along their long sides, laid in straight columns running from the top edge to the bottom edge of the frame; over every joint between two columns a narrow ridged cover tile about 16 cm wide with a gabled, triangular cross-section runs in a perfectly straight vertical line through the whole frame. Each pan tile is 55 cm wide and 73 cm long; the lower end of each tile overlaps the top of the tile below with a straight horizontal edge and a thin shadow line, and the cover tiles join at the same lines, so the courses form straight level rows across the whole frame. Exactly 8 columns of tiles across and 6 courses from top to bottom, a perfectly regular grid: all cover tiles parallel and evenly spaced, all course lines level and evenly spaced. Matte sun-faded fired clay in orange-red and ochre, each tile a slightly different shade from light ochre-orange to brick red, a few darker brown tiles, dust in the corners, small pale grey lichen spots, a few chipped corners. The frame shows a 4.4 m × 4.4 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 2048,
+    "height": 2048
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:19:30.045Z",
+  "url": "https://v3b.fal.media/files/b/0aae6391/D3O7w-N9YY7-dASqkg_kh_zyd2sxj4.png"
+}

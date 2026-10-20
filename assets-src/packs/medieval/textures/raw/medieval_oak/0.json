@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of old weathered hand-hewn oak timber from a medieval timber-framed house, seen straight on: one broad continuous flat face of solid oak that fills the frame, with no edges, no gaps, no joints and no separate boards. Silver-grey to light grey-brown sun-bleached oak with a deep, straight, open grain running vertically from the top edge to the bottom edge, long narrow drying checks and splits following the grain (thin dark cracks, some up to 40 cm long), shallow flat adze facets across the face, two small round old peg holes. No knots bigger than a coin, no paint, no nails, no metal. The frame shows a 1 m × 1 m patch. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:10:49.892Z",
+  "url": "https://v3b.fal.media/files/b/0aae635e/SdyuHjTQ9aLti8eT70-V0_jW3qOnAU.png"
+}

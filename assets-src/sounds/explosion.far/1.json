@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A distant explosion heard from a few blocks away in a city: a deep muffled boom that rolls and echoes between tall buildings, with a long reverberant rumbling tail. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 7,
+  "seed": 137511,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60ba/FJ6Nk_wHeyTrJr2vnPNGH_gPmmgv3y.flac"
+}

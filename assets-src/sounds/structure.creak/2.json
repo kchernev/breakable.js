@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "An old damaged brick building straining before it collapses: ominous deep cracking and grinding of stone, small debris trickling down. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 172462,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c4/nIBeoY0cqt6PO9IHb6Cch_lY0qzqxy.flac"
+}

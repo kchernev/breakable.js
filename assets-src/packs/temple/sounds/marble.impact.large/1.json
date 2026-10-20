@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A heavy round marble column drum falling and slamming onto stone paving: one deep, weighty thud with a hard, bright clack of stone on stone, then a short heavy roll and grind of stone on stone. Outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 766371,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae639d/CyxYXm9CTGs9hXwIzo5nc_bVvjLhLE.flac"
+}

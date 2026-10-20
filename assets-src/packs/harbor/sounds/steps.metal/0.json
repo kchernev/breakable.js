@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Footsteps of a person in boots walking over scattered bent steel sheets and metal scrap at a steady pace, clear separate steps with short gaps, each a hollow metallic clank with a crunch. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 8,
+  "seed": 314490,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6355/kH8gMAsjgcyHSBujBvfmp_Fdgvi1Ru.flac"
+}

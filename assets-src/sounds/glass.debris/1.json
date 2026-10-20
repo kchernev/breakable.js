@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Small glass shards falling onto a pavement: light bright tinkling and clinking, scattered. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 845641,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c2/6bNJlM46SlP9LiDuIKjJC_eRvynLoI.flac"
+}

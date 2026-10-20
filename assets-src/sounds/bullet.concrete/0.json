@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Bullets striking a concrete wall one at a time, about a second apart: each a hard, sharp snap of stone and a short spray of grit and plaster dust. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, gunshots, gunfire, rifle",
+  "duration": 8,
+  "seed": 850020,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae9c53/Q9l_JjLE_hNAjJTQI5fDw_4IdWKJX7.flac"
+}

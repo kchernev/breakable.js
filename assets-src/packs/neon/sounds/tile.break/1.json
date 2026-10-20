@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Glazed ceramic wall tiles cracking and showering off a concrete wall: a sharp crack, brittle ceramic shattering into shards, and small chips skittering across the pavement. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 780541,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6357/fY8UYZwfnaUbHcBs1zoyD_jgsOkmB7.flac"
+}

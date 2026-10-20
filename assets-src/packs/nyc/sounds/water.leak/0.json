@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Water gushing steadily out of a hole in the side of a wooden rooftop water tank and splashing onto a flat tar roof below: a steady pouring stream and splatter. Continuous and even, no impacts. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, impact, bang, rain, tap, sink, toilet, bubbling, drips",
+  "duration": 8,
+  "seed": 652810,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefe09/DrcQownbep89SQE6M7JVp_l1uwmIFz.flac"
+}

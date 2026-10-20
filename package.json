@@ -1,0 +1,38 @@
+{
+  "name": "breakable.js",
+  "version": "0.1.0",
+  "description": "Real-time destruction for Three.js (WebGPU) on top of three-avbd: Voronoi fracture, structural collapse, bonds that break, all simulated on the GPU; and what it sounds like.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/lib/index.ts"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5330 --strictPort",
+    "chrome": "sh scripts/chrome.sh",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "shot": "node scripts/shot.mjs",
+    "sounds:generate": "node scripts/assets/generate-sounds.mjs",
+    "sounds:qa": "node scripts/assets/qa-sounds.mjs",
+    "sounds:process": "node scripts/assets/process-sounds.mjs",
+    "sources:pack": "node scripts/assets/sources.mjs pack",
+    "sources:fetch": "node scripts/assets/sources.mjs fetch"
+  },
+  "peerDependencies": {
+    "three": ">=0.186.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.0",
+    "@types/three": "0.186.0",
+    "@webgpu/types": "^0.1.74",
+    "puppeteer-core": "^24.0.0",
+    "three": "0.186.1",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.0",
+    "webgpu": "0.6.1"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "endpoint": "tripo3d/p2/image-to-3d",
+  "source": "concept0.png",
+  "input": {
+    "pbr": true,
+    "texture": true,
+    "texture_quality": "detailed",
+    "delight": true,
+    "export_uv": true,
+    "quad": false,
+    "face_limit": 30000,
+    "image_url": "https://v3b.fal.media/files/b/0aae6361/UA4_ko3Ltvr9Wwe_aQhuo_yard_tractor_concept0.png"
+  },
+  "seed": null,
+  "made": "2026-10-14T20:13:43.070Z",
+  "seconds": 162,
+  "output": {
+    "model_mesh": {
+      "url": "https://v3b.fal.media/files/b/0aae6371/xuBcBfBokR2owsZdLtPWq_model.glb",
+      "content_type": "model/gltf-binary",
+      "file_name": "model.glb",
+      "file_size": 10491456
+    },
+    "model_urls": {
+      "glb": {
+        "url": "https://v3b.fal.media/files/b/0aae6371/xuBcBfBokR2owsZdLtPWq_model.glb",
+        "content_type": "model/gltf-binary",
+        "file_name": "model.glb",
+        "file_size": 10491456
+      },
+      "fbx": null,
+      "base_model": null,
+      "pbr_model": {
+        "url": "https://v3b.fal.media/files/b/0aae6371/xuBcBfBokR2owsZdLtPWq_model.glb",
+        "content_type": "model/gltf-binary",
+        "file_name": "model.glb",
+        "file_size": 10491456
+      }
+    },
+    "rendered_image": {
+      "url": "https://v3b.fal.media/files/b/0aae6371/Rrm9U16G-ZCIz_ZfX6ZOr_preview.png",
+      "content_type": "image/png",
+      "file_name": "preview.png",
+      "file_size": 189569
+    },
+    "task_id": "851f59e8-7344-478a-ab2f-42453a6bf812"
+  }
+}

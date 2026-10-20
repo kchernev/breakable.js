@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Field recording of a pressurised steam pipe punctured in a street at night: a sudden loud roaring hiss of escaping steam bursting out at full force, then blowing hard and steady, close-up. No music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, rain, wind gusts, whistle, kettle, train, explosion",
+  "duration": 3,
+  "seed": 419790,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefdb1/wNK9RzX8hknS7xwPDzMDI_n7Q0HGfq.flac"
+}

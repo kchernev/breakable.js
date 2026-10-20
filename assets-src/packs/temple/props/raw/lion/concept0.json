@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "An Archaic Greek marble lion sculpture, sitting upright on its haunches on a low rectangular marble plinth about 1.9 m long, 0.75 m wide and 20 cm high: its body runs along the plinth, chest high, front legs straight and together, hind legs folded under it, tail curled round its right haunch onto the plinth; its head held up and looking straight ahead along the plinth, mouth a little open, a heavy mane carved in stylised flame-shaped locks. Simple, strong, slightly stylised forms. Weathered white-grey marble with a warm ochre-gold patina in the hollows, grey lichen streaks running down, a few chipped edges and a chipped ear; the plinth plain and squared. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform medium grey background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1536,
+      "height": 1024
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:15:45.240Z",
+  "url": "https://v3b.fal.media/files/b/0aae637c/LLZWFsSAi7g2HWI14n06a_TRnpI2Z7.png"
+}

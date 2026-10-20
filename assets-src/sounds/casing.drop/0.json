@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Empty brass rifle cartridge casings falling one at a time onto a concrete pavement: separate small, bright, high metallic tinkles and pings, each casing bouncing and rolling briefly, a short pause between each. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 8,
+  "seed": 396570,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae9c53/PpOPzCw7QQSQtGiFwyMu0_peqKd0nm.flac"
+}

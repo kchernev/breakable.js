@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A large thin sheet of galvanized steel roofing falling flat onto hard ground: a loud metallic clang and bang, then the wobbling warble and ringing of the flexing sheet metal dying away. Clearly metallic, steel. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, paper, foil, plastic, crinkling, crumpling, rustling, wrapper",
+  "duration": 2,
+  "seed": 846140,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae63b1/41KJH8YlYbWnjGyMgyy-x_dmh5cKO4.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "The far echo of a burst of rapid gunfire coming back across a wide sea bay from distant cliffs and islands: only the faint, soft, rolling rattle of the echoes, blurred and hollow with distance, slowly dying away into the open air. No close sounds. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, close gunshots, loud crack, explosion, boom, thunder, rain, seagulls, birds, waves crashing",
+  "duration": 5,
+  "seed": 693761,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefe34/YYo35sPMpyT92QbzDtEKv_ifZrbJ3z.flac"
+}

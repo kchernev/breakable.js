@@ -1,0 +1,175 @@
+2bb1a31 (sbobyn/three-avbd main, 2026-10-12)
+
+Local patches, all worth reporting upstream: each says where it is, what it does, why, and how to
+see it (repro). The repros marked "lab" are cases of three-breakable's scripts/solver-lab.mjs: each
+builds a world of its own with nothing but three-avbd's World, so it can be copied into a page to
+run against upstream (in three-breakable, `node scripts/solver-lab.mjs --only <case>` runs it).
+Upstream has none of the switches below; "off" is a switch turned off here, which is upstream's
+behaviour unless said. Lab numbers are from 2026-10-16 (RTX 4090, Linux, Chrome; the GPU shared).
+The tests-gpu files follow every patch, but couldn't be run here (Dawn won't load under Node on this
+machine); docs/API.md describes the new options.
+
+These eleven are every change from upstream: diffed against a clean checkout of 2bb1a31 on
+2026-10-16, after three-breakable's phase E (which changed nothing here), the only other files that
+differ are docs/API.md, tests/radii.test.ts and four tests-gpu files (avbd3d-gpu, grid-levels,
+lib, manifold-substeps), each following these; upstream's docs/media, public/paintings and
+tests/fixtures aren't vendored.
+
+- Slots wait a step: src/lib/world.ts (World.parked, add, remove, step).
+  What: a removed body's slot is given to a new body only after a step has run with the old one
+  parked in it (a full world still takes a parked slot at once).
+  Why: reused in the same frame, the new body took over the old one's warm starts (the narrowphase
+  matches last step's pair of the same two slots: its forces, penalties and static-friction
+  anchors), and the contact watch read the pair as still touching, so the new body's landing was
+  never reported. It replaces an earlier patch for a body removed before its first flush (freed at
+  once, two bodies were queued for one slot and every later handle was one off: seen as frozen
+  rubble jumping to the parking spot).
+  Repro: heavy boxes resting on the ground, removed and replaced in the same frame by light ones
+  reporting contacts (or loose hulls removed and cut into eight cells each, made in the freed
+  slots): read back after a step, the new bodies started up to 8 mm and 0.8 m/s off where they
+  were made, and one made touching the ground, as the old one did, gave no contact begin.
+  Tests: tests-gpu/lib.gpu.test.ts ("removed bodies free their slots for new ones").
+- The broadphase grid in levels: src/avbd3d/gpu (radii.ts, solver.ts uploadStatics,
+  wgsl-collision.ts findPairs/findFixedLarge, layout.ts Params).
+  What: the small bodies go in up to MAX_LEVELS (8) levels of cells, each twice the size of the one
+  below, from twice a typical radius (the movers' median, when below the median of all) up to twice
+  the largest small one; a body in the finest level whose cells are at least twice its radius. A
+  mover probes its own level and every coarser one, each only in the cells that can hold an
+  overlapping body (2 x 2 x 2 for a body much smaller than the cells, never more than the old
+  3 x 3 x 3); fixed bodies probe the coarser levels holding movers (a bitmask) as findFixedLarge did
+  the one coarse level. The same pairs; a single size of body still makes one level.
+  Why: one level's cells were twice the largest small radius, and with more than MAX_LARGE (64) big
+  bodies the 65th sized them: a terrain of ~1,100 fixed cliff hulls made 32 m cells, so every small
+  moving piece walked hundreds of bodies in its 27 cells (and findFixedLarge, each fixed body
+  thousands).
+  Repro: small moving pieces among more than 64 fixed bodies much bigger than them (three-breakable's
+  Sun Temple, ~1,100 cliff hulls: collision 1.8 ms a step with a few loose pieces, 2-3 ms with a
+  blast's ~150; now 0.26-0.38 and ~1.1. Brick Street ~2 ms, now ~0.6-1).
+  Tests: tests/radii.test.ts (the levels), tests-gpu/grid-levels.gpu.test.ts (the pairs against
+  brute force on mixed scenes of 5 cm to 40 m bodies, sleeping, waking and resizing).
+- A speed limit: src/avbd3d/gpu (solver.ts GpuParams3D.maxSpeed, wgsl-solve.ts withinReach,
+  mostPush, evalContact, updateVelocities, layout.ts Params limits) and src/lib/world.ts
+  (World.maxSpeed).
+  What: an optional limit on a moving body's speed (default Infinity: as upstream). With it, (1)
+  every primal update keeps the body within maxSpeed·dt of where it started the step, and the
+  velocity is derived from that pose (they agree); (2) no contact pushes harder than the pair's
+  reduced mass times maxSpeed over dt (a push cut so stiffens the step only as much as is left of
+  it, and doesn't ramp its penalty). The first version only slowed a body to maxSpeed at the end of
+  the step.
+  Why: a light body jammed between heavy or fixed ones can't satisfy both contacts, and the dual
+  raised their forces every iteration (to thousands of times its weight): their mismatch threw it
+  at tens of m/s, spinning, and, its velocity alone clamped, kilometres in one step, dragging what it
+  was jointed or pressed to. This bounds such a piece at maxSpeed; it doesn't stop a pinched piece
+  being shot out at up to it (two opposed pushes, each within the cap, can still differ by it).
+  The price: a light body holds at most about maxSpeed / (dt·g) times its weight (245 at 40 m/s and
+  60 steps a second); under more it's pressed into what it rests on.
+  Repro: no small one yet. The flings were traced by stepping a collapse by hand (three-breakable's
+  Neon Alley, every other step a substep) and reading every body after every step: 0.1-20 g pieces
+  (a neon tube fragment between the street and a fallen pane, a glass shard between two signboxes,
+  a steel mullion under a 4 t slab) carried 40 to 3,000 units of force from both sides and left at
+  10-40 m/s spinning at 100 rad/s, up to 10^13 m off in a step. Over 500 such steps, steps that sped
+  a piece up by 8 m/s or more away from any blast fell from 14 to 5 with this and the substep patch
+  (below). The lab's pinch case (slivers under a dropped slab, chips in a V under a dropped block,
+  panes between boxes driven together) doesn't show it: 4.5 m/s gained at most between readbacks
+  with no limit, 1.2 with it. The lab's stack case shows the price: a 0.3 m box of density 1 under
+  one of 2,500 is pressed 0.29 m into the ground at 40 m/s, 1 cm with no limit.
+- Friction where a contact slips: src/avbd3d/gpu (GpuParams3D.slipFriction, FLAG_SLIP_FRICTION,
+  wgsl-solve.ts accumulate and dualManifold). On by default.
+  What: rows cut to the friction cone keep only as much of their stiffness in the Hessian as the
+  cut left (floored at the pair's own m/dt² where they were stiffer), and a contact that slips
+  clears its STICK_BIT.
+  Why: upstream (and the reference) keep the full penalty, ramped while the contact stuck: for a
+  light body (m/dt² under the penalty) the Newton step then hardly felt the clamped friction force,
+  and it slid on as if on ice. And the stick bit, set only while within the cone, survived sliding,
+  so a contact that had stuck kept its anchors and, once stopped, pulled the body back towards them.
+  Without the floor, a light cube sliding pitched over its front edge and bounced along (58 m).
+  Repro: lab slide (0.3 m boxes of density 0.001 to 1000 sliding from 10 m/s on friction 0.5, where
+  v²/(2μg) is 10.2 m; then the same pushed after resting 2 s). Off: density 0.001 went 36.8 m and
+  density 10 13.4 m; pushed after resting, density 0.1 and 1 slid 10.1 m and were pulled back to
+  2.3 and 5.6 m. On: 10.1-11.3 m, none pulled back.
+  Tests: reference comparisons switch it off (tests-gpu/avbd3d-gpu.gpu.test.ts), as they do the
+  three below. The stick bit is the reference's too.
+- Deep penetration pushed out: src/avbd3d/gpu (GpuParams3D.pushOut, FLAG_PUSH_OUT, wgsl-solve.ts
+  pushOut, layout.ts PUSH_SLOP, PUSH_SPEED). On by default.
+  What: a contact's penetration deeper than 1 cm past the margin is pushed out at up to 1 m/s,
+  besides stabilization's 1 - alpha a step.
+  Why: stabilization takes 1% of it a step (alpha 0.99), so a piece pressed 20 cm into the ground (by
+  a load, or by a step that found the touch late) was still in it seconds later, and came to rest
+  there.
+  Repro: a 0.3 m box (density 500) made 20 cm into a fixed ground box, at rest. Off: its bottom is
+  17 cm under after 0.25 s and 11 cm after 1 s. On: out by 0.25 s.
+- Speculative contacts: src/avbd3d/gpu (GpuParams3D.speculative, FLAG_SPECULATIVE,
+  wgsl-collision.ts speculation, faceSeparated, testPair, probeLevel, testAxis, faceManifold,
+  collide, narrowphase; wgsl-hull.ts collidePoly, hullFaceContact; wgsl-solve.ts evalContact) and
+  src/lib/contacts.ts. On by default.
+  What: a moving body's pairs and contacts with fixed bodies are found while they're apart, as far
+  as it goes in three steps (SPECULATIVE_STEPS), but no further than the grid cells next to the
+  mover's own (probeLevel: against the large bodies the whole way, against small fixed ones about a
+  cell). Such a contact holds no force until the gap closes (the normal row takes the gap past the
+  margin whole, not 1 - alpha of it). Between two moving bodies, contacts are made on touch, as
+  before. The face bias (FLAG_FACE_BIAS: an edge axis must beat the face's separation by 5% of it and
+  1 cm) is taken on the separation's size, so it holds for pairs apart too. The contact watch follows:
+  a pair begins touching once a point has met (gap within the margin) or pushed, and a begin's
+  impulse is the larger of the step's and their speed into each other as the step began times their
+  reduced mass (a speculative contact takes a hit over two steps). COLLISION_MARGIN is exported from
+  layout.ts.
+  Why: found only once they overlapped, a thin piece thrown at the ground at 30 m/s was half a metre
+  into a 1 m ground box by then, past its middle, and was pushed out of its far side. Scaled by 0.95
+  as before, a positive gap let an edge win the face bias, and a flat plate falling onto the ground
+  met it on one edge point, tipped and went 7 cm in.
+  Repro: lab throw (120 plates and slivers, 1-3 cm thick, thrown at a 1 m ground box at 10-40 m/s,
+  every other step a substep): off, 41 through; on, 1. Lab landing (a 1 kg box falling 1.25 m,
+  m·v 4.95 N·s): one begin, 5.07 N·s off, 4.74 on.
+  Tests: tests-gpu/manifold-substeps.gpu.test.ts ("speculative contacts: a thin plate thrown at the
+  ground at 30 m/s stops on it"; the substep tests there turn it off).
+- Sliding over seams: src/avbd3d/gpu (GpuParams3D.seams, FLAG_SEAMS, wgsl-collision.ts rides,
+  testAxis, collide, narrowphase; wgsl-hull.ts queryFaces, collidePoly, polyFace). On by default.
+  What: a moving body level with a fixed body's upward face (overlapping it along its normal by no
+  more than twice the margin, the face within 45 degrees of up) meets that face, not any axis that
+  separates them more. Only for a moving and a fixed body, and only upward faces: a thin plate
+  sliding into the foot of a wall still meets the wall.
+  Why: a piece sliding on one fixed body rests the margin into it, so its bottom is that far below a
+  flush neighbour's top, and the neighbour's side was the SAT's axis: a contact there (found ahead by
+  speculation, or as the piece crossed into the neighbour by less than the margin) stopped it dead
+  at the seam or threw it up. Without speculation, at a few seams in a hundred; with it, at every
+  one. Report it with speculative contacts.
+  Repro: lab seams (boxes of 5-40 cm and a hull slid over a floor of 0.5 m fixed box or hull tiles at
+  3-15 m/s, friction 0.4). Both off: 0.51-1.33 of v²/(2μg), hopping at up to 1.26 m/s. Speculative
+  alone: 0.01-0.76, at up to 3.28 m/s. Both on: 0.98-1.10, at most 0.15 m/s.
+  Tests: tests-gpu/manifold-substeps.gpu.test.ts ("seams: a box slides over flush fixed tiles as far
+  as friction takes it, without a hop").
+- Substeps collide again: src/avbd3d/gpu/solver.ts step (reuseManifolds), wgsl-collision.ts.
+  What: a substep (step({ reuseManifolds: true })) keeps the detecting step's broadphase pairs and
+  runs the narrowphase on them again (pairs of bodies that haven't moved keep their points, as on
+  any step, reuseContacts); the kernel that copied every manifold whole (reuseManifolds) is gone.
+  Why: copied, a light piece spun half a turn since met its contacts at anchors and normals far from
+  where it was, and was flung; and a substep found no new contact, so what fell into the ground in
+  one went in.
+  Repro: the hand-stepped collapse in the speed limit's repro, every other step a substep: every
+  kilometre jump traced was in a substep, and the same 700 steps with every step detecting had none.
+  With substeps as before, 57% of the pieces' first sinkings into the ground were in substeps. It
+  costs the narrowphase on a slow frame's later substeps (0.3-0.5 ms each there).
+  Tests: tests-gpu/manifold-substeps.gpu.test.ts follows (the reuse tests).
+- Rolling resistance: src/avbd3d/gpu (wgsl-solve.ts rolled, updateVelocities, warmStartBodies;
+  layout.ts Body initialPos.w; solver.ts pack), ref/body.ts (Rigid.rolling) and src/lib/world.ts
+  (BodyOptions.rolling, Body.rolling).
+  What: rolling resistance per body (default 0: as upstream): a torque against its turn of the
+  coefficient times the push its contacts carry (their last iteration's) times its smallest half
+  width, applied where the step's spin is derived. Nothing in the air.
+  Why: nothing in the contacts resists turning, so a piece rolling over its faces (a dropped drum,
+  a baluster) loses little and rolls on.
+  Repro: lab roll (a 16-sided drum 0.6 m across set rolling at 2 m/s; a cube spinning in the air).
+  The drum goes 3.57 m at 0 and 2.86 m at 0.02; the cube spins at 4.758 rad/s after 1 s either way.
+- Scan pipelines once per device: src/avbd2d/gpu/scan.ts.
+  What: the prefix scan's shader module and pipelines are made once per device and shared.
+  Why: GpuSolver3D makes a scan again on every addBodies (its length changes): a shader module and
+  two pipelines each time.
+  Repro: add bodies in batches over a few frames and count GPUDevice.createComputePipeline: two more
+  each batch before (remade 122 times in one of three-breakable's collapses), none after the first.
+- The contact-event pass made at subscription: src/lib/world.ts (onContact, contactPass).
+  What: the contact-event pass is made when a listener subscribes, not when the first body reports
+  contacts.
+  Why: a scene subscribes as it loads; made when the first body was set to report contacts (in
+  three-breakable, the first piece to come loose), its two pipelines compiled in the middle of play.
+  Repro: subscribe with onContact, step a while, then set reportContacts on a body: before, the next
+  step's flush made the pass (a 50-67 ms frame here); now nothing is made then.

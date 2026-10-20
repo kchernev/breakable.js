@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "An old timber-framed house straining under its own weight just before it gives way: slow, deep creaking and groaning of heavy oak beams, wooden pegs squeaking and popping, a little dust and plaster crumbs trickling down. Slow and ominous. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3.5,
+  "seed": 530890,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6361/L7dGczWM9vRL7wsV9Z8Nu_utL83tNM.flac"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A heavy chunk of brick wall, several bricks still mortared together, slamming onto an asphalt street: a deep, low, weighty thud, then the bricks crunching apart and a short rattle of debris. Bassy and heavy. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 707950,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6166/ZPlvT5E3Px6XoNV1uHiHH_tUiNdhsb.flac"
+}

@@ -1,0 +1,728 @@
+// The 3D AVBD iterations on the GPU: warm starts, one primal (6-DOF Newton) pass per colour,
+// dual updates for joints and contacts, and the velocity update. The constraint math follows
+// ../ref (forces.ts, manifold.ts, solver.ts); rows are folded into a register accumulator as
+// outer products instead of the reference's 3x3 matrix products.
+
+import { PRELUDE_3D, PRIMAL_LANES_WGSL } from './layout.ts';
+
+export const solveWGSL = /* wgsl */ `
+${PRELUDE_3D}
+${PRIMAL_LANES_WGSL}
+
+// Per-dispatch constants, selected with a dynamic uniform offset
+struct PassConstants {
+  color: u32,   // colour solved by this primal dispatch
+  alpha: f32,   // stabilization for this iteration
+  pad0: u32,
+  pad1: u32,
+}
+
+@group(0) @binding(0) var<uniform> params: Params;
+@group(0) @binding(1) var<storage, read_write> bodies: array<Body>;
+@group(0) @binding(2) var<storage, read_write> joints: array<Joint>;
+@group(0) @binding(3) var<storage, read> info: array<vec4i>;  // type, bodyA (-1 = world), bodyB
+@group(0) @binding(4) var<storage, read_write> contacts: array<Contact>;
+@group(0) @binding(8) var<storage, read> manifolds: array<Manifold>;
+@group(0) @binding(5) var<storage, read> adj: array<u32>;
+@group(0) @binding(6) var<storage, read> color: array<u32>;
+@group(0) @binding(7) var<storage, read> counters: array<u32>;
+@group(1) @binding(0) var<uniform> pc: PassConstants;
+
+fn manifoldCount() -> u32 {
+  return min(counters[C_MANIFOLDS], params.manifoldCapacity);
+}
+
+/** outer(u, v): row i, column j = u[i] v[j] (WGSL matrices are column-major). */
+fn outer(u: vec3f, v: vec3f) -> mat3x3f {
+  return mat3x3f(u * v.x, u * v.y, u * v.z);
+}
+
+/**
+ * One body's Newton system [lin crossᵀ; cross ang]·dx = rhs. cross holds row = angular
+ * index, column = linear index.
+ */
+struct Acc {
+  lin: mat3x3f,
+  ang: mat3x3f,
+  cross: mat3x3f,
+  rLin: vec3f,
+  rAng: vec3f,
+}
+
+/** Fold one constraint row in: Jacobian (l, a) w.r.t. the body, stiffness k and force f. */
+fn addRow(acc: ptr<function, Acc>, l: vec3f, a: vec3f, k: f32, f: f32) {
+  (*acc).lin += outer(l, l) * k;
+  (*acc).ang += outer(a, a) * k;
+  (*acc).cross += outer(a, l) * k;
+  (*acc).rLin += l * f;
+  (*acc).rAng += a * f;
+}
+
+// --- Joints and springs -----------------------------------------------------------------------
+
+fn anchorA(k: Joint, a: i32) -> vec3f {
+  if (a < 0) { return k.rA.xyz; }
+  return qrotate(bodies[a].rot, k.rA.xyz) + bodies[a].pos.xyz;
+}
+
+fn rotA(a: i32) -> vec4f {
+  if (a < 0) { return vec4f(0.0, 0.0, 0.0, 1.0); }
+  return bodies[a].rot;
+}
+
+fn jointLinC(k: Joint, a: i32, b: i32) -> vec3f {
+  return anchorA(k, a) - (qrotate(bodies[b].rot, k.rB.xyz) + bodies[b].pos.xyz);
+}
+
+/**
+ * The angle lock's error: the turn from rotB to rotA·rest (the demo's qsub, 2·vec(q·rotB⁻¹)), in
+ * length units by the torque arm. The identity rest gives the demo's qsub(rotA, rotB). q and -q
+ * are one rotation, so the quaternion between them is taken in the hemisphere with w >= 0: the
+ * short way round, and always restoring (rest, or the two bodies' quaternions, may carry either sign).
+ */
+fn jointAngC(k: Joint, a: i32, b: i32) -> vec3f {
+  let qb = bodies[b].rot;
+  var d = qmul(qmul(rotA(a), k.rest), qconj(qb) / dot(qb, qb));
+  d = select(d, -d, d.w < 0.0);
+  return d.xyz * 2.0 * k.lamAng.w;
+}
+
+/** Stabilized linear / angular constraints (Eq. 18 on hard rows). */
+fn jointLinRows(k: Joint, a: i32, b: i32, alpha: f32) -> vec3f {
+  return jointLinC(k, a, b) - select(vec3f(0.0), k.c0Lin.xyz * alpha, k.penLin.w >= HARD);
+}
+
+fn jointAngRows(k: Joint, a: i32, b: i32, alpha: f32) -> vec3f {
+  return jointAngC(k, a, b) - select(vec3f(0.0), k.c0Ang.xyz * alpha, k.penAng.w >= HARD);
+}
+
+fn addJoint(acc: ptr<function, Acc>, j: u32, alpha: f32, i: u32) {
+  let t = info[j].x;
+  let a = info[j].y;
+  let b = info[j].z;
+  let k = joints[j];
+  let isA = i32(i) == a;
+  let sg = select(-1.0, 1.0, isA);
+
+  if (t == T_SPRING) {
+    let rAW = qrotate(bodies[a].rot, k.rA.xyz);
+    let rBW = qrotate(bodies[b].rot, k.rB.xyz);
+    let d = (rAW + bodies[a].pos.xyz) - (rBW + bodies[b].pos.xyz);
+    let len = length(d);
+    if (len <= 1.0e-6) { return; }
+    let n = d / len;
+    let stiffness = k.penLin.w;
+    let r = select(rBW, rAW, isA);
+    addRow(acc, n * sg, cross(r, n) * sg, stiffness, stiffness * (len - k.rA.w));
+    return;
+  }
+
+  // Ball-socket rows
+  if (dot(k.penLin.xyz, k.penLin.xyz) > 0.0) {
+    let F = k.penLin.xyz * jointLinRows(k, a, b, alpha) + k.lamLin.xyz;
+    // Jacobian: sg·I (linear) and skew(-rA) for A, skew(rB) for B (angular); rows below
+    var r: vec3f;
+    if (isA) { r = qrotate(bodies[a].rot, k.rA.xyz); }
+    else { r = -qrotate(bodies[b].rot, k.rB.xyz); }
+    // Row m of skew(-r): (-r) × e_m... written out: skew(v) rows (0,-vz,vy), (vz,0,-vx), (-vy,vx,0)
+    let v = -r;
+    addRow(acc, vec3f(sg, 0.0, 0.0), vec3f(0.0, -v.z, v.y), k.penLin.x, F.x);
+    addRow(acc, vec3f(0.0, sg, 0.0), vec3f(v.z, 0.0, -v.x), k.penLin.y, F.y);
+    addRow(acc, vec3f(0.0, 0.0, sg), vec3f(-v.y, v.x, 0.0), k.penLin.z, F.z);
+    // Diagonally lumped geometric stiffness (Sec. 3.5): column norms of -(r·F) I + r Fᵀ
+    let rf = dot(r, F);
+    let g = vec3f(
+      length(r * F.x - vec3f(rf, 0.0, 0.0)),
+      length(r * F.y - vec3f(0.0, rf, 0.0)),
+      length(r * F.z - vec3f(0.0, 0.0, rf)));
+    (*acc).ang += mat3x3f(vec3f(g.x, 0.0, 0.0), vec3f(0.0, g.y, 0.0), vec3f(0.0, 0.0, g.z));
+  }
+
+  // Angle-lock rows: Jacobian sg·torqueArm·I on the angular part
+  if (dot(k.penAng.xyz, k.penAng.xyz) > 0.0) {
+    let F = k.penAng.xyz * jointAngRows(k, a, b, alpha) + k.lamAng.xyz;
+    let s = sg * k.lamAng.w;
+    addRow(acc, vec3f(0.0), vec3f(s, 0.0, 0.0), k.penAng.x, F.x);
+    addRow(acc, vec3f(0.0), vec3f(0.0, s, 0.0), k.penAng.y, F.y);
+    addRow(acc, vec3f(0.0), vec3f(0.0, 0.0, s), k.penAng.z, F.z);
+  }
+}
+
+// --- Contacts ---------------------------------------------------------------------------------
+
+/** What a contact needs of one body, loaded once per pair: rotation and displacement since x-, mass. */
+struct PairBody {
+  index: u32,
+  rot: vec4f,
+  dLin: vec3f,
+  dAng: vec3f,
+  mass: f32,
+}
+
+fn pairBody(i: u32) -> PairBody {
+  let rot = bodies[i].rot;
+  let moved = bodies[i].pos.xyz - bodies[i].initialPos.xyz;
+  return PairBody(i, rot, moved, qsub(rot, bodies[i].initialRot), bodies[i].size.w);
+}
+
+/**
+ * How much more of a contact's penetration a step pushes out, past what stabilization takes (1 - α
+ * of it): what's deeper than PUSH_SLOP, at up to PUSH_SPEED. Stabilization alone takes 1% a step,
+ * so a piece pressed 20 cm into the ground (under a load, or by a step that found the touch late)
+ * was still in it a second later, and came to rest there.
+ */
+fn pushOut(c0: f32) -> f32 {
+  if ((params.flags & FLAG_PUSH_OUT) == 0u) { return 0.0; }
+  return clamp(-c0 - PUSH_SLOP, 0.0, PUSH_SPEED * params.dt);
+}
+
+/** A pair's inertia in a step: its reduced mass over dt² (A or B fixed: the other's mass). */
+fn pairInertia(A: PairBody, B: PairBody) -> f32 {
+  let inverse = select(0.0, 1.0 / A.mass, A.mass > 0.0) + select(0.0, 1.0 / B.mass, B.mass > 0.0);
+  return 1.0 / max(inverse * params.dt * params.dt, 1e-30);
+}
+
+/**
+ * The most a contact of a pair of that inertia (pairInertia) pushes: what changes their speed apart
+ * by the most speed in one step (their reduced mass times limits.x over dt; no limit without one).
+ * A light body jammed between heavy or fixed ones can't satisfy both contacts, and the dual raises
+ * their forces every iteration: near-opposed forces many times its weight, whose small mismatch shot
+ * it out at tens of metres a second, spinning. Cut so, a light piece under a heavy one gives way instead.
+ */
+fn mostPush(inertia: f32) -> f32 {
+  if (params.limits.x <= 0.0) { return 3.4e38; }
+  return params.limits.x * params.dt * inertia;
+}
+
+/**
+ * One contact point evaluated at the current poses: C, the force and the lever arms (callers
+ * rebuild their own angular Jacobian rows from these; keeping all six rows live cost
+ * registers, and the primal ran 60% slower on mixed piles).
+ */
+struct ContactEval {
+  rAW: vec3f,
+  rBW: vec3f,
+  C: vec3f,
+  F: vec3f,        // force: its push cut to mostPush's, its friction to the cone
+  frictionScale: f32,
+  bounds: f32,
+  pushScale: f32,  // how much of the push the cut left (1: not cut)
+}
+
+fn evalContact(k: Contact, basis: mat3x3f, friction: f32, A: PairBody, B: PairBody, alpha: f32, most: f32) -> ContactEval {
+  // Lever arms at the current rotation, as the reference does for boxes. Sphere contacts use
+  // the step-start rotation instead (the Taylor point x-): a rolling sphere turns ~0.1 rad per
+  // step, and a lever arm rotated with it puts a false separation into the normal row, so the
+  // sphere sank through the ground while gaining energy.
+  var rotA = A.rot;
+  var rotB = B.rot;
+  if ((k.key & ~STICK_BIT) == SPHERE_FEATURE) {
+    rotA = bodies[A.index].initialRot;
+    rotB = bodies[B.index].initialRot;
+  }
+  var e: ContactEval;
+  e.rAW = qrotate(rotA, k.rA);
+  e.rBW = qrotate(rotB, k.rB);
+
+  // Taylor series approximation of C(x) about x- (Sec. 4), one row per basis vector l, with
+  // angular Jacobians rA × l and rB × (-l)
+  let n = basis[0];
+  let t1 = basis[1];
+  let t2 = basis[2];
+  let keep = 1.0 - alpha;
+  // The normal row: stabilization (Eq. 18) takes 1 - alpha of an overlap a step; a gap (a contact
+  // found before they touch: speculation) may close all the way
+  let c0 = k.c0x * keep + alpha * max(k.c0x - COLLISION_MARGIN, 0.0) - pushOut(k.c0x);
+  e.C = vec3f(
+    c0 + dot(n, A.dLin) - dot(n, B.dLin) + dot(cross(e.rAW, n), A.dAng) + dot(cross(e.rBW, -n), B.dAng),
+    k.c0y * keep + dot(t1, A.dLin) - dot(t1, B.dLin) + dot(cross(e.rAW, t1), A.dAng) + dot(cross(e.rBW, -t1), B.dAng),
+    k.c0z * keep + dot(t2, A.dLin) - dot(t2, B.dLin) + dot(cross(e.rAW, t2), A.dAng) + dot(cross(e.rBW, -t2), B.dAng));
+  var F = k.pen * e.C + k.lam;
+  // Normal pushes only, no harder than most (mostPush); friction is clamped to the cone
+  e.pushScale = select(1.0, most / -F.x, F.x < -most);
+  F.x = max(min(F.x, 0.0), -most);
+  e.bounds = abs(F.x) * friction;
+  e.frictionScale = length(F.yz);
+  if (e.frictionScale > e.bounds && e.frictionScale > 0.0) {
+    F = vec3f(F.x, F.yz * (e.bounds / e.frictionScale));
+  }
+  e.F = F;
+  return e;
+}
+
+// --- Warm start -------------------------------------------------------------------------------
+
+@compute @workgroup_size(64)
+fn warmStartJoints(@builtin(global_invocation_id) gid: vec3u) {
+  let j = gid.x;
+  if (j >= params.jointCount || info[j].x != T_JOINT) { return; }
+  let k = joints[j];
+  let a = info[j].y;
+  let b = info[j].z;
+  // Only the fields that change are stored back (not the anchors or the rests: a joint record is
+  // 160 bytes, and a joint-heavy scene runs this over every one)
+  joints[j].c0Lin = vec4f(jointLinC(k, a, b), 0.0);
+  joints[j].c0Ang = vec4f(jointAngC(k, a, b), k.c0Ang.w);
+  let decay = params.alpha * params.gamma;
+  joints[j].lamLin = vec4f(k.lamLin.xyz * decay, k.lamLin.w);
+  joints[j].lamAng = vec4f(k.lamAng.xyz * decay, k.lamAng.w);
+  // Penalties decay, stay within bounds, and never exceed the material stiffness
+  joints[j].penLin = vec4f(min(clamp(k.penLin.xyz * params.gamma, vec3f(PENALTY_MIN), vec3f(PENALTY_MAX)), vec3f(k.penLin.w)), k.penLin.w);
+  joints[j].penAng = vec4f(min(clamp(k.penAng.xyz * params.gamma, vec3f(PENALTY_MIN), vec3f(PENALTY_MAX)), vec3f(k.penAng.w)), k.penAng.w);
+}
+
+/**
+ * The wind on a sail (a thin plate): pressure drag ½ρC_d A (n·u)|n·u| along its normal n, u
+ * the wind relative to the plate, plus skin friction along the plate (6% of that
+ * coefficient), which streams a flag out downwind. The wind gusts in time and across space,
+ * sideways too (a few travelling sines), so a flag lying along it still catches it and
+ * ripples. The pressure is linearised implicitly in the plate's normal speed (divided by
+ * 1 + dt ∂a/∂v): a light plate in real air is stiff, and explicit drag would blow up.
+ */
+fn windAccel(i: u32, x: vec3f, rot: vec4f, v: vec3f) -> vec3f {
+  let t = f32(params.step) * params.dt;
+  let w = params.wind.xyz;
+  let speed = length(w);
+  // Gusts travel downwind: phases in the wind's frame (a downwind, c across)
+  let d = select(vec3f(1.0, 0.0, 0.0), w / speed, speed > 1e-6);
+  let side = vec3f(-d.y, d.x, 0.0);
+  let a = dot(x, d);
+  let c = dot(x, side);
+  let along = 0.5 * sin(1.1 * t - 0.35 * a + 0.2 * c) + 0.3 * sin(2.9 * t - 0.8 * a + 0.6 * x.z)
+    + 0.2 * sin(6.1 * t - 1.7 * a + 1.3 * x.z + 0.9 * c);
+  let across = 0.6 * sin(1.7 * t - 0.6 * a + 0.4 * x.z) + 0.4 * sin(4.3 * t - 1.3 * a - 0.7 * x.z);
+  let lift = sin(2.3 * t - 0.9 * a + 1.1 * c);
+  let g = params.gust.x;
+  let u = w * (1.0 + g * along) + (side * (0.25 * across) + vec3f(0.0, 0.0, 0.1 * lift)) * (g * speed) - v;
+  let n = qrotate(rot, vec3f(0.0, 0.0, 1.0));
+  let size = bodies[i].size;
+  let k = params.wind.w * size.x * size.y / size.w; // ½ρC_d A / m
+  let un = dot(u, n);
+  let ut = u - n * un;
+  return n * (k * un * abs(un) / (1.0 + 2.0 * params.dt * k * abs(un))) + ut * (0.06 * k * length(ut));
+}
+
+@compute @workgroup_size(64)
+fn warmStartBodies(@builtin(global_invocation_id) gid: vec3u) {
+  let i = gid.x;
+  if (i >= params.bodyCount) { return; }
+  // Field-wise loads and stores: only the poses change (whole-record copies moved 320 bytes)
+  let pos = bodies[i].pos;
+  let rot = bodies[i].rot;
+  let vel = bodies[i].vel;
+  let angVel = bodies[i].angVel.xyz;
+  let dt = params.dt;
+  let g = params.gravity;
+  let dynamic = bodies[i].size.w > 0.0;
+
+  // Inertial target (Eq. 2), with the wind's push on sails as a second external force
+  var inertialPos = pos.xyz + vel.xyz * dt;
+  if (dynamic) { inertialPos += params.up.xyz * (g * (dt * dt)); }
+  if (dynamic && bodies[i].angVel.w == SHAPE_SAIL) { inertialPos += windAccel(i, pos.xyz, rot, vel.xyz) * (dt * dt); }
+  bodies[i].inertialPos = vec4f(inertialPos, bodies[i].inertialPos.w);
+  bodies[i].inertialRot = qadd(rot, angVel * dt);
+
+  // Adaptive warm start (original VBD paper), along up; vel.w holds last step's velocity along up. With
+  // FLAG_START_AT_REST a body slower than REST_SPEED starts from x- instead: at few
+  // iterations a resting stack never corrects the extrapolated guess, which pumps tall walls
+  // until they buckle (docs/FINDINGS.md, Stage 8m)
+  var w = 0.0;
+  if (abs(g) > 0.0) { w = clamp((dot(vel.xyz, params.up.xyz) - vel.w) / dt * sign(g) / abs(g), 0.0, 1.0); }
+  let slow = length(vel.xyz) + length(angVel) * bodies[i].moment.w < REST_SPEED;
+  let atRest = (params.flags & FLAG_START_AT_REST) != 0u && slow;
+
+  bodies[i].initialPos = vec4f(pos.xyz, bodies[i].initialPos.w);
+  bodies[i].initialRot = rot;
+  if (dynamic && !atRest) {
+    bodies[i].pos = vec4f(pos.xyz + vel.xyz * dt + params.up.xyz * (g * (w * dt * dt)), pos.w);
+    bodies[i].rot = qadd(rot, angVel * dt);
+  }
+  // A fixed body with a velocity is kinematic: it moves by it over the step, from where it
+  // started (initialPos), so what it touches sees it slide and is pushed and carried along
+  if (!dynamic && (any(vel.xyz != vec3f(0.0)) || any(angVel != vec3f(0.0)))) {
+    bodies[i].pos = vec4f(pos.xyz + vel.xyz * dt, pos.w);
+    bodies[i].rot = qadd(rot, angVel * dt);
+  }
+}
+
+// --- Primal: one colour -----------------------------------------------------------------------
+
+/** A partial system per body slot handed between lanes (primal). */
+var<workgroup> partials: array<Acc, 32>;
+
+/**
+ * One colour's bodies, lanesFor(colour size) threads per body: each lane accumulates every
+ * lanes-th adjacency entry, the partial systems are summed in workgroup memory (halving the
+ * lanes each round), and lane 0 solves. Bodies of one colour share no constraint, so writing
+ * poses in place never races with a neighbour's read (bodies left clashing by the colouring
+ * are the only, counted, exception).
+ */
+@compute @workgroup_size(64)
+fn primal(@builtin(local_invocation_id) lid: vec3u, @builtin(workgroup_id) wid: vec3u) {
+  primalColor(pc.color, lid.x, wid.x);
+}
+
+// All work stays in one workgroup, including buckets larger than one chunk. Colours
+// remain ordered; independent bodies within a colour can be solved chunk by chunk.
+var<workgroup> sparseThreads: u32;
+@compute @workgroup_size(64)
+fn primalSparse(@builtin(local_invocation_id) lid: vec3u) {
+  for (var c = SPARSE_COLOR_START; c < params.colorCap; c++) {
+    if (lid.x == 0u) {
+      let count = color[params.colorStartOffset + c + 1u] - color[params.colorStartOffset + c];
+      sparseThreads = count * lanesFor(count);
+    }
+    let threads = workgroupUniformLoad(&sparseThreads);
+    for (var chunk = 0u; chunk < groupsFor(threads); chunk++) {
+      primalColor(c, lid.x, chunk);
+    }
+    storageBarrier();
+  }
+}
+
+fn primalColor(c: u32, local: u32, group: u32) {
+  let start = color[params.colorStartOffset + c];
+  let count = color[params.colorStartOffset + c + 1u] - start;
+  let lanes = lanesFor(count);
+  let slot = local / lanes;
+  let lane = local % lanes;
+  let k = group * (64u / lanes) + slot;
+  let live = k < count;
+  var i = 0u;
+  var acc: Acc;
+  if (live) {
+    i = color[params.colorBodiesOffset + start + k];
+    acc = accumulate(i, lane, lanes);
+  }
+  // Lanes s..2s-1 hand their sums to lanes 0..s-1 (constant bounds keep the barriers uniform)
+  for (var s = 4u; s > 0u; s >>= 1u) {
+    let merging = s < lanes;
+    if (merging && lane >= s && lane < 2u * s) { partials[slot * s + lane - s] = acc; }
+    workgroupBarrier();
+    if (merging && lane < s) {
+      let other = partials[slot * s + lane];
+      acc.lin += other.lin;
+      acc.ang += other.ang;
+      acc.cross += other.cross;
+      acc.rLin += other.rLin;
+      acc.rAng += other.rAng;
+    }
+    workgroupBarrier();
+  }
+  if (live && lane == 0u) { finishBody(i, acc); }
+}
+
+/**
+ * Body i's Newton system from adjacency entries lane, lane + lanes, ... (lane 0 also adds the
+ * inertia terms); lanes > 1 split a body's constraints across threads.
+ */
+fn accumulate(i: u32, lane: u32, lanes: u32) -> Acc {
+  let pos = bodies[i].pos;
+  let rot = bodies[i].rot;
+  let dt2 = params.dt * params.dt;
+  let m = bodies[i].size.w / dt2;
+  let I = bodies[i].moment.xyz / dt2;
+  var acc: Acc;
+  if (lane == 0u) {
+    acc.lin = mat3x3f(vec3f(m, 0.0, 0.0), vec3f(0.0, m, 0.0), vec3f(0.0, 0.0, m));
+    acc.ang = mat3x3f(vec3f(I.x, 0.0, 0.0), vec3f(0.0, I.y, 0.0), vec3f(0.0, 0.0, I.z));
+    acc.rLin = m * (pos.xyz - bodies[i].inertialPos.xyz);
+    acc.rAng = I * qsub(rot, bodies[i].inertialRot);
+  }
+
+  // One flat loop over joints and contact points: each iteration handles one point, loading
+  // its pair when the previous pair runs out. Only what the point needs stays live across
+  // iterations (partner and own rotation/displacement, the normal): live registers limit
+  // how many threads hide memory latency, and mixed piles run in small, latency-bound
+  // per-colour dispatches.
+  var e = adj[i] + lane;
+  let end = adj[i + 1u];
+  var c = 0u;
+  var cEnd = 0u;
+  var A: PairBody;
+  var B: PairBody;
+  var normal = vec3f(0.0);
+  var friction = 0.0;
+  var most = 0.0;
+  var inertia = 0.0;
+  var isA = false;
+  loop {
+    if (c == cEnd) {
+      if (e >= end) { break; }
+      let id = adj[params.adjListOffset + e];
+      e += lanes;
+      if (id < params.jointCount) {
+        addJoint(&acc, id, pc.alpha, i);
+        continue;
+      }
+      let mf = manifolds[id - params.jointCount];
+      isA = i == mf.ids.x;
+      A = pairBody(mf.ids.x);
+      B = pairBody(mf.ids.y);
+      normal = mf.geo.xyz;
+      friction = mf.geo.w;
+      inertia = pairInertia(A, B);
+      most = mostPush(inertia);
+      c = mf.ids.z;
+      cEnd = mf.ids.z + pairCount(mf);
+      if (c == cEnd) { continue; }
+    }
+    let k = contacts[c];
+    c++;
+    let basis = orthonormal(normal);
+    let ev = evalContact(k, basis, friction, A, B, pc.alpha, most);
+    // This body's rows: linear ±l, angular r × (±l)
+    let sg = select(-1.0, 1.0, isA);
+    let r = select(ev.rBW, ev.rAW, isA);
+    let l0 = basis[0] * sg;
+    let l1 = basis[1] * sg;
+    let l2 = basis[2] * sg;
+    // Friction cut back to its cone (sliding) is a force of set size: its rows stiffen the step only
+    // as much as the cut left of them, but no less than the pair's inertia (its reduced mass over
+    // dt²) where they were stiffer than that. At full stiffness a light body's rows, ramped while
+    // it stuck, held it to its inertial path, and it slid on as if there were no friction; with
+    // none left, a light cube sliding pitched over its front edge and bounced on
+    var sliding = k.pen.yz;
+    if (ev.frictionScale > ev.bounds && (params.flags & FLAG_SLIP_FRICTION) != 0u) {
+      sliding = max(sliding * (ev.bounds / ev.frictionScale), min(sliding, vec2f(inertia)));
+    }
+    // (A push cut to its most is a force of set size too)
+    addRow(&acc, l0, cross(r, l0), k.pen.x * ev.pushScale, ev.F.x);
+    addRow(&acc, l1, cross(r, l1), sliding.x, ev.F.y);
+    addRow(&acc, l2, cross(r, l2), sliding.y, ev.F.z);
+  }
+  return acc;
+}
+
+/** Solve body i's 6x6 system and apply the update (Eq. 4). */
+fn finishBody(i: u32, acc: Acc) {
+  let pos = bodies[i].pos;
+  let rot = bodies[i].rot;
+  // LDLᵀ solve of the 6x6 SPD system (maths.h solve), lower triangle only. Each pivot is floored
+  // at 1e-5 of its diagonal: in f32 a direction held only by a light body's inertia, under
+  // contacts near PENALTY_MAX (a sliver on its edge under a slab), cancels to noise and can come
+  // out negative, and the step then climbs until the body is Inf, then NaN. The floor stiffens
+  // just that direction, and only when it is that ill-conditioned (pivot.gpu.test.ts).
+  let A11 = acc.lin[0][0];
+  let A21 = acc.lin[0][1]; let A22 = acc.lin[1][1];
+  let A31 = acc.lin[0][2]; let A32 = acc.lin[1][2]; let A33 = acc.lin[2][2];
+  let A41 = acc.cross[0][0]; let A42 = acc.cross[1][0]; let A43 = acc.cross[2][0]; let A44 = acc.ang[0][0];
+  let A51 = acc.cross[0][1]; let A52 = acc.cross[1][1]; let A53 = acc.cross[2][1]; let A54 = acc.ang[0][1]; let A55 = acc.ang[1][1];
+  let A61 = acc.cross[0][2]; let A62 = acc.cross[1][2]; let A63 = acc.cross[2][2]; let A64 = acc.ang[0][2]; let A65 = acc.ang[1][2]; let A66 = acc.ang[2][2];
+
+  let D1 = A11;
+  let L21 = A21 / D1;
+  let L31 = A31 / D1;
+  let L41 = A41 / D1;
+  let L51 = A51 / D1;
+  let L61 = A61 / D1;
+  let D2 = max(A22 - L21 * L21 * D1, A22 * PIVOT_FLOOR);
+  let L32 = (A32 - L21 * L31 * D1) / D2;
+  let L42 = (A42 - L21 * L41 * D1) / D2;
+  let L52 = (A52 - L21 * L51 * D1) / D2;
+  let L62 = (A62 - L21 * L61 * D1) / D2;
+  let D3 = max(A33 - (L31 * L31 * D1 + L32 * L32 * D2), A33 * PIVOT_FLOOR);
+  let L43 = (A43 - L31 * L41 * D1 - L32 * L42 * D2) / D3;
+  let L53 = (A53 - L31 * L51 * D1 - L32 * L52 * D2) / D3;
+  let L63 = (A63 - L31 * L61 * D1 - L32 * L62 * D2) / D3;
+  let D4 = max(A44 - (L41 * L41 * D1 + L42 * L42 * D2 + L43 * L43 * D3), A44 * PIVOT_FLOOR);
+  let L54 = (A54 - L41 * L51 * D1 - L42 * L52 * D2 - L43 * L53 * D3) / D4;
+  let L64 = (A64 - L41 * L61 * D1 - L42 * L62 * D2 - L43 * L63 * D3) / D4;
+  let D5 = max(A55 - (L51 * L51 * D1 + L52 * L52 * D2 + L53 * L53 * D3 + L54 * L54 * D4), A55 * PIVOT_FLOOR);
+  let L65 = (A65 - L51 * L61 * D1 - L52 * L62 * D2 - L53 * L63 * D3 - L54 * L64 * D4) / D5;
+  let D6 = max(A66 - (L61 * L61 * D1 + L62 * L62 * D2 + L63 * L63 * D3 + L64 * L64 * D4 + L65 * L65 * D5), A66 * PIVOT_FLOOR);
+
+  let y1 = acc.rLin.x;
+  let y2 = acc.rLin.y - L21 * y1;
+  let y3 = acc.rLin.z - L31 * y1 - L32 * y2;
+  let y4 = acc.rAng.x - L41 * y1 - L42 * y2 - L43 * y3;
+  let y5 = acc.rAng.y - L51 * y1 - L52 * y2 - L53 * y3 - L54 * y4;
+  let y6 = acc.rAng.z - L61 * y1 - L62 * y2 - L63 * y3 - L64 * y4 - L65 * y5;
+
+  let w3 = y6 / D6;
+  let w2 = y5 / D5 - L65 * w3;
+  let w1 = y4 / D4 - L54 * w2 - L64 * w3;
+  let v3 = y3 / D3 - L43 * w1 - L53 * w2 - L63 * w3;
+  let v2 = y2 / D2 - L32 * v3 - L42 * w1 - L52 * w2 - L62 * w3;
+  let v1 = y1 / D1 - L21 * v2 - L31 * v3 - L41 * w1 - L51 * w2 - L61 * w3;
+
+  // dx = -A⁻¹ rhs (Eq. 4), no further than the step may take it
+  bodies[i].pos = vec4f(withinReach(i, pos.xyz - vec3f(v1, v2, v3)), pos.w);
+  bodies[i].rot = qadd(rot, -vec3f(w1, w2, w3));
+}
+
+/**
+ * p, or the point as far as the step may take body i towards it: maxSpeed·dt from where it started
+ * the step (limits.x, 0: no limit). A Newton step on a light body pressed between heavy ones can
+ * throw it kilometres, and its joints and contacts drag the others after it: kept within reach,
+ * every pose the iterations see is one the body could have moved to.
+ */
+fn withinReach(i: u32, p: vec3f) -> vec3f {
+  let reach = params.limits.x * params.dt;
+  let start = bodies[i].initialPos.xyz;
+  let d = p - start;
+  let l = length(d);
+  if (reach <= 0.0 || l <= reach) { return p; }
+  return start + d * (reach / l);
+}
+
+// --- Dual -------------------------------------------------------------------------------------
+
+fn dualJoint(j: u32) {
+  let t = info[j].x;
+  if (t != T_JOINT) { return; }
+  let a = info[j].y;
+  let b = info[j].z;
+  let k = joints[j];
+  let alpha = pc.alpha;
+  var penLin = k.penLin;
+  var penAng = k.penAng;
+  var lamLin = k.lamLin;
+  var lamAng = k.lamAng;
+  if (dot(penLin.xyz, penLin.xyz) > 0.0) {
+    let C = jointLinRows(k, a, b, alpha);
+    if (penLin.w >= HARD) { lamLin = vec4f(penLin.xyz * C + lamLin.xyz, lamLin.w); }
+    penLin = vec4f(min(penLin.xyz + abs(C) * params.betaLin, vec3f(min(penLin.w, PENALTY_MAX))), penLin.w);
+  }
+  let frac = lamLin.w;
+  let limit = abs(frac);
+  var yielded = false;
+  if (dot(penAng.xyz, penAng.xyz) > 0.0) {
+    let C = jointAngRows(k, a, b, alpha);
+    if (penAng.w >= HARD) {
+      lamAng = vec4f(penAng.xyz * C + lamAng.xyz, lamAng.w);
+      // Yield (a plastic joint, see layout.ts J_YIELD): the force asked of a rigid angle lock
+      // is past yield but short of fracture, so the bend becomes the new rest (the error and
+      // the step's reference error with it: else stabilization, Eq. 18, would pull 99% of the
+      // bend back) and the force carried is cut back to yield. Perfectly plastic: the joint
+      // holds the bend with nothing more than yield, and lets the rest go on bending.
+      let yieldForce = k.c0Ang.w;
+      if (yieldForce < BIG) {
+        let force = length(lamAng.xyz);
+        if (force > yieldForce && !(limit < BIG && force > limit)) {
+          lamAng = vec4f(lamAng.xyz * (yieldForce / force), lamAng.w);
+          yielded = true;
+        }
+      }
+    }
+    // A yielding row is at its bound, as a clamped force: its penalty is not ramped
+    if (!yielded) {
+      penAng = vec4f(min(penAng.xyz + abs(C) * params.betaAng, vec3f(min(penAng.w, PENALTY_MAX))), penAng.w);
+    }
+  }
+  // A joint that gave moves its rest to where the bodies are. If it has then bent past its limit
+  // (layout.ts J_BREAK_BEND: the turn from the rest it started with to this one) it breaks, which
+  // is how a sustained overload tears a plastic joint: yield cuts its force back before the
+  // fracture test below sees more than a sudden jump
+  var rest = k.rest;
+  var bentOff = false;
+  if (yielded) {
+    rest = normalize(qmul(qconj(rotA(a)), bodies[b].rot));
+    if (k.rB.w < BIG) {
+      let d = qmul(qconj(k.restStart), rest);
+      bentOff = 2.0 * atan2(length(d.xyz), abs(d.w)) > k.rB.w;
+    }
+  }
+  // Fracture: the joint stops acting for good (the CPU deletes it). A negative threshold (not in
+  // the paper: GpuSolver3D.appendJoints) breaks on the linear force too, at the same limit
+  let linear = frac < 0.0 && dot(lamLin.xyz, lamLin.xyz) > limit * limit;
+  if ((limit < BIG && (dot(lamAng.xyz, lamAng.xyz) > limit * limit || linear)) || bentOff) {
+    penLin = vec4f(0.0);
+    penAng = vec4f(0.0);
+    lamLin = vec4f(0.0, 0.0, 0.0, frac);
+    lamAng = vec4f(0.0, 0.0, 0.0, lamAng.w);
+  }
+  joints[j].penLin = penLin;
+  joints[j].penAng = penAng;
+  joints[j].lamLin = lamLin;
+  joints[j].lamAng = lamAng;
+  if (yielded) {
+    joints[j].rest = rest;
+    joints[j].c0Ang = vec4f(0.0, 0.0, 0.0, k.c0Ang.w);
+  }
+}
+
+fn dualManifold(m: u32) {
+  let mf = manifolds[m];
+  let A = pairBody(mf.ids.x);
+  let B = pairBody(mf.ids.y);
+  let basis = orthonormal(mf.geo.xyz);
+  let most = mostPush(pairInertia(A, B));
+  let end = mf.ids.z + pairCount(mf);
+  for (var c = mf.ids.z; c < end; c++) {
+    let k = contacts[c];
+    let e = evalContact(k, basis, mf.geo.w, A, B, pc.alpha, most);
+    // Write back only what changes (lambda, penalty, stick): the dual is bandwidth-bound
+    contacts[c].lam = e.F;
+    // Ramp the penalty where the force is within its bounds (Eq. 16)
+    var pen = k.pen;
+    if (e.F.x < 0.0 && e.pushScale == 1.0) { pen.x = min(pen.x + params.betaLin * abs(e.C.x), PENALTY_MAX); }
+    let within = e.frictionScale <= e.bounds;
+    if (within) {
+      pen.y = min(pen.y + params.betaLin * abs(e.C.y), PENALTY_MAX);
+      pen.z = min(pen.z + params.betaLin * abs(e.C.z), PENALTY_MAX);
+    }
+    // Held by static friction: kept only while it holds. A contact that slid kept the anchors it
+    // stuck at, and once stopped its friction pulled it back towards them, metres
+    if (within || (params.flags & FLAG_SLIP_FRICTION) != 0u) {
+      let stick = within && length(e.C.yz) < STICK_THRESH;
+      contacts[c].key = (k.key & ~STICK_BIT) | select(0u, STICK_BIT, stick);
+    }
+    contacts[c].pen = pen;
+  }
+}
+
+/** Dual update of every constraint: joints first, then contact pairs (one dispatch). */
+@compute @workgroup_size(64)
+fn dual(@builtin(global_invocation_id) gid: vec3u) {
+  let id = gid.x;
+  if (id < params.jointCount) { dualJoint(id); }
+  else if (id - params.jointCount < manifoldCount()) { dualManifold(id - params.jointCount); }
+}
+
+/**
+ * Spin w of body i, slowed by its rolling resistance (initialPos.w, a coefficient): a torque against
+ * the turn of that times the push its contacts carry (their last iteration's) times its smallest
+ * half width, the lever a rolling piece turns on. The contacts take nothing from a piece rolling
+ * over its faces, so a dropped piece rolled on and on; in the air nothing pushes on it, so it
+ * spins on freely.
+ */
+fn rolled(i: u32, w: vec3f) -> vec3f {
+  let rolling = bodies[i].initialPos.w;
+  let spin = length(w);
+  if (rolling <= 0.0 || spin == 0.0) { return w; }
+  var push = 0.0;
+  for (var e = adj[i]; e < adj[i + 1u]; e++) {
+    let id = adj[params.adjListOffset + e];
+    if (id < params.jointCount) { continue; }
+    let mf = manifolds[id - params.jointCount];
+    for (var c = mf.ids.z; c < mf.ids.z + pairCount(mf); c++) { push -= contacts[c].lam.x; }
+  }
+  // Its moment about the axis it turns on
+  let axis = qrotate(qconj(bodies[i].rot), w / spin);
+  let moment = dot(bodies[i].moment.xyz, axis * axis);
+  let size = bodies[i].size.xyz;
+  let lever = 0.5 * min(min(size.x, size.y), size.z);
+  let slowed = rolling * push * lever * params.dt / max(moment, 1e-12);
+  return w * max(0.0, 1.0 - slowed / spin);
+}
+
+@compute @workgroup_size(64)
+fn updateVelocities(@builtin(global_invocation_id) gid: vec3u) {
+  let i = gid.x;
+  if (i >= params.bodyCount) { return; }
+  // This step's starting velocity along up, for the next step's adaptive warm start
+  let prevUp = dot(bodies[i].vel.xyz, params.up.xyz);
+  if (bodies[i].size.w > 0.0) {
+    // The step's move, within the most speed (limits.x), as the iterations kept it: the pose and the
+    // velocity agree
+    let pos = withinReach(i, bodies[i].pos.xyz);
+    let rot = bodies[i].rot;
+    bodies[i].pos = vec4f(pos, bodies[i].pos.w);
+    bodies[i].vel = vec4f((pos - bodies[i].initialPos.xyz) / params.dt, prevUp);
+    bodies[i].angVel = vec4f(rolled(i, qsub(rot, bodies[i].initialRot) / params.dt), bodies[i].angVel.w);
+  } else {
+    bodies[i].vel.w = prevUp;
+  }
+}
+`;

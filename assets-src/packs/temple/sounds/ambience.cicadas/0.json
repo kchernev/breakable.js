@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Field recording in a grove of olive and pine trees on a hot, dry hillside at summer midday: a dense chorus of many cicadas all around, a loud shrill rasping buzz pulsing and swelling in slow waves, a light warm breeze in dry leaves. Steady and even from start to end. No birds, no voices, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, birds, birdsong, crickets, frogs, traffic, cars, engines, people, airplane",
+  "duration": 45,
+  "seed": 163290,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae637f/bZQhG8Sb6codVO2BJdmwM_SbW5JIpt.flac"
+}

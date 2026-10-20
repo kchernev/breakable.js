@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Wooden planks and a door frame snapping and splintering: a sharp crack with a splintering crunch. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2,
+  "seed": 726772,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae60c2/49dqxWI1HNJfipIL5FRgg_iKbPvuOW.flac"
+}

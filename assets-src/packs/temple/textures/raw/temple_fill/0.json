@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the packed rubble bedding laid under ancient Greek marble paving, a broken face of it seen straight on: angular broken chips and fragments of white marble and pale cream limestone from 1 to 8 cm, densely packed, set in a pale grey-ochre lime mortar and fine stone dust, small dark voids between some fragments, a few small terracotta sherds. Evenly mixed over the whole frame: no layers, no whole stones bigger than 10 cm, no paving slabs. The frame shows a 1 m × 1 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-16T16:48:00.070Z",
+  "url": "https://v3b.fal.media/files/b/0aaea21d/zKvCt_M-4U9sFmosudUTH_whNUm4lR.png"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Bullets thudding into dry packed earth one at a time, about a second apart: each a dull, soft, low thump and a short spray of sand, soil and small pebbles pattering down. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, gunshots, gunfire, rifle, glass, flesh, wet",
+  "duration": 8,
+  "seed": 360521,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae9cb4/1CaAiOW_FEnzR0D0afhjh_XK7scd5J.flac"
+}

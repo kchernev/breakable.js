@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A puddle of petrol set alight: silence, then one sudden deep whoosh-whump as all the vapour ignites at once and flames burst up, the rush dying down quickly to a soft crackle. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, steady, continuous, constant, explosion, bang, gunshot, crack, debris",
+  "duration": 4,
+  "seed": 1552,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefdcc/cGn296ZQkIkRPbTvXNKRW_GsHDhdNu.flac"
+}

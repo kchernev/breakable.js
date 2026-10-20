@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "An ancient Greek Geometric-period bronze tripod cauldron, a votive offering about 1.5 m tall: a deep round bronze cauldron about 70 cm across with a thick rolled rim, held up on three tall, straight, sturdy cast bronze legs (flat bars about 6 cm wide with ribbed faces) evenly spaced around it, standing vertically from small flat feet on the ground up to the rim, so the whole tripod is about 75 cm across. Two large upright ring handles stand on the rim opposite each other, each a thick round solid bronze ring about 35 cm across with a short strut to the rim, open in the middle. Weathered dark brown bronze with pale blue-green verdigris streaks and patches, worn brighter on the rims. Empty, no fire, no inscription. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1024,
+      "height": 1536
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:15:43.594Z",
+  "url": "https://v3b.fal.media/files/b/0aae637c/tM_h4lDV0_D1yCUc9pZ_d_zymDAr7e.png"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A loose sheet of corrugated steel striking a concrete floor: a sharp, hollow sheet-metal clang with a short wobbly ring and rattle that fades fast. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2,
+  "seed": 764451,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6354/Ch60PpmUregxUS4I3kXVX_hkCIBj27.flac"
+}

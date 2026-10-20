@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A big block of solid marble splitting apart under a heavy blow: a loud, hard, full-bodied crack of thick stone breaking with a deep thump in it, heavy stone chunks breaking off and thudding down, then a short crumble of grit and pebbles. Outdoors. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2.5,
+  "seed": 127891,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae639d/wqF4MgaXgdwHfOEliHz4y_be1TpmxY.flac"
+}

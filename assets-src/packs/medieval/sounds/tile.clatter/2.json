@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A whole row of fired clay roof tiles sliding down a steep roof and pouring off the eaves: a rattling, scraping cascade of tiles, then tiles smashing and clattering onto cobblestones below, terracotta shards scattering. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3,
+  "seed": 600122,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6360/76sRhudh_Hck3T1Jt7F-0_UJzCkyXM.flac"
+}

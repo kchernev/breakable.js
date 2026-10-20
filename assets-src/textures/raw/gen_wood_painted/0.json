@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of weathered painted wood: vertical wooden boards about 12 cm wide running top to bottom with thin dark gaps between them, covered in old off-white cream paint that is cracked, peeling and flaking, revealing silver-grey weathered wood with a strong vertical grain underneath. The boards run straight through the top and bottom edges. The frame shows a 1 m × 1 m patch, about 8 boards across. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T18:24:48.906Z",
+  "url": "https://v3b.fal.media/files/b/0aae60e2/OLDP5gGaDtogzpJw6MAJM_tcK8k8i0.png"
+}

@@ -1,0 +1,100 @@
+{
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "source": "concept0.png",
+  "input": {
+    "model_type": "standard",
+    "topology": "triangle",
+    "target_polycount": 30000,
+    "should_remesh": true,
+    "should_texture": true,
+    "enable_pbr": true,
+    "symmetry_mode": "auto",
+    "texture_prompt": "New York yellow taxi cab, glossy taxi-yellow car paint, dark tinted glass, black rubber tyres, steel wheels with silver hub caps, black bumpers, white roof sign box",
+    "image_url": "https://v3b.fal.media/files/b/0aae615b/WMpHkcZG7qlUVFvcGetcR_taxi_concept0.png"
+  },
+  "seed": 836164022,
+  "made": "2026-10-14T18:49:11.370Z",
+  "seconds": 272,
+  "output": {
+    "animation_glb": null,
+    "animation_fbx": null,
+    "model_glb": {
+      "url": "https://v3b.fal.media/files/b/0aae6168/EY-qM53R1n9lXLOxLyTwX_model.glb",
+      "content_type": "model/gltf-binary",
+      "file_name": "model.glb",
+      "file_size": 10170732
+    },
+    "thumbnail": {
+      "url": "https://v3b.fal.media/files/b/0aae616f/KvnPMMJJQ007I8LnU_LmZ_preview.png",
+      "content_type": "image/png",
+      "file_name": "preview.png",
+      "file_size": 68656
+    },
+    "model_urls": {
+      "glb": {
+        "url": "https://v3b.fal.media/files/b/0aae6168/EY-qM53R1n9lXLOxLyTwX_model.glb",
+        "content_type": "model/gltf-binary",
+        "file_name": "model.glb",
+        "file_size": 10170732
+      },
+      "fbx": {
+        "url": "https://v3b.fal.media/files/b/0aae6169/UmrQBOv7IHiAbfPjrNHmi_model.fbx",
+        "content_type": "application/octet-stream",
+        "file_name": "model.fbx",
+        "file_size": 10383372
+      },
+      "obj": {
+        "url": "https://v3b.fal.media/files/b/0aae616b/NNkXPwxGor9QjoeeUuX3s_model.obj",
+        "content_type": "text/plain",
+        "file_name": "model.obj",
+        "file_size": 3155837
+      },
+      "usdz": {
+        "url": "https://v3b.fal.media/files/b/0aae616b/dFrSmwPhsk0dQy08ZUDUv_model.usdz",
+        "content_type": "model/vnd.usdz+zip",
+        "file_name": "model.usdz",
+        "file_size": 10946040
+      },
+      "blend": null,
+      "stl": {
+        "url": "https://v3b.fal.media/files/b/0aae616e/UCJbUCsOu3_1dIgBbzQgI_model.stl",
+        "content_type": "application/octet-stream",
+        "file_name": "model.stl",
+        "file_size": 1498484
+      }
+    },
+    "texture_urls": [
+      {
+        "base_color": {
+          "url": "https://v3b.fal.media/files/b/0aae6170/j6N74-9hUuMKQWFB3vxZN_texture_0.png",
+          "content_type": "image/png",
+          "file_name": "texture_0.png",
+          "file_size": 4085445
+        },
+        "metallic": {
+          "url": "https://v3b.fal.media/files/b/0aae6172/YASI5Bo9WXX0zu3Ry2CRb_texture_0_metallic.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_metallic.png",
+          "file_size": 183729
+        },
+        "normal": {
+          "url": "https://v3b.fal.media/files/b/0aae6174/xy3sRAiNp7B7IgImmft0v_texture_0_normal.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_normal.png",
+          "file_size": 4160053
+        },
+        "roughness": {
+          "url": "https://v3b.fal.media/files/b/0aae6175/KBsBpAerLan19s6OPVf_U_texture_0_roughness.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_roughness.png",
+          "file_size": 1279210
+        }
+      }
+    ],
+    "seed": 836164022,
+    "rigged_character_glb": null,
+    "rigged_character_fbx": null,
+    "basic_animations": null,
+    "rig_task_id": null
+  }
+}

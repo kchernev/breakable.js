@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A large container ship sounding its horn far out across a foggy harbour: one long, very deep, steady low foghorn blast of about four seconds, then its echo rolling back over the water and fading away. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, train, car horn, trumpet",
+  "duration": 9,
+  "seed": 495821,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6353/dmQ2MQitgggK6WzWWYRgH_a9EMsOsH.flac"
+}

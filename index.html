@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Cpath d=%27M4 28 10 6l6 10 4-6 8 18z%27 fill=%27%23e0905a%27/%3E%3C/svg%3E" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Breakable.js</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0d0f12; color: #e8e4dc; font: 14px/1.45 system-ui, -apple-system, sans-serif; }
+  canvas { display: block; }
+  #crosshair { position: fixed; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; pointer-events: none; opacity: .85; }
+  #crosshair::before, #crosshair::after { content: ''; position: absolute; background: #fff; box-shadow: 0 0 2px #000; }
+  #crosshair::before { left: 6px; top: 0; width: 2px; height: 14px; }
+  #crosshair::after { left: 0; top: 6px; width: 14px; height: 2px; }
+  #hud { position: fixed; left: 14px; bottom: 12px; font-size: 12px; opacity: .72; text-shadow: 0 1px 2px #000; pointer-events: none; font-variant-numeric: tabular-nums; }
+  #hud b { font-weight: 600; margin-right: 8px; }
+  /* The weapons, lower right: the one in hand bright */
+  #weapon { position: fixed; right: 14px; bottom: 12px; display: flex; gap: 14px; font-size: 12px; text-shadow: 0 1px 2px #000; pointer-events: none; font-variant-numeric: tabular-nums; }
+  #weapon .slot { opacity: .42; }
+  #weapon .slot.on { opacity: .85; }
+  #weapon kbd { display: inline-block; min-width: 1em; padding: 0 3px; margin-right: 5px; border: 1px solid rgba(255, 255, 255, .35); border-radius: 3px; font: 600 10px/1.4 system-ui, sans-serif; text-align: center; }
+  #status { margin: 0 0 10px; font-size: 13px; color: #f0b46e; min-height: 1.45em; }
+  #status:empty { display: none; }
+  #overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; background: rgba(8, 9, 11, .5); cursor: pointer; }
+  #overlay.hidden { display: none; }
+  #overlay .card { width: 100%; max-width: 880px; max-height: 100%; box-sizing: border-box; overflow: auto; padding: 20px 22px; background: rgba(16, 18, 22, .86); border: 1px solid rgba(255, 255, 255, .12); border-radius: 10px; }
+  #overlay h1 { margin: 0 0 4px; font-size: 20px; font-weight: 600; }
+  #overlay .lead { margin: 0 0 12px; opacity: .8; }
+  /* The worlds: a card each, a picture of it, its name and a line about it */
+  #worlds { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; margin: 0 0 14px; }
+  #worlds .world { display: flex; flex-direction: column; padding: 0; overflow: hidden; text-align: left; border-radius: 8px; border: 1px solid rgba(255, 255, 255, .1); background: rgba(255, 255, 255, .04); color: inherit; font: inherit; cursor: pointer; }
+  #worlds .world:hover { background: rgba(255, 255, 255, .09); border-color: rgba(255, 255, 255, .22); }
+  #worlds .world:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  #worlds .world.on { border-color: rgba(240, 180, 110, .7); background: rgba(240, 180, 110, .12); }
+  #worlds img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: #1c1f24; }
+  #worlds .text { padding: 8px 10px 10px; }
+  #worlds strong { display: block; font-size: 14px; font-weight: 600; }
+  #worlds .on strong::after { content: 'here'; margin-left: 8px; padding: 0 6px; border-radius: 4px; background: rgba(240, 180, 110, .25); color: #f0c48e; font-size: 11px; font-weight: 500; vertical-align: 1px; }
+  #worlds .text span { display: block; font-size: 12px; opacity: .72; margin-top: 2px; }
+  #overlay .keys { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; padding: 0; list-style: none; font-size: 12.5px; opacity: .8; }
+  #overlay kbd { display: inline-block; min-width: 1.1em; padding: 0 5px; margin-right: 3px; border: 1px solid rgba(255, 255, 255, .22); border-bottom-width: 2px; border-radius: 4px; font: 600 11px/1.5 system-ui, sans-serif; text-align: center; }
+  /* A phone: one world a row, the picture beside its name */
+  @media (max-width: 560px) {
+    #overlay { padding: 12px; }
+    #overlay .card { padding: 16px 14px; }
+    #worlds { grid-template-columns: 1fr; gap: 8px; }
+    #worlds .world { flex-direction: row; align-items: center; }
+    #worlds img { width: 112px; flex: none; }
+    #worlds .text { padding: 6px 10px; min-width: 0; }
+    #worlds .text span { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  }
+</style>
+</head>
+<body>
+<div id="crosshair"></div>
+<div id="hud"></div>
+<div id="weapon"></div>
+<div id="overlay"><div class="card">
+  <h1>Breakable.js</h1>
+  <p class="lead">Everything here breaks. Pick a world, or click to play.</p>
+  <p id="status">Loading…</p>
+  <div id="worlds" role="group" aria-label="Worlds"></div>
+  <ul class="keys">
+    <li><kbd>Mouse</kbd> look</li>
+    <li><kbd>Click</kbd> fire (hold: the machine gun)</li>
+    <li><kbd>1</kbd> launcher, <kbd>2</kbd> machine gun (<kbd>Wheel</kbd>, <kbd>Q</kbd> the last)</li>
+    <li><kbd>WASD</kbd> move, <kbd>Shift</kbd> run, <kbd>Space</kbd> jump</li>
+    <li><kbd>F</kbd> fly (<kbd>Space</kbd> up, <kbd>C</kbd> down)</li>
+    <li><kbd>M</kbd> sound on / off</li>
+    <li><kbd>R</kbd> rebuild the world</li>
+  </ul>
+</div></div>
+<script type="module" src="/src/demo/main.ts"></script>
+</body>
+</html>

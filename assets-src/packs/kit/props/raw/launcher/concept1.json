@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "A fictional shoulder-fired rocket launcher of no real model or maker, lying level. A long straight steel launch tube, 1.1 m long and 9 cm across, painted a dull olive-drab green, the paint worn through to dark bare steel along the edges and where hands hold it, with scuffs and a little grime. A slightly thicker ribbed collar around the muzzle end, and at the rear end a short flared blast cone. Under the tube, a little behind its middle, a black pistol grip with a trigger and a trigger guard, and a short black front grip ahead of it. On the left side of the tube, above the pistol grip, a compact boxy optical sight on a steel bracket with a black rubber eyecup at its back, and a small folding front sight post on top near the muzzle. Thick, sturdy, well-proportioned parts, nothing thin or spindly. The muzzle points to the right of the picture; it is seen from its left side, a little from above. The tube is empty (no rocket in it). Plain paint: no markings, no stencils, no stickers. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1536,
+      "height": 1024
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-15T00:51:10.475Z",
+  "url": "https://v3b.fal.media/files/b/0aae69f1/LrTJon6AEdd4ru99FDTs8_x7gJZ1Sa.png"
+}

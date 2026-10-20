@@ -1,0 +1,100 @@
+{
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "source": "concept0.png",
+  "input": {
+    "model_type": "standard",
+    "topology": "triangle",
+    "target_polycount": 30000,
+    "should_remesh": true,
+    "should_texture": true,
+    "enable_pbr": true,
+    "symmetry_mode": "auto",
+    "texture_prompt": "dark navy blue metallic car paint, dark tinted glass, black rubber tyres, silver alloy wheels, chrome trim",
+    "image_url": "https://v3b.fal.media/files/b/0aae6182/x4Ba7CHv_wo38z9wzn_Tx_sedan_concept0.png"
+  },
+  "seed": 1619441908,
+  "made": "2026-10-14T18:54:46.240Z",
+  "seconds": 221,
+  "output": {
+    "animation_glb": null,
+    "animation_fbx": null,
+    "model_glb": {
+      "url": "https://v3b.fal.media/files/b/0aae618f/KegdDJdEGRSOdf4Ox05nJ_model.glb",
+      "content_type": "model/gltf-binary",
+      "file_name": "model.glb",
+      "file_size": 9881756
+    },
+    "thumbnail": {
+      "url": "https://v3b.fal.media/files/b/0aae6194/tfroiIWxTFms9rmHAbSib_preview.png",
+      "content_type": "image/png",
+      "file_name": "preview.png",
+      "file_size": 69045
+    },
+    "model_urls": {
+      "glb": {
+        "url": "https://v3b.fal.media/files/b/0aae618f/KegdDJdEGRSOdf4Ox05nJ_model.glb",
+        "content_type": "model/gltf-binary",
+        "file_name": "model.glb",
+        "file_size": 9881756
+      },
+      "fbx": {
+        "url": "https://v3b.fal.media/files/b/0aae6190/0mQvu0_KiSN1pWsO-kay4_model.fbx",
+        "content_type": "application/octet-stream",
+        "file_name": "model.fbx",
+        "file_size": 10151980
+      },
+      "obj": {
+        "url": "https://v3b.fal.media/files/b/0aae6191/QGqEnvE_QZ9jv_NBAQ2ri_model.obj",
+        "content_type": "text/plain",
+        "file_name": "model.obj",
+        "file_size": 3074039
+      },
+      "usdz": {
+        "url": "https://v3b.fal.media/files/b/0aae6190/S6BO-DG0areUkfuq5-yxq_model.usdz",
+        "content_type": "model/vnd.usdz+zip",
+        "file_name": "model.usdz",
+        "file_size": 10714252
+      },
+      "blend": null,
+      "stl": {
+        "url": "https://v3b.fal.media/files/b/0aae6193/8iLANCenydFhUpjkwTiUL_model.stl",
+        "content_type": "application/octet-stream",
+        "file_name": "model.stl",
+        "file_size": 1485034
+      }
+    },
+    "texture_urls": [
+      {
+        "base_color": {
+          "url": "https://v3b.fal.media/files/b/0aae6194/v3jAVMvZyM0pzLbT09Bo7_texture_0.png",
+          "content_type": "image/png",
+          "file_name": "texture_0.png",
+          "file_size": 4225082
+        },
+        "metallic": {
+          "url": "https://v3b.fal.media/files/b/0aae6195/5Zp5qw2jcEg6JgFdwnadg_texture_0_metallic.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_metallic.png",
+          "file_size": 468910
+        },
+        "normal": {
+          "url": "https://v3b.fal.media/files/b/0aae6197/_CdUOT-lYfn5MMuatNkyR_texture_0_normal.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_normal.png",
+          "file_size": 3783570
+        },
+        "roughness": {
+          "url": "https://v3b.fal.media/files/b/0aae6198/gf17EbtBhZ3SdiilIE9th_texture_0_roughness.png",
+          "content_type": "image/png",
+          "file_name": "texture_0_roughness.png",
+          "file_size": 1248547
+        }
+      }
+    ],
+    "seed": 1619441908,
+    "rigged_character_glb": null,
+    "rigged_character_fbx": null,
+    "basic_animations": null,
+    "rig_task_id": null
+  }
+}

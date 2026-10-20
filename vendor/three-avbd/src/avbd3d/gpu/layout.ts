@@ -1,0 +1,360 @@
+// Buffer layouts shared by the 3D GPU host code and its WGSL. Counters, indirect-argument
+// slots, colouring and the Params fields read by the shared kernels (topology, args) are the
+// 2D pipeline's (../../avbd2d/gpu/layout.ts). As there, Infinity is never stored on the GPU:
+// unbounded stiffness is BIG and a row is hard when its stiffness is >= HARD.
+
+import { CORE_WGSL } from '../../avbd2d/gpu/layout.ts';
+
+/**
+ * Floats per body, 10 vec4. Everything a contact reads comes first (one 64-byte span):
+ * pos (xyz, friction), rot (quaternion), initialPos (xyz, rolling resistance), initialRot; then size (xyz, mass),
+ * moment (xyz, bounding radius), inertialPos, inertialRot, vel (xyz, previous vel.z),
+ * angVel (xyz, shape: SHAPE_BOX / SHAPE_SPHERE / SHAPE_SAIL). Rendering reads pos, rot, size
+ * and shape.
+ */
+export const BODY_FLOATS = 40;
+export const B_POS = 0;
+export const B_ROT = 4;
+export const B_INITIAL_POS = 8;
+export const B_INITIAL_ROT = 12;
+export const B_SIZE = 16;
+export const B_MOMENT = 20;
+export const B_INERTIAL_POS = 24;
+export const B_INERTIAL_ROT = 28;
+export const B_VEL = 32;
+export const B_ANGVEL = 36;
+
+/**
+ * Floats per joint record (joints and springs): 10 vec4 (32 floats before 0.3, which added the
+ * rest rotation and the rest it started with: anything reading the raw joint buffer strides by this).
+ *
+ * What a joint's fields hold, as `readJoints` returns them after a step (the values of its last
+ * iteration; the next step's warm start scales the multipliers by alpha * gamma):
+ * - penalty (xyz, per row) and stiffness (w): a hard row has stiffness BIG (>= HARD), a free
+ *   one (a ball joint's angle lock) 0. A joint that broke has both stiffnesses and every penalty
+ *   and multiplier zeroed (fracture and torque arm stay), which is how a broken joint reads:
+ *   stiffness 0 at J_PEN_LIN + 3 and J_PEN_ANG + 3.
+ * - multipliers λ (xyz): the force a hard row carries: |λ_lin| is the force (N) holding the
+ *   anchors together, and |λ_ang| the angular force, the one `fracture` and `yield` limit. The
+ *   torque it is, is the torque arm (J_LAM_ANG + 3) times it; the angular Jacobian is
+ *   ±torqueArm·I.
+ * - the rest (J_REST) the angle lock holds now and the one it started with (J_REST_START): how far
+ *   a plastic joint has bent is the turn from one to the other (decodeJoint's `bend`).
+ */
+export const JOINT_FLOATS = 40;
+export const J_PEN_LIN = 0; // xyz, w: stiffness (joint lin; spring: its stiffness)
+export const J_PEN_ANG = 4; // xyz, w: angular stiffness
+export const J_LAM_LIN = 8; // xyz, w: fracture threshold on |lambdaAng| (negative: on |lambdaLin| too)
+export const J_LAM_ANG = 12; // xyz, w: torque arm
+export const J_C0_LIN = 16;
+export const J_C0_ANG = 20; // xyz, w: yield threshold on |lambdaAng| (BIG: never)
+export const J_RA = 24; // xyz (world point for world joints), w: spring rest length
+export const J_RB = 28; // xyz, w: bend limit (see J_BREAK_BEND)
+/**
+ * The relative rotation the angle lock holds, B's orientation in A's frame as a quaternion
+ * (x, y, z, w): it holds rotB = rotA·rest. The identity (0, 0, 0, 1) is the demo's joint, which
+ * holds the two rotations equal. A plastic joint moves it (see J_YIELD).
+ */
+export const J_REST = 32;
+/**
+ * The rest the joint was made with (as J_REST, which a plastic joint moves away from it): how far
+ * it has bent is the angle of the turn between the two, 2·atan2(|vec|, |w|) of restStart⁻¹·rest.
+ */
+export const J_REST_START = 36;
+/** The word holding a joint's yield threshold (BIG: never): past it |λ_ang| is cut back and the rest moves. */
+export const J_YIELD = J_C0_ANG + 3;
+/**
+ * The word holding a plastic joint's bend limit, an angle in radians (BIG: never): it breaks, as
+ * by fracture, when it yields and has then bent past it. (Only a joint that yields can bend, so a
+ * limit on a joint that cannot is never reached.)
+ */
+export const J_BREAK_BEND = J_RB + 3;
+
+/**
+ * Contacts come in pairs' manifolds: a 32-byte pair record (bodies, first contact, contact
+ * count, normal, friction) and 64 bytes per contact point, stored consecutively per pair.
+ * Loading both bodies and the basis once per pair instead of once per point is most of the
+ * solve's memory traffic.
+ */
+export const MANIFOLD_WORDS = 8;
+export const M_IDS = 0; // a, b (a > b), first contact, count | generation step << 4 (u32)
+export const M_GEO = 4; // normal (B to A) xyz, friction
+
+/** 32-bit words per contact point: 4 vec4, the w's carrying the key and C0. */
+export const CONTACT_WORDS = 16;
+export const K_RA = 0; // body-local anchor on A, w: key (feature | STICK_BIT, u32)
+export const K_RB = 4; // body-local anchor on B, w: C0 normal
+export const K_PEN = 8; // penalty xyz, w: C0 tangent 1
+export const K_LAM = 12; // lambda xyz, w: C0 tangent 2
+/** Static friction held last step (features use bits 0-25). */
+export const STICK_BIT = 0x80000000;
+
+// Counter words beyond the shared ones (../../avbd2d/gpu/layout.ts uses 0-5)
+export const C_MANIFOLDS = 6;
+export const C_PREV_MANIFOLDS = 7;
+export const C_TAIL_BODIES = 8;
+
+/**
+ * Shape codes in angVel.w (spheres: see ../shapes.ts; radius = size.x / 2). A sail collides
+ * as a box and catches the wind on its local z faces.
+ */
+export const SHAPE_BOX = 0;
+export const SHAPE_SPHERE = 1;
+export const SHAPE_SAIL = 2;
+/** Hulls (../hull.ts): angVel.w = SHAPE_HULL + the hull's header offset in the hull buffer (vec4s). */
+export const SHAPE_HULL = 3;
+
+export const T_JOINT = 1;
+export const T_SPRING = 2;
+
+export const FLAG_MATCH_NEAREST = 1;
+/** Prefer face axes over edge axes the way Box2D does (see wgsl-collision.ts collide). */
+export const FLAG_FACE_BIAS = 2;
+/** Reuse a pair's contact points while neither body has moved (wgsl-collision.ts). */
+export const FLAG_REUSE_CONTACTS = 4;
+/** Slow bodies start each step's iterations from the step-start pose (wgsl-solve.ts). */
+export const FLAG_START_AT_REST = 8;
+/** A contact's normal penalty starts at the lighter body's m/dt² (wgsl-collision.ts contactPenaltyMin). */
+export const FLAG_MASS_PENALTY = 16;
+export const FLAG_REUSE_MANIFOLDS = 64;
+export const FLAG_SPARSE_COLORS = 32;
+/** Sliding friction as Coulomb's (wgsl-solve.ts accumulate, dualManifold). */
+export const FLAG_SLIP_FRICTION = 128;
+/** Deep penetration pushed out at a capped speed (wgsl-solve.ts pushOut). */
+export const FLAG_PUSH_OUT = 256;
+/** Contacts of moving bodies with fixed ones found before they touch (wgsl-collision.ts speculation). */
+export const FLAG_SPECULATIVE = 512;
+/** A moving body level with a fixed one's upward face meets that face, not the seam beside it (wgsl-collision.ts rides). */
+export const FLAG_SEAMS = 1024;
+export const SPARSE_COLOR_START = 16;
+/** Speed (m/s) of a body's fastest point, |v| + |ω|·radius, below which FLAG_START_AT_REST applies. */
+export const REST_SPEED = 0.1;
+/**
+ * A body counts as still while within this distance (m) and rotation (rad) of its reference
+ * pose; its pairs then keep their contact points instead of re-running the narrowphase.
+ */
+export const REUSE_LIN_TOL = 0.002;
+export const REUSE_ANG_TOL = 0.002;
+/** matchNearest tolerance, as a fraction of the smaller box's smallest side. */
+export const NEAREST_FRACTION = 0.05;
+
+/** How far into each other two bodies rest (m): a contact's C is its gap plus this. */
+export const COLLISION_MARGIN = 0.01;
+
+/** Words in the Params uniform (see the struct in PRELUDE_3D). */
+export const PARAM_WORDS = 52;
+
+export const PRELUDE_3D = /* wgsl */ `
+// Shared by every 3D module (avbd3d/gpu/layout.ts)
+${CORE_WGSL}
+const T_JOINT = ${T_JOINT};
+const T_SPRING = ${T_SPRING};
+
+const PENALTY_MIN = 1.0;
+const PENALTY_MAX = 1e10;
+// Least LDLᵀ pivot of the primal solve, relative to its diagonal (wgsl-solve.ts finishBody)
+const PIVOT_FLOOR = 1e-5;
+const COLLISION_MARGIN = ${COLLISION_MARGIN};
+// A contact's penetration past its margin and this is pushed out at up to PUSH_SPEED (m/s): wgsl-solve.ts pushOut
+const PUSH_SLOP = 0.01;
+const PUSH_SPEED = 1.0;
+const STICK_THRESH = 0.00001;
+
+const SHAPE_SPHERE = ${SHAPE_SPHERE}.0;
+const SHAPE_SAIL = ${SHAPE_SAIL}.0;
+const SHAPE_HULL = ${SHAPE_HULL}.0;
+const STICK_BIT = ${STICK_BIT}u;
+const C_MANIFOLDS = ${C_MANIFOLDS}u;
+const C_PREV_MANIFOLDS = ${C_PREV_MANIFOLDS}u;
+/** Feature key of every contact involving a sphere (one contact per pair). */
+const SPHERE_FEATURE = 3u << 24u;
+
+const FLAG_MATCH_NEAREST = ${FLAG_MATCH_NEAREST}u;
+const FLAG_FACE_BIAS = ${FLAG_FACE_BIAS}u;
+const FLAG_REUSE_CONTACTS = ${FLAG_REUSE_CONTACTS}u;
+const FLAG_START_AT_REST = ${FLAG_START_AT_REST}u;
+const FLAG_MASS_PENALTY = ${FLAG_MASS_PENALTY}u;
+const FLAG_REUSE_MANIFOLDS = ${FLAG_REUSE_MANIFOLDS}u;
+const FLAG_SPARSE_COLORS = ${FLAG_SPARSE_COLORS}u;
+const FLAG_SLIP_FRICTION = ${FLAG_SLIP_FRICTION}u;
+const FLAG_PUSH_OUT = ${FLAG_PUSH_OUT}u;
+const FLAG_SPECULATIVE = ${FLAG_SPECULATIVE}u;
+const FLAG_SEAMS = ${FLAG_SEAMS}u;
+// Steps ahead a moving body's contacts with fixed ones are found (wgsl-collision.ts speculation)
+const SPECULATIVE_STEPS = 3.0;
+const SPARSE_COLOR_START = ${SPARSE_COLOR_START}u;
+const REST_SPEED = ${REST_SPEED};
+const NEAREST_FRACTION = ${NEAREST_FRACTION};
+
+struct Body {
+  pos: vec4f,          // xyz, w: friction
+  rot: vec4f,          // orientation quaternion (x, y, z, w)
+  initialPos: vec4f,   // pose at the start of the step (x-), w: rolling resistance
+  initialRot: vec4f,
+  size: vec4f,         // full widths, w: mass (0 = static)
+  moment: vec4f,       // principal moments, w: bounding radius
+  inertialPos: vec4f,  // inertial target y, w: step it last moved from its reference pose (u32)
+  inertialRot: vec4f,
+  vel: vec4f,          // xyz, w: previous step's velocity along up (adaptive warm start)
+  angVel: vec4f,       // xyz, w: shape (SHAPE_BOX, SHAPE_SPHERE, SHAPE_SAIL, or SHAPE_HULL + hull offset)
+}
+
+struct Joint {
+  penLin: vec4f,  // xyz, w: linear stiffness (>= HARD: hard); spring: its stiffness
+  penAng: vec4f,  // xyz, w: angular stiffness
+  lamLin: vec4f,  // xyz, w: fracture threshold on |lamAng| (negative: on |lamLin| too)
+  lamAng: vec4f,  // xyz, w: torque arm
+  c0Lin: vec4f,   // C(x-)
+  c0Ang: vec4f,   // xyz: C(x-), w: yield threshold on |lamAng| (BIG: never yields)
+  rA: vec4f,      // xyz: anchor on A (world point when A is the world), w: spring rest length
+  rB: vec4f,      // xyz: anchor on B, w: bend limit in radians (BIG: a plastic joint never breaks on it)
+  rest: vec4f,    // the relative rotation the angle lock holds: rotB = rotA·rest (quaternion x, y, z, w)
+  restStart: vec4f, // the rest it was made with: its bend is the turn from this to rest
+}
+
+struct Manifold {
+  ids: vec4u,     // bodyA, bodyB (A > B), first contact, count | generation step << 4
+  geo: vec4f,     // normal (B to A), friction
+}
+
+fn pairCount(m: Manifold) -> u32 {
+  return m.ids.w & 15u;
+}
+
+struct Contact {
+  rA: vec3f,      // body-local anchors
+  key: u32,       // feature | STICK_BIT
+  rB: vec3f,
+  c0x: f32,       // C(x-) in the pair's basis, including the collision margin
+  pen: vec3f,     // normal, tangent, tangent
+  c0y: f32,
+  lam: vec3f,
+  c0z: f32,
+}
+
+struct Params {
+  dt: f32,
+  gravity: f32,         // acceleration along up (m/s², negative: down)
+  betaLin: f32,
+  betaAng: f32,
+  gamma: f32,
+  alpha: f32,
+  flags: u32,
+  bodyCount: u32,
+  jointCount: u32,
+  colorCap: u32,
+  cellSize: f32,
+  tableMask: u32,
+  maxSmallRadius: f32,
+  largeCount: u32,
+  noCollideCount: u32,
+  pairCapacity: u32,
+  contactCapacity: u32,
+  hashMask: u32,
+  adjFillOffset: u32,
+  adjListOffset: u32,
+  gridCursorOffset: u32,
+  gridSortedOffset: u32,
+  gridCellOffset: u32,
+  stateBOffset: u32,
+  colorHistOffset: u32,
+  colorStartOffset: u32,
+  colorGroups: u32,
+  colorBodiesOffset: u32,
+  rounds: u32,
+  manifoldCapacity: u32,
+  step: u32,           // steps since the solver was created (from 1)
+  primalLanes: u32,    // bytes 0-2: log2 of the colour sizes from which 1, 2, 4 lanes per body suffice
+  wind: vec4f,         // xyz: wind velocity (m/s), w: air pressure coefficient ½ρC_d
+  gust: vec4f,         // x: gust strength (fraction of the wind)
+  up: vec4f,           // xyz: which way is up (unit)
+  levels: vec4u,       // x: grid levels (cellSize is level 0's), y: the levels holding movers (a bit each)
+  limits: vec4f,       // x: the most speed of a moving body (m/s; 0: none)
+}
+
+fn qmul(a: vec4f, b: vec4f) -> vec4f {
+  return vec4f(
+    a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y,
+    a.w * b.y - a.x * b.z + a.y * b.w + a.z * b.x,
+    a.w * b.z + a.x * b.y - a.y * b.x + a.z * b.w,
+    a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z);
+}
+
+fn qconj(q: vec4f) -> vec4f {
+  return vec4f(-q.xyz, q.w);
+}
+
+/** The demo's quat - quat: 2·vec(a·b⁻¹), a small-angle rotation vector. */
+fn qsub(a: vec4f, b: vec4f) -> vec3f {
+  return qmul(a, qconj(b) / dot(b, b)).xyz * 2.0;
+}
+
+/** The demo's quat + float3: integrate a rotation vector, normalize(a + (v, 0)·a·½). */
+fn qadd(a: vec4f, v: vec3f) -> vec4f {
+  return normalize(a + qmul(vec4f(v, 0.0), a) * 0.5);
+}
+
+fn qrotate(q: vec4f, v: vec3f) -> vec3f {
+  let t = cross(q.xyz, v) * 2.0;
+  return v + t * q.w + cross(q.xyz, t);
+}
+
+/** Contact basis rows (n, t1, t2), as maths.h orthonormal(). */
+fn orthonormal(n: vec3f) -> mat3x3f {
+  var t1 = select(vec3f(0.0, -n.z, n.y), vec3f(-n.y, n.x, 0.0), abs(n.x) > abs(n.z));
+  t1 = normalize(t1);
+  // Columns of the WGSL matrix are the basis rows
+  return mat3x3f(n, t1, cross(n, t1));
+}
+`;
+
+/** 3D record accessors for the shared topology kernels (../../avbd2d/gpu/wgsl-topology.ts). */
+export const TOPOLOGY_ACCESSORS_3D = /* wgsl */ `
+alias TopoItem = Manifold;
+
+/** A body pair has one manifold, so the other body alone orders a body's contacts. */
+fn topoSecondary(i: u32) -> u32 {
+  return 0u;
+}
+
+fn topoCount() -> u32 {
+  return min(atomicLoad(&counters[C_MANIFOLDS]), params.manifoldCapacity);
+}
+
+fn dynamicBody(i: i32) -> bool {
+  return i >= 0 && bodies[i].size.w > 0.0;
+}
+
+/** A joint or spring takes part unless disabled (fracture, released drag): stiffness zeroed. */
+fn jointActive(j: u32) -> bool {
+  let k = joints[j];
+  return info[j].x != T_NONE && (k.penLin.w != 0.0 || k.penAng.w != 0.0);
+}
+`;
+
+/**
+ * Threads per body in one colour's primal (primalLanes): big colours fill the GPU with one
+ * thread per body, smaller ones split each body's contacts over 2, 4 or 8 threads, since a
+ * small colour's time is the longest chain of dependent loads (the body with most contacts).
+ */
+export const PRIMAL_LANES_WGSL = /* wgsl */ `
+fn lanesFor(bodies: u32) -> u32 {
+  let rule = params.primalLanes;
+  if (bodies >= (1u << (rule & 255u))) { return 1u; }
+  if (bodies >= (1u << ((rule >> 8u) & 255u))) { return 2u; }
+  if (bodies >= (1u << ((rule >> 16u) & 255u))) { return 4u; }
+  return 8u;
+}
+
+fn colorThreads(bodies: u32) -> u32 {
+  return bodies * lanesFor(bodies);
+}
+`;
+
+/** Indirect-argument items for the shared args kernels: contact pairs, lanes per body. */
+export const ARGS_ITEMS_3D = {
+  counter: 'C_MANIFOLDS',
+  prevCounter: 'C_PREV_MANIFOLDS',
+  capacity: 'params.manifoldCapacity',
+  colorThreads: PRIMAL_LANES_WGSL,
+};

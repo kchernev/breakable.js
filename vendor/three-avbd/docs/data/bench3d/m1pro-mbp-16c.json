@@ -1,0 +1,212 @@
+{
+ "machine": "MacBook Pro M1 Pro (16-core GPU, 16 GB)",
+ "adapter": "apple · metal-3 · apple-m1-pro · Metal driver on macOS Version 26.6.2 (Build 25G83)",
+ "source": "headless: Node v22.22.2, Dawn (webgpu package)",
+ "date": "2026-09-24",
+ "timestamps": true,
+ "results": [
+  {
+   "scene": "Wall smash 2k",
+   "iterations": 10,
+   "bodies": 2002,
+   "joints": 0,
+   "contacts": 22718,
+   "colors": 17,
+   "clashes": 0,
+   "overflow": 0,
+   "wallMs": 13.310749999999961,
+   "gpu": {
+    "total": 4.58752,
+    "collision": 0.524288,
+    "adjacency": 0.065536,
+    "coloring": 0.131072,
+    "solve": 3.93216
+   },
+   "buildMs": 454.6302919999998,
+   "gpuBytes": 15370532
+  },
+  {
+   "scene": "Chain mail 1.6k",
+   "iterations": 10,
+   "bodies": 1602,
+   "joints": 3120,
+   "contacts": 9,
+   "colors": 5,
+   "clashes": 0,
+   "overflow": 0,
+   "wallMs": 3.3550874999999905,
+   "gpu": {
+    "total": 1.441792,
+    "collision": 0.196608,
+    "adjacency": 0.065536,
+    "coloring": 0.131072,
+    "solve": 1.048576
+   },
+   "buildMs": 166.83579199999986,
+   "gpuBytes": 2406788
+  },
+  {
+   "scene": "Brick ring 9k",
+   "iterations": 4,
+   "bodies": 9132,
+   "joints": 0,
+   "contacts": 49128,
+   "colors": 11,
+   "clashes": 0,
+   "overflow": 0,
+   "wallMs": 4.645241600000008,
+   "gpu": {
+    "total": 3.538944,
+    "collision": 1.245184,
+    "adjacency": 0.131072,
+    "coloring": 0.196608,
+    "solve": 1.769472
+   },
+   "buildMs": 791.5723749999997,
+   "gpuBytes": 44712392
+  },
+  {
+   "scene": "Brick gables 6.7k",
+   "iterations": 3,
+   "bodies": 6723,
+   "joints": 0,
+   "contacts": 40859,
+   "colors": 8,
+   "clashes": 0,
+   "overflow": 0,
+   "wallMs": 2.514600000000064,
+   "gpu": {
+    "total": 2.555904,
+    "collision": 0.65536,
+    "adjacency": 0.065536,
+    "coloring": 0.196608,
+    "solve": 1.048576
+   },
+   "buildMs": 480.1083750000007,
+   "gpuBytes": 16787864
+  },
+  {
+   "scene": "Jointed drop 6k",
+   "iterations": 10,
+   "bodies": 6025,
+   "joints": 12484,
+   "contacts": 17931,
+   "colors": 19,
+   "clashes": 0,
+   "overflow": 0,
+   "wallMs": 10.092662500000007,
+   "gpu": {
+    "total": 6.750208,
+    "collision": 1.179648,
+    "adjacency": 0.131072,
+    "coloring": 0.196608,
+    "solve": 5.24288
+   },
+   "buildMs": 1923.6526249999988,
+   "gpuBytes": 13008988
+  },
+  {
+   "scene": "Brick ring 110k",
+   "iterations": 4,
+   "bodies": 110442,
+   "joints": 0,
+   "contacts": 1237932,
+   "colors": 12,
+   "clashes": 0,
+   "overflow": 0,
+   "wallMs": 38.689849999999566,
+   "gpu": {
+    "total": 38.600704,
+    "collision": 10.551296,
+    "adjacency": 1.048576,
+    "coloring": 2.62144,
+    "solve": 23.855104
+   },
+   "buildMs": 23846.42,
+   "gpuBytes": 291633184,
+   "paper": "9.8 ms (3.5 solve)"
+  },
+  {
+   "scene": "Jointed drop 34k (71k joints)",
+   "iterations": 10,
+   "bodies": 34097,
+   "joints": 71064,
+   "contacts": 109058,
+   "colors": 30,
+   "clashes": 0,
+   "overflow": 0,
+   "wallMs": 49.9841207999998,
+   "gpu": {
+    "total": 23.199744,
+    "collision": 4.390912,
+    "adjacency": 0.458752,
+    "coloring": 0.720896,
+    "solve": 17.956864
+   },
+   "buildMs": 3928.171957999999,
+   "gpuBytes": 101202204,
+   "paper": "16 ms"
+  },
+  {
+   "scene": "Brick gables 506k",
+   "iterations": 3,
+   "bodies": 505923,
+   "joints": 0,
+   "contacts": 4400271,
+   "colors": 11,
+   "clashes": 0,
+   "overflow": 0,
+   "wallMs": 91.43095000000031,
+   "gpu": {
+    "total": 89.587712,
+    "collision": 27.131904,
+    "adjacency": 3.145728,
+    "coloring": 5.505024,
+    "solve": 52.4288
+   },
+   "buildMs": 146723.55108399998,
+   "gpuBytes": 1272786792,
+   "paper": "17.6 ms (10.3 solve)"
+  },
+  {
+   "scene": "Settled pile 32k",
+   "iterations": 4,
+   "bodies": 32001,
+   "joints": 0,
+   "contacts": 151571,
+   "colors": 9,
+   "clashes": 0,
+   "overflow": 0,
+   "wallMs": 9.267675000001327,
+   "gpu": {
+    "total": 9.17504,
+    "collision": 3.670016,
+    "adjacency": 0.32768,
+    "coloring": 0.458752,
+    "solve": 4.849664
+   },
+   "buildMs": 1036.4311250000028,
+   "gpuBytes": 67914740
+  },
+  {
+   "scene": "Box columns 100k",
+   "iterations": 4,
+   "bodies": 100001,
+   "joints": 0,
+   "contacts": 400000,
+   "colors": 3,
+   "clashes": 0,
+   "overflow": 0,
+   "wallMs": 12.909629100002348,
+   "gpu": {
+    "total": 12.320768,
+    "collision": 4.128768,
+    "adjacency": 0.262144,
+    "coloring": 0.65536,
+    "solve": 7.405568
+   },
+   "buildMs": 2994.1707500000193,
+   "gpuBytes": 144271644
+  }
+ ]
+}

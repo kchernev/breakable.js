@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A heavy chunk of broken concrete dropped into a shallow puddle on a wet street: a heavy wet splash with a gritty thud, and the water spattering back down. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, rain",
+  "duration": 2,
+  "seed": 877712,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6358/A-aFTFpjIPZMN3qLWpKT8_LD0GFcKr.flac"
+}

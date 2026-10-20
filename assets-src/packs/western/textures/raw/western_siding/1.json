@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of the weathered clapboard wall of an old frontier-town building in the desert: horizontal lap siding, long wooden boards running perfectly straight and level from the left edge to the right edge with no board ends or joints, each board 15 cm tall, its thick lower edge lapping over the top of the board below with a thin straight dark shadow line under it. Old chalky off-white paint, sun-bleached and finely cracked all over, with many small flakes of paint missing (1 to 5 cm across) scattered evenly over every board, showing silver-grey bare wood with a fine grain running along the boards (left to right). About two thirds of the paint is left everywhere: no large bare areas and no large unbroken painted areas, the same wear across the whole wall. A few small rusty nail heads with faint rust streaks below them, faint dust in the cracks. The frame shows a 1.0 m wide by 1.5 m tall patch: exactly 10 boards from top to bottom, all the same height, evenly spaced like ruled lines. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1536
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:23:53.011Z",
+  "url": "https://v3b.fal.media/files/b/0aae63ac/g-CSHg1p0W7f4fFj-PUyW_P6SoDCBg.png"
+}

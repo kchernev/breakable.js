@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "An old empty wooden buckboard freight wagon of the American frontier, parked with no horse. A long open rectangular box bed made of horizontal planks (about 3.2 m long, 1.1 m wide, sides 45 cm deep) in weathered, sun-bleached silver-grey to light grey-brown wood with open grain and fine checks, with faint traces of old faded red paint left on the sides, dark iron corner straps and bolt heads. A plain plank bench seat across the front of the box on two short iron springs, with a low curved iron hand rail at each end of the seat. Four tall wooden spoked wagon wheels, each with twelve thick wooden spokes, wooden rims, dark iron tyres and iron hub bands; the rear wheels clearly taller than the front wheels; all wheels straight, not turned. Heavy wooden axles and running gear underneath. A single straight wooden tongue (draft pole) runs forward from the front axle, angled down so its front tip rests on the ground. No horse, no harness, no canvas cover, no cargo, no driver. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 60 degrees off the front axis, so the whole length and all four wheels are clearly seen), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1536,
+      "height": 1024
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:10:03.573Z",
+  "url": "https://v3b.fal.media/files/b/0aae635a/pT5y54MvJbrStF0Hh_buD_tBAw7R4p.png"
+}

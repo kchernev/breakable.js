@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Bullets hitting thick wooden planks one at a time, about a second apart: each a solid, dull thunk with a crack of splintering wood. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, gunshots, gunfire, rifle",
+  "duration": 8,
+  "seed": 75380,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae9c53/gNqhEWVDGMwxEKZOJI1VB_ZD4Ch348.flac"
+}

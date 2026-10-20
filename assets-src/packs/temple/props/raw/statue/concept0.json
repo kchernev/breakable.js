@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "A life-size ancient Greek cast bronze statue of a standing goddess of wisdom and war, Classical style of the 5th century BC, about 2.4 m tall including its plinth. She stands calmly in a gentle contrapposto, facing forward, her weight on her right leg. She wears a long belted peplos that falls in deep straight vertical folds to her feet, an overfold at the waist, and a crested Corinthian helmet pushed back on top of her head so her calm face shows. Her raised right hand grips a long, sturdy spear held upright and close beside her right side, its butt resting on the plinth by her right foot and its leaf-shaped point a little above the helmet crest. Her lowered left hand rests on the rim of a large round shield (about 90 cm across) standing on edge on the plinth, leaning against her left leg, its outer face plain and smooth. She stands on a low square bronze plinth about 15 cm high, part of the casting. Weathered cast bronze: dark brown bronze with pale blue-green verdigris streaks running down from the shoulders, the folds and the shield rim, a few worn brighter bronze edges. No inscription, no gilding, no jewellery. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform pure white background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1024,
+      "height": 1536
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:15:42.225Z",
+  "url": "https://v3b.fal.media/files/b/0aae637c/97Q1yWLj-ezuoSi_AANbN_7BMLdSFY.png"
+}

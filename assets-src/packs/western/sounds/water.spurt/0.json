@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A bullet punching through the side of a big wooden water tank outdoors: a sharp wooden crack, then water suddenly bursting out of the hole under pressure in a hissing, splashing gush that quickly settles into a strong steady spurt. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, rain, tap, sink, toilet, flushing, bubbles, underwater",
+  "duration": 2.5,
+  "seed": 588760,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaefe1c/t_VSPmkN76GgiQYWHxZ7q_iVyrgiWT.flac"
+}

@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of a New York City concrete sidewalk seen from directly above: a regular grid of 4 × 4 square light grey concrete flags, each 1.5 m square, separated by straight, narrow tooled joints with rounded edges, all joints perfectly straight, parallel and evenly spaced. Fine broom-finished concrete, faint stains and discolouration, a few dark flattened chewing gum spots, a couple of hairline cracks. The frame shows a 6 m × 6 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 2048,
+    "height": 2048
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T18:25:22.903Z",
+  "url": "https://v3b.fal.media/files/b/0aae60e5/k9B801OnBuEWQNQp669g9_e0yR5xTf.png"
+}

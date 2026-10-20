@@ -1,0 +1,248 @@
+{
+  "cobblestone_floor_001": {
+    "use": "the ground",
+    "tile_m": [
+      2.4,
+      2.4
+    ],
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/cobblestone_floor_001",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/cobblestone_floor_001/cobblestone_floor_001_diff_1k.png",
+        "md5": "18167e632088a07f2618f2a3bcccbfe2",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/cobblestone_floor_001/cobblestone_floor_001_nor_gl_1k.png",
+        "md5": "36510d340777f7827a2a816abab8fe97",
+        "webp_quality": 90
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/cobblestone_floor_001/cobblestone_floor_001_arm_1k.png",
+        "md5": "eb4091919c85af575d2aba10ba47dbbd",
+        "webp_quality": 90
+      }
+    }
+  },
+  "rocky_trail_02": {
+    "use": "the dirt roads out of the gate and the south-west gap (scenery)",
+    "tile_m": [
+      2.0,
+      2.0
+    ],
+    "authors": {
+      "Amal Kumar": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/rocky_trail_02",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/rocky_trail_02/rocky_trail_02_diff_1k.png",
+        "md5": "cd1ac64aa295eedde3266d47a01c754e",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/rocky_trail_02/rocky_trail_02_nor_gl_1k.png",
+        "md5": "99c53160cf26df87a685a2f2af9f98d0",
+        "webp_quality": 80
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/rocky_trail_02/rocky_trail_02_arm_1k.png",
+        "md5": "23fe4e8eaa7a504617335c12a31e49ea",
+        "webp_quality": 90
+      }
+    }
+  },
+  "castle_wall_slates": {
+    "use": "rubble",
+    "tile_m": [
+      2.5,
+      2.5
+    ],
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/castle_wall_slates",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/castle_wall_slates/castle_wall_slates_diff_1k.png",
+        "md5": "a61ea854244ea710abf6baca1f37d26d",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/castle_wall_slates/castle_wall_slates_nor_gl_1k.png",
+        "md5": "9baba71388142b762321826273cf2beb",
+        "webp_quality": 90
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/castle_wall_slates/castle_wall_slates_arm_1k.png",
+        "md5": "40aedcde9dabc647b56247d1be5a5d4f",
+        "webp_quality": 90
+      }
+    },
+    "fixed": "The town wall's rubble: its few pale and coloured stones (a lattice of light squares every\n  1.25 m on the wall's face) repainted at the wall's median colour, keeping their own grain; and\n  never glossy (it looked wet in the low sun)."
+  },
+  "medieval_wall_01": {
+    "use": "plaster, as photographed (beige); medieval_limewash is it made near-white",
+    "tile_m": [
+      2.0,
+      2.0
+    ],
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/medieval_wall_01",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/medieval_wall_01/medieval_wall_01_diff_1k.png",
+        "md5": "f2b9fc8f9820679ef77d292ea740e88c",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/medieval_wall_01/medieval_wall_01_nor_gl_1k.png",
+        "md5": "b3ebb1cff239722f4dfc1f6e6307acda",
+        "webp_quality": 90
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/medieval_wall_01/medieval_wall_01_arm_1k.png",
+        "md5": "25a95d2719229d99d2dda307e5229189",
+        "webp_quality": 90
+      }
+    }
+  },
+  "medieval_limewash": {
+    "use": "plaster (the wash tints it)",
+    "tile_m": [
+      2.0,
+      2.0
+    ],
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/medieval_wall_01",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/medieval_wall_01/medieval_wall_01_diff_1k.png",
+        "md5": "f2b9fc8f9820679ef77d292ea740e88c",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/medieval_wall_01/medieval_wall_01_nor_gl_1k.png",
+        "md5": "b3ebb1cff239722f4dfc1f6e6307acda",
+        "webp_quality": 90
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/medieval_wall_01/medieval_wall_01_arm_1k.png",
+        "md5": "25a95d2719229d99d2dda307e5229189",
+        "webp_quality": 90
+      }
+    },
+    "derived": {
+      "from": "medieval_wall_01",
+      "mean": [
+        0.86,
+        0.85,
+        0.81
+      ],
+      "saturation": 0.3,
+      "contrast": 0.85,
+      "dark_marks": 3
+    }
+  },
+  "old_planks_02": {
+    "use": "boards",
+    "tile_m": [
+      2.0,
+      2.0
+    ],
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/old_planks_02",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/old_planks_02/old_planks_02_diff_1k.png",
+        "md5": "625e4caffc8911f0fe10e990079df836",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/old_planks_02/old_planks_02_nor_gl_1k.png",
+        "md5": "64d050aa5ec6324eccb4912fadb1913d",
+        "webp_quality": 90
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/old_planks_02/old_planks_02_arm_1k.png",
+        "md5": "5de27e0dc338bfe9faaac6ec7f0a5ff0",
+        "webp_quality": 90
+      }
+    }
+  },
+  "kloppenheim_06_puresky_1k": {
+    "authors": {
+      "Greg Zaal": "Original",
+      "Jarod Guest": "Sky edits"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/kloppenheim_06_puresky",
+    "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/kloppenheim_06_puresky_1k.hdr",
+    "md5": "995d68b1656f26452572645c0ffe898b"
+  },
+  "kloppenheim_06_puresky_2k": {
+    "authors": {
+      "Greg Zaal": "Original",
+      "Jarod Guest": "Sky edits"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/kloppenheim_06_puresky",
+    "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloppenheim_06_puresky_2k.hdr",
+    "md5": "590a829b3cf71216451655e601d542c6"
+  },
+  "syferfontein_6d_clear_puresky_1k": {
+    "authors": {
+      "Greg Zaal": "Original",
+      "Jarod Guest": "Sky Edits"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/syferfontein_6d_clear_puresky",
+    "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/syferfontein_6d_clear_puresky_1k.hdr",
+    "md5": "908b7b028f5db44f47960fd4a3f0138e"
+  },
+  "roof_09": {
+    "use": "tile (plain peg tiles; clay_roof_tiles_03 before it had a moulded diamond on each tile)",
+    "tile_m": [
+      4.0,
+      4.0
+    ],
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "license": "CC0",
+    "page": "https://polyhaven.com/a/roof_09",
+    "maps": {
+      "diff": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/roof_09/roof_09_diff_1k.png",
+        "md5": "163dc5215edfa2bf6cebc8cff41d2bbd",
+        "webp_quality": 90
+      },
+      "nor_gl": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/roof_09/roof_09_nor_gl_1k.png",
+        "md5": "fb23c19bf154abdd7aa1a737eaa6397e",
+        "webp_quality": 90
+      },
+      "arm": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/roof_09/roof_09_arm_1k.png",
+        "md5": "d0dcb48d1cf8f9f75b51e02b63fecb44",
+        "webp_quality": 90
+      }
+    },
+    "fixed": "Plain tiles: the photo's brown moved toward fired clay, which the roofs' tints then vary."
+  }
+}

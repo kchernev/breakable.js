@@ -1,0 +1,16 @@
+{
+  "endpoint": "openai/gpt-image-2.5/flare/text-to-image",
+  "input": {
+    "prompt": "A wooden cable reel (a cable drum) standing upright on the rims of its two round flanges, its axle horizontal, seen three-quarter so one flange face and the cable between them both show: 1.4 m across and 1.0 m wide. Each flange a thick disc of weathered plywood braced by a few timber battens and bolts, with a round steel-lined arbor hole at its centre. Between them a barrel wound full with many neat turns of thick black rubber-sheathed cable, filling to a hand-width below the flange rims. Pale, grey-weathered wood with water stains and dirt. No labels, no stencils, no lettering. Product photo for 3D reconstruction: exactly one object, shown whole and centred with a generous empty margin on every side, nothing cropped. Three-quarter front view from slightly above (camera about 20 degrees above the horizon and about 35 degrees off the front axis), a long lens with little perspective distortion. Isolated on a plain, seamless, uniform light grey background. Soft, even, diffuse studio lighting from all around: no harsh highlights, no cast shadow or contact shadow, no floor, no reflections of surroundings. No other objects, no people, no text, no lettering, no numbers, no logos, no badges, no watermark. Photorealistic, sharp, accurate real-world proportions and materials.",
+    "image_size": {
+      "width": 1024,
+      "height": 1024
+    },
+    "quality": "high",
+    "background": "opaque",
+    "output_format": "png",
+    "num_images": 1
+  },
+  "made": "2026-10-14T20:10:27.305Z",
+  "url": "https://v3b.fal.media/files/b/0aae635b/LGLctxY31Mh4L5Tecx6CO_87rxTn4a.png"
+}

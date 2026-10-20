@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of coarse undyed linen canvas, as used for medieval market stall awnings, lying flat and seen straight on: a clearly visible plain weave of thick, slightly irregular natural off-white threads (about 4 threads per centimetre each way), small slubs and thicker threads here and there, very faint soft creases, a few faint pale water marks and light grey dirt marks. Almost white overall. The frame shows a 0.5 m × 0.5 m patch. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:11:15.000Z",
+  "url": "https://v3b.fal.media/files/b/0aae6361/Cp3z44KgJS49A0nwZ-SLF_KGvJvf42.png"
+}

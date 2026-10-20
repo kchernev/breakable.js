@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Close-up electrical hum of an old neon sign at night: a steady low mains buzz from its transformer, a thin high whine of the glowing gas tubes, and a faint irregular crackle. Constant and unchanging from start to end. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, rain, drone music, hum melody",
+  "duration": 8,
+  "seed": 800681,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aae6356/jMWCjljO1IENPfZVhmVt4_4YFNCkcn.flac"
+}

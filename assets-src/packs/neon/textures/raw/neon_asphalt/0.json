@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "Texture of an old asphalt alley pavement seen from directly above, just after rain: dark grey asphalt with fine grey aggregate stones, a few slightly darker patched repairs with straight edges, thin cracks sealed with black tar, and several shallow puddles of standing water in the low spots, together covering about a quarter of the area: irregular rounded shapes from 20 cm to 1 m across, their water very smooth, dark and plain, the asphalt under them darker and blurred. No reflections of sky or lights in the water, no painted lines, no manholes, no drains, no leaves or litter. The frame shows a 4 m × 4 m area. Seamless tileable texture: the left edge continues into the right edge and the top edge into the bottom edge. Orthographic view, camera exactly perpendicular to the surface, no perspective. Flat, even, diffuse overcast lighting: no directional light, no cast shadows, no highlights, no vignette. The surface fills the whole frame edge to edge, uniform density everywhere; no borders, no text, no logos, no watermark, nothing in front of it. Photographic albedo texture for a PBR material, sharp and highly detailed.",
+  "image_size": {
+    "width": 1024,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-14T20:09:01.252Z",
+  "url": "https://v3b.fal.media/files/b/0aae6353/URAuuAwLiUVgmabKE6av7_pPVhtPUm.png"
+}
