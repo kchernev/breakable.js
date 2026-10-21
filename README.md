@@ -49,11 +49,13 @@ sparks or goes dark.
 
 ```sh
 pnpm install
-pnpm dev        # http://127.0.0.1:5330
+pnpm dev        # starts the server at http://127.0.0.1:5330; leave it running
 ```
 
-You need a browser with WebGPU, such as Chrome or Edge. On Linux, `pnpm chrome` opens the demo with
-WebGPU switched on ([why](docs/development.md#running-it)).
+Then open http://127.0.0.1:5330 in a browser with WebGPU, such as Chrome or Edge. On Linux, run
+`pnpm chrome` in a second terminal while `pnpm dev` is running: it opens the demo in Chrome with
+WebGPU switched on ([why](docs/development.md#running-it)). Add a world to go straight to it, e.g.
+`pnpm chrome neon`.
 
 | Key | Action |
 |---|---|

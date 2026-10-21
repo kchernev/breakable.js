@@ -2,7 +2,7 @@
 # Opens the demo in a Chrome of its own (its own profile, so your usual Chrome is untouched) with
 # WebGPU on: Chrome on Linux has no WebGPU adapter without these flags. skip_validation makes the
 # solver's many indirect dispatches cheap; it's a developer setting, so use this profile only for
-# the demo.
+# the demo. It only opens the page: `pnpm dev` has to be running for the dev server's address.
 #
 #   npm run chrome            the world picker
 #   npm run chrome -- neon    straight into a world

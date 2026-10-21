@@ -6,7 +6,7 @@ Running, checking and publishing the demo, and where everything is. Back to the 
 
 ```sh
 pnpm install
-pnpm dev          # http://127.0.0.1:5330 (demo), /lab.html (small test structures), /fx-lab.html (effects), /sounds.html (the sound packs)
+pnpm dev          # the dev server (leave it running): http://127.0.0.1:5330 (demo), /lab.html (small test structures), /fx-lab.html (effects), /sounds.html (the sound packs)
 pnpm test         # geometry, structure, ground, bullets, the piece budget, weapons, sound and runtime tests (CPU, no GPU needed)
 pnpm typecheck
 pnpm build
@@ -15,7 +15,9 @@ pnpm build
 Needs WebGPU. On **Linux with NVIDIA**, Chrome needs it switched on, and Dawn's per-call check of
 indirect dispatches costs ~0.5 ms each there (the solver makes ~90 a step). Without the flags the
 page says WebGPU is off. `pnpm chrome` (or `pnpm chrome neon` for a world) opens the demo in a
-Chrome of its own profile with them, leaving your usual Chrome as it is:
+Chrome of its own profile with them, leaving your usual Chrome as it is. It only opens the page,
+so start `pnpm dev` first, in another terminal, and keep it running; if Chrome says
+"127.0.0.1 refused to connect", the server isn't running. It does the same as:
 
 ```sh
 google-chrome --user-data-dir=~/.cache/breakable-chrome --enable-unsafe-webgpu --enable-features=Vulkan \
