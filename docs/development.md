@@ -34,6 +34,14 @@ repo's Settings > Pages, Source "GitHub Actions"). `URL=https://<user>.github.io
 flags above. Asset URLs in the code are relative to the page (`'packs/<id>/models/'`, no leading
 slash), so the same build works there and at `/`.
 
+The overrides in `package.json` (`pnpm.overrides`) keep two known holes out of what
+`puppeteer-core` brings in (the scripts that drive Chrome use it: `scripts/shot.mjs`,
+`scripts/solver-lab.mjs`). `extract-zip` unpacks a browser that's downloaded, and has no fixed
+release; it is left out, since puppeteer-core never downloads one and the scripts use the Chrome
+that's installed. `basic-ftp` (a proxy's PAC file over FTP) is taken to its fixed 6.x, which
+changed nothing get-uri uses. puppeteer-core 25 brings in neither, but needs Node 22.12 or later;
+drop both overrides when moving to it.
+
 Controls: mouse to look, click to fire (hold the button for the machine gun: it fires for as long
 as it's held, and never needs reloading), 1 for the launcher and 2 for the machine gun (the wheel
 goes round them, Q back to the last one), WASD to move (Shift runs, Space jumps), F to fly (Space
