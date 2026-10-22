@@ -3,6 +3,10 @@
 A frontier main street at high noon: two rows of false-front wooden buildings with covered
 boardwalks, a brick bank, an adobe chapel with a bell, a water tower and a windmill, open desert
 and mesas beyond. Everything in the town breaks. The desert, the mesas and the street's dirt don't.
+(Since built, the street breaks, the ground round it out to about 200 m is laid breakable where a
+blast reaches it, and the desert's shrubs, rocks, cacti, poles and outskirts are built as pieces
+once a round or a blast reaches them. Only the desert past that, the mesas and buttes and the haze
+don't break: see the README's "Round the town".)
 
 This is the plan the builder and the asset makers follow. Numbers are targets: change them if a
 screenshot says so, and keep this file in step.
@@ -90,7 +94,9 @@ screenshot says so, and keep this file in step.
 
 ### 1.4 Distant scenery (unbreakable, `scenery()`)
 
-All of it sits well inside the camera's far plane (600 m) and is fogged.
+All of it sits well inside the camera's far plane (600 m) and is fogged. (No longer all
+unbreakable: the ground within about 200 m and the mid-ground's shrubs, rocks, cacti and poles
+wake as pieces when reached; the mesas, the buttes and the haze skirt don't. See the README.)
 
 - **Ground**: one fixed physics box (1200 × 4 × 1200, top at y = 0, friction 0.9; 4 m thick, as a
   piece driven half a metre into a 1 m box went out of its bottom). It's drawn as
@@ -366,7 +372,8 @@ The frame is built from the ground up:
   - A `tin` tail vane 1.6 × 0.9 on a 1.6 `iron` boom, bonded to the gearbox.
   - An `iron` pump rod down the centre in 5 lengths, to a `timber` pump stand.
   - **The wheel is not a piece.** It's a visual mesh (18 tin blades on two rings, Ø 3.2) that
-    follows the gearbox piece's pose and spins (§7).
+    follows the gearbox piece's pose and spins (§7). (Now it's dormant while the gearbox stands:
+    a round or a blast reaching it jams it, and it's built as its hub and 18 blades.)
 - **Stock tank.** Ø 3.0 × 0.7: 12 `timber` staves and a floor of 4 `prism` quarter panels.
 - **Failure.** Shoot the legs and the tower folds. The head, with its wheel, crashes down.
 
@@ -422,7 +429,7 @@ The textures are in `packs/western/textures/` unless named as base (`textures/`)
 | `stone` | `presets.concrete` | Sandstone trim. Surface base `concrete_wall_008` with `color 0xe6d2ae`, `uvScale 0.5`. `inside 0xd8c4a0`, base `gen_concrete_broken` inside |
 | `glass` | `presets.glass` | Old dusty panes: surface `color 0x7d8f8c`, `roughness 0.18`, `metalness 0.25`, `opacity 0.5`, writing depth (a blast's dust drifting over a front fades at its panes as at its walls). `landing 2`: bottles and panes break where they land |
 | `iron` | `presets.metal` | Bars, hoops, rods, stove, gearbox. Surface base `gen_iron_painted` with `color 0x8a8a8a`, `uvScale 1`. `plastic { yieldStress 1.5e4, bend 1.4 }` (bank bars bend before they tear) |
-| `bronze` | `presets.metal` | The bell, which never breaks: `density 8`, `impact 1e9`, `minSize 3`, `maxPieces 1`, no `plastic`. Surface plain `color 0xa0783c`, `metalness 1`, `roughness 0.35` |
+| `bronze` | `presets.metal` | The bell, which never breaks: `density 8`, `impact 1e9`, `minSize 3`, `maxPieces 1`, no `plastic`. Surface plain `color 0xa0783c`, `metalness 1`, `roughness 0.35`. (Now `minSize 0.2`, `maxPieces 4`: rounds only ring it, a blast cracks it in a few pieces.) |
 | `signpaint` | `material()` | `density 0.5`, `support 80`, `strength 6e3`, `impact 10`, `fragmentSize 0.3`, `minSize 0.1`, `dustSize 0.04`, `maxPieces 6`, `grain` along u ×4. Surface: the sign atlas (§3.5), `uvScale` [1 / 7.2, 1 / 9.0] (a metre of board a metre of atlas). Splinter inside, `insideMap 0` |
 | `hangboard` | `material()` | The hanging signs' boards: `signpaint` with no `grain` and `fragmentSize 0.15`, so a round blows out where it struck and leaves a piece at each chain (70% of the board; along the grain, a strip of 40%). The same atlas |
 | `paint` | `presets.wood` | Painted trim: window frames, balusters, batwings, the barber's pole, barrel hoops (colour by tint). `density 0.5`, `strength 8e3`, `impact 10`, `fragmentSize 0.25`, `minSize 0.06`, `maxPieces 5`. Surface plain white, `roughness 0.78`. Splinter inside |
@@ -574,7 +581,9 @@ regeneration each for the two worst results. Look at the previews before spendin
 
 ## 5. Props (4 Meshy models)
 
-Props are thrown whole and never break. Their concepts use `concept()`: no lettering, no badges.
+Props are thrown whole and never break. (Since then they have shards and break under a blast's
+heart or enough rounds; the tumbleweeds, made in code, still don't.) Their concepts use
+`concept()`: no lettering, no badges.
 
 | Name | What | Real size (`fit`, `metres`) | Mass | Material (sounds) | How many, where |
 |---|---|---|---|---|---|

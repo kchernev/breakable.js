@@ -221,7 +221,7 @@ export class Levers {
     const known = this.down.get(p);
     if (known !== undefined) return known;
     this.down.set(p, false);
-    let down = p.isStatic || p.bounds.min[1] < 0.01;
+    let down = p.isStatic || p.anchor || p.bounds.min[1] < 0.01;
     for (const b of p.bonds) if (!down && on(b, p) && b.other(p).state === 'fixed') down = this.grounded(b.other(p));
     this.down.set(p, down);
     return down;

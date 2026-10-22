@@ -6,7 +6,7 @@
 
 import { abs, color, float, mix, modelPosition, modelScale, mrt, mx_noise_float, normalView, output, positionGeometry, positionLocal, positionViewDirection, positionWorld, sin, smoothstep, step, time, vec3, vec4 } from 'three/tsl';
 import * as THREE from 'three/webgpu';
-import type { V3 } from '../../../lib/index.ts';
+import type { V3 } from '../lib/index.ts';
 
 /** The demo draws particles on layer 1: not in the ambient occlusion's pre-pass. */
 const PARTICLES = 1;
@@ -16,7 +16,7 @@ const HIDDEN = -200;
 
 export class Fires {
   private readonly light: THREE.PointLight;
-  private readonly flames: Array<{ outer: THREE.Mesh; inner: THREE.Mesh; at: V3 | null; phase: number }> = [];
+  private readonly flames: Array<{ outer: THREE.Mesh; inner: THREE.Mesh; at: V3 | null; phase: number; size: number }> = [];
 
   constructor(scene: THREE.Scene) {
     // Never quite dark: a light's intensity counts in pipeline keys as zero or not
@@ -60,15 +60,23 @@ export class Fires {
         c.layers.set(PARTICLES);
         scene.add(c);
       }
-      this.flames.push({ outer, inner, at: null, phase: i * 2.1 });
+      this.flames.push({ outer, inner, at: null, phase: i * 2.1, size: 1 });
     }
   }
 
-  /** Light a flame at `at` (its foot): its index, or -1 when all three are burning. */
-  start(at: V3): number {
+  /** Light a flame at `at` (its foot), `size` times a tank's (4 m tall): its index, or -1 when all three are burning. */
+  start(at: V3, size = 1): number {
     const i = this.flames.findIndex((f) => !f.at);
-    if (i >= 0) this.flames[i].at = at;
+    if (i >= 0) Object.assign(this.flames[i], { at, size });
     return i;
+  }
+
+  /** Move flame `i`'s foot (what burns has moved), and its size. */
+  move(i: number, at: V3, size?: number): void {
+    const f = this.flames[i];
+    if (!f?.at) return;
+    f.at = at;
+    if (size !== undefined) f.size = size;
   }
 
   stop(i: number): void {
@@ -85,8 +93,8 @@ export class Fires {
   update(time: number, newest: V3 | null): void {
     for (const f of this.flames) {
       if (!f.at) continue;
-      const k = 0.85 + Math.random() * 0.2 + Math.sin(time * 9 + f.phase) * 0.08;
-      const up = 0.8 + Math.random() * 0.45 + Math.sin(time * 6.3 + f.phase) * 0.15;
+      const k = (0.85 + Math.random() * 0.2 + Math.sin(time * 9 + f.phase) * 0.08) * f.size;
+      const up = (0.8 + Math.random() * 0.45 + Math.sin(time * 6.3 + f.phase) * 0.15) * f.size;
       f.outer.position.set(...f.at);
       f.outer.scale.set(k, up, k);
       f.inner.position.set(...f.at);

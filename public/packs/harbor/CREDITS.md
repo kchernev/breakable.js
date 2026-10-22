@@ -78,6 +78,10 @@ models or photographs were used.
   - puts back the reel's black cable and grey-weathered plywood, which the model had lightened;
   - fills a missing triangle in the drum's wall;
   - fits the drum's and the reel's colliders again to the result.
+- **Shards:** what each prop breaks into (`models/<name>.shards.glb`, listed under `shards` in
+  `models/index.json`) is cut from its own processed mesh by `scripts/assets/shatter-props.py`
+  (Blender): Voronoi cells, their cut faces filled in a duller, darker shade of the prop's colour.
+  No generation; the pieces wear the prop's own materials.
 
 | Model | What it is | Size (w x h x l, m) | Triangles |
 |---|---|---|---|

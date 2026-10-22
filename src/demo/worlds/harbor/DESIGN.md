@@ -26,7 +26,7 @@ them by looking at the world.
 
 ```
  z
--340  . . . . . . . . . . . [ container ship, beam-on, x -80..140 ] . . . . . . .   (scenery)
+-340  . . . . . . . . . . . [ container ship, beam-on, x -80..140 ] . . . . . . .   (dormant scenery)
 -300  STS cranes x3 (x -150..-40)                    breakwater + lighthouse (x 120..400, z -200..-160)
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ water y -1.8 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  -30  ==kerb=====o========o========o========o========o========o========o=====  quay edge, bollards o
@@ -55,7 +55,7 @@ them by looking at the world.
 | Quay kerb (capping) | x -35..35, z -30..-29.4 | 0.35 h x 0.6 deep, 1 m segments | concrete, painted faded yellow |
 | Bollards (7) | x = -30, -20, ..., 30; z = -28.7 | 0.45 dia body, 0.6 cap, 0.7 tall | cast iron, 3 pieces each |
 | Quay-edge pair (Q) | x -33.5..-27.4, z -27.6..-25.2 | 2 x 20ft stacked | there to be blown into the sea |
-| Crane rails A and B | z = -21 and z = -1, x -35..6 | scenery strips | end stops at x 6 (small steel blocks, breakable) |
+| Crane rails A and B | z = -21 and z = -1, x -35..6 | scenery strips (as built: pieces, `railBeams`) | end stops at x 6 (small steel blocks, breakable) |
 | Block A, bay B1 | x -33.5..-21.3 | 40ft along x | heights by row r0..r4: 3, 2, 2, 1, 2 |
 | Block A, bay B2 | x -20.9..-8.7 | 40ft along x | heights 2, 3, 0, 2, 1 (r2 empty: the crane's working slot) |
 | Block A, bay B3 | x -8.3..4.0 | two 20ft per row (x halves) | heights [2,2] [2,1] [1,0] [2,1] [1,1] |
@@ -84,7 +84,13 @@ them by looking at the world.
   cranes show grey in the fog.
 - Open ground for the player: x -6..12, z 14..29 and the lane.
 
-### Distant scenery (unbreakable; procedural, instanced where repeated)
+### Distant scenery (procedural, instanced where repeated)
+
+As built, all of it but the water stands as scenery until something reaches it, then breaks
+(README, Round the yard): the deck in 12 m tiles that a blast lays breakable as the apron is, the
+quay wall in 12 m lengths, the ship's hull in 10 m lengths, its bow, each box on its deck and its
+house, each far crane, gantry, mast and shed, each box of the far stacks, the breakwater, the
+lighthouse and the buoys.
 
 - **Water**: a plane at y -1.8 out to 800 m. TSL: dark grey-green `0x2a383d`, roughness 0.12,
   slow moving normal ripples (two scrolling noise layers, ~3 m and ~0.6 m wavelengths), slightly
@@ -109,7 +115,8 @@ them by looking at the world.
 - **Ground**: the yard deck in `harbor_yard_concrete`, wetter (lower roughness, darker) in a
   noise mask of puddles; painted lines: yellow lane edges along the lanes, white bay stripes at the
   ends of the container rows (no numbers, no text), crane rails (steel strips on a concrete beam,
-  flush), drain grates every 20 m along the lanes, oil stains under the parked tractor.
+  flush; as built, pieces), drain grates every 20 m along the lanes, oil stains under the parked
+  tractor.
 
 ### Piece budget (target ~6,000, ceiling 8,000)
 
@@ -383,7 +390,7 @@ where a tint will colour them.
 |---|---|---|---|---|
 | `harbor_container` | Shipping container side wall: corrugated steel sheet, trapezoidal vertical corrugations ~28 cm pitch (flat crests and valleys, ~4 cm deep), painted **light neutral grey** (to be tinted), faded and chalky, rust spots at dents and along a few corrugation edges, dirt streaks running down, scuffs, no markings or text. | 2 m x 2 m, 7 corrugations across; 1536 px | **custom `corrugated(a, n=7, axis='x')`**: find the period from the column profile (`period()`), resample so exactly 7 periods span the tile, wrap the seam (`wrap_cut`), then build the height from a synthetic trapezoid profile at that period plus 0.15 of the image's high-pass detail (so the corrugation reads strongly in the normal map); AO from the profile; roughness 0.55 paint, 0.8 rust; partly desaturate the paint (keep the rust's hue) and normalise it to ~0.7 albedo | `container` (surface), `cladding` (surface, finer) |
 | `harbor_steel_painted` | Painted structural steel plate: pale neutral grey industrial paint, chipped at edges, rust blooms and short rust streaks, grime, a few scratches to bare metal. No bolts, no welds in rows. | 1 m x 1 m | `generic(rough=0.6)` | `steel`, `tank`, `iron`, `cable` |
-| `harbor_yard_concrete` | Heavy-duty port pavement seen from above: 2 x 2 grey concrete slabs 4 m square with straight sawn joints, wet: darker damp patches, a few shallow puddles, oil stains, tyre scuffs, fine cracks. | frame 8 m, tile one slab joint to joint (4 m); 2048 px | **custom like `sidewalk`**: cut a slab joint to joint; roughness lower (0.25) where the image is darker/wet, 0.85 dry | scenery ground (not a breakable material) |
+| `harbor_yard_concrete` | Heavy-duty port pavement seen from above: 2 x 2 grey concrete slabs 4 m square with straight sawn joints, wet: darker damp patches, a few shallow puddles, oil stains, tyre scuffs, fine cracks. | frame 8 m, tile one slab joint to joint (4 m); 2048 px | **custom like `sidewalk`**: cut a slab joint to joint; roughness lower (0.25) where the image is darker/wet, 0.85 dry | scenery ground, and the slabs' tops (`slab`, `paving.ts`) |
 | `harbor_pallet_wood` | Rough-sawn pallet timber: one wide plank surface, pale yellow-beige pine with saw marks, knots, grey weathering in places, dirt, a few nail heads. Grain running left to right. | 1 m x 1 m | `generic(rough=0.85)` | `wood` |
 | `harbor_roller_door` | Galvanised steel roller shutter curtain: horizontal interlocking slats ~8 cm tall with a rounded profile, dull zinc grey, grime collected in the joints, faint dents. | 1 m x 1 m, 12 slats | **custom**: as `corrugated` along y (n=12) | `rollerDoor` |
 | (reserve) | One set kept for a redo. | | | |

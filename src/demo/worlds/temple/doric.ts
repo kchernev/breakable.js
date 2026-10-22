@@ -152,12 +152,14 @@ function dedupe(cuts: number[]): number[] {
 
 /**
  * A rectangular step or platform course, as a ring of slabs `width` deep round its outline (the
- * steps above hide the middle) or, with `fill`, slabs over the whole of it cut at `xs`/`zs`.
+ * steps above hide the middle) or, with `fill`, slabs over the whole of it cut at `xs`/`zs`. Its
+ * slabs are anchors unless `anchor` is false: they hold up what's on them as the ground does (the
+ * course above stands over the hollow the ring leaves), but break as any piece.
  */
-export function platform(k: Kit, material: string, x0: number, x1: number, z0: number, z1: number, y0: number, y1: number, o: { width?: number; xs?: number[]; zs?: number[]; length?: number; static?: boolean; tint?: () => number } = {}): Piece[] {
+export function platform(k: Kit, material: string, x0: number, x1: number, z0: number, z1: number, y0: number, y1: number, o: { width?: number; xs?: number[]; zs?: number[]; length?: number; anchor?: boolean; tint?: () => number } = {}): Piece[] {
   const out: Piece[] = [];
   const push = (p: Piece | null) => p && out.push(p);
-  const opts = () => ({ static: o.static ?? true, tint: o.tint?.() });
+  const opts = () => ({ anchor: o.anchor ?? true, tint: o.tint?.() });
   const L = o.length ?? 2.2;
   const even = (a: number, b: number) => {
     const n = Math.max(1, Math.round((b - a) / L));

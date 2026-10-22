@@ -169,7 +169,8 @@ export function groundKind(def: Pick<WorldDefinition, 'audio'>): (x: number, y: 
  * sound), goes to the world's onShot; each burst, as it ends (after what the gun already does
  * then: its echo), to its onBurst.
  */
-export function gunHooks(gun: Gun, def: Pick<WorldDefinition, 'onShot' | 'onBurst'>, rt: WorldRuntime, strike: (hit: BulletHit) => void): void {
+export function gunHooks(gun: Gun, def: Pick<WorldDefinition, 'onRound' | 'onShot' | 'onBurst'>, rt: WorldRuntime, strike: (hit: BulletHit) => void): void {
+  gun.onRound = (r) => def.onRound?.(r, rt);
   gun.onHit = (h) => {
     strike(h);
     def.onShot?.(h, rt);

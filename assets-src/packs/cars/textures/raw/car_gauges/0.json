@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "A car's lit instrument cluster face at night: two large round analogue dials side by side, a speedometer on the left numbered 0 to 260 and a tachometer on the right numbered 0 to 8 with a red zone at the top, thin glowing white numerals and tick marks on a deep black face, slim bright orange-red needles, between the dials a small dark rectangular display with a few glowing icons. Seen straight on, filling the whole frame edge to edge, flat, no reflections, no glare, no bezel, no hands, no car interior around it. No brand names, no logos, no words.",
+  "image_size": {
+    "width": 1536,
+    "height": 640
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-21T14:21:36.531Z",
+  "url": "https://v3b.fal.media/files/b/0aaf4770/xVGHV1Aea6eIy0pvObeyL_s87UXIqs.png"
+}

@@ -34,7 +34,7 @@ meta: `{ id: 'neon', title: 'Neon Alley', blurb: 'A rain-soaked alley in a megac
   the balconies stick out a little.
 - Storey heights are the same in every building, so ledges, the bridge and the cables line up:
   - ground floor `H0 = 3.6`, upper floors `H = 3.0`, slab `ts = 0.24`
-  - the bottom of level k's slab: `y0 = 0` (the ground slab, static), `yk = 3.6 + 3.0 (k − 1)` for k ≥ 1
+  - the bottom of level k's slab: `y0 = 0` (the ground slab), `yk = 3.6 + 3.0 (k − 1)` for k ≥ 1
   - so level 3 is at y 9.6 … 9.84. The bridge deck uses this level.
 - Neighbouring buildings are 0.06 m apart, so each is a separate structure (as in Brick Street).
 - Lot-local frame (as in Brick Street's `building()`): `lx` runs along the alley from the lot's
@@ -45,7 +45,7 @@ meta: `{ id: 'neon', title: 'Neon Alley', blurb: 'A rain-soaked alley in a megac
 
 ```
         z
-  +12.75 ┌──────────────── back of the north row (unbreakable back towers from z 14) ─────────────┐
+  +12.75 ┌──────────────── back of the north row (dormant back towers from z 14) ─────────────────┐
          │  N1 A7    │ N2 B4  │  N3 A8    │ N4 A6  ║lane║ N5 A7  │ N6 B5 │    N7 A6     │        │
          │ −26…−19   │−19…−13 │ −13…−5    │ −5…2   ║2…6 ║ 6…13   │13…19  │   19…30      │   E    │
   +3.75  ├───────────┴────────┴─────▲─────┴──[BB]──╨────╨═[BRIDGE]┴───────┴──────────────┤  A8    │
@@ -65,7 +65,7 @@ meta: `{ id: 'neon', title: 'Neon Alley', blurb: 'A rain-soaked alley in a megac
 | N2 | −19.0 … −13.0 | B | 4 | 8.0 | mint render | rooftop billboard facing −x |
 | N3 | −13.0 … −5.0 | A | 8 | 9.0 | salmon tile | caged balconies on floors 2, 4, 6 |
 | N4 | −5.0 … 2.0 | A, corner | 6 | 9.0 | pale blue tile | **big blade** at x 0.9; lane facade on its east side |
-| (lane) | 2.0 … 6.0 | | | | | cross lane north to the unbreakable lane beyond z 12.75 |
+| (lane) | 2.0 … 6.0 | | | | | cross lane north to the lane beyond z 12.75 (scenery) |
 | N5 | 6.0 … 13.0 | A, corner | 7 | 9.0 | pale green tile | bridge's north end; transformer box on its lane wall |
 | N6 | 13.0 … 19.0 | B | 5 | 8.0 | cream render | |
 | N7 | 19.0 … 30.0 | A | 6 | 9.0 | ochre tile | 4 bays; rooftop water tanks and billboard |
@@ -93,12 +93,12 @@ Brick Street does with `W = width − 0.06`.
   end, the end block's billboard (y 8 to 11) above its glowing arcade. Each sign has to read
   against the ones behind it: at most two colours per sign, and neighbours in different colours.
 - **From the crossroads** (x 4, z 0): north up the lane between N4's and N5's lane facades, with
-  their blade signs and the transformer box. The lane continues as unbreakable scenery into the fog.
+  their blade signs and the transformer box. The lane continues as scenery into the fog.
   South: the S5 facade with the bridge landing above.
 - **Looking up**: a narrow strip of overcast sky lit by the city, cut by cables, with the back
-  towers' rooftop billboards (unbreakable) glowing beyond the roofs.
+  towers' rooftop billboards (scenery) glowing beyond the roofs.
 - **Looking back west** from under the bridge: the gate's lanterns, and across the avenue the big
-  lightboxes on the far facades (unbreakable).
+  lightboxes on the far facades (scenery).
 
 ### Landmarks (breakable)
 
@@ -122,7 +122,12 @@ Brick Street does with `W = width − 0.06`.
 - Place them as `nyc/props.ts` does: check the collider bounds against what stands, and try again
   where they would overlap.
 
-### Distant scenery (unbreakable: `scenery.ts`)
+### Distant scenery (`scenery.ts`)
+
+As built, all of it but the avenue's traffic lights stands as scenery until something reaches it,
+then breaks (README, Round the alley): the towers in dormant sections (`Towers`), what hangs on a
+section (billboards, signs, glow strips, beacons, shopfronts, awnings) built with it, and the
+ground in 8 m tiles that a blast lays breakable as the alley is (`DormantGround`).
 
 - **Ground**: asphalt 240 × 240 m at y = 0, with a fixed physics box under it (friction 0.8; wet
   asphalt is a little slippery). Drawn with `neon_asphalt` and the puddle and ripple shading
@@ -142,9 +147,9 @@ Brick Street does with `W = width − 0.06`.
 - **The avenue** (west, behind the start): a road 14 m wide along z at x −44 … −30, and facades
   across it at x −46 with big lightbox billboards. A few headlight and taillight pairs (small
   emissive quads) pass along the avenue every 4 to 10 s, moved in `update`.
-- **The north lane beyond z 12.75** (x 2 … 6): unbreakable narrow facades with a few static signs,
+- **The north lane beyond z 12.75** (x 2 … 6): narrow facades with a few signs,
   running into the fog.
-- **Beyond the arcade** (x > 38): a short lit passage, 20 m of static facades with warm light,
+- **Beyond the arcade** (x > 38): a short lit passage, 20 m of facades with warm light,
   then fog.
 - **Beyond the slot** (x −12.5 … −11, z < −12.75): a dark wall with one lit window.
 
@@ -173,7 +178,8 @@ Report `demo.stats()` after building.
 General rules from Brick Street apply. Neighbours share faces exactly: compute positions from the
 same numbers, never with offsets. Nothing overlaps. No piece is longer than about 2.3 m; split
 anything longer into equal runs (`runs(length) = max(1, round(length / 2.2))`). Ground slabs
-(level 0) are `static: true`. Tilted or edge-touching parts are joined with `d.bond`.
+(level 0) are `static: true` (as built they aren't: they break, in panels of about 3 m). Tilted
+or edge-touching parts are joined with `d.bond`.
 
 ### Type A: tile-clad concrete frame (10 towers and E)
 

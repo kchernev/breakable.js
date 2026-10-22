@@ -85,3 +85,21 @@ export function boxDistance(b: Box3, p: V3): number {
   const dz = Math.max(b.min[2] - p[2], 0, p[2] - b.max[2]);
   return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }
+
+/** Where a ray from `at` along `dir` (unit) enters `box` (0 if it starts inside), or null if it misses it. */
+export function rayBox(at: V3, dir: V3, box: Box3): number | null {
+  let t0 = 0;
+  let t1 = Infinity;
+  for (let k = 0; k < 3; k++) {
+    if (Math.abs(dir[k]) < 1e-12) {
+      if (at[k] < box.min[k] || at[k] > box.max[k]) return null;
+      continue;
+    }
+    const a = (box.min[k] - at[k]) / dir[k];
+    const b = (box.max[k] - at[k]) / dir[k];
+    t0 = Math.max(t0, Math.min(a, b));
+    t1 = Math.min(t1, Math.max(a, b));
+    if (t0 > t1) return null;
+  }
+  return t0;
+}

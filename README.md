@@ -21,6 +21,15 @@ Buildings that stand under their own weight, and come down when it fails.
 - **Bullets.** Rounds chip and dent what they strike until it gives way where it was hit.
 - **Breakable ground.** Roads, squares, sand and earth crater under rockets, and sustained fire
   digs into them.
+- **Scenery that wakes.** Towers down the street, the houses and trees out of town, a ship in the
+  bay: what's round each world stands as scenery, costing nothing, until a round or a rocket
+  reaches it, then breaks like the rest.
+- **Props that shatter.** Hydrants, barrels, crates and statues take their rounds, then fly apart
+  in pieces cut from their own mesh.
+- **Cars that come apart.** Doors and hoods spring open and tear off, windows shatter, tyres go
+  flat, wheels roll away, and a holed fuel tank leaks, catches fire and blows the car up. Each car
+  has a full interior, seats to engine, and Brick Street parks a sports car among its cabs and
+  sedans.
 - **Sound.** A spatial Web Audio engine turns every break, knock, landing and rumble into sound.
 - **Cheap when still.** Standing pieces cost the solver nothing, so a whole town of 6,000–8,000
   pieces stays interactive. Rubble that comes to rest freezes again.
@@ -42,8 +51,8 @@ Built on WebGPU and [three-avbd](https://github.com/sbobyn/three-avbd)'s GPU rig
 </tr>
 </table>
 
-Each world reacts to what you do. Birds take off, alarms go off, and what you shoot leaks, rings,
-sparks or goes dark.
+Each world reacts to what you do. Birds take off (and can be shot down), alarms go off, and what
+you shoot leaks, rings, sparks or goes dark.
 
 ## Quick start
 

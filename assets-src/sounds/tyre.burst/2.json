@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A car tyre bursting: one loud sharp bang of the tyre blowing out, then a strong hiss of escaping air fading away. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, gunshots, gunfire",
+  "duration": 2.5,
+  "seed": 402732,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaf45cc/o9CJPdEGViUw4GyFT2KzM_QVT6RIoB.flac"
+}

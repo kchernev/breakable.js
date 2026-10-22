@@ -15,10 +15,10 @@ import { PLACES } from './layout.ts';
 export function buildAltar(k: Kit): Piece[] {
   const { x, z } = PLACES.altar;
   const [x0, x1, z0, z1] = [x - 1.2, x + 1.2, z - 3, z + 3];
-  platform(k, 'marble', x0, x1, z0, z1, 0, 0.2, { length: 1.2, static: false });
+  platform(k, 'marble', x0, x1, z0, z1, 0, 0.2, { length: 1.2, anchor: false });
   const core = courses(0.2, [0.425, 0.425]);
-  for (const [y0, y1] of core) platform(k, 'limestone', x0 + 0.1, x1 - 0.1, z0 + 0.1, z1 - 0.1, y0, y1, { length: 1.16, static: false });
-  platform(k, 'marble', x0 - 0.08, x1 + 0.08, z0 - 0.08, z1 + 0.08, 1.05, 1.3, { length: 1.22, static: false });
+  for (const [y0, y1] of core) platform(k, 'limestone', x0 + 0.1, x1 - 0.1, z0 + 0.1, z1 - 0.1, y0, y1, { length: 1.16, anchor: false });
+  platform(k, 'marble', x0 - 0.08, x1 + 0.08, z0 - 0.08, z1 + 0.08, 1.05, 1.3, { length: 1.22, anchor: false });
   // The step the priest stood on
   for (let i = 0; i < 6; i++) k.box('limestone', [x0 - 0.8, 0, z0 + i], [x0, 0.3, z0 + i + 1]);
   const fire = [k.box('embers', [x - 0.35, 1.3, z - 0.28], [x + 0.35, 1.34, z + 0.28])];
@@ -41,17 +41,17 @@ export function buildRamp(k: Kit): void {
       [xm, xb],
     ]) {
       const outline: Array<[number, number]> = [[a, 0], [b, 0], [b, rise(b)], [a, rise(a)]];
-      k.hull('marble', prismZ(outline.filter(([, y], i) => i < 2 || y > 1e-6), z0, z1), { static: true });
+      k.hull('marble', prismZ(outline.filter(([, y], i) => i < 2 || y > 1e-6), z0, z1), { anchor: true });
     }
-    k.box('marble', [8.25, 0.35, z0], [8.7, 1.05, z1], { static: true });
-    k.box('marble', [7.8, 0.7, z0], [8.25, 1.05, z1], { static: true });
+    k.box('marble', [8.25, 0.35, z0], [8.7, 1.05, z1], { anchor: true });
+    k.box('marble', [7.8, 0.7, z0], [8.25, 1.05, z1], { anchor: true });
   }
 }
 
 /** The statue base (a step, a die in two courses, a crown) and the limestone exedra round it. */
 export function buildStatueBase(k: Kit): number {
   const { x, z } = PLACES.statue;
-  platform(k, 'marble', x - 1.1, x + 1.1, z - 1.1, z + 1.1, 0, 0.35, { length: 1.1, static: false });
+  platform(k, 'marble', x - 1.1, x + 1.1, z - 1.1, z + 1.1, 0, 0.35, { length: 1.1, anchor: false });
   for (const [y0, y1] of courses(0.35, [0.75, 0.75])) {
     k.box('marble', [x - 0.7, y0, z - 0.7], [x, y1, z + 0.7]);
     k.box('marble', [x, y0, z - 0.7], [x + 0.7, y1, z + 0.7]);

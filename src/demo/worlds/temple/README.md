@@ -6,11 +6,15 @@ treasury stands north of it, a domed tholos to the south-west, the ruin of a sto
 cliff, a gate (propylon) on the east. Cypresses and olives, dry grass and pale rock, cliffs down to
 the sea 62 m below, islands in the haze, dry hills inland and mountains behind them. The court before
 the temple is paved with marble flags and the hilltop round it is earth over rock, both breakable:
-a rocket craters them, the gun chips them. The place answers the gun as it answers a rocket: the
-cicadas fall silent, jackdaws go up off the roofs, the bay throws the burst back, the bronze goddess
-rings when she's shot and a shot olive sheds its leaves. About 5,750 pieces (276 of them static, 422 the ground's
-slabs), 16 materials, 13 props. `?world=temple`. It loads in 6.5..8.2 s here (Brick Street 5.3..6.3
-at the same time, the GPU shared).
+a rocket craters them, the gun chips them. The rest of the plateau is laid the same where a blast
+reaches it, and the olive scrub, the loose rocks and the two boats are built as pieces once a round
+or a blast reaches them (see "Round the sanctuary"). What doesn't break: the land off the plateau
+(its slopes, the cliffs, the hills and mountains inland), the sea and the islands. The place
+answers the gun as it answers a rocket: the cicadas fall silent, jackdaws go up off the roofs, the
+bay throws the burst back, the bronze goddess rings when she's shot and a shot olive sheds its
+leaves. About 5,750 pieces (276 of them anchors, 422 the ground's slabs), 19 materials, 13 props.
+`?world=temple`. It loads in 6.5..8.2 s here (Brick Street 5.3..6.3 at the same time, the GPU
+shared).
 
 The plan it follows is `DESIGN.md` (same folder); where this differs, it says so below.
 
@@ -18,20 +22,20 @@ The plan it follows is `DESIGN.md` (same folder); where this differs, it says so
 
 | File | What |
 |---|---|
-| `index.ts` | The definition: sky, look, audio, and the reactions to blasts and the gun (`onBlast`, `onShot`, `onBurst`: cicadas, birds, the bay's echo, the goddess ringing, leaves shed) and to what falls (marble dust where stone lands, bronze ringing, bursting leaves, splashes), the altar's smoke, the sea (`water`). |
+| `index.ts` | The definition: sky, look, audio, and the reactions to blasts and the gun (`onBlast`, `onShot`, `onBurst`: cicadas, birds, the bay's echo, the goddess ringing, leaves shed, the tufts a blast flattens) and to what falls (marble dust where stone lands, bronze ringing, bursting leaves, splashes), the altar's smoke, the sea (`water`), `groundAt` (the bed where the plateau has been laid too), and the scenery made dormant (`dormantScenery`). |
 | `meta.ts` | The card (order 5). |
 | `layout.ts` | Where things are: the height function of the land (plateau, cliffs, slopes, hills, mountains), the coastlines, the sea level, the places of the buildings, the breakable ground's areas and layers. |
-| `kit.ts` | The builders' kit: boxes by corners, hulls of points, per-material tints, drums and columns (their texture frames on their axes, shaded round), prisms cut in a vertical plane, drums lying on a facet. |
-| `doric.ts` | Entablature bands round a rectangle of column axes, the triglyph frieze, coursed walls in running bond, platforms. |
+| `kit.ts` | The builders' kit: boxes by corners, hulls of points (`static` or `anchor` if asked), per-material tints, drums and columns (their texture frames on their axes, shaded round), prisms cut in a vertical plane, drums lying on a facet. |
+| `doric.ts` | Entablature bands round a rectangle of column axes, the triglyph frieze, coursed walls in running bond, platforms (their slabs anchors unless `anchor: false`). |
 | `roof.ts` | A gabled roof (ridge along x): plates, tie beams and king posts, rafters, tile panels, ridge caps, antefixes, sima, pediments with raking cornice and acroterion; with `falls`, its frame falls with what held it (the treasury's and the propylon's). |
 | `temple.ts`, `buildings.ts` (treasury, propylon), `stoa.ts`, `tholos.ts`, `small.ts` (altar and its offering, ramp, statue base and exedra, votive column, stelai, pedestals, temenos wall, fragments), `trees.ts` | The structures. |
-| `ground.ts` | The breakable ground: its slabs, the plateau's bodies (the bed under the ground), and what a crater shows past the slabs (the bed, the cut where the ground ends). |
+| `ground.ts` | The breakable ground: its slabs, the bed's bodies under its areas (`plateau()`; the rest of the plateau, `PLATEAU`, is tiles in `scenery.ts`), and what a crater shows past the slabs (the bed, under the whole plateau, and the cut where the ground ends; `pitMaterial()`, the tiles' pits' too). |
 | `land.ts` | The land's look (grass, thyme and bare rock, cliff rock, the terra rossa and bedrock under the grass), shared by the land mesh, the ground's earth and rock, and the cut. |
-| `levers.ts` | Spans cut at their supports when they're let go or have lost them, and stone come to rest hanging (see below). |
+| `levers.ts` | Spans cut at their supports when they're let go or have lost them, and stone come to rest hanging (see below); an anchor counts as the ground. |
 | `props.ts` | The statue, lions, tripods and amphorae. |
-| `scenery.ts` | The land mesh (with a hole where the breakable ground is), the sea, the islands, the scrub, the tufts at wall feet, and the physics of the land. |
+| `scenery.ts` | The land mesh (with a hole where the breakable ground is, and where the plateau's tiles have been laid), the plateau's tiles (`DormantGround`), the sea, the islands, the scrub, the loose rocks and the boats (each a dormant thing: `dormantScenery`), the tufts at wall feet (`flatten`), and the physics of the land, with the slopes' hulls under what wakes past it (`slopeUnder`). |
 | `flock.ts` | The jackdaws that burst off a roof, the gulls off the cliffs, and the olive leaves a bullet knocks off a tree, fluttering down. |
-| `materials.ts` | The materials, and their TSL surfaces (drafted block edges, grooved triglyphs, fluted drums, weathered bronze, smouldering embers, the court's flags, the earth and the rock). |
+| `materials.ts` | The materials, and their TSL surfaces (drafted block edges, grooved triglyphs, fluted drums, weathered bronze, smouldering embers, the court's flags, the earth and the rock, the woken scrub). |
 
 ## How it's built
 
@@ -107,9 +111,15 @@ The plan it follows is `DESIGN.md` (same folder); where this differs, it says so
   120%, each point by ±5%, two or three gentle side flames on the lower half, dark green (0x2f4a26
   at the foot to 0x3e5a32 on top). Their leaves are their own material (`cypress`, the foliage at
   a smaller scale).
-- **Static pieces**: the steps and stylobates, the stoa's platform, the tholos's steps and the
-  ramp. They never break and hold up what stands on them; they stand on the plateau itself, never
-  on the breakable ground.
+- **Anchors** (they were static): the temple's steps and stylobate, the treasury's and the stoa's
+  platforms, the tholos's steps and top, and the ramp, 276 pieces. `platform()` in `doric.ts` makes
+  its slabs anchors unless told not to (the altar's and the statue base's aren't), and the kit
+  passes `anchor` on (`PieceOpts`). An anchor holds up what stands on it as the ground does, over
+  the hollow its ring of slabs hides, needing nothing under it (the library's `PieceOptions.anchor`),
+  but breaks as any piece: a blast or rounds break them, and what they break into stands or falls
+  as pieces do. They stand on the plateau itself, never on the breakable ground, and the plateau's
+  tiles under them never wake (see "Round the sanctuary"). `levers.ts` counts an anchor as the
+  ground.
 
 ### Spans that shear (`levers.ts`)
 
@@ -270,6 +280,9 @@ CPU profile of four flank blasts, `Levers.update` took 48 ms in all, against 80.
 | `fill` | groundPresets.fill | The rubble under them: `temple_fill`, inside and out. maxPieces 16, minBodySize 0.75 and `keepSmall` (Phase F): what a blast or a bullet reaches goes as a spray of grit, not as lumps that fall back into the hole and plug it; what's beyond its reach stands however small, so a crater's sides hold. |
 | `earth` | groundPresets.earth | The hilltop's earth: its top the land's look (`landLook`), its sides and breaks `temple_earth` (dry crumbs and clods); reach 0.45, maxPieces 20, minBodySize 0.6 and `keepSmall` (what a blast reaches flies as a spray of soil, a clod or two at most, and the rest of the slab stands whole round the hole: no wedges at the rim), `landing: 2` (clods crumble where they land). |
 | `rock` | groundPresets.paving | The bedrock under the earth: impact 80, reach 0.25 (a blast barely reaches it: craters stop on it), 10 cells a slab, density 2.5; bedrock on top, cliff rock in its sides, breaks `temple_marble_broken` tinted 0xd8ccb8. |
+| `scrub` | foliage | The slopes' olive scrub, woken: the olives' leaves drawn as the scrub is (`scrubLook()`: each bush's green its tint, darker underneath, mottled), uvJitter 0. |
+| `boulder` | concrete preset | The loose rocks, woken: the cliffs' `marble_rock_02`, density 2.6, maxPieces 6, broken `temple_marble_broken`. |
+| `sail` | material() | A boat's sail, woken: light cloth (density 0.15, impact 2, maxPieces 4), torn by what reaches it. |
 
 The marble's and limestone's supports and strengths are much lower than DESIGN.md's (45/40,
 9e3/1.2e4): with those, corners hung off their neighbours after a column went, and falling sections
@@ -281,7 +294,7 @@ stuck in place as rigid cantilevers.
   steps (round the ramp) to the gate, x 8.7..31.4, z -11.2..5.1, in three areas; and the hilltop
   where the player walks, in four: south of the temple to the temenos wall (x -14..31.4, z
   3.8..23.1, in two), the strip north of the temple (x -16..8.7, z -16.5..-11.8) and between the
-  court and the stoa (x 8.7..33.1, z -19.6..-11.2). What mustn't go stands on the plateau itself:
+  court and the stoa (x 8.7..33.1, z -19.6..-11.2). What mustn't sink stands on the plateau itself:
   the temple's steps and stylobate, the ramp, the treasury's and the stoa's platforms, the tholos,
   the propylon and the temenos wall; a strip of the land's own, 0.6 m wide, is left at the foot of
   the temple's steps and along the wall, where the tufts grow. What stands on the ground bonds to
@@ -311,11 +324,13 @@ stuck in place as rigid cantilevers.
     from the next, each flag its own patch of the marble and its own shade, dust in broad patches,
     a dark hairline and a worn band in the joints, and a square of earth round the olive in the
     court. Their sides are plain marble, their breaks the marble's own. The rubble: `temple_fill`.
-- **The bed and the cut** (`ground.ts`): the plateau's body is boxes now, its top at the bed under
-  the areas and at the land's 0 elsewhere (`plateau()`, cut along the areas' edges). `pits()` draws
-  what a crater shows past the slabs: the bed as bare rock, and where the ground ends against what
-  isn't ground (the land, a step, a platform), the cut through the earth and the rock from the bed
-  up. `groundAt` is the bed inside the areas, the terrain elsewhere. A bullet strikes the cut as
+- **The bed and the cut** (`ground.ts`): the plateau's body under the areas is boxes, their top at
+  the bed (`plateau()`, cut along the areas' edges); the rest of the plateau is the tiles' boxes,
+  their top at the land's 0 (see "Round the sanctuary"). `pits()` draws what a crater shows past
+  the slabs: the bed as bare rock (under the whole plateau, a little lower outside the areas), and
+  where the ground ends against what isn't ground (the land, a step, a platform), the cut through
+  the earth and the rock from the bed up. `groundAt` is the bed inside the areas and where a tile
+  has been laid, the terrain elsewhere. A bullet strikes the cut as
   it's drawn, earth over rock (`pitSide` in `index.ts`: in the court too, not its flags and rubble;
   checked with the gun's trace at 0.1..0.9 m down and 8 rounds, `pitside.mjs`), and the floor as
   rock.
@@ -347,6 +362,37 @@ stuck in place as rigid cantilevers.
   walls, the chunks out round it.
 - **Footsteps**: stone on the flags and the rock, gravel on the earth, the rubble and the bed.
 
+## Round the sanctuary
+
+The rest of the plateau and what's on the land round it stand as scenery (drawn meshes and fixed
+bodies, no pieces) until something reaches them, then are built as pieces (`Destruction.addDormant`;
+made dormant in `build()`, once what stands on the plateau is built, by `dormantScenery` in
+`scenery.ts`): a blast within 1.25 of its radius of its box, a round's ray entering its box, or a
+rocket's flight through it (`wakeAlong`). None of it is among the pieces at load.
+
+- **The plateau** (`PLATEAU`: x -34..40, z -30..30) outside the breakable ground's areas is a
+  `DormantGround`: tiles about 6 m across, cut along the areas' edges (`cuts`), each a fixed box 4 m
+  deep, its top at 0, until a blast reaches it (rounds strike it as the scenery it is). Then it's
+  laid as the fields are, earth over rock on the bed 1 m down (`earth`, `rock`, 3 m slabs), the land
+  mesh cut away over it, and `groundAt` gives its bed there (`plateauBed`). The tiles under what
+  stands on the plateau (the platforms, the tholos, the gate, the wall, the trees: any standing
+  piece with its foot at the plateau's top) stay as they are and never wake (`dormant(d, stay)`),
+  so the structures never sink. A laid tile's sides against those still dormant are drawn as the
+  cut, earth over rock (`pitMaterial()`).
+- **The olive scrub** (1,400 bushes): no body, so a round or a rocket passing through a bush's box
+  wakes it; woken, the hull of its points set on the land (`scrub`, drawn as the scrub is). A round
+  into it sheds leaves as an olive's crown does.
+- **The loose rocks** (260): woken, a boulder of the cliffs' marble rock set on the land
+  (`boulder`).
+- **The two boats** far out: woken, the hull (`timber`) afloat on a fixed body at the waterline,
+  and its sail (`sail`) on it.
+- **The tufts** aren't pieces: a blast flattens those within 1.2 times its radius (`flatten`).
+- **The slopes** past the land's physics hulls get hulls (the land's 4 m cells) under what wakes
+  there (`slopeUnder`), so a bush or a rock comes down onto the slope, not into it.
+
+What doesn't break: the land off the plateau (its slopes, the cliffs, the hills and mountains
+inland), the sea and the islands.
+
 ## The gun on the sanctuary (Phase E)
 
 Every material says what a bullet sounds like on it (`bullet` in `audio.materials`):
@@ -361,11 +407,14 @@ Every material says what a bullet sounds like on it (`bullet` in `audio.material
 | `timber` | `bullet.wood` | wood |
 | `bark` | `bullet.wood` at 0.85 | wood |
 | `bronze` | `bullet.metal` at 0.85: bronze rings lower than steel | metal: sparks, a dent |
-| `foliage`, `cypress` | `bullet.dirt` at 1.3: a soft rustle and thud through leaves | dirt |
+| `foliage`, `cypress`, the woken `scrub` | `bullet.dirt` at 1.3: a soft rustle and thud through leaves | dirt |
 | `embers` | `bullet.wood` (at the material's 1.3) | wood |
 | `earth`, `fill` (at 1.1) | `bullet.dirt` | dirt: clods, a pock |
+| `boulder` (a woken rock) | `bullet.concrete` | stone |
+| `sail` | `bullet.dirt` at 1.4 | dirt |
 
-The ground outside the areas is struck as dirt (its steps are gravel); the sea takes bullets unseen
+The ground outside the areas is struck as dirt (its steps are gravel), until a blast lays it: then
+as the fields' earth and rock; the sea takes bullets unseen
 and unheard (`water`: where the terrain is under the sea's level). Chips and dust are the
 materials' own colours (the ground's: white marble, pale rubble, brown clods, pale rock).
 
@@ -375,8 +424,11 @@ door leaves up to 29 (their frames 2): they dent and spark and hold out longest.
 one spot: 43..48 broke something on the tholos's limestone, 32 on a column's drums (it came down
 in drums), 49 on the stoa's ruin (its column came down), 12 on the treasury's bronze door (dents),
 61 on an olive's trunk (cut through, the crown down). Five rounds at a flank column cut a drum, and
-that bay of the colonnade comes down (126 pieces loose at once). The props never break: the
-amphorae skitter (up to 6 m/s), a tripod is knocked over, the lions and the statue only take marks.
+that bay of the colonnade comes down (126 pieces loose at once). The props have their shards now
+and break, under a blast's heart (within 0.85 of its radius) or enough rounds (as many as a piece
+of their material half their size takes: `propRounds` in the library); not measured here since.
+Before, the amphorae skittered (up to 6 m/s), a tripod was knocked over, the lions and the statue
+only took marks.
 
 ## The scenery
 
@@ -418,13 +470,15 @@ amphorae skitter (up to 6 m/s), a tripod is knocked over, the lions and the stat
   faces the sun, scrub in patches, and hazed toward the horizon strip's colour, more at the
   waterline than at the crest.
 - **Physics**: the plateau is fixed boxes 4 m deep (their top at the bed under the breakable
-  ground, at 0 elsewhere: `plateau()` in `ground.ts`); past it, fixed hulls follow the cliffs and slopes, so
-  what's thrown off the edge tumbles down the rock. 907 of them: cells of 8 m where the land is
+  ground, `plateau()` in `ground.ts`; at 0 elsewhere, the tiles' boxes until they're laid); past
+  it, fixed hulls follow the cliffs and slopes, so what's thrown off the edge tumbles down the
+  rock. 907 of them: cells of 8 m where the land is
   gentle (beside the sanctuary only where it's all but flat), 4 m where it isn't; down the cliffs
   only along the coasts the sanctuary overlooks, and only to the water; each cell a column to 2 m
   under its lowest corner, cut into bands no taller than 10 m. The old ones (1,104 on a 4 m grid,
   down to 14 m under the sea, cliff columns 40..58 m tall) made the solver's cells 32 m; with the
   solver's grid in levels the two cost the same (below), and the new ones are fewer and short.
+  Past them, the slopes get hulls only under what wakes there (`slopeUnder`).
 - **Cliffs**: the coasts wander in coves and headlands (±12 m), the faces have stronger
   buttresses and gullies, the ledge part way down wanders along the coast, and the ochre streaks
   are no longer level bands.
@@ -436,7 +490,8 @@ amphorae skitter (up to 6 m/s), a tripod is knocked over, the lions and the stat
   underneath), loose pale rocks along the cliff tops and outside the temenos, tufts of thyme and
   dry grass (fans of blades) along the temenos wall, round the platforms, bases and the tholos (all
   instanced, and not physical: keep them low; none on the breakable ground), two small sailing boats far out, gulls gliding in
-  circles off the cliffs (`Gulls` in `flock.ts`).
+  circles off the cliffs (`Gulls` in `flock.ts`). The scrub, the rocks and the boats are dormant,
+  and a blast flattens the tufts it reaches (see "Round the sanctuary").
 
 ## Assets (public/packs/temple)
 
@@ -492,8 +547,9 @@ rounds it has.
   from 7 m, a burst's shots at -20; her strikes are the bronze's own `bullet.metal` at 0.85, sparks
   and dents. Two voices.
 - **Leaves flutter down off a shot olive** (`Leaves` in `flock.ts`): each round into an olive's
-  crown knocks 6 leaves out of the face it struck (10 when it broke a cell), at most 40 at once and
-  20 a second more (pool 160): each tumbles as it falls (0.6..1.1 m/s, gliding side to side,
+  crown (or a woken bush of the scrub) knocks 6 leaves out of the face it struck (10 when it
+  broke a cell), at most 40 at once and 20 a second more (pool 160): each tumbles as it falls
+  (0.6..1.1 m/s, gliding side to side,
   drifting toward the sea on the breeze), dark grey-green on top and silver underneath so they
   flicker, lands flat on what's under the strike (not the tree), lies 5 s and shrinks away. 14
   rounds into a crown: 55..57 leaves; 28: 37..40 (most of the rounds passed through once the
@@ -553,6 +609,9 @@ rounds it has.
   (`ground.ts`); its craters by the materials' `reach` (`paving`, `fill`, `earth`, `rock`), what
   flies as spray and what stays by their `minBodySize`, `keepSmall` and `maxPieces`; the flags'
   courses and lengths in `flags()` (`COURSE`, `FLAG_LENGTH`, `OLIVE_BED`).
+- Round the sanctuary: the plateau's tiles (`tile`, 6 m, in `buildScenery`; `PLATEAU` in
+  `ground.ts`), how far a blast flattens the tufts (1.2 times its radius, `onBlast`), and how the
+  woken scenery breaks (`scrub`, `boulder`, `sail` in `materials.ts`).
 - The answers to the gun: how loud a burst is (`loud` in `onBurst`), the cicadas' quiet
   (`hush()`), the birds' reach and wait (`scatter()`), the echo (`bayEcho()`), the goddess's ring
   (`ring()`); the leaves (`LEAVES`, `SHED`, `BREEZE` and their fall in `Leaves`, `flock.ts`).
@@ -771,8 +830,9 @@ with a count of what's left over each flank column's top added.
 - **The leaves pass through things**: they fall to the floor found under where the round struck
   (what stands there or the ground) and lie there; one drifting over a step or a block on the way
   passes through it.
-- **Props never break**: the amphorae are terracotta props, and under the gun they skitter and
-  roll but stay whole; the lions take marks.
+- **How many rounds a prop takes isn't measured**: the props have shards now and break (a blast's
+  heart or enough rounds); until then the amphorae skitter and roll under the gun and the lions
+  take marks.
 - **The heavy gun and the colonnade**: five rounds at a flank column cut a drum (marble's `impact`,
   a drum 0.68 m), and the bay over it comes down as a rocket would bring it: the gun is the quicker
   way to drop a column now. Held 20 s on the ground it adds 360..390 pieces that stay (cells left
@@ -785,5 +845,5 @@ with a count of what's left over each flank column's top added.
   (1 m) in its middle (Phase E: a jump got out of it).
 - **The cut where the ground meets the steps** shows earth over rock under the temple's lowest
   step (the cut is the land's, wherever the ground ends), not a foundation.
-- **16 materials** (the ground's four added; Brick Street has 16 too): one draw each, and each
-  material's mesh holds its own 600k vertices.
+- **19 materials** (the ground's four and the woken scenery's three added): one draw each, and
+  each material's mesh holds its own 600k vertices.

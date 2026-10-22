@@ -14,7 +14,7 @@ import { Frame, Kit, type P } from './kit.ts';
 import { COOP, cross, placeProps, stalls, well, yard } from './market.ts';
 import { townMaterials } from './materials.ts';
 import { meta } from './meta.ts';
-import { COBBLE_MAP, ground, groundAt, haze, onSquare, SQUARE, town, trees, walkable, windmill } from './scenery.ts';
+import { COBBLE_MAP, dormantScenery, ground, groundAt, haze, onSquare, SQUARE, town, trees, walkable, windmill } from './scenery.ts';
 import { buildHouses, lantern, marketHall, type Sign, stable } from './town.ts';
 import { gatehouse, tower, townWall, wallStair } from './walls.ts';
 
@@ -203,6 +203,8 @@ const world: WorldDefinition = {
     lantern(kit, new Frame([15, 0, 1], Math.PI / 2), 4.4, 2.7);
     for (const u of [2.4, 4.6]) lantern(kit, hall.sub(0, 0, 0.25), u, 2.5);
     kit.close();
+    // The rest of the town, the trees and the windmill, and the cobbles round the square: scenery until something reaches them
+    dormantScenery(d);
     const props = placeProps(d, models, counters);
     console.debug(`Market Town: ${d.stats.pieces} pieces, ${props} props`, JSON.stringify(kit.counts));
     // Reset what the reactions remember (the world may be built again)
@@ -249,6 +251,10 @@ const world: WorldDefinition = {
       hay: { settle: 'dust.settle', bullet: 'bullet.dirt', pitch: { bullet: 1.1 } },
       produce: { bullet: 'bullet.dirt', pitch: { bullet: 1.25 } },
       lantern: { break: 'glass.shatter', impact: 'glass.debris', debris: 'glass.debris', bullet: 'bullet.glass', pitch: 1.3 },
+      // The scenery woken: its houses' panels as the daub, their roofs as tile; a tree's crown thuds
+      house: { break: 'dust.settle', impact: 'tile.impact', debris: 'dust.settle', settle: 'dust.settle', bullet: 'bullet.dirt', pitch: { impact: 0.75, bullet: 1.1 } },
+      roofing: { break: 'tile.impact', impact: 'tile.impact', heavyImpact: 'tile.clatter', debris: 'tile.impact', collapse: 'tile.clatter', land: 'tile.clatter', bullet: 'bullet.brick', pitch: { bullet: 1.15 } },
+      leaves: { settle: 'dust.settle', bullet: 'bullet.dirt', pitch: { bullet: 1.35 } },
       // The square's setts: stone, without a wall's heavy landing; the earth under them crunches
       // where its clods land (no stone's sounds: a bullet into it pocks it as dirt)
       cobbles: { break: 'stone.break', impact: 'brick.impact.small', heavyImpact: 'brick.impact.large', debris: 'brick.debris', settle: 'dust.settle', bullet: 'bullet.concrete' },
@@ -264,11 +270,11 @@ const world: WorldDefinition = {
       },
     },
   },
-  dust: { limestone: 0xd8cdb4, limestoneTower: 0xd8cdb4, rubble: 0xa89c88, rubbleTower: 0xa89c88, plaster: 0xe2dccc, oak: 0x9a8670, boards: 0xa89478, tile: 0xb88c74, hay: 0xd8c890, cloth: 0xd8d2c4, glass: 0xe0e6e2, produce: 0xb8b890, cobbles: 0xb4ac9c, earth: 0x9a8670 },
+  dust: { limestone: 0xd8cdb4, limestoneTower: 0xd8cdb4, rubble: 0xa89c88, rubbleTower: 0xa89c88, plaster: 0xe2dccc, house: 0xe2dccc, roofing: 0xb88c74, leaves: 0x5e6e3e, oak: 0x9a8670, boards: 0xa89478, tile: 0xb88c74, hay: 0xd8c890, cloth: 0xd8d2c4, glass: 0xe0e6e2, produce: 0xb8b890, cobbles: 0xb4ac9c, earth: 0x9a8670 },
   // Well under the default: a cloud over every falling section hid the town
-  dustAmount: { limestone: 0.3, limestoneTower: 0.3, rubble: 0.3, rubbleTower: 0.3, plaster: 0.3, tile: 0.3, oak: 0.2, boards: 0.2, hay: 0.4, cloth: 0.2, glass: 0.2, produce: 0.2, cobbles: 0.3, earth: 0.4 },
+  dustAmount: { limestone: 0.3, limestoneTower: 0.3, rubble: 0.3, rubbleTower: 0.3, plaster: 0.3, house: 0.3, roofing: 0.3, leaves: 0.6, tile: 0.3, oak: 0.2, boards: 0.2, hay: 0.4, cloth: 0.2, glass: 0.2, produce: 0.2, cobbles: 0.3, earth: 0.4 },
   // Cloth's chips undyed linen (the awnings are striped, the bolts every dye)
-  chips: { limestone: 0xcfc3a8, limestoneTower: 0xcfc3a8, rubble: 0x8f8472, rubbleTower: 0x8f8472, plaster: 0xeee6d4, oak: 0x6b5238, boards: 0x8a6a48, tile: 0xb0583a, glass: 0x9fb79a, hay: 0xd2b25a, cloth: 0xcfc2a6, produce: 0x8a9a40, iron: 0x3a3632, bronze: 0x9a7440, lantern: 0xffe0b0, cobbles: 0x8c867a, earth: 0x6a5440 },
+  chips: { limestone: 0xcfc3a8, limestoneTower: 0xcfc3a8, rubble: 0x8f8472, rubbleTower: 0x8f8472, plaster: 0xeee6d4, house: 0xeee6d4, roofing: 0xb0583a, leaves: 0x4a6a2a, oak: 0x6b5238, boards: 0x8a6a48, tile: 0xb0583a, glass: 0x9fb79a, hay: 0xd2b25a, cloth: 0xcfc2a6, produce: 0x8a9a40, iron: 0x3a3632, bronze: 0x9a7440, lantern: 0xffe0b0, cobbles: 0x8c867a, earth: 0x6a5440 },
   blastRadius: 2.5,
   onBlast(at, _radius, rt) {
     lastBlast = rt.time;

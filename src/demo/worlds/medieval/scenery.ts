@@ -1,14 +1,22 @@
-// What doesn't break: the cobbles round the square (its own break: SQUARE), what a crater in it
-// shows past its slabs, the dirt roads out, the rolling country (fields in strips with hedgerows,
-// the wooded hill, the windmill hill, a ridge far north), trees, the windmill, and the rest of the
-// town (more wall and round towers, roofs and gables) round the breakable part.
+// The scenery round the breakable town: the cobbles round the square (laid breakable in tiles where
+// a blast reaches them: DormantGround), what a crater in it shows past its slabs, the dirt roads
+// out, the rolling country (fields in strips with hedgerows, the wooded hill, the windmill hill, a
+// ridge far north), trees, the windmill, and the rest of the town (more wall and round towers,
+// houses under tile). The houses, walls, towers, trees and the windmill each stand as scenery until
+// a round or a blast reaches them, then are built as pieces (wake.ts). What doesn't break: the
+// country itself, its roads, and the haze.
 
-import { abs, cameraPosition, color, float, floor, fract, fwidth, hash, max, min, mix, mx_noise_float, normalWorld, positionWorld, select, sin, smoothstep, step, texture, uv, vec2, vec3 } from 'three/tsl';
+import { abs, attribute, cameraPosition, color, dot, float, floor, fract, fwidth, hash, max, min, mix, mx_noise_float, normalWorld, positionWorld, select, sin, smoothstep, step, texture, uv, vec2, vec3 } from 'three/tsl';
 import * as THREE from 'three/webgpu';
 import { mergeGeometries, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
-import type { World } from 'three-avbd';
-import type { V3 } from '../../../lib/index.ts';
+import type { Body, World } from 'three-avbd';
+import type { Destruction, V3 } from '../../../lib/index.ts';
+import { DormantGround } from '../../dormant-ground.ts';
+import { boundsOf, DormantUnits, Merged, union } from '../../dormant.ts';
 import { textured } from '../../textures.ts';
+import { type FacadeLook, facadeStandIn } from '../../towers.ts';
+import { Frame, Kit } from './kit.ts';
+import { EAVES, house, type HouseSpec, JETTY, type Lump, PITCH, roofHalves, STOREY, townTower, tree, type TreeSpec, wallLength, wallStub, windmill as millPieces } from './wake.ts';
 
 const base = 'packs/medieval/textures/';
 
@@ -23,10 +31,6 @@ const HILLS = [
   { x: -185, z: 95, r: 70, h: 22 },
 ];
 const MILL = { x: -185, z: 95 };
-
-/** The scenery houses: a storey's height, and how far an upper storey stands out over the ground floor. */
-const STOREY = 2.8;
-const JETTY = 0.4;
 
 /**
  * Where the scenery houses stand (x0, z0, x1, z1). Up close they're boxes with their framing drawn
@@ -106,8 +110,59 @@ export function onSquare(x: number, z: number): boolean {
   return x >= x0 && x <= x1 && z >= z0 && z <= z1;
 }
 
-/** The world's ground (groundAt): on the square its bed (the slabs over it are found as pieces), else the land's height. */
-export const groundAt = (x: number, z: number): number => (onSquare(x, z) ? SQUARE.bed : height(x, z));
+/**
+ * The world's ground (groundAt): on the square its bed (the slabs over it are found as pieces), and
+ * where the cobbles round it have been laid breakable theirs; else the land's height.
+ */
+export const groundAt = (x: number, z: number): number => (onSquare(x, z) ? SQUARE.bed : (cobbleBed(x, z) ?? height(x, z)));
+
+/** What stands as scenery until something reaches it (made dormant in build: dormantScenery), and the cobbles round the square. */
+const units = new DormantUnits();
+let cobbles: DormantGround[] = [];
+/** The kit the woken scenery is built with (one per Destruction). */
+let kit: Kit | null = null;
+const kitFor = (d: Destruction): Kit => (kit?.d === d ? kit : (kit = new Kit(d, 2024)));
+
+/** The scenery's dormant things (in build: the Destruction is made). */
+export function dormantScenery(d: Destruction): void {
+  units.dormant(d);
+  for (const g of cobbles) g.dormant(d);
+}
+
+/** The bed where a blast has laid the cobbles round the square breakable, else null. */
+function cobbleBed(x: number, z: number): number | null {
+  for (const g of cobbles) {
+    const b = g.bedAt(x, z);
+    if (b !== null) return b;
+  }
+  return null;
+}
+
+/**
+ * The hills in the world under what wakes on them (a tree, the windmill): the drawn ground's cells
+ * (4 m, as the country's mesh) as fixed hulls, made as they're first needed, so what falls lies on
+ * the hill and not inside it. The flat ground has its box.
+ */
+const PATCH = 4;
+const patched = new Set<string>();
+let solids: World | null = null;
+function hillUnder(x0: number, z0: number, x1: number, z1: number): void {
+  if (!solids) return;
+  for (let i = Math.floor(x0 / PATCH); i <= Math.floor(x1 / PATCH); i++)
+    for (let k = Math.floor(z0 / PATCH); k <= Math.floor(z1 / PATCH); k++) {
+      const key = `${i},${k}`;
+      if (patched.has(key)) continue;
+      patched.add(key);
+      const corners = [
+        [i, k],
+        [i + 1, k],
+        [i, k + 1],
+        [i + 1, k + 1],
+      ].map(([a, b]) => [a * PATCH, height(a * PATCH, b * PATCH), b * PATCH]);
+      if (corners.every((c) => c[1] < 0.02)) continue;
+      solids.addHull({ points: corners.flatMap(([x, y, z]) => [x, y, z, x, -1, z]), fixed: true, friction: 0.9 });
+    }
+}
 
 /** Trodden dirt (rocky_trail_02, 2 m) at world (x, z): the cobbles fade into it, and the country round them. */
 function dirtColor(map: THREE.Texture, p: THREE.Node<'vec2'>): THREE.Node<'vec3'> {
@@ -178,33 +233,32 @@ function flat(rects: ReadonlyArray<readonly [number, number, number, number]>, y
   return g;
 }
 
-/** The town's ground and the country round it, drawn and in the world. */
+/**
+ * The town's ground and the country round it, drawn and in the world. The cobbles round the square
+ * are tiles of breakable ground waiting for a blast (each a fixed box until then), in four strips
+ * round it.
+ */
 export function ground(scene: THREE.Scene, world: World): void {
+  // (The first of the scenery: what the last build left goes)
+  units.units.length = 0;
+  patched.clear();
+  solids = world;
   const [x0, z0, x1, z1] = SQUARE.area;
   const { bed } = SQUARE;
-  // In the world: the square's bed, and round it the ground, its top at 0 and its foot under the
-  // bed, so nothing slips under it out of a crater by the square's edge
+  // In the world: the square's bed, and round the cobbles the ground, its top at 0 and its foot
+  // under the bed, so nothing slips under it out of a crater by their edge
   world.addBox({ size: [700, 2, 700], position: [0, bed - 1, 0], fixed: true, friction: 0.9 });
   const block = (a0: number, b0: number, a1: number, b1: number) => world.addBox({ size: [a1 - a0, 1 - bed, b1 - b0], position: [(a0 + a1) / 2, (bed - 1) / 2, (b0 + b1) / 2], fixed: true, friction: 0.9 });
-  block(-350, -350, 350, z0);
-  block(-350, z1, 350, 350);
-  block(-350, z0, x0, z1);
-  block(x1, z0, 350, z1);
-
-  // The cobbles over the town but the square (its slabs draw it, in the same look and uvs)
   const [cx0, cz0, cx1, cz1] = COBBLES;
-  const around = [
-    [cx0, cz0, cx1, z0],
-    [cx0, z1, cx1, cz1],
-    [cx0, z0, x0, z1],
-    [x1, z0, cx1, z1],
-  ] as const;
-  const town = new THREE.Mesh(flat(around, 0, COBBLE_MAP.origin, COBBLE_MAP.tile), cobbleSurface(positionWorld.xz));
-  town.receiveShadow = true;
-  scene.add(town);
-  // What a crater in the square shows past its slabs: the bed, and down the square's edges (where
-  // the ground beyond it stays) the setts in section over the earth, as a slab's broken side
-  const pit = new THREE.Mesh(flat([SQUARE.area], bed, [0, 0, 0], 1), earthSurface(positionWorld, normalWorld));
+  block(-350, -350, 350, cz0);
+  block(-350, cz1, 350, 350);
+  block(-350, cz0, cx0, cz1);
+  block(cx1, cz0, 350, cz1);
+
+  // What a crater shows past the slabs: the bed, and down the square's edges (where the ground
+  // beyond it stays) the setts in section over the earth, as a slab's broken side; the same down a
+  // pit in the cobbles round it
+  const pit = new THREE.Mesh(flat([COBBLES], bed, [0, 0, 0], 1), earthSurface(positionWorld, normalWorld));
   pit.receiveShadow = true;
   scene.add(pit);
   const edge = earthSurface(positionWorld, normalWorld);
@@ -222,6 +276,33 @@ export function ground(scene: THREE.Scene, world: World): void {
     side.receiveShadow = true;
     scene.add(side);
   }
+
+  // The cobbles over the town but the square (its slabs draw it, in the same look and uvs), laid
+  // breakable as the square is where a blast reaches them
+  const around = [
+    [cx0, cz0, cx1, z0],
+    [cx0, z1, cx1, cz1],
+    [cx0, z0, x0, z1],
+    [x1, z0, cx1, z1],
+  ] as const;
+  cobbles = around.map(
+    (area) =>
+      new DormantGround(scene, world, {
+        name: 'cobbles',
+        area: [...area],
+        tile: 6,
+        top: 0,
+        bottom: bed,
+        pit: edge,
+        layers: (a) => [{ material: 'cobbles', under: 'earth', bed: 'earth', area: a, top: 0, depth: SQUARE.depth, underDepth: SQUARE.underDepth, cell: SQUARE.cell, textureFrame: { position: COBBLE_MAP.origin } }],
+      }),
+  );
+  const surface = cobbleSurface(positionWorld.xz);
+  surface.opacityNode = cobbles.map((g) => g.hole(positionWorld.xz)).reduce((a, b) => max(a, b)).oneMinus();
+  surface.alphaTest = 0.5;
+  const town = new THREE.Mesh(flat(around, 0, COBBLE_MAP.origin, COBBLE_MAP.tile), surface);
+  town.receiveShadow = true;
+  scene.add(town);
 
   country(scene, textured('rocky_trail_02', { base }).map!);
   roads(scene);
@@ -442,6 +523,9 @@ export function trees(scene: THREE.Scene, seed = 5): void {
     [-0.2, 0.62, -0.55, 0.55],
     [0.3, 0.45, -0.3, 0.5],
   ];
+  // Each tree's lumps (as drawn: middle, half-sizes) and the instances that draw it
+  const lumps = new Map<Spot, Lump[]>();
+  const drawn = new Map<Spot, Array<[THREE.InstancedMesh, number]>>();
   const crowns = (list: Spot[], detail: number, hedge: number) => {
     const mesh = new THREE.InstancedMesh(crownGeometry(detail), leaves, list.length * CROWNS.length + hedge);
     let k = 0;
@@ -450,6 +534,7 @@ export function trees(scene: THREE.Scene, seed = 5): void {
       const h = 5 * t.size;
       const yew = t.shade < 0;
       const base = yew ? 0x2c3e22 : t.wood ? woodGreens[Math.floor(t.shade * 3.99)] : greens[t.shade > 0.93 ? 5 : Math.floor(t.shade * 4.99)];
+      tints.set(t, base);
       CROWNS.forEach(([ox, oy, oz, r0], j) => {
         if (yew && j > 2) return;
         const r = (yew ? 1.6 - j * 0.45 : r0 * (t.wood ? 5.4 : 4.2)) * t.size;
@@ -458,8 +543,11 @@ export function trees(scene: THREE.Scene, seed = 5): void {
         q.setFromEuler(new THREE.Euler(0, spin + j, 0));
         // The wood's crowns sit low enough to hide its trunks
         const up = yew ? h * (0.35 + j * 0.42) : h * ((t.wood ? 0.22 : 0.35) + oy * 0.75);
-        m.compose(new THREE.Vector3(t.x + cx, y + up, t.z + cz), q, new THREE.Vector3(r, r * (yew ? 1.0 : 0.78), r));
+        const ry = r * (yew ? 1.0 : 0.78);
+        m.compose(new THREE.Vector3(t.x + cx, y + up, t.z + cz), q, new THREE.Vector3(r, ry, r));
         mesh.setMatrixAt(k, m);
+        lumps.get(t)!.push({ c: [t.x + cx, y + up, t.z + cz], s: [r, ry, r] });
+        drawn.get(t)!.push([mesh, k]);
         // Lit crowns on top a little lighter, the lower ones and one in three a shade darker
         c.set(base).multiplyScalar((j === 0 ? 1.12 : 0.9) * (0.85 + ((i * 13 + j * 7) % 10) * 0.03) * ((i + j) % 3 === 0 ? 0.85 : 1));
         mesh.setColorAt(k, c);
@@ -468,7 +556,10 @@ export function trees(scene: THREE.Scene, seed = 5): void {
     });
     return { mesh, k };
   };
+  const tints = new Map<Spot, number>();
   spots.forEach((t, i) => {
+    lumps.set(t, []);
+    drawn.set(t, [[trunks, i]]);
     const h = 5 * t.size;
     m.compose(new THREE.Vector3(t.x, height(t.x, t.z) - 0.2, t.z), q.identity(), new THREE.Vector3(t.size * 1.2, h * 0.55, t.size * 1.2));
     trunks.setMatrixAt(i, m);
@@ -476,11 +567,15 @@ export function trees(scene: THREE.Scene, seed = 5): void {
   // The south-west hedge: crowns squashed into a low dark line between the big trees
   const hedgeAt = Array.from({ length: 30 }, (_, i) => line(110 + Math.sin(i * 1.7) * 3, -52 + i * 3.6));
   const nearCrowns = crowns(near, 2, hedgeAt.length);
+  const bushes: Array<{ lump: Lump; at: [THREE.InstancedMesh, number]; tint: number; x: number; z: number }> = [];
   hedgeAt.forEach((p, i) => {
-    q.setFromEuler(new THREE.Euler(0, Math.atan2(across[0], across[1]), 0));
-    m.compose(new THREE.Vector3(p.x, height(p.x, p.z) + 0.6, p.z), q, new THREE.Vector3(1.4, 1.5 + (i % 3) * 0.3, 2.4));
+    const turn = Math.atan2(across[0], across[1]);
+    q.setFromEuler(new THREE.Euler(0, turn, 0));
+    const size = new THREE.Vector3(1.4, 1.5 + (i % 3) * 0.3, 2.4);
+    m.compose(new THREE.Vector3(p.x, height(p.x, p.z) + 0.6, p.z), q, size);
     nearCrowns.mesh.setMatrixAt(nearCrowns.k, m);
-    nearCrowns.mesh.setColorAt(nearCrowns.k++, c.set(0x34482a).multiplyScalar(0.9 + (i % 4) * 0.05));
+    nearCrowns.mesh.setColorAt(nearCrowns.k, c.set(0x34482a).multiplyScalar(0.9 + (i % 4) * 0.05));
+    bushes.push({ lump: { c: [p.x, height(p.x, p.z) + 0.6, p.z], s: [size.x, size.y, size.z], turn }, at: [nearCrowns.mesh, nearCrowns.k++], tint: c.getHex(), x: p.x, z: p.z });
   });
   const farCrowns = crowns(far, 1, 0);
   // The yew has fewer crowns than were made room for
@@ -492,6 +587,26 @@ export function trees(scene: THREE.Scene, seed = 5): void {
     mesh.receiveShadow = true;
     scene.add(mesh);
   }
+  // Each tree and bush dormant (no body: a round or a rocket passing through its box wakes it, and
+  // meets its pieces), on the hill under it once it's woken
+  const wake = (spec: TreeSpec, instances: Array<[THREE.InstancedMesh, number]>) => {
+    const boxes = spec.lumps.map((l) => {
+      const r = Math.max(l.s[0], l.s[2]);
+      return { min: [l.c[0] - r, l.c[1] - l.s[1], l.c[2] - r] as V3, max: [l.c[0] + r, l.c[1] + l.s[1], l.c[2] + r] as V3 };
+    });
+    const bounds = union([...boxes, { min: [spec.x - 0.4, spec.y, spec.z - 0.4], max: [spec.x + 0.4, spec.y + 1, spec.z + 0.4] }]);
+    units.add({
+      name: 'tree',
+      bounds,
+      instances,
+      build: (d) => {
+        hillUnder(bounds.min[0] - 6, bounds.min[2] - 6, bounds.max[0] + 6, bounds.max[2] + 6);
+        tree(d, spec);
+      },
+    });
+  };
+  for (const t of spots) wake({ x: t.x, y: height(t.x, t.z), z: t.z, trunk: 0.28 * t.size * 1.2, lumps: lumps.get(t)!, tint: new THREE.Color(tints.get(t)!).multiplyScalar(0.92).getHex() }, drawn.get(t)!);
+  for (const b of bushes) wake({ x: b.x, y: height(b.x, b.z), z: b.z, trunk: 0, lumps: [b.lump], tint: b.tint }, [b.at]);
 }
 
 /** The post mill on the windmill hill: body, roof, post and trestle, and the sails (turned in update). */
@@ -536,42 +651,80 @@ export function windmill(scene: THREE.Scene): THREE.Object3D {
   }
   mill.add(sails);
   scene.add(mill);
+  // Dormant (no body: what passes through its box wakes it), on its hill once woken; its sails as they stood
+  const f = new Frame([MILL.x, y, MILL.z], mill.rotation.y);
+  const corners: V3[] = [];
+  for (const u of [-10.6, 10.6]) for (const v of [0, 18.4]) for (const w of [-2.6, 2.8]) corners.push(f.at(u, v, w));
+  units.add({
+    name: 'windmill',
+    bounds: { min: [0, 1, 2].map((k) => Math.min(...corners.map((p) => p[k]))) as V3, max: [0, 1, 2].map((k) => Math.max(...corners.map((p) => p[k]))) as V3 },
+    hide: () => {
+      mill.visible = false;
+    },
+    build: (d) => {
+      hillUnder(MILL.x - 24, MILL.z - 24, MILL.x + 24, MILL.z + 24);
+      millPieces(d, f, sails.rotation.z);
+    },
+  });
   return sails;
 }
 
 /**
  * The rest of the town: the wall carrying on east and round behind the church, west and south
  * behind the west row with two more round towers; houses (plastered and timbered, under tile)
- * between. In the world too, near the breakable part.
+ * between. In the world too, near the breakable part. Each length of wall, tower and house a
+ * dormant thing: drawn merged, each hidden on its own as it wakes.
  */
 export function town(scene: THREE.Scene, world: World): void {
-  const walls: THREE.BufferGeometry[] = [];
-  const roofs: THREE.BufferGeometry[] = [];
-  const houses: THREE.BufferGeometry[] = [];
-  const westHouses: THREE.BufferGeometry[] = [];
-  const box = (x0: number, z0: number, x1: number, z1: number, y0: number, y1: number, into: THREE.BufferGeometry[], body = false) => {
-    const g = new THREE.BoxGeometry(x1 - x0, y1 - y0, z1 - z0);
-    worldUV(g, [x1 - x0, y1 - y0, z1 - z0]);
-    g.translate((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2);
-    into.push(g);
-    if (body) world.addBox({ size: [x1 - x0, y1 - y0, z1 - z0], position: [(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2], fixed: true, friction: 0.8 });
+  const walls = new Merged();
+  const towerMeshes = new Merged();
+  const cones = new Merged();
+  const houses = new Merged();
+  const westHouses = new Merged();
+  const roofs = new Merged();
+  let next = 0;
+  // A box from (u0, v0, w0), su by sv by sw, in frame f (its uvs in metres), into a merged mesh as part `key`
+  const box = (into: Merged, key: number, f: Frame, u0: number, v0: number, w0: number, su: number, sv: number, sw: number, tone?: THREE.Color) => {
+    const g = new THREE.BoxGeometry(su, sv, sw);
+    worldUV(g, [su, sv, sw]);
+    if (tone) toned(g, tone);
+    g.rotateY(f.a);
+    g.translate(...f.at(u0 + su / 2, v0 + sv / 2, w0 + sw / 2));
+    into.add(key, g);
   };
-  // Walls: north from the breakable end, east side, west side; crenellated
-  const wall = (x0: number, z0: number, x1: number, z1: number) => {
-    box(x0, z0, x1, z1, -0.5, 7.5, walls, true);
-    const alongX = x1 - x0 > z1 - z0;
-    const len = alongX ? x1 - x0 : z1 - z0;
-    for (let t = 0.4; t + 1 < len; t += 1.8) {
-      if (alongX) box(x0 + t, z0, x0 + t + 1, z0 + 0.6, 7.5, 9.6, walls);
-      else box(x1 - 0.6, z0 + t, x1, z0 + t + 1, 7.5, 9.6, walls);
+  const body = (f: Frame, u0: number, v0: number, w0: number, su: number, sv: number, sw: number): Body => world.addBox({ size: [su, sv, sw], position: f.at(u0 + su / 2, v0 + sv / 2, w0 + sw / 2), rotation: f.q, fixed: true, friction: 0.8 })!;
+
+  // Walls: north from the breakable end, east side, west side, crenellated, in lengths of about 6 m
+  // between the towers. A run's frame: its outer face at w = 0 (2 m thick inward), along u
+  const run = (f: Frame, length: number) => {
+    const n = Math.max(1, Math.round(length / 6));
+    for (let i = 0; i < n; i++) {
+      const key = next++;
+      const L = length / n;
+      const g = f.sub((length * i) / n, 0, 0);
+      box(walls, key, g, 0, -0.5, 0, L, 8, 2);
+      // The parapet, its merlons (as battlements() lays them)
+      box(walls, key, g, 0, 7.5, 0, L, 1.1, 0.6);
+      const pitch = 1.8;
+      const m = Math.max(1, Math.floor((L + 0.8) / pitch));
+      const start = (L - (m * pitch - 0.8)) / 2;
+      for (let k = 0; k < m; k++) box(walls, key, g, start + k * pitch, 8.6, 0, 1, 1, 0.6);
+      units.add({
+        name: 'town wall',
+        bounds: boundsOf(g.at(L / 2, 4.55, 1), [L, 10.1, 2], g.a),
+        bodies: [body(g, 0, -0.5, 0, L, 8, 2), body(g, 0, 7.5, 0, L, 1.1, 0.6)],
+        hide: () => walls.hide(key),
+        build: (d) => wallLength(kitFor(d), g, L),
+      });
     }
   };
-  wall(26.02, -18, 50, -16);
-  wall(48, -16, 50, 42);
-  wall(-44, -18, -32.1, -16);
-  wall(-44, -16, -42, 32);
-  // Both runs end on a tower, and a robbed-out stub of the south wall steps down from each: the
-  // open south reads as a wall long gone, not one left unfinished
+  // (Each run ends 3 m from a tower's middle: inside it, as the woken wall's end blocks are)
+  run(new Frame([26.02, 0, -18]), 46 - 26.02);
+  run(new Frame([50, 0, -14], -Math.PI / 2), 15 + 14);
+  run(new Frame([50, 0, 21], -Math.PI / 2), 39 - 21);
+  run(new Frame([-40, 0, -18]), -32.1 + 40);
+  run(new Frame([-44, 0, 7], Math.PI / 2), 7 + 14);
+  run(new Frame([-44, 0, 29], Math.PI / 2), 29 - 13);
   const towers: Array<[number, number]> = [
     [49, -17],
     [49, 18],
@@ -580,35 +733,72 @@ export function town(scene: THREE.Scene, world: World): void {
     [-43, 10],
     [-43, 32],
   ];
+  // Colours: each house its wash, each roof its tiles (a generator of their own, so the layout
+  // stays as it was)
+  let c = 4242;
+  const shade = () => ((c = (c * 16807) % 2147483647) / 2147483647);
+  const tiles = () => {
+    const id = shade();
+    const k = smooth(0.3, 0.6, id);
+    const m = smooth(0.75, 0.95, id);
+    return new THREE.Color(0xffffff).lerp(new THREE.Color(0xd8a890), k).lerp(new THREE.Color(0xb8b090), m);
+  };
+  // Both runs end on a tower, and a robbed-out stub of the south wall steps down from each: the
+  // open south reads as a wall long gone, not one left unfinished
   for (const [x, dir] of [
     [-43, 1],
     [49, -1],
   ]) {
+    const key = next++;
     const z = x < 0 ? 31 : 41;
-    [5.5, 4.2, 3.0, 1.6, 0.8].forEach((top, i) => {
+    const steps = [5.5, 4.2, 3.0, 1.6, 0.8].map((top, i) => {
       const a = x + dir * (3.4 + i * 1.9);
       const b = a + dir * (1.9 - (i === 4 ? 0.6 : 0));
-      box(Math.min(a, b), z - 1, Math.max(a, b), z + 1, -0.5, top + Math.sin(i * 2.3) * 0.3, walls, i < 3);
+      return { x0: Math.min(a, b), x1: Math.max(a, b), top: top + Math.sin(i * 2.3) * 0.3 };
+    });
+    const f = new Frame([0, 0, z - 1]);
+    for (const st of steps) box(walls, key, f, st.x0, -0.5, 0, st.x1 - st.x0, st.top + 0.5, 2);
+    units.add({
+      name: 'wall stub',
+      bounds: union(steps.map((st) => ({ min: [st.x0, -0.5, z - 1] as V3, max: [st.x1, st.top, z + 1] as V3 }))),
+      bodies: steps.map((st) => body(f, st.x0, -0.5, 0, st.x1 - st.x0, st.top + 0.5, 2)),
+      hide: () => walls.hide(key),
+      build: (d) => {
+        for (const st of steps) wallStub(kitFor(d), st.x0, st.x1, z - 1, st.top);
+      },
     });
   }
-  const towerMeshes: THREE.BufferGeometry[] = [];
-  const cones: THREE.BufferGeometry[] = [];
   // Squatter than the breakable round tower, so it doesn't pass for it seen past it
   for (const [x, z] of towers) {
+    const key = next++;
     const t = new THREE.CylinderGeometry(3.4, 3.6, 9.5, 16);
     worldUV(t, [21, 9.5, 21]);
     t.translate(x, 4.75, z);
-    towerMeshes.push(t);
-    const c = new THREE.ConeGeometry(3.9, 4.5, 16);
-    c.translate(x, 9.5 + 2.25, z);
-    cones.push(c);
-    // In the world as drawn: the 16 sides (a square box stood 1.35 m out on the diagonals)
+    towerMeshes.add(key, t);
+    const tint = tiles();
+    const cg = new THREE.ConeGeometry(3.9, 4.5, 16);
+    toned(cg, tint);
+    cg.translate(x, 9.5 + 2.25, z);
+    cones.add(key, cg);
+    // In the world as drawn: the 16 sides (a square box stood 1.35 m out on the diagonals), the cone
     const points: number[] = [];
+    const cone: number[] = [x, 14, z];
     for (let i = 0; i < 16; i++) {
       const a = (i / 16) * Math.PI * 2;
       points.push(x + 3.6 * Math.sin(a), -0.5, z + 3.6 * Math.cos(a), x + 3.4 * Math.sin(a), 9.5, z + 3.4 * Math.cos(a));
+      cone.push(x + 3.9 * Math.sin(a), 9.5, z + 3.9 * Math.cos(a));
     }
-    world.addHull({ points, fixed: true, friction: 0.8 });
+    const bodies = [world.addHull({ points, fixed: true, friction: 0.8 }), world.addHull({ points: cone, fixed: true, friction: 0.6 })].filter((b): b is Body => !!b);
+    units.add({
+      name: 'round tower',
+      bounds: { min: [x - 3.9, -0.5, z - 3.9], max: [x + 3.9, 14, z + 3.9] },
+      bodies,
+      hide: () => {
+        towerMeshes.hide(key);
+        cones.hide(key);
+      },
+      build: (d) => townTower(kitFor(d), x, z, tint.getHex()),
+    });
   }
   // Houses: a body and a gable roof each, east behind the church and north-east, west behind the west row
   let s = 9;
@@ -617,16 +807,47 @@ export function town(scene: THREE.Scene, world: World): void {
   // eaves stand half a metre out. In the world too, roof and all: debris from the church fell
   // through the houses beside it and lay inside them
   footprints.length = 0;
+  const washes = [0xf3ead8, 0xe8cf98, 0xe9c9b8, 0xd9dccb];
   const place = (x0: number, z0: number, w: number, d: number, h: number, ridgeAlongX: boolean, west: boolean) => {
+    const key = next++;
     const into = west ? westHouses : houses;
-    footprints.push([x0, z0, x0 + w, z0 + d]);
+    const print: [number, number, number, number] = [x0, z0, x0 + w, z0 + d];
+    footprints.push(print);
+    const k = shade();
+    const wash = new THREE.Color(washes[k < 0.3 ? 0 : k < 0.55 ? 1 : k < 0.75 ? 2 : 3]).multiplyScalar(0.97 + shade() * 0.06);
+    const f = new Frame([0, 0, 0]);
+    const bodies: Body[] = [];
     if (h > 5.2) {
-      box(x0 + JETTY, z0 + JETTY, x0 + w - JETTY, z0 + d - JETTY, -0.2, STOREY, into, true);
-      box(x0, z0, x0 + w, z0 + d, STOREY, h, into, true);
-    } else box(x0, z0, x0 + w, z0 + d, -0.2, h, into, true);
-    const roof = gableRoof(x0 - 0.5, z0 - 0.5, x0 + w + 0.5, z0 + d + 0.5, h, ridgeAlongX);
-    roofs.push(roof);
-    world.addHull({ points: [...(roof.attributes.position.array as Float32Array)], fixed: true, friction: 0.6 });
+      box(into, key, f, x0 + JETTY, -0.2, z0 + JETTY, w - 2 * JETTY, STOREY + 0.2, d - 2 * JETTY, wash);
+      box(into, key, f, x0, STOREY, z0, w, h - STOREY, d, wash);
+      bodies.push(body(f, x0 + JETTY, -0.2, z0 + JETTY, w - 2 * JETTY, STOREY + 0.2, d - 2 * JETTY), body(f, x0, STOREY, z0, w, h - STOREY, d));
+    } else {
+      box(into, key, f, x0, -0.2, z0, w, h + 0.2, d, wash);
+      bodies.push(body(f, x0, -0.2, z0, w, h + 0.2, d));
+    }
+    const tint = tiles();
+    const spec: HouseSpec = { x0, z0, x1: x0 + w, z1: z0 + d, h, ridgeAlongX, tone: wash.getHex(), tiles: tint.getHex() };
+    const roof = roofGeometry(spec);
+    toned(roof, tint);
+    roofs.add(key, roof);
+    const hull = world.addHull({ points: [...(roof.attributes.position.array as Float32Array)], fixed: true, friction: 0.6 });
+    if (hull) bodies.push(hull);
+    const half = (ridgeAlongX ? d : w) / 2 + EAVES;
+    units.add({
+      name: 'house',
+      bounds: { min: [x0 - EAVES, -0.2, z0 - EAVES], max: [x0 + w + EAVES, h + half * PITCH, z0 + d + EAVES] },
+      bodies,
+      hide: () => {
+        into.hide(key);
+        roofs.hide(key);
+      },
+      build: (dd) => {
+        // Its ruins may be walked into
+        const at = footprints.indexOf(print);
+        if (at >= 0) footprints.splice(at, 1);
+        house(dd, spec);
+      },
+    });
   };
   // East: rows along x = 38..47 between the churchyard and the east wall
   for (let z = -14; z < 38; ) {
@@ -664,24 +885,28 @@ export function town(scene: THREE.Scene, world: World): void {
       place(x, z0, w, depth + rand() * 1.5, 6 + rand() * 3, true, false);
       x += w + 0.4 + rand() * 1.2;
     }
-  const rubble = townWallMaterial();
-  const mesh = (gs: THREE.BufferGeometry[], m: THREE.Material, name: string, castShadow = true) => {
-    if (!gs.length) return;
-    const g = mergeGeometries(gs.map((x) => (x.index ? x.toNonIndexed() : x)));
-    const o = new THREE.Mesh(g, m);
-    o.name = `scenery:${name}`;
-    o.castShadow = castShadow;
-    o.receiveShadow = true;
-    scene.add(o);
+  const add = (m: Merged, material: THREE.Material, name: string, castShadow = true) => {
+    const mesh = m.build(material, name, castShadow);
+    if (mesh) scene.add(mesh);
   };
-  mesh(walls, rubble, 'walls');
-  mesh(towerMeshes, rubble, 'towers');
-  mesh(cones, roofMaterial(true), 'cones');
-  mesh(houses, houseMaterial(), 'houses');
+  const rubble = townWallMaterial();
+  add(walls, rubble, 'walls');
+  add(towerMeshes, rubble, 'towers');
+  add(cones, roofMaterial(true), 'cones');
+  const plaster = facadeStandIn(houseLook);
+  add(houses, plaster, 'houses');
   // West of the square: lit by a sun behind them, they'd throw their shadows over it
-  mesh(westHouses, houseMaterial(), 'west houses', false);
+  add(westHouses, plaster, 'west houses', false);
   // Both sides: the eaves' undersides show from the street
-  mesh(roofs, roofMaterial(false, true), 'roofs');
+  add(roofs, roofMaterial(false, true), 'roofs');
+}
+
+/** A colour for every vertex of `g` (its `tone`: a house's wash, a roof's tiles). */
+function toned(g: THREE.BufferGeometry, c: THREE.Color): void {
+  const n = g.attributes.position.count;
+  const a = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) a.set([c.r, c.g, c.b], i * 3);
+  g.setAttribute('tone', new THREE.BufferAttribute(a, 3));
 }
 
 /** UVs in metres (per face, by the box's size), so maps keep their scale on any box. */
@@ -695,37 +920,55 @@ function worldUV(g: THREE.BufferGeometry, [w, h, d]: [number, number, number]): 
   }
 }
 
-/** A gable roof over (x0, z0)–(x1, z1) from its eaves at height y, pitched about 50°. */
-function gableRoof(x0: number, z0: number, x1: number, z1: number, y: number, ridgeAlongX: boolean): THREE.BufferGeometry {
-  const half = ridgeAlongX ? (z1 - z0) / 2 : (x1 - x0) / 2;
-  const rise = half * 1.2;
-  const g = new THREE.BufferGeometry();
+/**
+ * A house's roof drawn as it's built once it wakes (roofHalves): each half's slope, its ends and the
+ * eaves' underside, the uvs (m) projected as a piece's are in its tiles' frame (fragment-mesh's
+ * drawFaces: the axis the face looks along most, u flipped so the map isn't mirrored), so the tiles
+ * lie the same before and after.
+ */
+function roofGeometry(s: HouseSpec): THREE.BufferGeometry {
   const v: number[] = [];
-  const uv: number[] = [];
-  const slope = Math.hypot(half, rise);
-  const quad = (a: number[], b: number[], c: number[], d: number[], w: number) => {
-    v.push(...a, ...b, ...c, ...a, ...c, ...d);
-    uv.push(0, 0, w, 0, w, slope, 0, 0, w, slope, 0, slope);
-  };
-  const tri = (a: number[], b: number[], c: number[]) => {
-    v.push(...a, ...b, ...c);
-    uv.push(0, 0, 1, 0, 0.5, 1);
-  };
-  if (ridgeAlongX) {
-    const zm = (z0 + z1) / 2;
-    quad([x0, y, z1], [x1, y, z1], [x1, y + rise, zm], [x0, y + rise, zm], x1 - x0);
-    quad([x1, y, z0], [x0, y, z0], [x0, y + rise, zm], [x1, y + rise, zm], x1 - x0);
-    tri([x0, y, z0], [x0, y, z1], [x0, y + rise, zm]);
-    tri([x1, y, z1], [x1, y, z0], [x1, y + rise, zm]);
-  } else {
-    const xm = (x0 + x1) / 2;
-    quad([x0, y, z0], [x0, y, z1], [xm, y + rise, z1], [xm, y + rise, z0], z1 - z0);
-    quad([x1, y, z1], [x1, y, z0], [xm, y + rise, z0], [xm, y + rise, z1], z1 - z0);
-    tri([x0, y, z1], [x1, y, z1], [xm, y + rise, z1]);
-    tri([x1, y, z0], [x0, y, z0], [xm, y + rise, z0]);
+  const uvs: number[] = [];
+  const P = (p: V3) => new THREE.Vector3(...p);
+  for (const half of roofHalves(s)) {
+    const [e, m, t] = half.section.map(P);
+    const shift = new THREE.Vector3(...half.along).multiplyScalar(half.length);
+    const [e1, m1, t1] = [e, m, t].map((p) => p.clone().add(shift));
+    const middle = [e, m, t, e1, m1, t1].reduce((a, p) => a.add(p), new THREE.Vector3()).divideScalar(6);
+    const o = P(half.frame.position);
+    const inv = new THREE.Quaternion(...half.frame.rotation).invert();
+    for (let f of [
+      [e, e1, t1, t],
+      [e, t, m],
+      [e1, m1, t1],
+      [e, m, m1, e1],
+    ]) {
+      let n = new THREE.Vector3().subVectors(f[1], f[0]).cross(new THREE.Vector3().subVectors(f[2], f[0])).normalize();
+      // Wound to face out
+      if (n.dot(f[0].clone().sub(middle)) < 0) {
+        f = [...f].reverse();
+        n = n.negate();
+      }
+      const tn = n.clone().applyQuaternion(inv);
+      const [ax, ay, az] = [Math.abs(tn.x), Math.abs(tn.y), Math.abs(tn.z)];
+      const [ua, va] =
+        ax > ay && ax > az ? [new THREE.Vector3(0, 0, -Math.sign(tn.x) || -1), new THREE.Vector3(0, 1, 0)]
+        : ay > az ? [new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0, -Math.sign(tn.y) || -1)]
+        : [new THREE.Vector3(Math.sign(tn.z) || 1, 0, 0), new THREE.Vector3(0, 1, 0)];
+      const uv = (p: THREE.Vector3) => {
+        const q = p.clone().sub(o).applyQuaternion(inv);
+        return [q.dot(ua), q.dot(va)];
+      };
+      for (let k = 1; k + 1 < f.length; k++)
+        for (const p of [f[0], f[k], f[k + 1]]) {
+          v.push(p.x, p.y, p.z);
+          uvs.push(...uv(p));
+        }
+    }
   }
+  const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(v, 3));
-  g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+  g.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
   g.computeVertexNormals();
   return g;
 }
@@ -740,36 +983,30 @@ function townWallMaterial(): THREE.MeshStandardNodeMaterial {
   return m;
 }
 
-/** Roofs: the clay tile map in metres; some redder, some mossy, by a hash of where they are. */
+/** Roofs: the clay tile map in metres, in each roof's tint (its `tone`: some redder, some mossy). */
 function roofMaterial(cones: boolean, twoSided = false): THREE.MeshStandardNodeMaterial {
   const m = textured('roof_09', { base });
   if (twoSided) m.side = THREE.DoubleSide;
   const map = m.map!;
-  const id = hash(floor(positionWorld.x.div(5)).add(200).mul(3.1).add(floor(positionWorld.z.div(5)).add(200).mul(17.3)));
-  const tint = mix(mix(color(0xffffff), color(0xd8a890), smoothstep(0.3, 0.6, id)), color(0xb8b090), smoothstep(0.75, 0.95, id));
   // Rows along the slope's level lines, v up the slope (the faces' uvs are in metres; the map is 4 m)
   const uvNode = cones ? vec2(abs(positionWorld.x.add(positionWorld.z)), positionWorld.y) : uv();
-  m.colorNode = texture(map, uvNode.div(4)).rgb.mul(tint);
+  m.colorNode = texture(map, uvNode.div(4)).rgb.mul(attribute<'vec3'>('tone', 'vec3'));
   m.normalMap = null;
   return m;
 }
 
+let limewash: THREE.Texture | null = null;
+
 /**
- * Houses: lime plaster in washes, oak framing drawn on (storey bands, posts, braces now and
- * then), some all stone; chosen by a hash of where each house stands.
+ * The scenery houses' facades (a FacadeLook: drawn on the scenery, and on a woken house's panels
+ * from where each stood): lime plaster (the house's wash is its tone), oak framing drawn on
+ * (storey bands, posts, braces now and then), dark windows in most bays upstairs and a door now and
+ * then below; some houses all stone, by a hash of the wash.
  */
-function houseMaterial(): THREE.MeshStandardNodeMaterial {
-  const m = textured('medieval_limewash', { base });
-  const map = m.map!;
-  const side = abs(normalWorld.x).greaterThan(0.5);
-  const along = select(side, positionWorld.z, positionWorld.x);
-  const y = positionWorld.y;
-  // Each house's cell, taken 5 cm inside the face: a face on a cell edge (the south-east rows start at
-  // x 13) flickered between two cells pixel by pixel, which turned its windows to striped noise
-  const inner = positionWorld.sub(normalWorld.mul(0.05));
-  const house = hash(floor(inner.x.div(6.5)).add(100).mul(5.3).add(floor(inner.z.div(6.5)).add(100).mul(11.9)));
-  // Washes by the hash, blended by steps (select on colours misbehaved here)
-  const wash = mix(mix(mix(color(0xf3ead8), color(0xe8cf98), step(0.3, house)), color(0xe9c9b8), step(0.55, house)), color(0xd9dccb), step(0.75, house));
+export const houseLook: FacadeLook = ({ along, y, tone, top }) => {
+  const map = (limewash ??= textured('medieval_limewash', { base }).map!);
+  // Each house's own number, from its wash (each a shade apart)
+  const house = hash(floor(dot(tone, vec3(31.7, 17.3, 7.1)).mul(97)));
   // Frame: plates every storey, posts every 1.1 m, a brace in some bays. Each line's width on screen
   // from the change of its own coordinate across a pixel (taken before it's wrapped)
   const storey = fract(y.div(STOREY));
@@ -781,7 +1018,7 @@ function houseMaterial(): THREE.MeshStandardNodeMaterial {
   const diag = abs(bay.sub(storey));
   const brace = step2(diag, 0.06, du.add(dy)).mul(step(0.6, hash(floor(along.div(1.1)).add(200).add(floor(y.div(STOREY)).mul(7.7)))));
   const timber = max(max(plate, post), brace).mul(step(0.6, y));
-  const plaster = texture(map, vec2(along.div(2), y.div(2))).rgb.mul(wash);
+  const plaster = texture(map, vec2(along.div(2), y.div(2))).rgb;
   const oak = color(0x5a4636).mul(mx_noise_float(vec2(along.mul(3), y.mul(0.5))).mul(0.15).add(1));
   // Windows: dark openings in most bays of 2.2 m on the upper storeys, a door now and then below
   const level = floor(y.div(STOREY));
@@ -790,14 +1027,17 @@ function houseMaterial(): THREE.MeshStandardNodeMaterial {
   const upper = step(0.5, level);
   const pane = step(0.3, wide).mul(step(wide, 0.68)).mul(step(0.32, storey)).mul(step(storey, 0.74)).mul(step(0.3, which)).mul(upper);
   const door = step(0.4, wide).mul(step(wide, 0.62)).mul(step(storey, 0.76)).mul(step(0.8, which)).mul(float(1).sub(upper));
-  const opening = max(pane, door).mul(step(0.5, abs(normalWorld.y).oneMinus()));
+  const opening = max(pane, door).mul(select(top, float(0), float(1)));
   const dark = color(0x2a2119).mul(mix(float(0.75), float(1.2), which));
   // Some all stone
-  const wall = mix(mix(plaster, oak, timber), plaster.mul(color(0xd8c8a8)), step(0.88, house));
-  m.colorNode = mix(wall, dark, opening);
-  m.normalMap = null;
-  return m;
-}
+  const stone = step(0.88, house);
+  const wall = mix(mix(plaster, oak, timber), plaster.mul(color(0xd8c8a8)), stone);
+  return {
+    color: mix(wall, dark, opening),
+    toned: float(1).sub(opening).mul(float(1).sub(stone)).mul(float(1).sub(timber)),
+    roughness: float(0.9),
+  };
+};
 
 /**
  * 1 where x < w: a line w wide, `px` the change of x across a pixel. Its edge is a pixel soft, and

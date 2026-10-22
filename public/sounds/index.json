@@ -31,6 +31,42 @@
   "kind": "loop",
   "space": "head"
  },
+ "bird.hit": {
+  "src": [
+   "bird.hit/0.mp3",
+   "bird.hit/1.mp3",
+   "bird.hit/2.mp3",
+   "bird.hit/3.mp3",
+   "bird.hit/4.mp3",
+   "bird.hit/5.mp3",
+   "bird.hit/6.mp3",
+   "bird.hit/7.mp3"
+  ],
+  "duration": [
+   0.16,
+   0.23,
+   0.266,
+   0.34,
+   0.315,
+   0.32,
+   0.306,
+   0.325
+  ],
+  "kind": "slice",
+  "space": "world",
+  "play": {
+   "near": 10,
+   "rolloff": 0.8,
+   "volume": 0.4,
+   "voices": 3,
+   "cooldown": 0.05,
+   "pitch": [
+    0.9,
+    1.15
+   ],
+   "reverb": 0.3
+  }
+ },
  "brick.break": {
   "src": [
    "brick.break/0.mp3",
@@ -352,6 +388,52 @@
    "reverb": 0.25
   }
  },
+ "car.door": {
+  "src": [
+   "car.door/0.mp3"
+  ],
+  "duration": [
+   1.969
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 6,
+   "rolloff": 0.8,
+   "volume": 0.55,
+   "voices": 2,
+   "cooldown": 0.15,
+   "pitch": [
+    0.92,
+    1.08
+   ],
+   "reverb": 0.3
+  }
+ },
+ "car.lid": {
+  "src": [
+   "car.lid/0.mp3",
+   "car.lid/1.mp3"
+  ],
+  "duration": [
+   1.293,
+   1.589
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 6,
+   "rolloff": 0.8,
+   "volume": 0.55,
+   "voices": 2,
+   "cooldown": 0.15,
+   "pitch": [
+    0.92,
+    1.08
+   ],
+   "reverb": 0.3
+  }
+ },
  "casing.drop": {
   "src": [
    "casing.drop/0.mp3",
@@ -511,6 +593,43 @@
   ],
   "kind": "loop",
   "space": "world"
+ },
+ "fuel.ignite": {
+  "src": [
+   "fuel.ignite/0.mp3",
+   "fuel.ignite/1.mp3"
+  ],
+  "duration": [
+   2.26,
+   2.967
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 10,
+   "rolloff": 0.7,
+   "volume": 0.9,
+   "voices": 2,
+   "cooldown": 0.5,
+   "reverb": 0.4
+  }
+ },
+ "fuel.leak": {
+  "src": [
+   "fuel.leak/0.mp3"
+  ],
+  "duration": [
+   7.3
+  ],
+  "kind": "loop",
+  "space": "world",
+  "play": {
+   "near": 3,
+   "rolloff": 1,
+   "volume": 0.35,
+   "voices": 2,
+   "reverb": 0.15
+  }
  },
  "glass.debris": {
   "src": [
@@ -825,6 +944,30 @@
   ],
   "kind": "shot",
   "space": "world"
+ },
+ "tyre.burst": {
+  "src": [
+   "tyre.burst/0.mp3",
+   "tyre.burst/1.mp3"
+  ],
+  "duration": [
+   2.145,
+   2.5
+  ],
+  "kind": "shot",
+  "space": "world",
+  "play": {
+   "near": 8,
+   "rolloff": 0.8,
+   "volume": 0.7,
+   "voices": 2,
+   "cooldown": 0.1,
+   "pitch": [
+    0.9,
+    1.1
+   ],
+   "reverb": 0.35
+  }
  },
  "wood.break": {
   "src": [

@@ -2,12 +2,13 @@
 
 A world is one place to blow apart: what's built and of what, the ground it stands on (which can
 break too), how it looks (sky, light, fog), how it sounds, what stands around (props), and how it
-reacts, to a rocket and to the gun alike. The demo (`src/demo/main.ts`) is the same for every
-world: renderer, post-processing (ambient occlusion and bloom), GPU physics, the player, two
-weapons (the rocket launcher and the machine gun: <kbd>1</kbd> / <kbd>2</kbd>, the wheel,
-<kbd>Q</kbd> the last one), particles, marks on surfaces (bullet holes, scorches) and sound. Worlds
-are picked in the overlay (a card each, with its picture) or with `?world=<id>`
-(http://127.0.0.1:5330/?world=<id>).
+reacts, to a rocket and to the gun alike. The aim is that everything a world shows breaks: what
+isn't built as pieces at load stands as scenery until something reaches it ("Dormant scenery",
+below). The demo (`src/demo/main.ts`) is the same for every world: renderer, post-processing
+(ambient occlusion and bloom), GPU physics, the player, two weapons (the rocket launcher and the
+machine gun: <kbd>1</kbd> / <kbd>2</kbd>, the wheel, <kbd>Q</kbd> the last one), particles, marks
+on surfaces (bullet holes, scorches) and sound. Worlds are picked in the overlay (a card each, with
+its picture) or with `?world=<id>` (http://127.0.0.1:5330/?world=<id>).
 
 Brick Street (`src/demo/worlds/nyc/`) is the worked example. Read it first: it uses the library
 and the world contract plainly, most features once, where they do the most (its road and
@@ -70,13 +71,15 @@ same from `/` (the dev server) and from a subpath like `https://<user>.github.io
     `&sky=<JSON>` over its sky (e.g. `sky={"elevation":1.13}`).
 - `materials()`: the breakable materials, by name.
 - `ground`: the height pieces stand on (default 0; `null`: none, stand on static pieces).
-- `scenery(scene, world, sky)`: what doesn't break. Draw the ground and add it to the physics world
-  (`world.addBox({ size, position, fixed: true, friction })`), plus anything far off (skyline,
-  hills, mesas, sea). Every fixed body stops rockets and bullets, and those that rise above
-  `groundAt` (a corner more than 5 cm over it) are walls and floors to the player too: make
-  colliders follow what's drawn (a round tower's collider as a hull round it, `world.addHull`, not
-  a box). Bodies that are the ground itself are left to `groundAt`; under a breakable ground the
-  ground body's top is the ground's bed (see "Breakable ground").
+- `scenery(scene, world, sky)`: what stands as scenery. Draw the ground and add it to the physics
+  world (`world.addBox({ size, position, fixed: true, friction })`), plus anything far off
+  (skyline, hills, mesas, sea). What of it should break but isn't built as pieces at load is made a
+  dormant thing in `build()`, where the Destruction exists ("Dormant scenery", below). Every fixed
+  body stops rockets and bullets, and those that rise above `groundAt` (a corner more than 5 cm
+  over it) are walls and floors to the player too: make colliders follow what's drawn (a round
+  tower's collider as a hull round it, `world.addHull`, not a box). Bodies that are the ground
+  itself are left to `groundAt`; under a breakable ground the ground body's top is the ground's bed
+  (see "Breakable ground").
 - **Lights**: make every light the world will ever use in `scenery()` or `build()`, at intensity
   0 until wanted, and switch them by intensity, colour and place. A light added or removed later,
   or a shadow switched on or off, recompiles every lit material (a frame of over half a second).
@@ -86,9 +89,11 @@ same from `/` (the dev server) and from a subpath like `https://<user>.github.io
   empty or out of sight (Brick Street's hydrant droplets, Harbor Yard's flames; the birds a shot
   puts up: Brick Street's pigeons and Harbor Yard's gulls sit on their perches from the start, Sun
   Temple's jackdaws and its falling leaves are drawn shrunk to nothing), or its first frame
-  compiles. And three keys a material's pipeline on each of its numbers being zero or not:
-  switch an emissive between a little and a lot, never to 0 (Harbor Yard's lighthouse at 0 cost a
-  78–91 ms frame at each switch).
+  compiles. The pieces' materials are warmed with it (`destruction.warm()`: a piece of each
+  material no piece uses yet, out of sight, so scenery that wakes into a material of its own
+  doesn't make its shaders at the first hit). And three keys a material's pipeline on each of its
+  numbers being zero or not: switch an emissive between a little and a lot, never to 0 (Harbor
+  Yard's lighthouse at 0 cost a 78–91 ms frame at each switch).
 - `groundAt(x, z)`: the ground's height (structures aside), where the player walks, a rocket that
   hits nothing else goes off and a bullet that hits nothing else strikes. Inside a breakable
   ground's area it's the ground's bed, under the slabs (`top - depth - underDepth`): the player and
@@ -111,7 +116,9 @@ same from `/` (the dev server) and from a subpath like `https://<user>.github.io
   Their models arrive in `build()` by name.
 - `build(d, models)`: build everything breakable and return `{ feet, look }`, where the player
   starts and what they look at. The demo calls `d.reinforce()` after, so what's built stands. Lay
-  a breakable ground first (`d.addGround`), so what stands on it bonds to its slabs.
+  a breakable ground first (`d.addGround`), so what stands on it bonds to its slabs. Make the
+  scenery's dormant things here too ("Dormant scenery"): Sun Temple's after what stands on its
+  plateau, which keeps the tiles under it.
 - `destruction`: the Destruction's options, any but `world`, `scene`, `materials` and `ground`
   (`shatterSpeed`, `heavy`, `maxLoose`, `maxPieces`, `maxSpeed`, `killBelow`, `killBeyond`,
   `rolling`, `passHeldOnly`, `bondTolerance`, `frameBudget`, ...). The demo's own defaults are
@@ -150,7 +157,7 @@ same from `/` (the dev server) and from a subpath like `https://<user>.github.io
 - `blastRadius` (default 2.3).
 - `pitSide(at, ground)`: what the side of a pit through a breakable ground is where a bullet
   strikes it ("Breakable ground", "Steps and strikes").
-- `onStart`, `onBlast`, `onShot`, `onBurst`, `onImpact`, `update`: reactions (below).
+- `onStart`, `onBlast`, `onRound`, `onShot`, `onBurst`, `onImpact`, `update`: reactions (below).
 
 ## Breakable ground
 
@@ -262,10 +269,68 @@ d.addGround({ material: 'asphalt', under: 'base', bed: 'earth', area: [GROUND.x0
   land on what's under them, not on `groundAt`.
 - `killBelow` just under the bed.
 
+## Dormant scenery
+
+What's round the part built as pieces (the towers down Brick Street and round Neon Alley, Market
+Town's outer houses, walls, trees and windmill, Harbor Yard's far stacks, cranes and ship, the
+desert's sage and cacti, Brick Street's street on to its ends and the flat ground round the other
+worlds' breakable grounds) stands as scenery until a round or a blast reaches it, then is built as
+pieces: the library's dormant things (`d.addDormant`, [the library](library.md#dormant-things)).
+Draw it and put its fixed bodies in the world in `scenery()`, and make it dormant in `build()`
+(each world's `dormantScenery(d)`); a stand-in may be static pieces instead (Brick Street's street
+ends, which its `hide` removes). A dormant thing needs no body: a round or a rocket passing through
+its box wakes it and meets its pieces (Market Town's trees, Sun Temple's scrub). Once woken it's
+strengthened to stand as built, as `reinforce()` does what `build()` made. The demo's helpers:
+
+- `src/demo/dormant.ts`: `DormantUnits` collects the units made in `scenery()` (`add({ name?,
+  bounds, instances?, bodies?, hide?, build, blastOnly? })`: the instances it's drawn as, its fixed
+  boxes, what it's built as) and makes them dormant in `build()` (`units.dormant(d)`).
+  `boxPieces(d, { at, size, turn?, material, tint?, most?, hollow?, roof? })` builds a box as
+  blocks at most `most` a side (2.5 m), or `hollow` as walls that thick and a roof, in panels (a
+  shed, a ship's house). `Merged` is scenery drawn as one merged mesh (`add(key, geometry)`, then
+  `build(material, name)`) whose parts hide one by one as they wake (`hide(key)`: their triangles
+  collapsed to a point): Market Town's walls and houses, Dust Town's outskirts. `hideInstance`,
+  `solidBox` (a fixed box for a box of the scenery), `boundsOf` and `union` are the rest.
+- `src/demo/dormant-ground.ts`: `DormantGround` is flat ground round a world's breakable ground,
+  in tiles (`area`, `tile`, `top`, `bottom`, `skip`, `layers`), each a fixed box until a blast lays
+  it as breakable ground there (`d.addGround` with the tile's `layers`). It's `blastOnly`: rounds
+  strike it as the scenery it is. `cut(material, xz)` cuts the drawn ground away where it's been
+  laid (`hole(xz)` is the mask, for a material cut by several), `bedAt(x, z)` is the bed there for
+  the world's `groundAt` (null where it's still dormant), and the pit's sides are drawn between
+  woken and dormant tiles (`pit`). `cuts: { xs, zs }` cuts the tiles along other ground's edges too
+  (Sun Temple's plateau round its courts), and `dormant(d, stay?)` leaves the tiles under what
+  mustn't sink as they are (Sun Temple's platforms stand on the plateau itself).
+- `src/demo/towers.ts`: `Towers` are stand-in towers (`TowerSpec`: a footprint, a height, a tone)
+  in one instanced draw, in sections, each a fixed box and dormant (`towers.dormant(d, along?)`:
+  `along` gives what goes with a section, a sign on its face). Woken, a section is storey-high
+  panels a bay wide (and its roof, if it's the top) wearing the same facade, drawn from where each
+  panel stood, so nothing changes as it wakes; a section over one that gives way wakes too. The
+  facade is a `FacadeLook`: `facadeMaterial(look, options, preset)` the pieces' material,
+  `facadeStandIn(look)` the scenery's, their maps laid in `WORLD_FRAME` (Market Town's scenery
+  houses use them too).
+- What wakes on terrain that has no physics needs ground under it as it wakes, or its pieces fall
+  through the hill: Market Town's `hillUnder` and Sun Temple's `slopeUnder` add the land's 4 m
+  cells round it as fixed hulls, the first time they're needed.
+- What still doesn't break, in any world: the terrain off the flat (hills, slopes, cliffs, Market
+  Town's country with its dirt roads, Dust Town's desert past 200 m and its mesas), the water and
+  the sea, the sky, the islands and the haze. What's drawn moving isn't pieces: the birds are shot
+  down as they fly (`onRound`), and Neon Alley's traffic is only lights.
+
 ## Reactions
 
 The hooks get a `WorldRuntime`: `scene`, `camera`, `destruction`, `sound` (the engine), `ambience`
-(the world's ambience loops by name), `effects` and `time`.
+(the world's ambience loops by name), `effects`, `time`, `floor(at)` (what's under a point in the
+open: the ground, or the top of what stands on it there) and `blast(at, radius?, throws?)` (a blast
+as a rocket's, for what the world blows up itself: its fireball, soot, sound and shake, and
+`onBlast`; `throws` softer than a rocket's 15 m/s for one under a car).
+
+Cars that come apart (the library's `Vehicle`, `docs/library.md`) with what goes on round them are
+`src/demo/cars.ts`'s `Cars`: made in `scenery` (its flames and leaks are drawn from the start),
+`cars.place(d, model, position, rotation, tint)` in `build` for each (`loadVehicles` there: `build`
+may be `async`), `cars.start(rt)` in `onStart`, and `cars.blast` in `onBlast`, `cars.shot` in
+`onShot`, `cars.impact` in `onImpact`, `cars.update(rt)` in `update`. Brick Street's are its own
+props'; the world adds `vehiclePresets`' four materials (`carbody`, `carglass`, `tyre`, `bumper`) and
+their sounds.
 
 - `onStart(rt)`: once, when it's built and its sounds have loaded. Subscribe to events here and
   start what plays from the start. `update(dt, rt)` runs from the first frame, before it too.
@@ -281,6 +346,16 @@ The hooks get a `WorldRuntime`: `scene`, `camera`, `destruction`, `sound` (the e
   there). Up to 14 a second while the trigger is held: keep it light (Market Town's, which looks
   over its signs, the bell and the coop each round, takes 0.018 ms a round), and don't play a sound
   on every one.
+- `onRound(round, rt)`: each round of the gun as it flies, before what it struck (`onShot`), into
+  the sky too. `round` is `{ from, direction, reach }`: the eye, its way, and how far it went (to
+  what it struck, or the gun's 400 m). For what's in the air on its way, which isn't a piece: the
+  birds. `src/demo/birds.ts` has what's the same for every world's: `first(round, birds, radius)`
+  (which of them it strikes first; `reach(span)` the radius for a bird that wide), `blown(at,
+  radius, birds)` for a blast, `struck(at, color, size, rt, cry?)` (its feathers, the hit's
+  `bird.hit`, its cry) and `Fall` (it drops, tumbling, onto `rt.floor`, and lies on its side; if what
+  it lies on goes, it falls again). A round goes on through a bird to what's behind it. Brick
+  Street's pigeons, Dust Town's doves and hawk, Harbor Yard's gulls (into the harbour with a splash)
+  and Sun Temple's jackdaws and gulls are shot down so; Market Town's pigeons are only heard.
 - `onBurst(burst, rt)`: once a burst ends (the trigger let go, or the gun put away), after the
   gun's echo. `burst` is `{ rounds, at, seconds }`: the rounds fired, where most of them struck (the
   median of the strikes, each axis apart, so a stray round doesn't move it; null when none struck
@@ -371,18 +446,22 @@ The hooks get a `WorldRuntime`: `scene`, `camera`, `destruction`, `sound` (the e
   - `d.explode({ at, radius, speed?, spin?, loose? })` and `d.hit(at, radius?, speed?)` (a small
     break). All blasts, hits and bullets share one breaking budget a frame (`frameBudget`, 4 ms):
     what's over breaks in the next frames, so `explode()` may return `done: false`. `loose: true`
-    cuts the loose pieces it reaches too, as the rockets do.
+    cuts the loose pieces it reaches too, as the rockets do. A blast first wakes what's dormant
+    within 1.25 of its radius ("Dormant scenery").
   - `d.shoot(at, direction, power = 1, range = 500)`: a bullet (the demo's gun fires these, below).
-    It strikes the first standing piece, rubble, prop or loose piece (where it is now) and returns
-    a `ShotHit` (`piece`, `point`, `normal`, `distance`, `material`, `broke`, `damage` 0-1) or null.
+    It wakes what's dormant on its way, then strikes the first standing piece, rubble, prop or loose
+    piece (where it is now) and returns a `ShotHit` (`piece`, `point`, `normal`, `distance`,
+    `material`, `broke`, `damage` 0-1) or null.
   - `d.loosePieces` (read only); `d.killBelow`, `d.killBeyond` and `d.maxPieces` (above) can be set
     in `build()` or as it runs; `d.viewer` is the camera the budget looks from (default the first
     camera in the scene: the demo's).
 
 ## Building breakable things (the library: src/lib)
 
-- `d.addBox({ material, size, position, rotation?, tint?, static? })`. `d.addConvex({ material,
-  points, position, rotation })` makes the hull of points. Shape helpers (`src/lib/shapes.ts`):
+- `d.addBox({ material, size, position, rotation?, tint?, static?, anchor? })`. `d.addConvex({
+  material, points, position, rotation })` makes the hull of points. `static` never breaks or
+  moves; `anchor` holds up what's bonded to it as the ground does, needing nothing under it, but
+  breaks as any piece (below: "How Brick Street stands up"). Shape helpers (`src/lib/shapes.ts`):
   `cylinder`, `frustum`, `prism` (gables, wedges), `ringSegment`, `arch` and `pointedArch`
   (voussoirs, round and Gothic), `arcBlock` (round towers), `domePiece`.
 - **Bonds**: pieces that touch face to face (within 2 mm and 2.6° of facing each other, all over
@@ -418,8 +497,9 @@ The hooks get a `WorldRuntime`: `scene`, `camera`, `destruction`, `sound` (the e
   - It pushes what's free to move along its way, up to `bulletPush(mass, power)` m/s (`0.008 ×
     power / mass`, at most 6; under 0.08 not at all): a crate skitters off, a bin slides, a car
     doesn't move. What's already going that way as fast isn't pushed again, so a sheet held in the
-    line of fire isn't sped up round after round. Props and static pieces never break (they take
-    marks). A piece too small to cut comes loose whole when it gives way.
+    line of fire isn't sped up round after round. Static pieces never break (they take marks), nor
+    do props without shards; a prop with them breaks at its `rounds` ("Props", below). A piece too
+    small to cut comes loose whole when it gives way.
   - Each round adds `power` to what the piece has taken, and it breaks where it was struck once
     that passes `bulletsToBreak(material, piece.size)`: glass (`shatter`) at the first, anything
     else at `3 × (impact / 25) × (2.5 if plastic) × (size / 0.25)^1.5`, rounded (`size`: the cube
@@ -476,13 +556,13 @@ The hooks get a `WorldRuntime`: `scene`, `camera`, `destruction`, `sound` (the e
     once it has lain its material's `rubbleLife`, and past the Destruction's `maxPieces` the rest of
     what's at rest, a tenth of what's over every 0.25 s (at most 32 going at once: about 25 a
     second). What's out of the viewer's view goes first, and of each, what looks smallest from it
-    (its size over its distance). Never what stands, props, anything loose or hanging, rubble that
-    came to rest under 3 s ago, nor rubble with other rubble lying on it from above (the top of a
-    pile goes first); rubble that came to rest joined goes together or not at all. What only
-    leaned on a piece that went rests on as it lies; a piece woken while it goes (a bullet's push,
-    a blast) stays, drawn whole again. Brick Street's collapse, then the budget set at 5,000, far
-    under its count: its rubble went from 2,117 pieces to 37 in 85 s, steadily, none woken, the
-    frames as before.
+    (its size over its distance). Never what stands, props (a broken prop's pieces go as rubble
+    does), anything loose or hanging, rubble that came to rest under 3 s ago, nor rubble with other
+    rubble lying on it from above (the top of a pile goes first); rubble that came to rest joined
+    goes together or not at all. What only leaned on a piece that went rests on as it lies; a piece
+    woken while it goes (a bullet's push, a blast) stays, drawn whole again. Brick Street's
+    collapse, then the budget set at 5,000, far under its count: its rubble went from 2,117 pieces
+    to 37 in 85 s, steadily, none woken, the frames as before.
 - **What it doesn't**:
   - Rubble doesn't weigh on what it rests on, and weight goes to the ground by the fewest bonds, not
     by stiffness: a piece joining two parts that shouldn't be joined (a pane bonded up a window's
@@ -547,15 +627,21 @@ The hooks get a `WorldRuntime`: `scene`, `camera`, `destruction`, `sound` (the e
   ended at 9,405 with the budget at 9,400, 10,328 without); what's left standing stays.
 - **How Brick Street stands up**: facades are free-standing stacks of piers, sills and lintels,
   carried by what's under them; floor slabs stop 2 cm short of the facade so it peels away when
-  undermined; no piece much over 2 m. Use `static: true` for foundations that must never go.
+  undermined; no piece much over 2 m. Use `static: true` for foundations that must never go, and
+  `anchor: true` for what holds up what's on it but may break itself: Sun Temple's platforms
+  (their steps and stylobate over the hollow they hide, the tholos's rings) hold up the temple as
+  the ground would, and break, what they break into standing or falling as pieces do.
 - **Props**: `d.addProp({ model, material, position, rotation, tint? })` places a model (a GLB with
   a collider and a mass, from a prop pack) that rests until thrown or until what it stands on
-  goes, and never breaks (bullets push the light ones and mark them all). Use a material whose
-  sounds fit (cars: metal). `tint` colours a copy (only its paint, when the model has a paint
-  mask): one model, many cars. A model may collide as several welded parts (`colliders`: a
-  forklift's body and forks) and round ones roll (`hullVertices` up to 32; and stop, as pieces do:
-  `rolling`): both come from `props.mjs` (below). A prop pushed along for good (a tumbleweed in the
-  wind) counts as loose.
+  goes (bullets push the light ones and mark them all). Without shards it never breaks. With them
+  (`PropModel.shards`, from its pack's `<name>.shards.glb`: `shatter-props.py`, below) it takes its
+  `rounds` (default by its material and size) and flies apart from the last, and a blast breaks it
+  within 0.85 of its radius; its pieces are rubble the budget clears (`d.breakProp(piece, at)` by
+  hand). Use a material whose sounds fit (cars: metal). `tint` colours a copy (only its paint, when
+  the model has a paint mask): one model, many cars. A model may collide as several welded parts
+  (`colliders`: a forklift's body and forks) and round ones roll (`hullVertices` up to 32; and
+  stop, as pieces do: `rolling`): both come from `props.mjs` (below). A prop pushed along for good
+  (a tumbleweed in the wind) counts as loose.
 - **Emissive things** (neon, lamps, lit windows at night): a material whose surface has
   `emissive` and `emissiveIntensity`, with bloom, and `glow: 'standing'` so it goes dark when
   knocked loose and never glows on broken faces (see the `lamp` material in nyc/materials.ts).
@@ -675,6 +761,11 @@ wherever you keep it), and never print it or write it into the repo.
     main body: a forklift's body and forks, a wagon's bed and wheels).
   - `--colliders` fits the colliders again to the GLBs as they are; `finish-props.py` in the pack
     runs after (`--no-finish` skips it) for what a pack needs besides.
+  - Then `blender -b --factory-startup --python scripts/assets/shatter-props.py -- <id>` (`base`
+    for the base pack; `--only name,name`) breaks each prop into the pieces it shatters into (the
+    Voronoi cells of its mesh, their cut faces filled): `<name>.shards.glb` beside it and its
+    entry's `shards`, so it breaks in the game. Run it again after `process-props.py`, which
+    writes a prop's entry anew. The base pack's cars are left whole (they come apart as cars).
 - **HDRIs**: Poly Haven (CC0) has many skies. Download a 1k or 2k `.hdr` from
   `https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/<name>_1k.hdr` into `public/packs/<id>/hdri/`
   (see the API: https://api.polyhaven.com/assets?t=hdris).

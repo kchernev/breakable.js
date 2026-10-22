@@ -1050,6 +1050,10 @@ def dump_index(index):
       if k in ('collider', 'colliders'):
         pts = ',\n'.join(f'      {json.dumps(p)}' for p in v)
         lines.append(f'    {json.dumps(k)}: [\n{pts}\n    ]{comma}')
+      elif k == 'shards':
+        # (shatter-props.py's: a piece a line)
+        parts = ',\n'.join(f'        {json.dumps(p)}' for p in v['parts'])
+        lines.append(f'    "shards": {{\n      "file": {json.dumps(v["file"])},\n      "parts": [\n{parts}\n      ]\n    }}{comma}')
       else:
         lines.append(f'    {json.dumps(k)}: {json.dumps(v)}{comma}')
     lines.append('  }' + (',' if i < len(index) - 1 else ''))

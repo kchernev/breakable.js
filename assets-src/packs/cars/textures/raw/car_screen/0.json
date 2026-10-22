@@ -1,0 +1,14 @@
+{
+  "model": "openai/gpt-image-2.5/flare/text-to-image",
+  "prompt": "A car's centre touchscreen at night showing a navigation map in dark mode: a dark grey city street grid, a glowing blue route along several streets, a small white arrow for the car, a few soft icons along the left edge. Seen straight on, filling the whole frame edge to edge, flat, no reflections, no glare, no bezel, no hands, no car interior around it. No brand names, no logos, no words.",
+  "image_size": {
+    "width": 1536,
+    "height": 1024
+  },
+  "quality": "high",
+  "background": "opaque",
+  "output_format": "png",
+  "num_images": 1,
+  "made": "2026-10-21T14:21:52.664Z",
+  "url": "https://v3b.fal.media/files/b/0aaf4771/PhFfSm3e1t9mam1u98jUi_dY62SofE.png"
+}

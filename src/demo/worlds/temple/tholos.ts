@@ -27,23 +27,23 @@ export function buildTholos(k: Kit): void {
     }
     return pts;
   };
-  const ringOf = (n: number, off: number, r0: number, r1: number, y0: number, y1: number, material: string, o: { static?: boolean; tint?: number; skip?: (a0: number, a1: number) => boolean } = {}) => {
+  const ringOf = (n: number, off: number, r0: number, r1: number, y0: number, y1: number, material: string, o: { anchor?: boolean; tint?: number; skip?: (a0: number, a1: number) => boolean } = {}) => {
     const out: Piece[] = [];
     for (let i = 0; i < n; i++) {
       const a0 = off + (i / n) * Math.PI * 2;
       const a1 = off + ((i + 1) / n) * Math.PI * 2;
       if (o.skip?.(a0, a1)) continue;
-      const p = k.hull(material, arc(r0, r1, a0, a1, y0, y1), { static: o.static, tint: o.tint });
+      const p = k.hull(material, arc(r0, r1, a0, a1, y0, y1), { anchor: o.anchor, tint: o.tint });
       if (p) out.push(p);
     }
     return out;
   };
 
-  // Steps: two rings and the top platform (static)
-  ringOf(32, 0, 5.6, 6.6, 0, 0.3, 'marble', { static: true });
-  ringOf(32, 0, 5.2, 6.2, 0.3, 0.6, 'marble', { static: true });
-  ringOf(20, 0, 2.0, 5.8, 0.6, 0.9, 'marble', { static: true });
-  k.hull('marble', [...ring(cx, 0.6, cz, 2.0, 20), ...ring(cx, 0.9, cz, 2.0, 20)], { static: true });
+  // Steps: two rings and the top platform (anchors: over the hollow the rings leave, they hold up what's on them, and break)
+  ringOf(32, 0, 5.6, 6.6, 0, 0.3, 'marble', { anchor: true });
+  ringOf(32, 0, 5.2, 6.2, 0.3, 0.6, 'marble', { anchor: true });
+  ringOf(20, 0, 2.0, 5.8, 0.6, 0.9, 'marble', { anchor: true });
+  k.hull('marble', [...ring(cx, 0.6, cz, 2.0, 20), ...ring(cx, 0.9, cz, 2.0, 20)], { anchor: true });
   const floor = 0.9;
 
   // Columns: twelve on r 4.9, each abacus turned to face out

@@ -62,5 +62,8 @@
  "casing.drop:0:5",
  "casing.drop:1:3",
  "casing.drop:1:7",
- "casing.drop:1:9"
+ "casing.drop:1:9",
+ "car.door:1",
+ "car.door:2",
+ "tyre.burst:1"
 ]

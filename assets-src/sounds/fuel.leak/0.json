@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Petrol pouring out of a holed car fuel tank: a thin steady stream of liquid splashing and gurgling onto asphalt, close up, constant. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 10,
+  "seed": 966920,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaf45cc/FETalhwJyrXzuTPgLETpn_04ZAJ7kP.flac"
+}

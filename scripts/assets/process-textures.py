@@ -576,6 +576,8 @@ SETS = {
 
 # Which take of each set to use (assets-src/textures/raw/<set>/<take>.png)
 TAKES = {}
+# A set made from another set's image (a pack's pattern drawn over a generated grain): set -> source
+SOURCES = {}
 
 
 # --- Previews --------------------------------------------------------------------------------------
@@ -600,9 +602,10 @@ def previews(name, col, lit_img):
 
 
 def process(name):
-  take = TAKES.get(name, 0)
-  print(f'{name} (take {take})')
-  raw = RAW / name / f'{take}.png'
+  source = SOURCES.get(name, name)
+  take = TAKES.get(source, 0)
+  print(f'{name} (take {take}{f" of {source}" if source != name else ""})')
+  raw = RAW / source / f'{take}.png'
   a = load(raw)
   print(f'    raw {a.shape[1]}x{a.shape[0]}, seams {seam_score(a)}')
   col, h, rough, metal, ao_amount, nz = SETS[name](a)
@@ -632,8 +635,8 @@ def generic(a, overlap=96, rough=0.85, metal=0.0, ao_amount=0.5, nz=0.93, delit=
 
 if PACK:
   # A pack's own processing: scripts/assets/packs/<pack>/textures.py runs with everything above in
-  # scope and sets SETS (name -> function of the raw image, as above; `generic` for plain sets)
-  # and TAKES
+  # scope and sets SETS (name -> function of the raw image, as above; `generic` for plain sets),
+  # TAKES and SOURCES
   plugin = ROOT / f'scripts/assets/packs/{PACK}/textures.py'
   SETS = {}
   if plugin.exists():

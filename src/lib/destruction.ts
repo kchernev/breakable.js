@@ -27,9 +27,20 @@ import { type Ground, type GroundOptions, layGround } from './ground.ts';
 import { PropMesh } from './prop-mesh.ts';
 import type { BreakableMaterial } from './materials.ts';
 import { overhang, reachToward, type Touch, touches } from './support.ts';
-import { add, type Box3, boxDistance, boxesOverlap, conjugate, cross, distance, dot, length, lerp, multiply, normalize, type Q, quatFromAxisAngle, random, rotate, scale, sub, toLocal, toWorld, type V3 } from './math.ts';
+import { add, type Box3, boxDistance, boxesOverlap, conjugate, cross, distance, dot, length, lerp, multiply, normalize, type Q, quatFromAxisAngle, random, rayBox, rotate, scale, sub, toLocal, toWorld, type V3 } from './math.ts';
 
 export type PieceState = 'fixed' | 'loose' | 'rubble' | 'gone';
+
+/** The cells (m) the scenery's shapes are looked up by, seen from above (what a piece stands on). */
+const SCENERY_CELL = 8;
+
+/** A blast wakes what's dormant within this many of its radii (Destruction.addDormant). */
+const DORMANT_REACH = 1.25;
+/** The cells (m, seen from above) what's dormant is found in by what's let go under it. */
+const DORMANT_CELL = 16;
+
+/** A prop that breaks (PropModel.shards) breaks within this share of a blast's radius of it. */
+const PROP_BREAK = 0.85;
 
 /** A pose: where a body's frame is. */
 export interface Pose {
@@ -132,9 +143,12 @@ export class Piece {
   readonly body: Body;
   /** Never breaks or moves: holds up what's bonded to it (a foundation, an unbreakable neighbour). */
   readonly isStatic: boolean;
+  /** Holds up what's bonded to it as the ground does, needing nothing under it, but breaks as any piece (PieceOptions.anchor). */
+  anchor = false;
   /** Its texture's frame in the body's frame (so a map stays put on the piece as it moves), with its box and smoothing. */
   readonly texture: TextureFrame;
-  readonly tint: V3;
+  /** Its colour over its material's (PieceOptions.tint; Destruction.retint). */
+  tint: V3;
   /** Its density (its material's, unless it's a prop of a given mass). */
   readonly density: number;
   /** The model it's drawn as, if it's a prop (Destruction.addProp). */
@@ -221,10 +235,24 @@ export interface PropModel {
   /** Its mass (the solver's units: a 1 m cube of density 1 weighs 1). */
   mass: number;
   name?: string;
-  /** Where a copy's tint applies: 'alpha', as much as its colour map's alpha says (process-props.py's `paint`). Default: everywhere. */
-  tintMask?: 'alpha';
+  /**
+   * Where a copy's tint applies: 'alpha', as much as its colour map's alpha says (process-props.py's
+   * `paint`); 'paint', on its materials named paint (a modelled car's). Default: everywhere.
+   */
+  tintMask?: 'alpha' | 'paint';
   /** The tint of a copy addProp gives none (its paint's colour, with a tint mask). Default white. */
   tint?: THREE.ColorRepresentation;
+  /**
+   * The pieces it breaks into (scripts/assets/shatter-props.py: the cells of its mesh, their cut
+   * faces filled), each a prop of its own in its frame. Without them it never breaks: it's thrown,
+   * tumbles and takes marks. With them a blast's heart or enough rounds (Destruction.breakProp)
+   * swap it for them, flying apart.
+   */
+  shards?: PropModel[];
+  /** Rounds of power 1 it takes before it breaks (default: as a piece of its material would, half its size). */
+  rounds?: number;
+  /** A piece of a prop that broke: rubble at rest that the budget clears, as any piece's. */
+  debris?: boolean;
 }
 
 export interface PropOptions {
@@ -235,8 +263,47 @@ export interface PropOptions {
   rotation?: Q;
   /** Starts moving (default: at rest, until a blast or a strike wakes it). */
   loose?: boolean;
+  /** Moving loose: at this velocity (m/s), turning at `spin` (rad/s). Default still. */
+  velocity?: V3;
+  spin?: V3;
   /** Colour multiplying this copy's (where its model's tint mask lets it: PropModel.tintMask). */
   tint?: THREE.ColorRepresentation;
+}
+
+/**
+ * Something that breaks, standing as scenery until something reaches it (Destruction.addDormant, awaken): a
+ * tower down the street, a house out of town, a ship in the bay. Drawn by its stand-in (a mesh, an
+ * instance) and solid as its stand-in's fixed bodies until then; a blast or a round reaching it makes
+ * it its pieces, and goes on into them.
+ */
+export interface DormantOptions {
+  /** The box (world) it stands in: a blast reaching it, or a round entering it, wakes it. */
+  bounds: Box3;
+  /** Make its pieces, as build() makes a world's (addBox, addConvex...): called once, as it wakes. */
+  build: (d: Destruction) => void;
+  /** Its stand-in goes: an instance hidden, a mesh taken out of the scene. */
+  hide?: () => void;
+  /** The fixed bodies standing in for it: taken out of the world as it wakes. */
+  bodies?: Body[];
+  /** Woken with it (after it): what stands on it (a tower's storeys over these). */
+  with?: Dormant[];
+  /** Woken by blasts only: rounds strike its stand-in as scenery (a stretch of ground: each round would lay it). */
+  blastOnly?: boolean;
+  name?: string;
+}
+
+export class Dormant {
+  readonly options: DormantOptions;
+  /** Made into its pieces. */
+  woken = false;
+
+  constructor(options: DormantOptions) {
+    this.options = options;
+  }
+
+  get bounds(): Box3 {
+    return this.options.bounds;
+  }
 }
 
 export interface PieceOptions {
@@ -247,6 +314,12 @@ export interface PieceOptions {
   rotation?: Q;
   /** Never breaks or moves (foundations, unbreakable neighbours): holds up what's bonded to it. */
   static?: boolean;
+  /**
+   * Holds up what's bonded to it as the ground does, needing nothing under it (a platform's slabs
+   * over the hollow its steps hide), but breaks as any piece: what it breaks into stands or falls
+   * as pieces do.
+   */
+  anchor?: boolean;
   /** Colour multiplying the material's (per piece: one brick wall a little redder than the next). */
   tint?: THREE.ColorRepresentation;
   /**
@@ -263,6 +336,12 @@ export interface PieceOptions {
   smooth?: number;
   /** Starts loose (a prop standing on the structure, not part of it). */
   loose?: boolean;
+  /**
+   * Starts at rest, as rubble or a prop does: not part of what stands (nothing weighs on it, it
+   * holds nothing up), on what's under it, or joined to what it's bonded to (Destruction.bond: a
+   * car's window on its body), and wakes with that. It bonds to nothing by itself.
+   */
+  rest?: boolean;
   /**
    * Bond to the pieces it touches (default true). Or how loosely: faces up to `gap` apart (m) and
    * turned up to `angle` (rad) from facing each other bond too (a dome's pieces, tilted voussoirs);
@@ -545,6 +624,8 @@ type Events = {
   debris: DebrisEvent;
   collapse: { pieces: Piece[]; volume: number; center: V3 };
   fracture: { piece: Piece; pieces: Piece[]; at: V3 };
+  /** Something dormant made into its pieces (its stand-in's fixed bodies gone from the world). */
+  wake: { dormant: Dormant; pieces: Piece[] };
   bondBreak: { bond: Bond };
   impact: ImpactEvent;
   state: StateEvent;
@@ -566,7 +647,7 @@ const LEAN = 0.6;
 /** Seconds at rest after which a piece wedged among rubble, not quite over what holds it, stays there. */
 const SETTLE = 2.5;
 /** A prop's parts are welded by a bond of this area (m²): far stronger than anything pulls on it. */
-const WELD = 1e6;
+export const WELD = 1e6;
 /** A section or heavy piece moving into something slower than this (m/s) hasn't landed on it: it settles, slides or tips. */
 const LAND = 2;
 /** A section let go turns over the edge of what it rests on as if it had tipped this far already (rad). */
@@ -680,7 +761,7 @@ export class Destruction {
   private readonly impacts: Array<{ at: V3; impulse: number; struck: Piece }> = [];
   /** Falling pieces that landed hard enough to break, and where. */
   private readonly landings: Array<{ piece: Piece; at: V3; impulse: number }> = [];
-  private readonly listeners: { [K in keyof Events]: Set<(e: Events[K]) => void> } = { dust: new Set(), debris: new Set(), collapse: new Set(), fracture: new Set(), bondBreak: new Set(), impact: new Set(), state: new Set(), landed: new Set() };
+  private readonly listeners: { [K in keyof Events]: Set<(e: Events[K]) => void> } = { dust: new Set(), debris: new Set(), collapse: new Set(), fracture: new Set(), wake: new Set(), bondBreak: new Set(), impact: new Set(), state: new Set(), landed: new Set() };
   /** Sections and heavy pieces touching down since the last readback, each piece's whole's tally ('landed'). */
   private readonly touching = new Map<Piece, Touchdown>();
   /**
@@ -744,12 +825,20 @@ export class Destruction {
   private margin = 1.5;
   /** reinforce() is weighing what's built, to remember it. */
   private recording = false;
+  /** While recording, only these pieces' overhangs as built are taken (a dormant's, waking: the rest keep theirs). */
+  private recordFor: Set<Piece> | null = null;
+  private readonly dormants: Dormant[] = [];
+  /** What's dormant by where it stands seen from above (DORMANT_CELL m cells): what's let go finds what rested on it there. */
+  private readonly dormantCells = new Map<string, Dormant[]>();
+  /** Where fixed pieces gave way since the last update: what's dormant on them wakes. */
+  private readonly unheld = new Set<Box3>();
   /** reinforce() is at work: every bond passes on all its weight (it's strengthened for that). */
   private reinforcing = false;
   /** The weighing's: the bonds a piece stands on (tips()). */
   private readonly stands: Bond[] = [];
   /** Fixed bodies that aren't pieces (the ground, steps, a quay), as convexes: what rests on them is held up. */
   private sceneryShapes: Array<{ body: Body; convex: Convex; corners: V3[]; bounds: Box3 }> | null = null;
+  private sceneryGrid: { shapes: Array<{ body: Body; convex: Convex; corners: V3[]; bounds: Box3 }>; cells: Map<string, Array<{ body: Body; convex: Convex; corners: V3[]; bounds: Box3 }>>; big: Array<{ body: Body; convex: Convex; corners: V3[]; bounds: Box3 }> } | null = null;
   /**
    * Jammed pieces dropping clear, each to its jam: the pieces jammed together (a section, a prop's
    * parts), their own collision groups, what they pass through, and until when at most.
@@ -896,15 +985,15 @@ export class Destruction {
     const frame: Pose = { position: options.position ?? [0, 0, 0], rotation: options.rotation ?? [0, 0, 0, 1] };
     const tint = new THREE.Color(options.tint ?? model.tint ?? 0xffffff);
     const state = options.loose ? 'loose' : 'rubble';
-    const piece = this.create(look.convex, null, options.material, frame, [tint.r, tint.g, tint.b], state, false, undefined, undefined, { model, frame });
+    const [velocity, spin] = options.loose ? [options.velocity, options.spin] : [];
+    const piece = this.create(look.convex, null, options.material, frame, [tint.r, tint.g, tint.b], state, false, velocity, spin, { model, frame });
     if (!piece) return null;
     // Its other parts, welded to it: they move, rest and wake with it, and go when it goes
     const parts = [piece];
     for (const part of look.parts) {
-      const p = this.create(part.convex, null, options.material, frame, [tint.r, tint.g, tint.b], state, false, undefined, undefined, { model, frame, part: part.shape });
+      const p = this.create(part.convex, null, options.material, frame, [tint.r, tint.g, tint.b], state, false, velocity, spin, { model, frame, part: part.shape });
       if (!p) continue;
-      const weld = this.bond(piece, p, WELD);
-      if (state === 'loose') this.join(weld);
+      this.bond(piece, p, WELD);
       parts.push(p);
     }
     if (parts.length > 1) for (const p of parts) this.attached.set(p, [...(this.attached.get(p) ?? []), () => parts.forEach((q) => this.removePiece(q))]);
@@ -914,6 +1003,127 @@ export class Destruction {
       for (const p of parts) this.link(p, under.get(p)!);
     }
     return piece;
+  }
+
+  /** Something that breaks, standing as scenery until a blast or a round reaches it (DormantOptions). */
+  addDormant(options: DormantOptions): Dormant {
+    const dormant = new Dormant(options);
+    this.dormants.push(dormant);
+    const { min, max } = dormant.bounds;
+    for (let i = Math.floor(min[0] / DORMANT_CELL); i <= Math.floor(max[0] / DORMANT_CELL); i++)
+      for (let k = Math.floor(min[2] / DORMANT_CELL); k <= Math.floor(max[2] / DORMANT_CELL); k++) {
+        const key = `${i},${k}`;
+        const list = this.dormantCells.get(key);
+        if (list) list.push(dormant);
+        else this.dormantCells.set(key, [dormant]);
+      }
+    return dormant;
+  }
+
+  /**
+   * A dormant thing made into its pieces now: its stand-in goes (its fixed bodies out of the world),
+   * its pieces are built and strengthened to stand as they're built (as reinforce() does, for them
+   * alone), and what rested on its stand-in rests on them. The pieces made.
+   */
+  awaken(dormant: Dormant): Piece[] {
+    if (dormant.woken) return [];
+    dormant.woken = true;
+    const first = this.nextId;
+    for (const b of dormant.options.bodies ?? []) if (b.alive) b.remove();
+    dormant.options.hide?.();
+    // What stood on its stand-in looks again at what it stands on (its pieces, once they're made)
+    const top = dormant.bounds.max[1];
+    for (const p of this.pieces) if (p.grounded && Math.abs(p.bounds.min[1] - top) < 0.03 && boxesOverlap(p.bounds, dormant.bounds, 0.01)) p.grounded = null;
+    dormant.options.build(this);
+    // (Its stand-in has gone from the scenery, and what it's built on may be scenery its build put
+    // in the world: a patch of a hill)
+    this.refreshScenery();
+    const made = [...this.pieces].filter((p) => p.id >= first);
+    this.reinforceSome(made);
+    this.emit('wake', { dormant, pieces: made });
+    for (const other of dormant.options.with ?? []) made.push(...this.awaken(other));
+    return made;
+  }
+
+  /**
+   * Wake what's dormant along a ray from `at` (all but the blastOnly), nearest first, within `range`
+   * or as far as the first piece it meets: each woken, the ray is cast again into its pieces, and
+   * goes on to the next only if it passes through them (a gap, a doorway). What it meets, as
+   * raycast(). A projectile's flight calls it each step, so it meets what stood as scenery.
+   */
+  wakeAlong(at: V3, direction: V3, range: number): RayHit | null {
+    const dir = normalize(direction);
+    let hit = this.raycast(at, dir, range);
+    if (!this.dormants.length) return hit;
+    for (let n = 0; n < 8; n++) {
+      const asleep = this.dormantIn(null, { at, dir, range: hit?.distance ?? range })[0];
+      if (!asleep) break;
+      this.awaken(asleep);
+      hit = this.raycast(at, dir, range);
+    }
+    return hit;
+  }
+
+  /** The dormant things a box reaches, and those a ray enters within `range` (nearest first). */
+  private dormantIn(box: Box3 | null, ray?: { at: V3; dir: V3; range: number }): Dormant[] {
+    const out: Array<{ d: Dormant; t: number }> = [];
+    for (const d of this.dormants) {
+      if (d.woken) continue;
+      if (box && boxesOverlap(box, d.bounds, 0)) out.push({ d, t: 0 });
+      else if (ray && !d.options.blastOnly) {
+        const t = rayBox(ray.at, ray.dir, d.bounds);
+        if (t !== null && t <= ray.range) out.push({ d, t });
+      }
+    }
+    return out.sort((a, b) => a.t - b.t).map((o) => o.d);
+  }
+
+  /** reinforce() for pieces just made (a dormant thing's): their bonds strengthened, their overhangs as built taken. */
+  private reinforceSome(made: Piece[]): void {
+    if (!made.length) return;
+    const set = new Set(made);
+    for (const p of made) p.builtOverhang = -1;
+    // What they're joined to, all of it: loads go no further, so the rest isn't weighed again (a
+    // shrub woken among 8,000 pieces took 60 ms weighing them all seven times)
+    const joined = new Set(made.filter((p) => p.state === 'fixed'));
+    const stack = [...joined];
+    while (stack.length) {
+      const p = stack.pop()!;
+      for (const b of p.bonds) {
+        const q = b.other(p);
+        if (q.state === 'fixed' && !joined.has(q)) {
+          joined.add(q);
+          stack.push(q);
+        }
+      }
+    }
+    this.reinforcing = true;
+    for (let round = 0; round < 6; round++) {
+      this.weigh(joined);
+      let changed = 0;
+      for (const p of made)
+        for (const b of p.bonds) {
+          // (Each bond once: by its first piece, or by the made one when the other is older)
+          if (b.a !== p && set.has(b.a)) continue;
+          if (b.load * this.margin <= 1) continue;
+          b.strength *= b.load * this.margin;
+          changed++;
+        }
+      if (!changed) break;
+    }
+    this.recording = true;
+    this.recordFor = set;
+    this.weigh(joined);
+    this.recording = this.reinforcing = false;
+    this.recordFor = null;
+    for (const p of made) for (const b of p.bonds) b.builtLoad = b.force;
+    // What rested on its stand-in rests on its pieces now
+    const box = made.reduce((acc, p) => ({ min: [0, 1, 2].map((k) => Math.min(acc.min[k], p.bounds.min[k])) as V3, max: [0, 1, 2].map((k) => Math.max(acc.max[k], p.bounds.max[k])) as V3 }), { min: [Infinity, Infinity, Infinity] as V3, max: [-Infinity, -Infinity, -Infinity] as V3 });
+    for (const p of this.rubble)
+      if (!set.has(p) && boxesOverlap(p.bounds, box, 0.5)) {
+        this.unlink(p);
+        this.link(p, this.support([p]).under.get(p)!);
+      }
   }
 
   /**
@@ -927,8 +1137,13 @@ export class Destruction {
     let frame: TextureFrame = { ...textureWorld, smooth: options.smooth ?? textureWorld.smooth };
     // A frame with its box is a piece's, already placed (and jittered once)
     if (material.uvJitter && !textureWorld.box) frame = jitterFrame(frame, material.uvScale, material.uvJitter, this.rand);
-    const piece = this.create(c, pose, options.material, frame, [tint.r, tint.g, tint.b], options.loose ? 'loose' : 'fixed', options.static ?? false);
+    const piece = this.create(c, pose, options.material, frame, [tint.r, tint.g, tint.b], options.loose ? 'loose' : options.rest ? 'rubble' : 'fixed', options.static ?? false);
     if (!piece) return null;
+    piece.anchor = options.anchor ?? false;
+    if (piece.state === 'rubble') {
+      this.link(piece, this.support([piece]).under.get(piece)!);
+      return piece;
+    }
     if (typeof options.bond === 'object') {
       const tolerance = { gap: options.bond.gap ?? this.bondTolerance.gap, angle: options.bond.angle ?? this.bondTolerance.angle };
       this.tolerances.set(piece, tolerance);
@@ -947,7 +1162,8 @@ export class Destruction {
   /**
    * Bond two standing pieces that don't touch face to face (a bracket bolted on, a stair's foot on
    * its landing): `area` m² of bond (what it carries scales with it), at `at` (default: midway
-   * between the nearest points of their bounds), where the joint goes if they fall together.
+   * between the nearest points of their bounds), where the joint goes if they fall together. Two
+   * loose pieces are held by that joint at once, as they are now.
    */
   bond(a: Piece, b: Piece, area = 0.02, at?: V3): Bond {
     const ca = volumeCentroid(a.convex).centroid;
@@ -957,6 +1173,7 @@ export class Destruction {
     const bond = new Bond(a, b, area, center, normalize(sub(cb, ca)));
     a.bonds.add(bond);
     b.bonds.add(bond);
+    if (a.state === 'loose' && b.state === 'loose') this.join(bond);
     return bond;
   }
 
@@ -1165,6 +1382,10 @@ export class Destruction {
    */
   explode(o: ExplosionOptions): ExplosionResult {
     const R = o.radius;
+    // What's dormant within its radius wakes first, to be broken as the rest is (not as far as its
+    // pressure carries to glass: a tower's windows are drawn, its walls are what breaks)
+    const reach = R * DORMANT_REACH;
+    for (const d of this.dormantIn({ min: [o.at[0] - reach, o.at[1] - reach, o.at[2] - reach], max: [o.at[0] + reach, o.at[1] + reach, o.at[2] + reach] })) this.awaken(d);
     const result: ExplosionResult = { broken: 0, made: [], loose: [], dust: 0, collapsed: [], done: false };
     // What's moving already is pushed on the GPU, and sections it reaches part of go with it whole
     const speed = o.speed ?? 12;
@@ -1498,7 +1719,8 @@ export class Destruction {
    */
   shoot(at: V3, direction: V3, power = 1, range = 500): ShotHit | null {
     const dir = normalize(direction);
-    let hit = this.raycast(at, dir, range);
+    // Something dormant in the way first: it wakes, and the round goes on into its pieces
+    let hit = this.wakeAlong(at, dir, range);
     // What's moving, where it is now (its readback carried on): its bounding sphere, then its shape
     for (const p of this.loose) {
       const now = this.now(p);
@@ -1510,6 +1732,20 @@ export class Destruction {
       if (h && h.t < (hit?.distance ?? Infinity)) hit = { piece: p, distance: h.t, normal: h.n, point: add(at, scale(dir, h.t)) };
     }
     if (!hit) return null;
+    return this.strikeAt(hit, dir, power);
+  }
+
+  /**
+   * A round of `power` striking `piece` at `at`, on its way along `direction`, as shoot's does once
+   * it has found what it strikes (whatever else is in the way): glass a hull round it hides (a car's
+   * window in its door's), struck all the same.
+   */
+  shootPiece(piece: Piece, at: V3, direction: V3, power = 1): ShotHit {
+    const dir = normalize(direction);
+    return this.strikeAt({ piece, point: at, normal: scale(dir, -1), distance: 0 }, dir, power);
+  }
+
+  private strikeAt(hit: RayHit, dir: V3, power: number): ShotHit {
     const { piece } = hit;
     const shot: ShotHit = { ...hit, material: piece.materialName, broke: false, damage: 0 };
     if (piece.state !== 'fixed') {
@@ -1519,7 +1755,19 @@ export class Destruction {
       const v = bulletPush(piece.mass, power) - along;
       if (v > 0.08) this.push(piece, scale(dir, v));
     }
-    if (piece.isStatic || piece.prop) return shot;
+    if (piece.isStatic) return shot;
+    if (piece.prop) {
+      // A prop that breaks takes its rounds, then flies apart from where the last struck
+      if (!piece.prop.shards?.length) return shot;
+      const limit = this.propRounds(piece);
+      const taken = (this.damage.get(piece) ?? 0) + power;
+      this.damage.set(piece, taken);
+      shot.damage = Math.min(1, taken / limit);
+      if (taken < limit) return shot;
+      this.damage.delete(piece);
+      shot.broke = this.breakProp(piece, hit.point, { along: scale(dir, 1.5 * Math.cbrt(Math.max(1, power))) }).length > 0;
+      return shot;
+    }
     const limit = bulletsToBreak(piece.material, piece.size);
     const taken = (this.damage.get(piece) ?? 0) + power;
     this.damage.set(piece, taken);
@@ -1649,6 +1897,7 @@ export class Destruction {
       const p = this.create(cell.convex, null, piece.materialName, textureWorld, piece.tint, 'fixed', false);
       if (!p) continue;
       p.ground = piece.ground;
+      p.body.setCollisionGroups(piece.body.group, piece.body.collidesWith);
       // Cells bond as loosely as their piece did (to the neighbours it bonded to)
       const tolerance = this.tolerances.get(piece);
       if (tolerance) this.tolerances.set(p, tolerance);
@@ -1707,6 +1956,70 @@ export class Destruction {
     this.reweigh();
   }
 
+  /** Rounds of power 1 a prop takes before it breaks (PropModel.rounds). */
+  private propRounds(piece: Piece): number {
+    return piece.prop?.rounds ?? Math.max(1, Math.min(60, bulletsToBreak(piece.material, piece.size * 0.5)));
+  }
+
+  /** Where a prop's model frame is now (its first part's body sits at its hull's centre, on its axes). */
+  propFrame(piece: Piece): Pose {
+    const look = piece.prop && this.props.get(piece.prop);
+    const pose = piece.state === 'loose' ? this.now(piece) : piece.pose;
+    if (!look) return pose;
+    const rotation = multiply(pose.rotation, conjugate(look.shape.rotation as Q));
+    return { position: sub(pose.position, rotate(rotation, look.shape.center as V3)), rotation };
+  }
+
+  /**
+   * A prop broken: swapped for the pieces it breaks into (PropModel.shards), where it was, each moving
+   * as that point of it moved, and thrown: by `blast` as its cells would be, or pushed `along` (a
+   * round's way) and apart from `at`. Its pieces are props too (they don't break again), and rubble
+   * the budget clears once at rest. Returns them (none: it doesn't break).
+   */
+  breakProp(piece: Piece, at: V3, push: { blast?: ExplosionOptions; along?: V3 } = {}): Piece[] {
+    const model = piece.prop;
+    if (!model?.shards?.length || piece.state === 'gone') return [];
+    const frame = this.propFrame(piece);
+    const v = (piece.state === 'loose' ? piece.body.velocity : [0, 0, 0]) as V3;
+    const w = (piece.state === 'loose' ? piece.body.angularVelocity : [0, 0, 0]) as V3;
+    const tint = piece.tint;
+    const material = piece.materialName;
+    // It goes (its welded parts with it)
+    this.removePiece(piece);
+    const made: Piece[] = [];
+    for (const shard of model.shards) {
+      shard.debris = true;
+      const p = this.addProp({ model: shard, material, position: frame.position, rotation: frame.rotation, tint: new THREE.Color(tint[0], tint[1], tint[2]), loose: true, velocity: v, spin: w });
+      if (!p) continue;
+      const centre = p.pose.position;
+      // Moving as that point of the prop moved, and thrown
+      let velocity = add(v, cross(w, sub(centre, frame.position)));
+      if (push.blast) {
+        const o = push.blast;
+        velocity = add(velocity, this.kick(centre, p.mass, o.at, o.radius * 1.3, o.speed ?? 12) ?? scale(normalize(sub(centre, o.at)), 1.5));
+      } else {
+        const out = sub(centre, at);
+        velocity = add(velocity, add(push.along ?? [0, 0, 0], scale(normalize(add(out, [0, 0.05, 0])), 1.2 + this.rand() * 1.3)));
+      }
+      p.body.set({ velocity: this.capped(velocity), angularVelocity: add(w, this.randomSpin(push.blast ? (push.blast.spin ?? 10) * 0.5 : 4)) });
+      made.push(p);
+    }
+    this.emit('fracture', { piece, pieces: made, at });
+    return made;
+  }
+
+  /** Tint a piece anew (a car burnt black): a prop's copy, or a piece's faces (the cells it breaks into keep it). */
+  retint(piece: Piece, tint: THREE.ColorRepresentation): void {
+    const c = new THREE.Color(tint);
+    piece.tint = [c.r, c.g, c.b];
+    if (piece.prop) this.props.get(piece.prop)?.mesh?.retint(piece.body.index, piece.tint);
+    else if (piece.draw) {
+      const mesh = this.meshes.get(piece.materialName)!;
+      mesh.release(piece.draw);
+      piece.draw = mesh.insert(piece.body.index, drawFaces(piece.local.faces, piece.texture, piece.material.uvScale), piece.tint, piece.texture, piece.state);
+    }
+  }
+
   /**
    * Push a piece that's free to move: loose, rubble or a prop at rest (which wakes, with what it
    * rests joined to). `velocity` (m/s) is added to its own, shared with a section it's joined to as
@@ -1742,6 +2055,9 @@ export class Destruction {
   private become(piece: Piece, to: PieceState): void {
     const from = piece.state;
     piece.state = to;
+    // What's dormant standing on it wakes, once this update is done with the structure (a tower's
+    // storeys over a section that's coming down)
+    if (from === 'fixed' && this.dormants.length) this.unheld.add(piece.bounds);
     if (to === 'rubble') this.rubble.add(piece);
     else this.rubble.delete(piece);
     if (to === 'gone') this.dissolving.delete(piece);
@@ -1937,6 +2253,7 @@ export class Destruction {
 
   /** Hold two loose pieces together as they are now, by a joint that breaks as their bond's strength says. */
   private join(bond: Bond): void {
+    if (bond.joint) return;
     const { a, b: c } = bond;
     // Where the bond's face was as they stood, and how they were turned (kept from then on)
     bond.anchors ??= [toLocal(a.pose.position, a.pose.rotation, bond.center), toLocal(c.pose.position, c.pose.rotation, bond.center)];
@@ -2006,7 +2323,10 @@ export class Destruction {
         const g = this.groundAt(x, z);
         if (g !== null && Math.abs(-f.d - g) < 0.02) return true;
         // Or on a breakable ground's bed, reaching its area (a curb standing on the bed beside it)
-        return this.grounds.some((ground) => Math.abs(-f.d - ground.bed) < 0.02 && f.pts.some((p) => ground.contains(p[0], p[2], TOUCH)));
+        if (this.grounds.some((ground) => Math.abs(-f.d - ground.bed) < 0.02 && f.pts.some((p) => ground.contains(p[0], p[2], TOUCH)))) return true;
+        // Or on the scenery: the top of a fixed body in the world that isn't a piece (a quay's wall
+        // under its coping, a tower's storeys still standing as scenery under these)
+        return this.sceneryUnder(x, z).some((s) => s.body.alive && Math.abs(-f.d - s.bounds.max[1]) < 0.02 && x >= s.bounds.min[0] && x <= s.bounds.max[0] && z >= s.bounds.min[2] && z <= s.bounds.max[2]);
       });
     }
     return piece.grounded;
@@ -2021,7 +2341,7 @@ export class Destruction {
     const queue: Piece[] = [];
     for (const p of this.pieces) {
       if (p.state !== 'fixed') continue;
-      if (p.isStatic || this.onGround(p)) {
+      if (p.isStatic || p.anchor || this.onGround(p)) {
         supported.add(p);
         queue.push(p);
       }
@@ -2069,15 +2389,17 @@ export class Destruction {
    * theirs. Each bond's `load` is set to the share of what it can carry that it carries; the bonds
    * asked to carry more than they can come back. A bond reinforce() strengthened has that strength
    * for its load as built: asked to carry more (supports lost elsewhere), it falls back toward its
-   * material's own, all of the way at reinforce()'s margin times its load as built.
+   * material's own, all of the way at reinforce()'s margin times its load as built. `within`: those
+   * pieces alone (whole groups of joined pieces: the rest keep what they were last weighed as).
    */
-  weigh(): Bond[] {
+  weigh(within?: ReadonlySet<Piece>): Bond[] {
     const g = Math.hypot(...this.world.gravity);
-    // Breadth first from what holds everything up: the ground and static pieces
+    // Breadth first from what holds everything up: the ground, static pieces and anchors (of
+    // `within` alone, if given: whole groups of joined pieces, as no load leaves one)
     const order: Piece[] = [];
-    for (const p of this.pieces) {
+    for (const p of within ?? this.pieces) {
       p.depth = -1;
-      if (p.state === 'fixed' && (p.isStatic || this.onGround(p))) {
+      if (p.state === 'fixed' && (p.isStatic || p.anchor || this.onGround(p))) {
         p.depth = 0;
         order.push(p);
       }
@@ -2204,7 +2526,7 @@ export class Destruction {
       }
       out = Math.max(0, overhang(center, corners).distance);
     }
-    if (this.recording) p.builtOverhang = out;
+    if (this.recording && (!this.recordFor || this.recordFor.has(p))) p.builtOverhang = out;
     return out > allowed && !this.recording;
   }
 
@@ -2405,6 +2727,24 @@ export class Destruction {
     return { pieces: this.pieces.size, loose: this.loose.size - still, hanging: hanging.size, standing: this.pieces.size - this.loose.size, joints: this.jointBonds.size, vertices };
   }
 
+  /**
+   * Make the mesh of each material that has none yet, with a piece in it out of the way under the
+   * world, so a frame drawn now makes its shaders: a material that only scenery waking into pieces
+   * uses would make them at its first wake, a frame of a quarter to half a second. Returns what
+   * takes those pieces out again, once that frame is drawn.
+   */
+  warm(): () => void {
+    const made: Piece[] = [];
+    for (const name of Object.keys(this.materials)) {
+      if (this.meshes.has(name)) continue;
+      const p = this.addBox({ material: name, size: [0.05, 0.05, 0.05], position: [made.length, -1000, 0], static: true, bond: false });
+      if (p) made.push(p);
+    }
+    return () => {
+      for (const p of made) this.removePiece(p);
+    };
+  }
+
   /** Every piece in the world (a copy). */
   all(): Piece[] {
     return [...this.pieces];
@@ -2415,6 +2755,16 @@ export class Destruction {
   /** Keep the loose pieces' poses fresh, freeze those at rest, shrink old small rubble away (and rubble past maxPieces). Call each frame. */
   update(dt: number): void {
     this.time += dt;
+    if (this.unheld.size) {
+      const boxes = [...this.unheld];
+      this.unheld.clear();
+      const near = new Set<Dormant>();
+      for (const b of boxes)
+        for (let i = Math.floor(b.min[0] / DORMANT_CELL); i <= Math.floor(b.max[0] / DORMANT_CELL); i++)
+          for (let k = Math.floor(b.min[2] / DORMANT_CELL); k <= Math.floor(b.max[2] / DORMANT_CELL); k++) for (const d of this.dormantCells.get(`${i},${k}`) ?? []) if (!d.woken) near.add(d);
+      for (const d of near)
+        if (!d.woken && boxes.some((b) => Math.abs(b.max[1] - d.bounds.min[1]) < 0.05 && b.min[0] < d.bounds.max[0] && b.max[0] > d.bounds.min[0] && b.min[2] < d.bounds.max[2] && b.max[2] > d.bounds.min[2])) this.awaken(d);
+    }
     // Blasts under way go on breaking, in what's left of this frame's budget (those fired since the
     // last update have had theirs); what's fired from now on draws on the next frame's
     this.work();
@@ -2483,7 +2833,7 @@ export class Destruction {
       for (const q of group) seen.add(q);
       const members = new Set(group);
       const free = (q: Piece) => [...(q.carried ?? [])].every((r) => members.has(r) || r.pose.position[1] <= q.pose.position[1]);
-      if (!group.every((q) => !q.prop && !this.hinged.has(q) && !this.dissolving.has(q) && q.still >= BUDGET.settled && free(q))) continue;
+      if (!group.every((q) => (!q.prop || q.prop.debris) && !this.hinged.has(q) && !this.dissolving.has(q) && q.still >= BUDGET.settled && free(q))) continue;
       const size = Math.cbrt(group.reduce((v, q) => v + q.volume, 0));
       sphere.center.set(...this.centerOf(group).center);
       sphere.radius = size;
@@ -2565,6 +2915,8 @@ export class Destruction {
       }
       const p = this.create(cell.convex, null, piece.materialName, textureWorld, piece.tint, 'loose', false, vel, w as V3);
       if (!p) continue;
+      // Its cells collide as it did (a car's window's shards don't with the car they came out of)
+      p.body.setCollisionGroups(piece.body.group, piece.body.collidesWith);
       this.watch(p);
       made.push(p);
     }
@@ -3070,22 +3422,109 @@ export class Destruction {
    * on them is held up. Not those nothing collides with (a hinge's holder); those removed since are
    * passed over (support()). Looked at again by reinforce(), once all is built.
    */
+  /** The scenery's shapes whose box seen from above may hold (x, z) (a grid of them, made with sceneryShapes). */
+  private sceneryUnder(x: number, z: number): Array<{ body: Body; convex: Convex; corners: V3[]; bounds: Box3 }> {
+    const shapes = (this.sceneryShapes ??= this.scenery());
+    if (this.sceneryGrid?.shapes !== shapes) {
+      const cells = new Map<string, typeof shapes>();
+      const big: typeof shapes = [];
+      for (const sh of shapes) {
+        const [i0, k0] = [Math.floor(sh.bounds.min[0] / SCENERY_CELL), Math.floor(sh.bounds.min[2] / SCENERY_CELL)];
+        const [i1, k1] = [Math.floor(sh.bounds.max[0] / SCENERY_CELL), Math.floor(sh.bounds.max[2] / SCENERY_CELL)];
+        if ((i1 - i0 + 1) * (k1 - k0 + 1) > 256) {
+          big.push(sh);
+          continue;
+        }
+        for (let i = i0; i <= i1; i++)
+          for (let k = k0; k <= k1; k++) {
+            const key = `${i},${k}`;
+            const list = cells.get(key);
+            if (list) list.push(sh);
+            else cells.set(key, [sh]);
+          }
+      }
+      this.sceneryGrid = { shapes, cells, big };
+    }
+    const g = this.sceneryGrid;
+    const here = g.cells.get(`${Math.floor(x / SCENERY_CELL)},${Math.floor(z / SCENERY_CELL)}`);
+    return here ? [...here, ...g.big] : g.big;
+  }
+
   private scenery(): Array<{ body: Body; convex: Convex; corners: V3[]; bounds: Box3 }> {
     const out: Array<{ body: Body; convex: Convex; corners: V3[]; bounds: Box3 }> = [];
     for (const body of this.world.bodies) {
-      if (!body.fixed || this.byBody.has(body) || !body.group || !body.collidesWith) continue;
-      const { position, rotation } = body;
-      let convex: Convex | null = null;
-      if (body.shape === 'box') convex = boxConvex(body.size, position, rotation);
-      else if (body.hull) {
-        const v = body.hull.vertices;
-        const points: V3[] = [];
-        for (let i = 0; i + 2 < v.length; i += 3) points.push(add(rotate(rotation, [v[i], v[i + 1], v[i + 2]]), position));
-        convex = hullConvex(points);
-      }
-      if (convex) out.push({ body, convex, corners: vertices(convex), bounds: bounds(convex) });
+      const shape = this.sceneryShape(body);
+      if (shape) out.push(shape);
     }
     return out;
+  }
+
+  /** A body's shape as scenery: a fixed body in the world that isn't a piece's (else null). */
+  private sceneryShape(body: Body): { body: Body; convex: Convex; corners: V3[]; bounds: Box3 } | null {
+    if (!body.fixed || this.byBody.has(body) || !body.group || !body.collidesWith) return null;
+    const { position, rotation } = body;
+    let convex: Convex | null = null;
+    if (body.shape === 'box') convex = boxConvex(body.size, position, rotation);
+    else if (body.hull) {
+      const v = body.hull.vertices;
+      const points: V3[] = [];
+      for (let i = 0; i + 2 < v.length; i += 3) points.push(add(rotate(rotation, [v[i], v[i + 1], v[i + 2]]), position));
+      convex = hullConvex(points);
+    }
+    return convex ? { body, convex, corners: vertices(convex), bounds: bounds(convex) } : null;
+  }
+
+  /**
+   * The scenery's shapes brought up to date after something dormant wakes, rather than made again
+   * (8,000 bodies took 7-9 ms): those of bodies gone from the world dropped (its stand-in), those
+   * of fixed bodies put in it since taken in (what its build put there: a hill under it), in the
+   * grid sceneryUnder looks them up in too.
+   */
+  private refreshScenery(): void {
+    const old = this.sceneryShapes;
+    if (!old) return;
+    const known = new Set(old.map((sh) => sh.body));
+    const gone = old.filter((sh) => !sh.body.alive);
+    const added: typeof old = [];
+    for (const body of this.world.bodies) {
+      if (known.has(body)) continue;
+      const shape = this.sceneryShape(body);
+      if (shape) added.push(shape);
+    }
+    if (!gone.length && !added.length) return;
+    const shapes = [...old.filter((sh) => sh.body.alive), ...added];
+    this.sceneryShapes = shapes;
+    const g = this.sceneryGrid;
+    if (g?.shapes !== old) return;
+    const cellsOf = (sh: (typeof old)[number]): string[] | null => {
+      const [i0, k0] = [Math.floor(sh.bounds.min[0] / SCENERY_CELL), Math.floor(sh.bounds.min[2] / SCENERY_CELL)];
+      const [i1, k1] = [Math.floor(sh.bounds.max[0] / SCENERY_CELL), Math.floor(sh.bounds.max[2] / SCENERY_CELL)];
+      if ((i1 - i0 + 1) * (k1 - k0 + 1) > 256) return null;
+      const out: string[] = [];
+      for (let i = i0; i <= i1; i++) for (let k = k0; k <= k1; k++) out.push(`${i},${k}`);
+      return out;
+    };
+    for (const sh of gone) {
+      const keys = cellsOf(sh);
+      if (!keys) g.big.splice(g.big.indexOf(sh), 1);
+      else
+        for (const key of keys) {
+          const list = g.cells.get(key);
+          const at = list?.indexOf(sh) ?? -1;
+          if (list && at >= 0) list.splice(at, 1);
+        }
+    }
+    for (const sh of added) {
+      const keys = cellsOf(sh);
+      if (!keys) g.big.push(sh);
+      else
+        for (const key of keys) {
+          const list = g.cells.get(key);
+          if (list) list.push(sh);
+          else g.cells.set(key, [sh]);
+        }
+    }
+    g.shapes = shapes;
   }
 
   /**
@@ -3094,6 +3533,11 @@ export class Destruction {
    */
   private throwRubble(piece: Piece, o: ExplosionOptions, result: ExplosionResult): void {
     const R = o.radius;
+    // A prop that breaks, in the blast's heart: its pieces thrown as its cells would be
+    if (piece.prop?.shards?.length && distance(piece.pose.position, o.at) < R * PROP_BREAK + piece.radius * 0.5) {
+      result.loose.push(...this.breakProp(piece, o.at, { blast: o }));
+      return;
+    }
     const group = this.groupOf(piece, 'rubble');
     const kicks = new Map<Piece, V3>();
     for (const p of group) {

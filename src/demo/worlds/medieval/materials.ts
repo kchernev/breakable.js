@@ -4,12 +4,13 @@
 // the world's pack (public/packs/medieval: Poly Haven sets and ones made for it) and two of the
 // base pack's.
 
-import { abs, color, float, length, materialColor, min, mix, select, smoothstep, step, vec2, vec3 } from 'three/tsl';
+import { abs, color, float, length, materialColor, min, mix, mx_noise_float, normalWorld, select, smoothstep, step, vec2, vec3 } from 'three/tsl';
 import * as THREE from 'three/webgpu';
 import { type BreakableMaterial, groundPresets, material, pieceFrame, presets } from '../../../lib/index.ts';
 import { inside, textured } from '../../textures.ts';
+import { facadeMaterial } from '../../towers.ts';
 import { WELL } from './market.ts';
-import { COBBLE_MAP, cobbleSurface, earthSurface, SETTS_BROKEN, SQUARE } from './scenery.ts';
+import { COBBLE_MAP, cobbleSurface, earthSurface, houseLook, SETTS_BROKEN, SQUARE } from './scenery.ts';
 
 const base = 'packs/medieval/textures/';
 
@@ -98,6 +99,19 @@ function setts(): THREE.MeshStandardNodeMaterial {
   return m;
 }
 
+/**
+ * A woken tree's crown (its tint its green): shaded darker underneath, as the scenery's crowns are
+ * (their vertex colours), and mottled in clumps, so the one hull reads as leaves and not a green stone.
+ */
+function foliage(): THREE.MeshStandardNodeMaterial {
+  const m = new THREE.MeshStandardNodeMaterial({ roughness: 0.85 });
+  const { position: at } = pieceFrame();
+  const shade = smoothstep(-0.8, 0.8, normalWorld.y).mul(0.58).add(0.42);
+  const clumps = mx_noise_float(at.mul(0.9)).mul(0.22).add(mx_noise_float(at.mul(3.1)).mul(0.1)).add(1);
+  m.colorNode = vec3(shade.mul(clumps));
+  return m;
+}
+
 export function townMaterials(): Record<string, BreakableMaterial> {
   const broken = inside('medieval_limestone_broken', 1.25, { base });
   const slab = onSlab();
@@ -178,6 +192,65 @@ export function townMaterials(): Record<string, BreakableMaterial> {
       // Panels each their own patch: timbers part them, and one map per wall repeated its marks in a grid
       uvJitter: 1,
     }),
+    // The scenery houses' walls, woken (wake.ts): panels a bay wide and a storey high, the facade
+    // drawn on them as the scenery's was (each from where it stood). Plaster on its frame, as the
+    // breakable houses' panels, a little stronger: a panel stands for its frame and its infill
+    house: facadeMaterial(
+      houseLook,
+      {
+        density: 0.9,
+        support: 60,
+        compression: 40,
+        strength: 1500,
+        impact: 12,
+        fragmentSize: 0.35,
+        minSize: 0.15,
+        dustSize: 0.07,
+        minBodySize: 0.1,
+        maxPieces: 10,
+        rubbleLife: 8,
+        inside: 0xc8b090,
+        insideTexture: inside('medieval_daub_broken', 1.25, { base }),
+      },
+      material,
+    ),
+    // Their roofs, woken: each half solid from the eaves to the ridge (no rafters under it), so
+    // light; tiles on its faces, a dark void and broken tile inside
+    roofing: material({
+      density: 0.25,
+      friction: 0.55,
+      support: 60,
+      compression: 40,
+      strength: 2e3,
+      impact: 6,
+      fragmentSize: 0.45,
+      minSize: 0.2,
+      dustSize: 0.08,
+      minBodySize: 0.12,
+      maxPieces: 8,
+      rubbleLife: 10,
+      surface: sharp(textured('roof_09', { base })),
+      inside: 0x6a4a3a,
+      insideTexture: inside('gen_brick_broken', 2),
+      uvScale: 0.25,
+    }),
+    // A tree's crown, woken: light and soft, it bursts into leafy bits
+    leaves: material({
+      density: 0.08,
+      support: 40,
+      compression: 40,
+      strength: 900,
+      impact: 3,
+      fragmentSize: 0.8,
+      minSize: 0.4,
+      dustSize: 0.5,
+      minBodySize: 0.35,
+      maxPieces: 6,
+      rubbleLife: 6,
+      surface: foliage(),
+      inside: 0x3a5228,
+      insideMap: 0,
+    }),
     // Pegged oak: jetties cantilever on it, and a falling frame folds before it parts
     oak: presets.wood({
       density: 0.75,
@@ -236,13 +309,14 @@ export function townMaterials(): Record<string, BreakableMaterial> {
       uvScale: 0.25,
     }),
     glass: presets.glass({ reach: 2, surface: leaded(), uvScale: 1 }),
-    // The bell: a solid hull of about 0.8 t that never breaks
+    // The bell: a solid hull of about 0.8 t. Rounds only ring it; a blast at it cracks it in a few
     bronze: presets.metal({
       density: 1.6,
       impact: 1e5,
       strength: 1e6,
       support: 1e5,
-      minSize: 3,
+      minSize: 0.3,
+      maxPieces: 4,
       dustSize: 0.01,
       plastic: undefined,
       surface: new THREE.MeshStandardNodeMaterial({ color: 0x9a7440, metalness: 1, roughness: 0.35 }),

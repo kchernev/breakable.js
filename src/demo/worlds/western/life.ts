@@ -3,14 +3,16 @@
 // the street), doves on the roofs and a hawk on the windmill that take off at a blast or the gun
 // and come back, smoke from the forge, the water tower's tank spurting where it's shot (water.ts),
 // and the chapel bell rung in alarm after a blast or a long burst, until it falls. Shot, the bell
-// rings, a sign swings on what's left of it and a tumbleweed hops. It also sees that the water
+// rings, a sign swings on what's left of it and a tumbleweed hops; a dove or the hawk in a round's
+// way (or near a blast) is shot down (../../birds.ts). It also sees that the water
 // tower, the fronts and the two-storey buildings' walls come down once what holds them up is shot
 // out.
 
 import * as THREE from 'three/webgpu';
-import type { Destruction, ExplosionResult, Hinge, ImpactEvent, LandedEvent, Piece, PropModel, V3, Voice } from '../../../lib/index.ts';
-import { add, cross, normalize, random, rotate, scale, signedDistance, sub, toLocal } from '../../../lib/index.ts';
-import type { BulletHit, Burst } from '../../gun.ts';
+import type { Destruction, Dormant, ExplosionResult, Hinge, ImpactEvent, LandedEvent, Piece, PropModel, V3, Voice } from '../../../lib/index.ts';
+import { add, cross, frustum, normalize, random, rotate, scale, signedDistance, sub, toLocal } from '../../../lib/index.ts';
+import { blown, Fall as Shot, first, reach as birdReach, struck } from '../../birds.ts';
+import type { BulletHit, Burst, Round } from '../../gun.ts';
 import type { WorldRuntime } from '../types.ts';
 import { CHAIN, type Hanger, type WallWatch } from './fronts.ts';
 import { ATLAS } from './signs.ts';
@@ -105,12 +107,14 @@ interface Dove {
   wings: [THREE.Mesh, THREE.Mesh];
   perch: number;
   seat: V3;
-  mode: 'perched' | 'away' | 'circle' | 'back' | 'gone';
+  mode: 'perched' | 'away' | 'circle' | 'back' | 'gone' | 'shot';
   at: THREE.Vector3;
   v: THREE.Vector3;
   centre: THREE.Vector3;
   until: number;
   phase: number;
+  /** Shot down: falling, then lying where it landed. */
+  fall: Shot | null;
 }
 
 /**
@@ -124,7 +128,7 @@ interface Hawk {
   sitting: THREE.Group;
   flying: THREE.Group;
   wings: [THREE.Object3D, THREE.Object3D];
-  mode: 'perched' | 'up' | 'circle' | 'down' | 'in';
+  mode: 'perched' | 'up' | 'circle' | 'down' | 'in' | 'shot';
   roost: number;
   at: THREE.Vector3;
   v: THREE.Vector3;
@@ -132,6 +136,8 @@ interface Hawk {
   goal: THREE.Vector3;
   until: number;
   phase: number;
+  /** Shot down: falling, then lying where it landed. */
+  fall: Shot | null;
 }
 
 /** A wall being watched: watching what carries it, then (once its hits are in) let go, looked over as it lands, done. */
@@ -162,6 +168,11 @@ const NEAR: V3 = [0.6, 1, 0.8];
 const UPRIGHT = Math.cos(Math.PI / 6);
 const ONE = new THREE.Vector3(1, 1, 1);
 
+/** How near a round passes a dove, the hawk, to strike it (m); the way their models face. */
+const DOVE = birdReach(0.54);
+const HAWK = birdReach(1.3);
+const FORWARD = new THREE.Vector3(0, 0, 1);
+
 /** How far off the gun startles the doves after so many rounds: those close by at once, the street's in a couple of seconds (a blast's 40 m). */
 const reach = (rounds: number) => Math.min(40, 8 + rounds * 1.2);
 
@@ -182,6 +193,9 @@ export class Life {
   private spin = 0;
   private spinRate = 0;
   private loop: Voice | null = null;
+  /** The wheel turning as drawn until a round or a blast reaches it; then it's pieces, stopped. */
+  private wheelSleep: Dormant | null = null;
+  private jammed = false;
   // Signs, birds, weeds, hawk, bell, forge, the tank's water
   private readonly signs: Sign[] = [];
   private readonly doves: Dove[] = [];
@@ -231,6 +245,9 @@ export class Life {
       this.wheel.position.copy(this.wheelOffset).applyQuaternion(this.wheelPose.q).add(this.wheelPose.p);
       this.wheel.quaternion.copy(this.wheelPose.q);
       scene.add(this.wheel);
+      // Dormant while the gearbox stands: what reaches it jams it, and it's its pieces where it stopped
+      const [hx, hy, hz] = town.hub;
+      this.wheelSleep = d.addDormant({ name: 'windmill wheel', bounds: { min: [hx - 0.2, hy - 1.65, hz - 1.65], max: [hx + 0.2, hy + 1.65, hz + 1.65] }, build: (dd) => this.wheelPieces(dd) });
     }
     // The hanging signs' chains, from the arm down to each end of the board (in the board's frame:
     // its length along z, its top at half its height)
@@ -261,16 +278,18 @@ export class Life {
     for (let i = 0; i < 12; i++) {
       const perch = i < 7 ? 2 : i < 11 ? 1 : 0;
       const dove = makeDove();
+      dove.mesh.name = 'western:dove';
       const seat = this.seat(perch, i);
       dove.mesh.position.set(...seat);
       dove.mesh.rotation.y = between(0, Math.PI * 2);
       scene.add(dove.mesh);
-      this.doves.push({ ...dove, perch, seat, mode: 'perched', at: dove.mesh.position.clone(), v: new THREE.Vector3(), centre: new THREE.Vector3(), until: 0, phase: rand() * 10 });
+      this.doves.push({ ...dove, perch, seat, mode: 'perched', at: dove.mesh.position.clone(), v: new THREE.Vector3(), centre: new THREE.Vector3(), until: 0, phase: rand() * 10, fall: null });
     }
     // The hawk on the windmill, its flying figure drawn too (out of sight under the ground) so
     // both are made before play
     const hawk = makeHawk();
-    this.hawk = { ...hawk, mode: 'perched', roost: 0, at: new THREE.Vector3(), v: new THREE.Vector3(), goal: new THREE.Vector3(), until: 0, phase: 0 };
+    hawk.mesh.name = 'western:hawk';
+    this.hawk = { ...hawk, mode: 'perched', roost: 0, at: new THREE.Vector3(), v: new THREE.Vector3(), goal: new THREE.Vector3(), until: 0, phase: 0, fall: null };
     this.perch(this.hawk);
     hawk.flying.visible = true;
     hawk.flying.position.y = -30;
@@ -514,7 +533,10 @@ export class Life {
   private updateWindmill(dt: number): void {
     const g = this.town.gearbox;
     if (!this.wheel || !this.wheelPose || !g) return;
-    const standing = g.state === 'fixed';
+    const standing = g.state === 'fixed' && !this.jammed;
+    // (Once the gearbox goes the wheel rides it down as drawn: nothing's to wake there)
+    if (g.state !== 'fixed' && this.wheelSleep) this.wheelSleep.woken = true;
+    if (this.jammed) this.wheel.visible = false;
     if (g.state === 'gone') {
       this.wheel.visible = false;
     } else {
@@ -534,6 +556,38 @@ export class Life {
     } else {
       this.loop.stop(0.2);
       this.loop = null;
+    }
+  }
+
+  /**
+   * The wheel stopped where it is (a round or a blast reached it): its hub bonded to the gearbox, its
+   * eighteen blades to the hub, as pieces; the drawn wheel goes (its rings and arms with it).
+   */
+  private wheelPieces(d: Destruction): void {
+    const w = this.wheel;
+    const g = this.town.gearbox;
+    if (!w || !g) return;
+    this.jammed = true;
+    w.visible = false;
+    w.updateMatrixWorld(true);
+    const at = (x: number, y: number, z: number): V3 => new THREE.Vector3(x, y, z).applyMatrix4(w.matrixWorld).toArray() as V3;
+    const hub = d.addConvex({ material: 'iron', points: frustum(0.12, 0.12, 0.2, 10).map(([x, y, z]) => at(y - 0.1, x, z)), tint: 0x4a4440 });
+    if (hub) d.bond(hub, g, 0.01);
+    const [r0, r1, w0, w1] = [0.45, 1.6, 0.1, 0.3];
+    for (let i = 0; i < 18; i++) {
+      const a = (i / 18) * Math.PI * 2;
+      const [c, s] = [Math.cos(a), Math.sin(a)];
+      // A blade's corners turned a about x, a little thickness either side
+      const points: V3[] = [];
+      for (const [x, y, z] of [
+        [0.04, r0, -w0 / 2],
+        [-0.04, r0, w0 / 2],
+        [0.08, r1, -w1 / 2],
+        [-0.08, r1, w1 / 2],
+      ])
+        for (const dx of [-0.01, 0.01]) points.push(at(x + dx, y * c - z * s, y * s + z * c));
+      const blade = d.addConvex({ material: 'tin', points, tint: 0x9a948a });
+      if (blade && hub) d.bond(blade, hub, 0.004);
     }
   }
 
@@ -604,6 +658,16 @@ export class Life {
     for (const b of this.doves) {
       if (b.mode === 'gone') continue;
       b.phase += dt;
+      if (b.fall) {
+        // Shot: tumbling down, its wings limp and a last flutter dying away; lying spread there
+        b.fall.update(dt, rt.floor);
+        b.mesh.position.copy(b.fall.at);
+        b.mesh.quaternion.copy(b.fall.q);
+        const limp = b.fall.down ? 0.05 : 0.3 + 0.6 * Math.sin(b.phase * 16) * Math.exp(-b.fall.t * 1.5);
+        b.wings[0].rotation.z = limp;
+        b.wings[1].rotation.z = -limp;
+        continue;
+      }
       if (b.mode === 'perched') {
         // Folded wings, now and then a shuffle
         b.wings[0].rotation.z = 0.15;
@@ -698,6 +762,16 @@ export class Life {
     const h = this.hawk;
     const t = rt.time;
     h.phase += dt;
+    if (h.fall) {
+      // Shot: tumbling down, its wings limp, then lying spread where it landed
+      h.fall.update(dt, rt.floor);
+      h.mesh.position.copy(h.fall.at);
+      h.mesh.quaternion.copy(h.fall.q);
+      const limp = h.fall.down ? 0.06 : 0.25 + 0.5 * Math.sin(h.phase * 11) * Math.exp(-h.fall.t * 1.5);
+      h.wings[0].rotation.z = limp;
+      h.wings[1].rotation.z = -limp;
+      return;
+    }
     if (h.mode === 'perched') {
       // (Its flying figure was drawn for the warm-up before play; not since)
       h.flying.visible = false;
@@ -797,6 +871,7 @@ export class Life {
    */
   private hawkUp(at: V3, rt: WorldRuntime): void {
     const h = this.hawk;
+    if (h.fall) return;
     const t = rt.time;
     h.until = t + between(55, 85);
     if (h.mode === 'down' || h.mode === 'in') h.mode = 'circle';
@@ -815,9 +890,59 @@ export class Life {
     rt.sound.play('hawk.cry', { at: h.at.toArray() as V3, delay: between(0.5, 1.2) });
   }
 
+  /** A round over the town: the first dove in its way, or the hawk, sat or flying, is shot down. */
+  shoot(round: Round, rt: WorldRuntime): void {
+    const dove = first(round, this.doveMiddles(), DOVE);
+    const hawk = first(round, [this.hawkMiddle()], HAWK);
+    if (dove >= 0) this.doveDown(this.doves[dove], this.pushOf(round, this.doves[dove].mode === 'perched'), rt);
+    if (hawk >= 0) this.hawkDown(this.pushOf(round, this.hawk.mode === 'perched'), rt);
+  }
+
+  /** How a round pushes a bird it strikes: on with it; one sitting, off its perch (a round from below would only pin it there). */
+  private pushOf(round: Round, sitting: boolean): THREE.Vector3 {
+    const push = new THREE.Vector3(...round.direction);
+    if (!sitting) return push.multiplyScalar(2);
+    push.setY(0).normalize().multiplyScalar(between(2, 3));
+    return push.setY(between(1.5, 2.5));
+  }
+
+  /** Where each dove's body is (null: gone or shot already). */
+  private doveMiddles(): Array<THREE.Vector3 | null> {
+    return this.doves.map((b) => (b.fall || b.mode === 'gone' ? null : b.at.clone().setY(b.at.y + 0.07)));
+  }
+
+  /** Where the hawk's body is: sitting, up off its perch (null: shot already). */
+  private hawkMiddle(): THREE.Vector3 | null {
+    const h = this.hawk;
+    return h.fall ? null : h.mode === 'perched' ? h.at.clone().setY(h.at.y + 0.22) : h.at.clone();
+  }
+
+  private doveDown(b: Dove, push: THREE.Vector3, rt: WorldRuntime): void {
+    const at = b.at.clone().setY(b.at.y + 0.07);
+    // (Its wings are flat: it lies on its front, a little over, wings out, not on its side with one in the air)
+    b.fall = new Shot(at, b.v, b.mesh.quaternion, push, FORWARD, 0.3, 0.04);
+    b.mode = 'shot';
+    struck(at, 0x6e6c70, 0.8, rt);
+  }
+
+  /** The hawk struck: down it comes, crying, in its flying figure. */
+  private hawkDown(push: THREE.Vector3, rt: WorldRuntime): void {
+    const h = this.hawk;
+    const at = this.hawkMiddle()!;
+    h.fall = new Shot(at, h.v, h.mesh.quaternion, push, FORWARD, 0.35, 0.06);
+    h.mode = 'shot';
+    h.sitting.visible = false;
+    h.flying.position.y = 0;
+    h.flying.visible = true;
+    struck(at, 0x5e4330, 1.9, rt, 'hawk.cry');
+  }
+
   onBlast(at: V3, radius: number, rt: WorldRuntime): void {
     const t = rt.time;
     const d = rt.destruction;
+    // The birds near it blown out of the air (or off their perches)
+    for (const { i, push } of blown(at, radius, this.doveMiddles())) this.doveDown(this.doves[i], push, rt);
+    for (const { push } of blown(at, radius, [this.hawkMiddle()])) this.hawkDown(push, rt);
     this.alarm(at, t);
     // The doves near it flush; the hawk goes up
     this.flush([at], 40, t, rt);

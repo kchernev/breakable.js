@@ -5,9 +5,13 @@ towers and rendered shophouses, 4 to 8 storeys, stand 7.5 m apart. Their fronts 
 signs, blade signs, lightboxes, AC units, drain pipes and roller shutters. A glass footbridge
 crosses at level 3, lantern strings and power cables sag between the facades, a lantern gate
 stands at the mouth, and an end block with a lit arcade closes the far end. The wet asphalt
-reflects the neon, and breaks: a rocket craters it, the machine gun chips it. The alley answers the
-gun as it does a rocket: signs and lamps are shot dark, shutters rattle, steam pipes gush, a long
-burst browns the street's power out. `?world=neon`.
+reflects the neon, and breaks: a rocket craters it, the machine gun chips it. Round the alley, the
+towers behind both rows with their billboards, the lane north, the passage east, the avenue's
+facades with their signs, shopfronts and awnings, the far skyline and the street itself stand as
+scenery until something reaches them, then break too (Round the alley); only the sky and the
+avenue's traffic lights don't. The alley answers the gun as it does a rocket: signs and lamps are
+shot dark, shutters rattle, steam pipes gush, a long burst browns the street's power out.
+`?world=neon`.
 
 The plan it follows is `DESIGN.md` (same folder). Where this differs from it, it says so below.
 
@@ -22,9 +26,9 @@ The plan it follows is `DESIGN.md` (same folder). Where this differs from it, it
 | `signs.ts` | Neon tubes, flat signs, blade signs, the big blade's crown, lightbox panels and billboards. |
 | `glyphs.ts` | The made-up stroke script and the pictograms, and the glyph atlas (a canvas) the lightboxes show. |
 | `street.ts` | Shutters, awnings, the lantern gate, lantern strings and power cables (`slings`: what life.ts hangs once they're struck), the bridge, the vending machines, the transformer box, the pipes in the slot, and the clutter at street level (stools, gas cylinders, boxes). |
-| `materials.ts` | 14 of the 16 breakable materials (the street's two are in `wet.ts`). |
+| `materials.ts` | 14 of the 18 breakable materials (the street's two are in `wet.ts`, the blocks' and the shopfronts' in `scenery.ts`). |
 | `glow.ts` | Which glowing pieces are lit and how much, and the lightboxes' atlas places (see Light). |
-| `scenery.ts` | The night sky, the street drawn past the breakable one (and under it: the bed's earth and water, the pit's sides), the ground in the world, the towers behind both rows, their billboards, the skyline and its beacons, the avenue (its shopfronts, awnings and traffic), the lane north, the passage east; a fixed box in the world for each building and billboard but the far skyline's. |
+| `scenery.ts` | The night sky; the street round the breakable one (`ground`: drawn by the slabs' own shader, and in the world in 8 m tiles, `DormantGround`, each laid breakable as the alley is where a blast reaches it; `streetBed`), and under the alley what a crater shows (the bed's earth and water, the pit's sides); the towers round the alley (`Towers`, `../../towers.ts`, drawn with `nightFacade`): the back rows behind both rows with their roof billboards, the lane north, the passage east, the avenue's facades and the corner blocks, and the far skyline with its beacons, each tower in dormant sections, with the signs, glow strips, beacons, shopfronts and awnings on a section built with it (`dormantScenery`); the blocks' and the shopfronts' materials (`blockMaterial`, `shopfrontPiece`); the avenue's traffic. |
 | `wet.ts` | The wet street: its shader (`wetStreet`: asphalt, puddles, rain rings, gutters, drains, manholes, and where rounds struck it), its materials and its slabs (`groundMaterials`, `layGround`: see The street), and the signs, lit shops and lanterns as it reflects them (see Light). |
 | `props.ts` | Where the scooters, carts, crates and bins go, and each copy's paint. |
 | `life.ts` | The reactions (to rockets, to the gun: `onShot`, `onBurst`), the four point lights, the push that tips a dropping shophouse facade out, the end block's face over the alley (and the billboard on it) let go with its arcade's front, the gate let go once a post no longer holds it, the struck cables that hang from the facades, the vents (the manhole's steams from what's under it), and the footsteps by what's underfoot. |
@@ -33,9 +37,10 @@ The plan it follows is `DESIGN.md` (same folder). Where this differs from it, it
 
 - **Type A** (10 towers and the end block): a concrete frame clad in tile. Slabs butt against a tile
   band at every level and bond to it (in panels of at most about 2.2 m up to level 2, about 3 m from
-  level 3 up, where nobody sees them; the ground slab and the band under the facade are static,
-  never broken or moved, so each is one piece, or two on the end block); between the bands each
-  floor is tile columns and bays of spandrel, glass and head. Ground-floor columns come in two
+  level 3 up, where nobody sees them, and about 3 m on the ground: the ground slab and the band
+  under the facade break as the rest do, where they were static, one piece each, or two on the end
+  block); between the bands each floor is tile columns and bays of spandrel, glass and head.
+  Ground-floor columns come in two
   lengths, with a fascia between them and a lit shop or a roller shutter under it. Concrete back and
   side walls, an interior column on lots wider than 7 m. The two corner lots (N4, N5) have a facade
   module turned onto the lane for 5 m. Every tile piece of a facade shares one texture frame, so the
@@ -49,7 +54,7 @@ The plan it follows is `DESIGN.md` (same folder). Where this differs from it, it
 - **Type B** (5 shophouses): Brick Street's walk-up. A free-standing render facade (piers in two
   lifts a floor, sills, lintels, steel-framed sash windows, a security grille on floor 1) on a
   steel beam over the shop, tied in only through the side walls; the slabs stop 2 cm short of it
-  (their panels as type A's; the static plinth under the facade is one piece).
+  (their panels as type A's; the plinth under the facade in runs of about 3 m, no longer static).
 - **Lit shops**: glass with a door, two ceiling panels (lamps at 4 × their light), a back wall
   that glows with the shop's light (a lightbox on a blank of the atlas: an even glow, at 1 ×), two
   menus on it, a faint glowing sheet on the floor inside the window, and inside either a noodle bar
@@ -103,12 +108,15 @@ The plan it follows is `DESIGN.md` (same folder). Where this differs from it, it
   alley's corner, so it reads as what feeds the signs.
 - **The street** breaks: wet asphalt over a concrete base in 2.5 m slabs between the facades (see
   The street).
-- 7,953 pieces and 23 props at load (`demo.stats().pieces`: 7,976, under the 8,500 aimed at with
-  the breakable street; 7,844 before it, 132 of them now the street's slabs; it was 8,443 with the
-  buildings' slabs in 2.2 m panels everywhere); nothing comes loose at load. Past 9,500 (about
-  1,500 more than at load: `maxPieces` in `index.ts`), rubble at rest shrinks away (the library's
-  budget): the end block's and N7's four rockets each, a second apart, peaked at 9,722 pieces and
-  were back to 9,500 by +50 s, nothing moving.
+- 8,079 pieces and 23 props at load (`demo.stats().pieces`: 8,102), counted from the code, not
+  measured: the 7,953 measured, and 126 more since the ground slabs and the bands under the facades
+  are in panels of about 3 m (160 pieces where they were 34 static ones). As measured then
+  (`demo.stats().pieces`: 7,976, under the 8,500 aimed at with the breakable street; 7,844 before
+  it, 132 of them now the street's slabs; it was 8,443 with the buildings' slabs in 2.2 m panels
+  everywhere), nothing came loose at load. What stands round the alley adds no pieces until it
+  wakes (Round the alley). Past 9,500 (about 1,400 more than at load: `maxPieces` in `index.ts`),
+  rubble at rest shrinks away (the library's budget): the end block's and N7's four rockets each, a
+  second apart, peaked at 9,722 pieces and were back to 9,500 by +50 s, nothing moving.
 
 ## Light
 
@@ -180,16 +188,19 @@ The plan it follows is `DESIGN.md` (same folder). Where this differs from it, it
 - **Shutters**: metalness 0.4 and roughness at least 0.45 (at metalness 1 and the map's low
   roughness, the reflections speckled them with every sign's colour); the corrugation is in the
   normals.
-- **The towers behind** (`towerMaterial`): a dark body (0x161c2a) with paler spandrel bands at
-  each floor and a parapet line under the roof; windows 1.6 × 3.2 m cells (0.9 × 2.5 m on the
-  corner blocks' lower 10 m, seen close from the start), the glass 70 % of the width and 1.5 m
-  tall; one in ten lit, each at its own level, brighter at the top, with a curtain or blinds; LED
-  bands in 7 m dashes at 1.2 on some, none at street level. Their hashes take shifted integer
+- **The towers behind** (`nightFacade`, the same on the scenery and on the panels a woken section
+  comes down in; a tower's tone is data: its hash, its height, finer windows): a dark body
+  (0x161c2a) with paler spandrel bands at each floor and a parapet line under the roof; windows
+  1.6 × 3.2 m cells (0.9 × 2.5 m on the corner blocks' lower 10 m, seen close from the start), the
+  glass 70 % of the width and 1.5 m tall; one in ten lit, each at its own level, brighter at the
+  top, with a curtain or blinds; LED bands in 7 m dashes at 1.2 on some, none at street level.
+  Their hashes take shifted integer
   cells (TSL's hash takes a uint: negative cells all hashed the same, which lit whole faces). The
   roof billboards each start from their own place in the atlas, so no two read alike.
 - **The avenue** (behind the start): a band of shopfronts at street level across it and on the
-  corner blocks (`shopfrontMaterial`: 4 m cells from a small data texture, lit rooms with mullions
-  and a counter or shelves under a fascia of glyphs, grey shutters, or dark), awnings over some
+  corner blocks, one a block (`shopfrontMaterial`: 4 m cells from a small data texture, lit rooms
+  with mullions and a counter or shelves under a fascia of glyphs, grey shutters, or dark; woken,
+  the same read from where on the band each piece stood, `shopfrontPiece`), awnings over some
   (one instanced mesh), and three scooters on its curbs.
 - **Dust and smoke**: the blast's cloud cool grey (`look.smoke`, 0x8c949e, gone a little sooner in
   the rain: life 0.75), and all dust mixed from cool greys with the materials' own colours counting
@@ -311,10 +322,13 @@ each, and 7 and the end block's four rockets ten or more; with the breakable str
   first in `build()`, so what stands in the alley stands on its slabs and goes into a crater with
   them: the gate, the vending machines, the stools, cylinders and boxes, the scooters, carts, crates
   and bins (`clutter` and `placeProps` don't count the slabs as in the way). The buildings stand
-  outside it on their own static ground slabs and the band under each facade, so the shops'
-  thresholds never move; the lane north, the avenue and the passage east are drawn, as before.
+  outside it on their own ground slabs and the band under each facade, in panels of about 3 m that
+  break as the rest do (they were static, so the shops' thresholds never moved). Round it, the
+  street (the lane north, the avenue, the passage east and on) is dormant ground: drawn as before,
+  laid breakable where a blast reaches it (Round the alley).
 - **The same street, whole**: one shader (`wetStreet`) draws the slabs' tops and the street past
-  them (a 240 m plane with the area cut out), so the two meet under the gate without a seam
+  them (a 240 m plane with the area cut out, and cut away too where a blast has laid the street
+  round the alley breakable: `DormantGround.cut`), so the two meet under the gate without a seam
   (`phase-e/mouth-seam-above.png`). On the slabs the puddles, rain rings, gutters, drains and the two
   manholes go by where on the alley each point was laid (`pieceFrame`), so they stay on the chunks a
   blast throws; only what still stands reflects the signs. The library draws a piece's normals from
@@ -334,11 +348,13 @@ each, and 7 and the end block's four rockets ten or more; with the breakable str
 - **The player** walks into a crater (onto the base, 0.18 m down, or the bed) and out the far side
   without a stop: the bed is less than a step (0.5 m) down. Steps crunch (`steps.rubble`) on the
   base and the bed (`footstep`), splash (`steps.wet`) on the street.
-- **What changed round it**: `groundAt` is the bed in the area; the ground in the world is the bed
-  under the area and, round it, boxes reaching 1 m below the bed, so nothing slips under them out
-  of a crater; `killBelow` -1.2. The manhole's steam comes from what's under it (a crater's floor,
-  rubble: `phase-e/vent-crater.png`); debris landing on the street's pieces splashes, as it did on
-  the drawn street.
+- **What changed round it**: `groundAt` is the bed in the area (and round it where a blast has laid
+  the street breakable: `streetBed`); the ground in the world is the bed under the area and, round
+  it, the dormant street's tiles (fixed boxes from the top to 1.5 m down, 1 m below the bed; under
+  the towers, boxes of their own), so nothing slips under them out of a crater; `killBelow` -1.2.
+  The manhole's steam comes from what's under it (a crater's floor, rubble:
+  `phase-e/vent-crater.png`); debris landing on the street's pieces splashes, as it did on the
+  drawn street.
 - **The gun on it**: 70 rounds at the street 6 m off: the first slab gives way at the 6th round, 56
   of 70 break something, down into the base, +96 pieces; 10 s with the trigger held along the street
   chews a trench of broken plates, +220 pieces (+183 standing street pieces;
@@ -360,11 +376,50 @@ each, and 7 and the end block's four rockets ten or more; with the breakable str
   (`pieceFrame`), so they stay on a chunk a blast throws; not where a round bit the slab away. From
   4 m at night they read as strikes where before there were black pinpoints
   (`phase-f/marks-eye-zoom.png`, before on the left; `marks-now-zoom.png` close).
-- **What it costs**: 132 pieces at load (7,976 in all), two materials (16; the bed's `earth` has no
-  pieces, so no mesh). Idle, a collapse's frames,
+- **What it costs**: 132 pieces at load (7,976 in all then), two materials (16; the bed's `earth`
+  has no pieces, so no mesh). Idle, a collapse's frames,
   its physics steps and its draws are the same as before within the shared GPU's noise (Performance);
   no pipelines made after the card through a crater and 40 rounds into it; no street slab broken by
   what lands on it in any collapse below (asphalt's `impact` 30).
+
+## Round the alley
+
+What stands round the alley (`scenery.ts`) is scenery until something reaches it
+(`Destruction.addDormant`): drawn, and solid as fixed bodies, until a round or a blast reaches it;
+then it's built as pieces (`awaken`), and what stood on it stands on its pieces. A blast wakes
+what's dormant within 1.25 of its radius, a round the first thing dormant on its way (and goes on
+into its pieces), and a piece that goes from under something dormant wakes it.
+
+- **The towers** (`Towers`, `../../towers.ts`, `BLOCK` in `scenery.ts`): the back rows behind both
+  rows (8 to 16 m wide, 26 to 60 m tall, a gap where the lane runs on north), the lane's walls on
+  north into the fog, the passage east past the end block, the facades across the avenue, the two
+  corner blocks on the alley's side of it, and the far skyline (60 to 210 m out, 60 to 180 m tall,
+  none within 40 m of the alley's line from the avenue to the passage). One instanced draw, casting
+  no shadows; each tower in sections of 12.8 m (four storeys of 3.2 m), each a fixed box in the
+  world and dormant. Woken, a section's walls come down in panels 0.3 m thick, a storey high and a
+  3.2 m bay wide, the top section's with its roof in slabs of up to 2.6 m; the sections over it
+  stand on it as scenery until what's under them goes, then wake in turn. The panels are `block`
+  (`blockMaterial`): concrete at `strength` 2,000 and `support` 600 with the night facade read from
+  where each panel stood, so nothing changes as it wakes, its lit windows and LED bands glowing
+  while it stands and dark once it's loose, broken faces `gen_concrete_broken`; concrete's sounds,
+  landing at 0.85, and render's strike (`bullet.brick`).
+- **What hangs on a tower** goes with the section it's on (within 0.7 m of its faces, from the
+  section's floor to its top, or over the roof for the top section), hidden as it wakes and built
+  anew as pieces: the roof billboards on the back rows, the signs on the lane's walls and the big
+  ones on the avenue's facades as lightboxes showing the same atlas cells (`lightbox` in
+  `signs.ts`; a roof billboard's thin fixed box goes with it), the passage's glow strips and the
+  skyline's beacons as `lamp`, each block's band of shopfronts as one `shopfront` panel
+  (`shopfrontPiece`: the bands' look read from where on the band it stood, glowing while it stands,
+  shattering as glass), and the awnings over them as `awning` sheets.
+- **The street round the alley** (`ground` in `scenery.ts`, `DormantGround`): the 240 m square in
+  tiles of 8 m, but over the alley's breakable ground and under the towers (which stand on boxes of
+  their own), each a fixed box from the street's top to 1.5 m down, which rounds strike as the
+  scenery it is. A blast reaching a tile lays it as the alley is laid (asphalt over the base on the
+  earth, `GROUND`'s depths, cells and `toss`, mapped in the world's frame), cuts the drawn street
+  away over it, and walls its pit's sides where it meets a tile still dormant; `groundAt` gives its
+  bed there from then on (`streetBed`).
+- **What doesn't break**: the sky, the avenue's traffic (its head and tail lights), and what a
+  crater in the alley shows under it.
 
 ## The machine gun here
 
@@ -375,8 +430,8 @@ What a bullet sounds like on each material (`bullet` in `audio.materials`, at th
 |---|---|---|
 | concrete, the street's asphalt (pitch 0.85) and base | `bullet.concrete` | stone snaps |
 | earth (the bed, a crater's floor; pitch 0.85) | `bullet.dirt` | wet earth thuds |
-| tile (pitch 1.2), render | `bullet.brick` | glazed tile cracks sharper than render over masonry |
-| glass, neon (1.3), lightbox (0.85), lamp (1.15) | `bullet.glass` | tubes and lamps pop higher than panes, acrylic duller |
+| tile (pitch 1.2), render, the blocks round the alley (`block`) | `bullet.brick` | glazed tile cracks sharper than render over masonry |
+| glass, neon (1.3), lightbox (0.85), lamp (1.15), the avenue's shopfronts (`shopfront`) | `bullet.glass` | tubes and lamps pop higher than panes, acrylic duller |
 | steel, signbox (1.25), grate (1.1), shutter (1.2); the scooters and carts (signbox) | `bullet.metal` | sheet rings thinner than steel |
 | wood (the gate); awning (1.3), and the crates and bins (props of it) | `bullet.wood` | lacquered wood; plastic knocks |
 | lantern (1.4) | `bullet.dirt` | paper on a wire frame thuds |
@@ -394,7 +449,9 @@ columns at the 3rd to 6th; concrete at the 9th; the big blade's lightbox faces a
 sign boxes later; the scooters and carts (props) only dent; the crates and bins skid (a loose crate
 0.63 m in 6 rounds), or don't where they stand against a wall. 20 s held across N7's front from
 the street brought part of it down in a heap (431 loose at most, the fastest piece 16 m/s, none
-past 11 m; `gun-n7-20s.png`).
+past 11 m; `gun-n7-20s.png`). That was measured before the props had their shards
+(`<name>.shards.glb`): each now breaks into them under a blast's heart (within 0.85 of its radius)
+or enough rounds (not measured).
 
 The shutter's `minSize` is 0.15 (the preset's 0.3): a piece no bigger than 1.5 × its `minSize`
 isn't cut, it comes loose whole wherever it's struck, and at 0.3 a 2 m slat (0.28) would be let go
@@ -546,7 +603,11 @@ pack's 0.3 × 0.4 here), 20 s from the engine's output: the quietest 40 % at -32
 - In `life.ts`, how hard a dropping shophouse front leans out (`peelFacades`: 0.25 m/s plus 0.12 a
   metre) and the end block's face turns out (`dropFront`: 0.6 m/s plus 0.25 a metre; slower, it
   jams in its slot).
-- `panel` and `STATIC` in `buildings.ts`: how big the slab panels are, by level.
+- `panel` and `STATIC` in `buildings.ts`: how big the slab panels are, by level (`STATIC` the
+  ground slab's and the band's under the facade, 3 m).
+- `BLOCK` in `scenery.ts`: the towers round the alley's storey, bay, section and wall (bigger:
+  fewer pieces when a section wakes, and more of a tower woken at once); the street round the
+  alley's `tile` (8 m) in `ground`.
 - Paint: the tints in `props.ts`.
 
 ## Performance
@@ -645,6 +706,8 @@ against 66 to 148 of 649 to 841, worst 138 to 261 ms against 159 to 183, mean 27
   not its slot, or values of a world's own. Library request: a `pieceSlot()` node, or a few floats
   per piece a world can write.
 - A swinging lantern doesn't show in the wet street (`wet.ts` reflects what still stands).
+- **The blocks round the alley strike as render all over**: their windows are drawn (on the
+  scenery and on the woken panels alike), so a round into one holes it as render, not glass.
 - The vending machines are pieces, not a glowing prop: no model without a paid generation.
 - **The end block's heap is sometimes slow to settle** (library). After four rockets at its base
   (14 runs this phase, the last 6 with the finished code): 867 to 1,296 pieces loose at +10 s, 201

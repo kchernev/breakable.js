@@ -19,6 +19,10 @@
   #weapon .slot { opacity: .42; }
   #weapon .slot.on { opacity: .85; }
   #weapon kbd { display: inline-block; min-width: 1em; padding: 0 3px; margin-right: 5px; border: 1px solid rgba(255, 255, 255, .35); border-radius: 3px; font: 600 10px/1.4 system-ui, sans-serif; text-align: center; }
+  /* With the card closed and the mouse free: how to play */
+  #hint { position: fixed; left: 0; right: 0; top: calc(50% + 22px); text-align: center; font-size: 13px; text-shadow: 0 1px 3px #000; pointer-events: none; opacity: .85; }
+  #hint.hidden { display: none; }
+  #hint kbd { display: inline-block; min-width: 1em; padding: 0 4px; margin: 0 2px; border: 1px solid rgba(255, 255, 255, .35); border-radius: 3px; font: 600 11px/1.4 system-ui, sans-serif; text-align: center; }
   #status { margin: 0 0 10px; font-size: 13px; color: #f0b46e; min-height: 1.45em; }
   #status:empty { display: none; }
   #overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; background: rgba(8, 9, 11, .5); cursor: pointer; }
@@ -55,6 +59,7 @@
 <div id="crosshair"></div>
 <div id="hud"></div>
 <div id="weapon"></div>
+<div id="hint" class="hidden">Click to play &middot; <kbd>Esc</kbd> the worlds</div>
 <div id="overlay"><div class="card">
   <h1>Breakable.js</h1>
   <p class="lead">Everything here breaks. Pick a world, or click to play.</p>
@@ -68,6 +73,7 @@
     <li><kbd>F</kbd> fly (<kbd>Space</kbd> up, <kbd>C</kbd> down)</li>
     <li><kbd>M</kbd> sound on / off</li>
     <li><kbd>R</kbd> rebuild the world</li>
+    <li><kbd>Esc</kbd> this card, and again to close it</li>
   </ul>
 </div></div>
 <script type="module" src="/src/demo/main.ts"></script>

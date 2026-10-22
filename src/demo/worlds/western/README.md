@@ -3,8 +3,11 @@
 A frontier main street at high noon: two rows of false-front wooden buildings with covered
 boardwalks, a brick bank, an adobe chapel with its bell, a livery barn, a smithy, a water tower and a
 windmill, with open desert and mesas beyond. Everything in the town breaks, the street too (packed
-dirt and sand over earth: a rocket craters it, the gun digs into it); the desert and the mesas
-don't. The town answers the gun as it does a rocket: the water tower spurts where it's shot, the
+dirt and sand over earth: a rocket craters it, the gun digs into it), and so do the ground round it
+out to about 200 m, where a blast reaches it, and what stands in the desert (shrubs, rocks, cacti,
+telegraph poles, the outskirts), once a round or a blast reaches it (see "Round the town"). What
+doesn't break: the desert past that, the mesas and buttes on the horizon, and the haze. The town
+answers the gun as it does a rocket: the water tower spurts where it's shot, the
 bell rings, signs swing, tumbleweeds hop, the doves and the hawk take off. The plan, the numbers
 and the reasons are in `DESIGN.md`; the street, the gun and the town's answers to it are below.
 
@@ -13,8 +16,8 @@ and the reasons are in `DESIGN.md`; the street, the gun and the town's answers t
 | File | What it does |
 |---|---|
 | `meta.ts` | The picker card (order 2). |
-| `index.ts` | The definition: the sky (Goegap lighting, a pure noon sky shown, the sun at 65°), the look (fill, grade, heat haze, the street's dust palette and sandy blast clouds), materials, `groundAt` (the street's bed on the street), `killBelow` just under it and the piece budget (`maxPieces` 9,400), sounds (by material, with landing crashes and pitches and a bullet's strike; footsteps by surface, the earth's down in a crater), dust and chip colours and amounts, and the reactions (to blasts, to the gun's rounds and bursts, to what lands) wired to `life.ts`. |
-| `materials.ts` | The 17 breakable materials (siding, timber, stave, tin, adobe, brick, stone, glass, iron, bronze, signpaint and the hanging boards' hangboard, paint, hay, coals, and the street's sand and earth), the bales' straw drawn on a canvas with a normal map from it, and the coals' embers. |
+| `index.ts` | The definition: the sky (Goegap lighting, a pure noon sky shown, the sun at 65°), the look (fill, grade, heat haze, the street's dust palette and sandy blast clouds), materials, `groundAt` (the street's bed on the street, and the ground's round it where a blast has laid it), `killBelow` just under it and the piece budget (`maxPieces` 9,400), the scenery made dormant (`dormantScenery`), sounds (by material, with landing crashes and pitches and a bullet's strike; footsteps by surface, the earth's down in a crater), dust and chip colours and amounts, and the reactions (to blasts, to the gun's rounds and bursts, to what lands) wired to `life.ts`. |
+| `materials.ts` | The 22 breakable materials (siding, timber, stave, tin, adobe, brick, stone, glass, iron, bronze, signpaint and the hanging boards' hangboard, paint, hay, coals, the street's sand and earth; the ground round it, laid, `dirt`; and the desert's `brush`, `rock`, `cactus` and boot hill's `heap`), the bales' straw drawn on a canvas with a normal map from it, and the coals' embers. |
 | `frame.ts` | Building in a structure's own frame (x along its front, z back from it), turned onto the street. `wall()` lays courses between posts round holes, clipped under a roof line. `opening()` fills a hole with jambs, a head and a window, door (three boards a leaf, battens and a Z-brace, a knob) or batwings on hinges. `slope()` makes a roof slope of rafters with sheets on them. Timber gets ±6% tints. |
 | `fronts.ts` | The false-front buildings (saloon, barber, hotel, store, sheriff's): sleepers, plank floor, siding walls, the false front with its cap and signboard, a gable or shed roof in tin, the boardwalk, an awning or the saloon's balcony, and the hanging sign (`hangSign`). Also what `life.ts` watches: each front, and the two-storey buildings' side and back walls (`WallWatch`). |
 | `masonry.ts` | The brick bank (stone plinth, running-bond walls, barred windows, parapet, teller grille) and the adobe chapel (round vigas through the walls, buttresses, the bell gable with its arch, yoke and the bronze bell on a hinge). |
@@ -22,8 +25,8 @@ and the reasons are in `DESIGN.md`; the street, the gun and the town's answers t
 | `interiors.ts` | A little inside each building: the bar with its foot rail, bottles and mirror, tables and stools, the store's counter and shelves stocked with tins, jars, crates and sacks, the sheriff's desk, stove and cell, the barber's chairs, the hotel desk. |
 | `town.ts` | What stands where (DESIGN.md §1.2), the props placed clear of everything (each copy its own tint), and what `life.ts` needs from the built town. |
 | `signs.ts` | The sign atlas drawn on a canvas (weathered boards, a pictogram, rows of brush marks that read as lettering but are not letters): a row per false-front sign, and over them the hanging boards, each where both its faces read (`hangFrame`). |
-| `scenery.ts` | The street (`STREET`: where it breaks, its layers, `layStreet` for `build`, its slabs' look `streetSurface`) and the ground round it: the ground's fixed body, 4 m thick (a piece driven half a metre into a 1 m one went out of its bottom), its top at the street's bed under the street; the earth a crater shows past the slabs (the bed, the street's cut edges); the ground drawn in one shader (`dirt()`: dirt, a paler street, wheel ruts that merge into one track out of town, red earth and gravel further out) on a plane with the street cut out and on the street's slabs; mesas and tapered, notched buttes in banded sandstone (smooth shading, hard at ledges and the rim, normals bent by noise), scrub, rocks, cacti, telegraph poles, the outskirts (boot hill, a stock pen, a ruined adobe corral, a broken wheel) and a haze skirt round the horizon. |
-| `life.ts` | Gusting wind (pale dust lifted off the street, the effects' wind, the wind's loop swelling), the windmill's wheel riding its gearbox and its clank quickening, the hanging signs swinging on their hinges (their chains drawn; a board shot apart hangs on by what's left under its chains), tumbleweed props rolled by the wind (steered past the wagon by the start and the chapel; one caught on something comes in again at the west) and hopping when shot, doves that flush and return, the hawk on the windmill, smoke off the forge, the bell (it rings and swings when shot; the alarm swings it as it tolls), dust slapped up where sections land and where things strike the street (its slabs too), the water tower's topple and the watched walls' fall. All it draws (the wheel, the chains, the birds) is made with the town, so the warm-up before play draws it. |
+| `scenery.ts` | The street (`STREET`: where it breaks, its layers, `layStreet` for `build`, its slabs' look `streetSurface`) and the ground round it: the ground's fixed body, 4 m thick (a piece driven half a metre into a 1 m one went out of its bottom), its top at the street's bed under the street; round the street out to `AROUND` the ground in `DormantGround` tiles, laid as the street's dirt over earth where a blast reaches them (`groundSurface`, `groundBed`), the bed drawn under them; the earth a crater shows past the slabs (the bed, the street's cut edges); the ground drawn in one shader (`dirt()`: dirt, a paler street, wheel ruts that merge into one track out of town, red earth and gravel further out) on a plane with the street cut out (and cut away where a tile has been laid) and on the street's slabs; mesas and tapered, notched buttes in banded sandstone (smooth shading, hard at ledges and the rim, normals bent by noise), scrub, rocks, cacti, telegraph poles, the outskirts (boot hill, a stock pen, a ruined adobe corral, a broken wheel), each a dormant thing (`dormantScenery`), and a haze skirt round the horizon. |
+| `life.ts` | Gusting wind (pale dust lifted off the street, the effects' wind, the wind's loop swelling), the windmill's wheel riding its gearbox and its clank quickening (dormant while the gearbox stands: what reaches it jams it, and it's built as its hub and blades), the hanging signs swinging on their hinges (their chains drawn; a board shot apart hangs on by what's left under its chains), tumbleweed props rolled by the wind (steered past the wagon by the start and the chapel; one caught on something comes in again at the west) and hopping when shot, doves that flush and return, the hawk on the windmill, smoke off the forge, the bell (it rings and swings when shot; the alarm swings it as it tolls), dust slapped up where sections land and where things strike the street (its slabs too), the water tower's topple and the watched walls' fall. All it draws (the wheel, the chains, the birds) is made with the town, so the warm-up before play draws it. |
 | `water.ts` | The water tower's water: the level in the tank, a hole spurting a thin stream (GPU droplets, as Brick Street's hydrant's are) where a round goes into its staves under the waterline, the splash and the wet patches on the dirt, and the spill when the tank bursts. |
 
 About 7,850 pieces at load (the saloon 1,340, the hotel 1,150, the store 910, the livery 770, small
@@ -38,7 +41,8 @@ counted moving once they're at rest, so the HUD reads 3 moving standing: the tum
 wind rolls (4 about two fifths of the time, while a gust swings the sign nearest the player further
 than 10 cm). Four rockets along the saloon's front leave about 9,200–9,280 pieces (9,030–9,050
 before the street broke). Past 9,400 (`maxPieces`: the count at load and about a minute of the gun at
-a wall) rubble at rest shrinks away, what's out of sight first (the library's budget).
+a wall) rubble at rest shrinks away, what's out of sight first (the library's budget). The ground
+round the street and the desert's things add none at load: they're built as they wake.
 
 ## How it's built and how it fails
 
@@ -76,7 +80,8 @@ a wall) rubble at rest shrinks away, what's out of sight first (the library's bu
 - **The chapel** crumbles in tan lumps and dust. The bell hangs on a hinge under its yoke; the alarm
   after a blast or a long burst swings it as it tolls, and a round into it rings it and swings it.
   Shoot the gable's shoulders or the yoke and the bell comes down with the yoke and rings as it lands
-  (`bronze` impact sounds are `bell.toll`).
+  (`bronze` impact sounds are `bell.toll`). Rounds only ring the bell; a blast at it cracks it in a
+  few pieces (`bronze` minSize 0.2, maxPieces 4).
 - **The water tower** (`updateTower`). Its legs carry it as columns, so two can hold the tank up,
   and a top cut loose settles on their stubs. `life.ts` watches the legs: when two are cut, the
   rest groan, and a moment later everything over the lowest joints is let go (`d.release`) turning
@@ -86,7 +91,9 @@ a wall) rubble at rest shrinks away, what's out of sight first (the library's bu
   (smoothed between readbacks), spinning with the gusts; its clank quickens with them
   (`Voice.setRate`) and stops once the gearbox falls. The wheel is made with the town (it was made
   at the first frame, after the warm-up, and two pipelines were compiled the first time it came into
-  view).
+  view). While the gearbox stands the wheel is dormant: a round or a blast reaching it jams it (the
+  clank stops), and it's built where it stopped as its hub (`iron`, bonded to the gearbox) and its
+  18 blades (`tin`, bonded to the hub). Once the gearbox goes, the wheel rides it down as drawn.
 - **Hanging signs** are boards on hinges under their arms (`d.hinge`, `to: arm`): the wind leans
   them, blasts swing them, and they fall with the arm (and break where they land). Their chains are
   drawn, riding the boards. A round shatters a board (the first, at power 6); under each chain the
@@ -108,8 +115,9 @@ a wall) rubble at rest shrinks away, what's out of sight first (the library's bu
 - **Where.** Between the boardwalks (their fascias at |z| 6.96, footings from 7) from the west end of
   town (x -45) to the chapel's front (x 23), and on along the chapel's south wall (z 2.4) to x 45,
   where it's the road (`STREET.areas`, two `addGround` stretches). The rails, troughs, pumps, wagons,
-  the barrels at the west entrance and the player's start are on it; the boardwalks, the chapel's lot
-  and the desert stay scenery. A strip 1 m wide before the chapel's door (x 23-24) stays fixed too.
+  the barrels at the west entrance and the player's start are on it. The ground round it (under the
+  boardwalks and the buildings, the chapel's lot, the desert) is tiles laid the same where a blast
+  reaches them (see "Round the town").
 - **Layers.** Packed dirt and sand 0.25 m (`sand`) over earth 0.95 m (`earth`) on the bed at -1.2
   (`BED`: `groundAt` there, the ground's fixed body's top under the street; `killBelow` -2), in 3 m
   slabs: 272 (136 a layer). A crater's floor is earth too (`bed: 'earth'`: it's drawn as the earth). The slabs' tops are drawn by `dirt()`, the same shader as the ground
@@ -126,8 +134,9 @@ a wall) rubble at rest shrinks away, what's out of sight first (the library's bu
   a few clods thrown round it, which crumble where they land and clear in 6-8 s. Most of what a
   blast reaches sprays (`minBodySize` 0.5 and 0.4); what's small beyond its reach stands
   (`keepSmall`), so the rim is whole. Each crater leaves 43-118 more ground pieces (about 80). Rails
-  and troughs in reach drop in; a wagon a metre or two off is thrown over beside it (props are
-  thrown, never broken); the saloon's front falling into the street breaks no slab.
+  and troughs in reach drop in; a wagon a metre or two off is thrown over beside it (then props were
+  thrown, never broken; they have shards now, and one in a blast's heart, within 0.85 of its
+  radius, breaks); the saloon's front falling into the street breaks no slab.
 - **The player** walks down into a crater and out the far side without a stop (down to the earth's
   top, -0.25, walking through; on the bed in a deep one, out by a step up the earth's faces or a
   jump). Steps are dirt on the street and rubble on the earth and the bed (`footsteps.surface`).
@@ -135,6 +144,38 @@ a wall) rubble at rest shrinks away, what's out of sight first (the library's bu
   ahead break something 51-52 times and leave a trench down to the earth (+114-135 pieces). A bullet
   into a crater's bed strikes the earth (`bullet.dirt`, a pock and clods): ten rounds into a fresh
   crater struck `earth` all the way down, the last two on the bed at -1.2.
+
+## Round the town
+
+The ground round the street and what stands in the desert stand as scenery (drawn meshes and fixed
+bodies, no pieces) until something reaches them, then are built as pieces (`Destruction.addDormant`;
+made dormant in `build()` by `dormantScenery` in `scenery.ts`): a blast within 1.25 of its radius
+of a thing's box, a round's ray entering its box, or a rocket's flight through it (`wakeAlong`). Its
+stand-in goes, and what stood on it stands on its pieces.
+
+- **The ground round the street** (`AROUND`: 204 m east and west of the middle, 150 m north and
+  south) is `DormantGround` tiles 12 m across in five areas (north and south of the street, west
+  and east of it, the chapel's lot), each a fixed box until a blast reaches it (rounds strike it as
+  the scenery it is). Then it's laid as the street is, packed dirt over earth on the same bed
+  (`dirt`, `earth`), the drawn ground cut away over it, and `groundAt` gives its bed there
+  (`groundBed`). `dirt` is the street's `sand` drawn as the ground was there: `groundSurface`
+  reads `dirt()` at the point its map coordinates give (laid from the world's origin), so a laid
+  tile looks as it did; its sides and breaks are crumbled, as the street's. The bed is drawn under
+  the tiles, and where a laid tile meets one still dormant a crater shows earth down to it. Past
+  `AROUND` the desert is the ground's fixed boxes.
+- **The desert's things**: the 320 shrubs (`brush`, each its grey-green), the 70 rocks (`rock`,
+  sandstone) and the 16 cacti (`cactus`: the trunk and its two arms, each out from the trunk and
+  up, bonded) have no body, so a round or a rocket passing through one's box wakes it; a shrub or
+  a rock is the hull of its drawn points, set down on the ground and cut flat there. The 14
+  telegraph poles wake as the pole and its crossarm's two halves (`timber`).
+- **The outskirts** are dormant groups, each hidden from the outskirts' merged meshes as a whole as
+  it wakes: boot hill (its fence's posts and rails in `timber`, a rail a little short of its posts
+  and bonded to them; the mounds in `heap`, stony earth, with their crosses and headboards bonded
+  on, in `paint` as the signs' plain boards), the stock pen (posts and rails), the ruined adobe
+  corral (its wall blocks and lumps in `adobe`; its walls are fixed boxes in the world until then)
+  and the broken wagon wheel (its rim in 17 lengths, its spokes, hub and axle, `timber`).
+
+What doesn't break: the desert past `AROUND`, the mesas and buttes on the horizon, and the haze.
 
 ## The gun here
 
@@ -154,8 +195,10 @@ at, and the sound each strike played.
 | Tin (the roofs) | 6th-9th | 1-6 of 16-30: dents and sparks, ricochets | `bullet.metal` at 1.25 |
 | The bell | never (its yoke does: the bell falls) | | `bullet.metal` at 0.8, and it rings (`bell.shot`) |
 | The street | 3rd | 39-52 of 42-56 | `bullet.dirt` (the earth at 0.85) |
-| Props: wagons, the safe, pumps | never | dents and holes; the pumps ring and ricochet | `bullet.wood`, `bullet.metal` |
-| Props: rocking chairs, tumbleweeds | never | skitter off; a tumbleweed hops at each round (12 m in 6 rounds, up to 1.1 m high) | `bullet.wood`, `bullet.dirt` at 1.2 |
+| The desert's, woken: shrubs, rocks, cacti, boot hill's mounds; the ground round the street | not measured | | brush `bullet.dirt` at 1.35, rock `bullet.concrete`, cactus `bullet.wood` at 1.2, mounds `bullet.dirt` at 0.85, the ground as the street |
+| Props: wagons, the safe, pumps | after their rounds (`propRounds`, by material and size; not measured since they had shards) | dents and holes until then, and they fly apart into their shards; the pumps ring and ricochet | `bullet.wood`, `bullet.metal` |
+| Props: rocking chairs | as the wagons | skitter off until then | `bullet.wood` |
+| Tumbleweeds (props made in code, no shards) | never | a tumbleweed hops at each round (12 m in 6 rounds, up to 1.1 m high) | `bullet.dirt` at 1.2 |
 
 Casings land in dirt and on boards: `casing.drop` at 0.08 (0.15 in the base pack). The chips and
 dust are each material's colours (`chips`, `dust`); the street's dirt and earth have their own.
@@ -239,10 +282,10 @@ the bell and its gable) two `bell.shot`s (two more came too soon); 70 at the hot
 
 All in `public/packs/western/` (see its `CREDITS.md`): the eight texture sets (two of them, the
 street's broken dirt and earth, made for its craters) and the siding's paint mask, two Poly Haven
-skies, four props (wagon, safe, pump, rocking chair), and 17 sounds (three of them, `bell.shot`,
-`water.spurt` and `water.stream`, for the town's answers to the gun). The base pack adds brick,
-concrete and sandstone textures, the iron, and the explosions, glass, metal, masonry, footstep and
-gun sounds. The asset reports are in `assets-src/packs/western/*-report.md`, the
+skies, four props (wagon, safe, pump, rocking chair, each with its shards), and 17 sounds (three
+of them, `bell.shot`, `water.spurt` and `water.stream`, for the town's answers to the gun). The
+base pack adds brick, concrete and sandstone textures, the iron, and the explosions, glass, metal,
+masonry, footstep and gun sounds. The asset reports are in `assets-src/packs/western/*-report.md`, the
 screenshots this was judged by are in `assets-src/packs/western/shots/`.
 
 - **Sky.** Goegap lights the town: a real desert, whose sandy ground bounces warm light into the
@@ -307,6 +350,8 @@ screenshots this was judged by are in `assets-src/packs/western/shots/`.
   crater came out square, along the seams; smaller slabs also cost more pieces at load (1.7 m: 770).
   The layers' depths (0.25 and 0.95) and the earth's `reach` (0.45) set how deep the middle goes;
   `minBodySize` how much sprays rather than flies as clods, and `dustAmount` the cloud.
+- Round the town: how far the ground is laid breakable (`AROUND`), its tiles' size (`tile`, 12 m),
+  and how the desert's things break (`dirt`, `brush`, `rock`, `cactus`, `heap` in `materials.ts`).
 - Doves, hawk and tumbleweeds: their counts and timings are in `Life`'s constructor and their
   update methods; the tumbleweeds' pull to the street's middle east of x 0 and north of z 1.5, and
   their 4 s catch (taken out only over 25 m from the player) in `updateWeeds`.

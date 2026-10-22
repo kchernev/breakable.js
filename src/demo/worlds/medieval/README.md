@@ -5,8 +5,12 @@ houses on the west, the town wall with its gatehouse and a round tower on the no
 tower, E1 and the market hall on the east. The south lies open to the low sun, the road and the
 fields. Stalls with striped awnings, a well, a market cross, barrels, carts and hay stand in the
 square, whose cobbles break: a rocket leaves a crater in them, the machine gun chips them (see "The
-square's ground" and "The machine gun here"). The plan and the numbers come from `DESIGN.md`. What
-changed, and why, is listed below.
+square's ground" and "The machine gun here"). The rest of the town round the breakable part (the
+town wall and its round towers, the houses beyond), the trees, the windmill and the cobbles round
+the square stand as scenery until a round or a blast reaches them, then are built as pieces (see
+"The scenery round the town"). What doesn't break: the country itself (the fields, the hills, the
+roads) and the haze. The plan and the numbers come from `DESIGN.md`. What changed, and why, is
+listed below.
 
 The player starts at (3, 0, 11) looking north through the lane between the stall rows at the gate.
 
@@ -15,18 +19,19 @@ The player starts at (3, 0, 11) looking north through the lane between the stall
 | File | What |
 |---|---|
 | `meta.ts` | The picker card (order 1). |
-| `index.ts` | The definition: sky, look, audio (with what a bullet sounds like on each material), dust and chips, the square's ground laid (its bed earth), no water, the piece budget, and the reactions to blasts and to the gun (bell, pigeons, market, hens, sparks, chimney smoke, swinging and creaking signs, windmill). |
-| `materials.ts` | The 17 breakable materials (the town's 15, and the square's cobbles and earth). |
+| `index.ts` | The definition: sky, look, audio (with what a bullet sounds like on each material, the woken scenery's among them), dust and chips, the square's ground laid (its bed earth), the scenery round it made dormant (`dormantScenery`), no water, the piece budget, and the reactions to blasts and to the gun (bell, pigeons, market, hens, sparks, chimney smoke, swinging and creaking signs, windmill). |
+| `materials.ts` | The 20 breakable materials (the town's 15; the woken scenery's `house`, `roofing` and `leaves`; and the square's cobbles and earth). |
 | `kit.ts` | Frames to build in, pieces placed with their maps laid the way each material wants (see below), bevelled boxes and prisms, polygon clipping, tint variation. |
 | `masonry.ts` | Coursed walls in running bond with openings, round and pointed arches (voussoirs and fillers) and gables clipped to a roof; interlocking corners; the round tower's arc-block courses. |
 | `timber.ts` | Frame walls (plates, posts, rails, braces, set-back plaster panels, windows, doors, shutters), floors of joists and boards, and the roof kit (wall plates, rafters, tile slabs, ridge pieces, gables). |
 | `houses.ts` | One house from storeys, jetties, a stone or plinthed ground floor, a gable or eaves roof, and a chimney. |
 | `town.ts` | W1, W2 (the tavern), W3, E1 with its pentice, the market hall, the stable; hanging signs (hung on hinges) and lanterns. |
 | `church.ts` | The church tower (three stages, string courses with floors, belfry, battlements, pinnacles, the bell in its frame) and the nave. |
-| `walls.ts` | The town wall, the stair to its walk, the gatehouse (arch, fill, guard chamber, portcullis, gate leaves) and the round tower with its cone. |
+| `walls.ts` | The town wall, the stair to its walk, the gatehouse (arch, fill, guard chamber, portcullis, gate leaves) and the round tower with its cone; `battlements()` and `cone()`, which the woken scenery uses too. |
 | `market.ts` | Stalls and their wares, the well, the cross, hay, crates, trestles, the coop, the woodpile, the trough, the pillory, the low wall, and the props. |
 | `falls.ts` | Tall sections that come loose lean the way they were hit, and a tower falls on as loose blocks; jettied fronts left with no ground floor under them are let go (see "How it breaks"). |
-| `scenery.ts` | The square's breakable ground (`SQUARE`, `groundAt`) and the looks its slabs share with the drawn cobbles; the ground's fixed bodies, the cobbles round the square and their dirt apron, what a crater shows past the slabs (its bed and the square's edges), the country (fields, hedgerows, hills, a ridge), dirt roads, trees and the wood, the south-west skyline, the windmill, the rest of the town, the haze band round the horizon; and `walkable`, which keeps the player out from among the scenery houses. |
+| `scenery.ts` | The square's breakable ground (`SQUARE`, `groundAt`) and the looks its slabs share with the drawn cobbles; the ground's fixed bodies, the cobbles round the square (`DormantGround` tiles) and their dirt apron, what a crater shows past the slabs (its bed and the square's edges), the country (fields, hedgerows, hills, a ridge), dirt roads, trees and the wood, the south-west skyline, the windmill, the rest of the town, the haze band round the horizon; each length of wall, stub, round tower, house, tree and bush and the windmill as a dormant thing (`dormantScenery`), with the hills' hulls under what wakes on them (`hillUnder`); the scenery houses' facade (`houseLook`); and `walkable`, which keeps the player out from among the scenery houses (a house's footprint is freed once it wakes). |
+| `wake.ts` | What the scenery is built as once a round or a blast reaches it: a house (`house`: panels a bay wide and a storey high, a jettied house's floor, the roof in two solid halves, `roofHalves`), a length of the town wall (`wallLength`), a stub of the south wall (`wallStub`), a round tower and its cone (`townTower`), a tree or a bush (`tree`), the windmill (`windmill`). |
 
 ## How it's built
 
@@ -117,6 +122,9 @@ makes it stand as built.
 | The square's ground (cobbles over earth, 12 × 12 slabs a layer) | 288 |
 | **Total** | **8,014** |
 
+The scenery round the town adds none at load: it's built as it wakes (see "The scenery round the
+town").
+
 ## Materials
 
 | Name | From | What matters |
@@ -130,12 +138,15 @@ makes it stand as built.
 | boards | wood | splits along its planks (`grain` v, 3); `old_planks_02` (2 m) |
 | tile | material | **support 70**, **reach 0.5**, impact 6, friction 0.55, dustSize 0.05, **landing 3**, maxPieces 6: a blast holes a roof (see "Roofs"), the slabs whose rafters went slide off, anything landing on a roof breaks it, and slabs and pots break where they land; Poly Haven `roof_09` (4 m, plain peg tiles), insides `gen_brick_broken`. Pots and jugs are tile too: a turned belly (16 sides) and a rim or neck |
 | glass | glass | reach 2; a leaded diamond-quarry map drawn in code, tinted amber or pale green per window; it writes depth, so dust drifting over a window fades against it as over the wall |
-| bronze | metal | the bell: never breaks (its oak frame does: see "The machine gun here") |
+| bronze | metal | the bell: rounds only ring it (impact 1e5); a blast at it cracks it in a few pieces (minSize 0.3, maxPieces 4). Its oak frame breaks (see "The machine gun here") |
 | iron | metal | portcullis, brackets, sign pictograms, finial; `gen_iron_painted` |
 | cloth | material | awnings; `medieval_canvas` tinted by dye |
 | hay | material | bales and heaps that burst to chaff; `medieval_hay` |
 | produce | material | the stalls' cabbages, roots, apples: icospheres of 42 points, a little squashed and flat underneath, shaded round; plain colour by tint (±6 %), roughness 0.75, soft |
 | lantern | material | amber emissive (0xffa040 at 2.5) inside an iron frame and cap, with bloom, lit only while it stands (`glow: 'standing'`); no real lights |
+| house | material (`facadeMaterial`) | the scenery houses' panels, woken: the facade drawn as the scenery's (`houseLook`, each panel's from where it stood, its tint the house's wash); daub on its frame, a little stronger than plaster (support 60, strength 1.5e3, impact 12), insides `medieval_daub_broken` |
+| roofing | material | their roofs, woken: each half solid from the eaves to the ridge with no rafters, so light (density 0.25), impact 6; `roof_09` laid as the stand-in's, insides `gen_brick_broken` |
+| leaves | material | a woken tree's crown or a bush: light and soft (density 0.08, impact 3, dustSize 0.5), it bursts into leafy bits; darker underneath and mottled in clumps (`foliage()`), its tint its green |
 | cobbles | `groundPresets.cobbles` | the square's setts (0.25 m): the drawn cobbles' look and uvs (`cobbleSurface`), upright on a slab's sides, the well's shaft painted dark on the top; broken, the cobbles' own map in 0xc4b49c (`SETTS_BROKEN`), so a chunk is a lump of setts; impact 30, reach 0.45, at most 18 pieces a slab |
 | earth | `groundPresets.earth` | packed sandy earth under them (0.85 m): `rocky_trail_02` greyed as the dirt apron, then paler and yellower (`earthSurface`), broken 0xc8b494 with the map's grain; impact 15, reach 0.34, clods crumble where they land |
 
@@ -281,9 +292,10 @@ The square's cobbles break (`Destruction.addGround`, laid first in `build()`; `S
 -1.1 m. It covers x -14.96 … 14.65, z -14 … 14.96: from the fronts of W1–W3 to E1, the church
 tower and the hall's post pads, and from the gatehouse to the stable's front. That's the square and
 the lane to the gate, with the stalls, the well, the cross, the pillory, the trough, the hay and the
-hay wagon on it. The strip in front of the town wall, the alleys, the churchyard, the road out
-through the low wall, the fields and the ground under every building stay fixed. Each layer is 12 ×
-12 slabs of 2.47 × 2.41 m: 288 pieces in all.
+hay wagon on it. The rest of the town's cobbles (the strip in front of the town wall, the alleys,
+the churchyard, the road out through the low wall as far as z 24, the ground under every building)
+are tiles laid the same where a blast reaches them (see "The scenery round the town"); the fields
+stay fixed. Each layer is 12 × 12 slabs of 2.47 × 2.41 m: 288 pieces in all.
 
 - **It looks as the cobbles did.** One function draws the cobbles (`cobbleSurface`: the two turned
   lookups of the map, the worn and dusty patches) for the drawn cobbles round the square, from the
@@ -304,10 +316,11 @@ through the low wall, the fields and the ground under every building stay fixed.
   painted on the slabs' top now, so it goes with them. The country mesh lay 3 cm under the cobbles
   everywhere: it's cut out under them (it would have lain across a crater). The drawn cobbles have
   a hole over the square. The dirt roads and the trees are outside it.
-- **In the world.** The ground's fixed body is a box with its top at the bed, and four round the
-  square with their top at 0 and their foot under the bed (nothing slips under them out of a
-  crater). `groundAt` gives the bed on the square (`onSquare`), the land's height elsewhere;
-  `killBelow` is 0.7 m under the bed.
+- **In the world.** The ground's fixed body is a box with its top at the bed, four round the
+  town's cobbles with their top at 0 and their foot under the bed (nothing slips under them out of
+  a crater), and between those and the square the cobbles' tiles, each a box from 0 down to the
+  bed until it's laid. `groundAt` gives the bed on the square (`onSquare`) and where a tile has
+  been laid, the land's height elsewhere; `killBelow` is 0.7 m under the bed.
 - **What a pit strikes as.** Its floor is earth (the ground's `bed`, as it's drawn), and its sides
   where the square meets fixed ground are the layer at that height, as drawn there: the setts' top
   0.25 m as cobbles, earth under them. The south-east corner opened by hand (its last slab of each
@@ -341,6 +354,47 @@ through the low wall, the fields and the ground under every building stay fixed.
   (`steps.rubble` lower, and no stone's sounds, so the gun pocks it as dirt). Footsteps:
   `steps.cobble` on the setts, `steps.rubble` on the earth and on the bed under them.
 
+## The scenery round the town
+
+What the town shows past its breakable part stands as scenery (drawn meshes and fixed bodies, no
+pieces) until something reaches it, then is built as pieces (`Destruction.addDormant`; made
+dormant in `build()` by `dormantScenery` in `scenery.ts`, built by `wake.ts`): a blast within 1.25
+of its radius of its box, a round's ray entering its box, or a rocket's flight through it
+(`wakeAlong`). Its stand-in goes (hidden, its bodies out of the world), its pieces are made to
+stand as built, and what stood on it stands on them. None of it is among the 8,014 pieces at load.
+
+- **The town wall**, in lengths of about 6 m between the towers (`wallLength`): two rubble skins in
+  courses under battlements, as the breakable wall is built. The stand-in has a parapet and merlons
+  as the breakable wall's (`battlements()`, exported from `walls.ts`).
+- **The stubs of the south wall** (`wallStub`): each robbed-out step in courses of about 0.75 m.
+- **The six round towers** with their cones (`townTower`): 12 courses of arc blocks to 9.5 m
+  (`rubbleTower`, `roundTower` in `masonry.ts`) and a tiled cone to 14 m in two layers (`cone()`,
+  exported from `walls.ts`).
+- **The 26 scenery houses** (`house`): panels a bay wide (about 2.2 m) and a storey high (2.8 m),
+  0.3 m thick, in `house`, which draws the same facade from where each panel stood (`houseLook`,
+  each house's wash its tone), so nothing changes as it wakes; a jettied house's floor reaching out
+  over the ground storey to the upper walls; the roof in two solid halves from the eaves to the
+  ridge, in lengths of up to 3 m along it, in the light `roofing`, its tiles laid as the
+  stand-in's (both from `roofHalves`). Once a house wakes its footprint is freed (`walkable`): its
+  ruins may be walked into.
+- **The trees and the hedge's bushes** (about 1,180): they have no body, so a round or a rocket
+  passing through a tree's box wakes it, and meets its pieces. Woken, a trunk in two tapering
+  lengths of `oak` up to the crown's underside, bonded to it, and the crown as its lumps as drawn,
+  each a piece of `leaves` cut where it meets the others; a bush or the yew is its crown, cut flat
+  on the ground.
+- **The windmill** has no body either: woken, its trestle, post, body, roof, windshaft, hub and
+  sails, the sails as they had turned.
+- **The cobbles round the square** (all the town's ground, x -45 … 55, z -20 … 24, the ground under
+  the buildings too) are `DormantGround` tiles about 6 m across, in four strips round the square,
+  each a fixed box until a blast reaches it (rounds strike it as the scenery it is); then it's
+  laid as the square's cobbles over earth, on the same bed, the drawn cobbles cut away over it, and
+  `groundAt` gives its bed. Where a woken tile meets one still dormant, a crater shows the
+  setts in section over the earth down to the bed, as at the square's edges.
+- **The hills** get physics hulls (the drawn ground's 4 m cells) under what wakes on them
+  (`hillUnder`), so a tree or the windmill comes down onto the hill, not into it.
+
+What doesn't break: the country itself (the fields, the hills, the roads) and the haze.
+
 ## The machine gun here
 
 The gun fires 14 rounds a second at power 6 (`docs/changelog/phase-e/weapons.md`). What a bullet sounds like
@@ -361,6 +415,9 @@ on each material (`audio.materials`, `bullet`, at the material's pitch unless `p
 | cloth, hay, produce | `bullet.dirt` at 1.3, 1.1, 1.25: soft thuds | dirt |
 | cobbles | `bullet.concrete` | concrete |
 | earth | `bullet.dirt` | dirt |
+| house (a woken house's panels) | `bullet.dirt` at 1.1, as plaster | dirt |
+| roofing (its roof) | `bullet.brick` at 1.15, as tile | brick |
+| leaves (a woken tree or bush) | `bullet.dirt` at 1.35 | dirt |
 
 The chips and dust are the world's colours (cloth's chips now undyed linen, 0xcfc2a6: the awnings
 are striped, the bolts every dye; madder red for every strike was wrong). Long bursts at each, square
@@ -383,13 +440,17 @@ on at 5–6 m (rounds to the first break at one spot, and what it did):
   from 5 m off (2 rounds broke something) brought it down onto the player and across the square,
   its blocks' middle 21 m south-west of where it stood, 7 pieces loose at +10 s, none at +20 s; the
   nave's west gable stood.
-- **The bell** never breaks, and rings under the rounds (see "Reactions"): flying level with the
+- **The bell** doesn't break under the rounds (a blast cracks it in a few pieces), and rings under
+  them (see "Reactions"): flying level with the
   belfry's west opening 12 m off, 140 rounds through it struck the bronze 71 times and it still hung.
   Its oak headstock over it breaks: of a 70-round burst at the headstock 3 struck the oak, and the
   bell came off and down onto the belfry floor, jangling as it came off and clanging as it landed.
   The rockets' fall of the tower throws it into the square (26 m out in the gun's fall above).
-- **Props** never break: a barrel struck 30 times is nudged (0.3 m/s at most), the hay wagon not at
-  all.
+- **Props** break now: each has its shards (`public/packs/medieval/models/index.json`), and a
+  blast's heart (within 0.85 of its radius) or enough rounds (as many as a piece of its material
+  half its size takes: `propRounds` in the library) swaps it for them, flying apart. Not measured
+  here since. Before they had shards, a barrel struck 30 times was nudged (0.3 m/s at most), the
+  hay wagon not at all.
 - **The square** (with the library's bite this phase, `docs/changelog/phase-f/pile.md`): 70 rounds at one
   spot of the cobbles 6 m ahead of the start: 40 broke something, 19 struck the setts and then 51
   the earth under them; a pothole 1.9 m² open and 0.99 m deep, its chunks thrown out round it (+66
@@ -456,11 +517,13 @@ flock and one cackle, not one a round.
    (boards go at the first round), and the sign drops off its rings in pieces. In the breeze: every
    0.6–1.8 s one of the four is picked, and if it still hangs from its bracket it gets a push of up
    to 0.25 m/s across its board (no creak).
-10. **The windmill's sails** turn at 0.35 rad/s.
+10. **The windmill's sails** turn at 0.35 rad/s (until it wakes: then its pieces stand as the sails
+    had turned).
 
 Sounds by material (`audio.materials`): the rubble walls share the limestone's at 0.88 of its pitch
 (rougher, heavier), daub knocks as tile at 0.75, boards play the base wood at 1.15, iron fittings
-the base metal at 1.25, the lanterns' panes glass at 1.3; bullets as "The machine gun here" says. A
+the base metal at 1.25, the lanterns' panes glass at 1.3; a woken house's panels sound as the daub,
+its roof as tile, a tree's crown only settles as dust; bullets as "The machine gun here" says. A
 falling section (or heavy piece) that lands plays its material's `land` sound once, louder and lower
 the heavier: `stone.impact.large` for masonry, `timber.crack` for oak, `tile.clatter` for a slope of
 slabs. Footsteps: `steps.cobble` on the ground and the square's setts, `steps.asphalt` on standing
@@ -512,20 +575,26 @@ and on its bed in a crater.
   cool greens), so the canopy closes into one dark mass; it casts no shadows (it is far past their
   range). As 260 evenly spread trees it read as polka dots on a bald mound. A hedge with five big
   trees stands on the south-west skyline about 110 m out, dark against the low sun.
-- **The rest of the town** is merged meshes: wall and round towers (also in the physics world near
-  the square, the towers as 16-sided hulls as drawn, not 7 m boxes), houses and tile roofs (in the
-  physics world too, each storey a box and the roof a hull as drawn: debris from the church fell
-  through the houses beside it and lay inside them, and rockets now stop at them). Houses
-  of two storeys have their upper storeys jettied 0.4 m over the ground floor and eaves 0.5 m out
-  (the roofs are two-sided, so the eaves' undersides show); the node material draws the framing and
-  dark windows (most bays of 2.2 m upstairs, a door now and then below). Each drawn timber is a
+- **The rest of the town** is merged meshes, each part of them (a length of wall, a stub, a tower,
+  a house) hidden on its own as it wakes (`Merged` in `../../dormant.ts`; see "The scenery round
+  the town"): the wall in lengths of about 6 m, with its parapet and merlons as the breakable
+  wall's, and round towers (also in the physics world near the square, the wall a box a length and
+  its parapet another, the towers as 16-sided hulls as drawn and their cones, not 7 m boxes), houses
+  and tile roofs (in the physics world too, each storey a box and the roof a hull as drawn: debris
+  from the church fell through the houses beside it and lay inside them, and rockets now stop at
+  them). Houses of two storeys have their upper storeys jettied 0.4 m over the ground floor and
+  eaves 0.5 m out (the roofs are two-sided, so the eaves' undersides show); the facade (`houseLook`,
+  a `FacadeLook`, each house's wash its tone) draws the framing and dark windows (most bays of 2.2 m
+  upstairs, a door now and then below), on the scenery and on a woken house's panels alike. Each
+  roof and cone has its tiles' own tint, and a roof is drawn from the halves it's built as
+  (`roofHalves`), so its tiles lie the same before and after it wakes. Each drawn timber is a
   pixel soft at its edge and fades to its share of a pixel when thinner than one, so seen at a
   glance the framing no longer shimmers. Two rows along a street south-east of the stable and the
   hall, with a dirt lane between them, and the inner west row carried south to z 17 fill out the
   town seen from the wall walk. Up close they're boxes, so the player keeps 1.8 m from every scenery
-  house (`walkable`), which closes the lanes between them: the street south-east of the stable, the
-  alleys behind the west row, the nave and E1, and the east rows. The houses west of the square cast
-  no shadows, because the low sun would throw them over it.
+  house until it wakes (`walkable`), which closes the lanes between them: the street south-east of
+  the stable, the alleys behind the west row, the nave and E1, and the east rows. The houses west
+  of the square cast no shadows, because the low sun would throw them over it.
 
 ## Changes from the design
 
@@ -567,6 +636,10 @@ and on its bed in a crater.
   design had one fixed box with its top at 0 everywhere; `groundAt` gives the bed there.
 - The town hears the gun (phase F), as it hears rockets: the design's reactions answered blasts
   only. The bell rings under a round (`bell.ping`, new) and the signs creak (`sign.creak`, new).
+- The scenery the design made unbreakable breaks once a round or a blast reaches it (the rest of the
+  town, the trees and the hedge, the windmill, the cobbles round the square: see "The scenery round
+  the town"), with three materials more for it (`house`, `roofing`, `leaves`). The bell cracks under
+  a blast, and the props break.
 
 ## Tuning
 
@@ -585,6 +658,9 @@ and on its bed in a crater.
 - Which signs a blast swings: those within 6 m of it (`onBlast`); the breeze: the push in `update`.
 - The front release: `CARRIED` and `GAP` in `falls.ts`.
 - How near the player comes to the scenery houses: `CLEAR` in `scenery.ts` (1.8 m).
+- The scenery round the town once woken: its panels' size (`BAY`, `STOREY`, `T` in `wake.ts`), the
+  wall's lengths (about 6 m: `run` in `town()`), the cobbles' tiles (`tile`, 6 m), and how it breaks
+  (`house`, `roofing`, `leaves` in `materials.ts`).
 - The square's ground: where it breaks (`SQUARE.area`), how big its slabs are (`cell`, 2.5 m: bigger
   are fewer pieces and blockier craters), how deep its layers (`depth`, `underDepth`; the bed is
   computed from them); a crater's size: cobbles' and earth's `reach`; what cracks a slab: their
@@ -842,7 +918,7 @@ square's ground (7,726 pieces).
 - The market hall's upper storey keeps some of its panels where it lands.
 - Now and then a jettied front let go comes to rest leaning against its house instead of falling
   into the square (one run in five at the tavern; none in the four since).
-- The scenery houses are boxes: the player is kept 1.8 m from them, but from the square and the
-  wall walk the lanes between them can be seen into.
+- The scenery houses are boxes until they wake: the player is kept 1.8 m from them, but from the
+  square and the wall walk the lanes between them can be seen into.
 - The parapet's limestone coping reads as coarse sponge on its top up close (one `uvScale` per
   material).

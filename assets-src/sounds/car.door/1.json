@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A car door springing open by itself after its lock is shot: a hard metallic clunk of the latch letting go, then the heavy door swinging open with a short creak of its hinges. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2,
+  "seed": 904191,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaf45dd/8dW4C4vvAHviLsZ5mMRxg_NVabNCpl.flac"
+}

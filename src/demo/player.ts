@@ -29,12 +29,15 @@ export interface PlayerOptions {
   solids?: Solids;
 }
 
-/** A body's shape and pose, as the world has them (three-avbd's Body). */
-export type SolidBody = Pick<Body, 'shape' | 'size' | 'hull' | 'position' | 'rotation'>;
+/** A body's shape and pose, as the world has them (three-avbd's Body); gone once it's not `alive`. */
+export type SolidBody = Pick<Body, 'shape' | 'size' | 'hull' | 'position' | 'rotation'> & { alive?: boolean };
 
-/** Fixed bodies as convex shapes on the CPU (their poses never change), for rays against them. */
+/**
+ * Fixed bodies as convex shapes on the CPU (their poses never change), for rays against them; one
+ * taken out of the world (a dormant tower's stand-in, woken into pieces) is passed through.
+ */
 export class Solids {
-  private readonly shapes: Array<{ convex: Convex; min: V3; max: V3 }> = [];
+  private readonly shapes: Array<{ convex: Convex; min: V3; max: V3; body?: SolidBody }> = [];
 
   constructor(bodies: Iterable<SolidBody> = []) {
     for (const b of bodies) {
@@ -59,7 +62,7 @@ export class Solids {
             min[k] = Math.min(min[k], p[k]);
             max[k] = Math.max(max[k], p[k]);
           }
-      this.shapes.push({ convex, min, max });
+      this.shapes.push({ convex, min, max, body: b });
     }
   }
 
@@ -84,6 +87,7 @@ export class Solids {
   raycast(origin: V3, dir: V3, max: number): { distance: number; point: V3; normal: V3 } | null {
     let best: { t: number; n: V3 } | null = null;
     for (const s of this.shapes) {
+      if (s.body?.alive === false) continue;
       // The ray's box against the shape's first: most are far off
       let out = false;
       for (let k = 0; k < 3 && !out; k++) {

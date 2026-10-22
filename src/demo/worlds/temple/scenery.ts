@@ -1,19 +1,26 @@
-// What doesn't break: the hilltop and the land round it (one mesh from the height function, dry
-// grass and thyme mixed with bare pale rock, cliffs of marble rock down to the sea, ochre hills
-// with dark scrub inland), the sea (shaded on the plane near by and, past it, on a shell round the
-// camera, so it runs on to the horizon), islands in the haze, and scattered olive scrub on the
-// slopes. In the physics world: the plateau, and the cliffs and slopes near it as fixed hulls. The
-// breakable ground on the hilltop is cut out of the land (ground.ts lays it).
+// The scenery: the hilltop and the land round it (one mesh from the height function, dry grass and
+// thyme mixed with bare pale rock, cliffs of marble rock down to the sea, ochre hills with dark
+// scrub inland), the sea (shaded on the plane near by and, past it, on a shell round the camera, so
+// it runs on to the horizon), islands in the haze, olive scrub and loose rocks on the slopes, tufts
+// at the feet of the platforms, two boats far out. In the physics world: the plateau, and the cliffs
+// and slopes near it as fixed hulls. The breakable ground on the hilltop is cut out of the land
+// (ground.ts lays it); the rest of the plateau is laid the same where a blast reaches it (tiles,
+// each its box until then: DormantGround), but under what stands on it. The scrub, the rocks and
+// the boats stand as scenery until a round or a blast reaches them, then are built as pieces; a
+// blast flattens the tufts it reaches. What doesn't break: the land off the plateau (its slopes, the
+// cliffs, the hills inland), the sea and the islands.
 
 import { abs, atan, cameraPosition, clamp, color, Discard, dot, equirectUV, exp, float, Fn, If, max, mix, mx_noise_float, mx_noise_vec3, normalize, normalLocal, normalWorld, positionLocal, positionWorld, pow, reflect, smoothstep, texture, time, uniform, vec2, vec3, vec4 } from 'three/tsl';
 import * as THREE from 'three/webgpu';
 import type { World } from 'three-avbd';
-import { clip, type Convex, hullConvex, type V3 } from '../../../lib/index.ts';
+import { clip, type Convex, type Destruction, hullConvex, type Piece, type V3 } from '../../../lib/index.ts';
+import { DormantGround } from '../../dormant-ground.ts';
+import { DormantUnits, hideInstance } from '../../dormant.ts';
 import type { Sky } from '../../sky.ts';
 import { textured } from '../../textures.ts';
-import { pits, plateau } from './ground.ts';
+import { PLATEAU, pitMaterial, pits, plateau } from './ground.ts';
 import { BASE, landLook } from './land.ts';
-import { AREAS, noise2, northEdge, PLACES, SEA, terrain, westEdge, within } from './layout.ts';
+import { AREAS, LAYERS, noise2, northEdge, PLACES, SEA, terrain, westEdge, within } from './layout.ts';
 
 /** How far the land and the sea plane reach from the middle (m; the camera sees 2 km): the shell round the camera beyond. */
 const REACH = 1700;
@@ -24,13 +31,112 @@ const HAZE = { from: 1000, depth: 1800 };
 type Vec3 = THREE.Node<'vec3'>;
 type Float = THREE.Node<'float'>;
 
+/** What stands as scenery until something reaches it (made dormant in build: dormantScenery), and the plateau's tiles. */
+const units = new DormantUnits();
+let tiles: DormantGround | null = null;
+let solids: World | null = null;
+
 export function buildScenery(scene: THREE.Scene, world: World, sky: Sky): void {
+  units.units.length = 0;
+  patched.clear();
+  solids = world;
   physics(world);
-  scene.add(land());
+  // The plateau but the breakable ground's areas, in tiles cut along their edges, laid as the
+  // fields are where a blast reaches them
+  tiles = new DormantGround(scene, world, {
+    name: 'plateau',
+    area: PLATEAU,
+    tile: 6,
+    cuts: { xs: AREAS.flatMap(([x0, , x1]) => [x0, x1]), zs: AREAS.flatMap(([, z0, , z1]) => [z0, z1]) },
+    top: 0,
+    bottom: -4,
+    skip: ([x0, z0, x1, z1]) => within(AREAS, (x0 + x1) / 2, (z0 + z1) / 2),
+    pit: pitMaterial(),
+    layers: (area) => [{ material: 'earth', under: 'rock', bed: 'rock', area, top: 0, depth: LAYERS.earth, underDepth: -LAYERS.bed - LAYERS.earth, cell: 3, textureFrame: { position: [0, 0, 0] } }],
+  });
+  scene.add(land(tiles));
   const hdr = scene.background as THREE.Texture;
   const sea = seaShading(hdr, scene, sky.sunDirection);
   scene.add(seaPlane(sea), seaShell(sea, sky.sunDirection));
-  scene.add(scrub(), rocks(), tufts(), boats(), pits());
+  scene.add(scrub(), rocks(), (tuftMesh = tufts()), boats(), pits());
+}
+
+/**
+ * The scenery's dormant things (in build, once what stands on the plateau is built): the scrub,
+ * the rocks, the boats, and the plateau's tiles but those under something standing on it (the
+ * platforms, the tholos, the gate, the wall, the trees: they stand on the plateau itself).
+ */
+export function dormantScenery(d: Destruction): void {
+  units.dormant(d);
+  const standing = d.all().filter((p: Piece) => p.state === 'fixed' && !p.ground && p.bounds.min[1] < 0.05);
+  tiles?.dormant(d, ([x0, z0, x1, z1]) => standing.some(({ bounds: b }) => b.min[0] < x1 - 0.05 && b.max[0] > x0 + 0.05 && b.min[2] < z1 - 0.05 && b.max[2] > z0 + 0.05));
+}
+
+/** The bed where a blast has laid the plateau breakable (the world's groundAt there), else null. */
+export const plateauBed = (x: number, z: number): number | null => tiles?.bedAt(x, z) ?? null;
+
+/**
+ * The slopes in the world under what wakes on them beyond where physics() put the land's hulls: the
+ * land's cells (4 m) as fixed hulls, made as they're first needed.
+ */
+const patched = new Set<string>();
+function slopeUnder(x0: number, z0: number, x1: number, z1: number): void {
+  if (!solids) return;
+  for (let i = Math.floor(x0 / 4); i <= Math.floor(x1 / 4); i++)
+    for (let k = Math.floor(z0 / 4); k <= Math.floor(z1 / 4); k++) {
+      const [x, z] = [i * 4, k * 4];
+      // (physics() has the land from -84 to 76)
+      if ((x >= -84 && x + 4 <= 76 && z >= -84 && z + 4 <= 76) || patched.has(`${i},${k}`)) continue;
+      patched.add(`${i},${k}`);
+      const corners: V3[] = [
+        [x, terrain(x, z), z],
+        [x + 4, terrain(x + 4, z), z],
+        [x, terrain(x, z + 4), z + 4],
+        [x + 4, terrain(x + 4, z + 4), z + 4],
+      ];
+      const lo = Math.min(...corners.map((c) => c[1])) - 2;
+      solids.addHull({ points: [...corners, ...corners.map(([cx, , cz]): V3 => [cx, lo, cz])].flat(), fixed: true, friction: 0.8 });
+    }
+}
+
+/** A hull of `points` set on the land there: cut off at the land's height under its middle. */
+function onLand(points: V3[]): V3[] | null {
+  const [x, z] = [points.reduce((a, p) => a + p[0], 0) / points.length, points.reduce((a, p) => a + p[2], 0) / points.length];
+  const shape = hullConvex(points);
+  const cut = shape && clip(shape, [0, -1, 0], -terrain(x, z));
+  return cut ? cut.faces.flatMap((f) => f.pts) : null;
+}
+
+/** The box round some points. */
+function bound(points: V3[]): { min: V3; max: V3 } {
+  return { min: [0, 1, 2].map((k) => Math.min(...points.map((p) => p[k]))) as V3, max: [0, 1, 2].map((k) => Math.max(...points.map((p) => p[k]))) as V3 };
+}
+
+/** An instance's points (the geometry's, placed by its matrix). */
+function instancePoints(g: THREE.BufferGeometry, mesh: THREE.InstancedMesh, i: number): V3[] {
+  const m = new THREE.Matrix4();
+  mesh.getMatrixAt(i, m);
+  const p = g.attributes.position as THREE.BufferAttribute;
+  const v = new THREE.Vector3();
+  const out: V3[] = [];
+  for (let k = 0; k < p.count; k++) out.push(v.fromBufferAttribute(p, k).applyMatrix4(m).toArray() as V3);
+  return out;
+}
+
+/** The tufts (flatten() hides those a blast reaches). */
+let tuftMesh: THREE.InstancedMesh | null = null;
+
+/** A blast at `at` flattens the tufts within `radius` of it. */
+export function flatten(at: V3, radius: number): void {
+  const mesh = tuftMesh;
+  if (!mesh) return;
+  const m = new THREE.Matrix4();
+  const p = new THREE.Vector3();
+  for (let i = 0; i < mesh.count; i++) {
+    mesh.getMatrixAt(i, m);
+    p.setFromMatrixPosition(m);
+    if (m.elements[0] !== 0 && p.distanceTo(new THREE.Vector3(...at)) < radius) hideInstance(mesh, i);
+  }
 }
 
 /** Coordinates along an axis: 1 m apart near the middle, wider and wider out to REACH, and at `edges`. */
@@ -44,8 +150,8 @@ function axis(edges: number[]): number[] {
   return [...new Set([...out.slice(1).map((v) => -v), ...out, ...edges])].sort((a, b) => a - b);
 }
 
-/** The land, with a hole where the breakable ground is laid (the mesh's lines run along its edges). */
-function land(): THREE.Mesh {
+/** The land, with a hole where the breakable ground is laid (the mesh's lines run along its edges), and where the plateau's tiles have been. */
+function land(tiles: DormantGround): THREE.Mesh {
   const xs = axis(AREAS.flatMap(([x0, , x1]) => [x0, x1]));
   const zs = axis(AREAS.flatMap(([, z0, , z1]) => [z0, z1]));
   const nx = xs.length;
@@ -71,7 +177,9 @@ function land(): THREE.Mesh {
   g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   g.setIndex(index);
   g.computeVertexNormals();
-  const mesh = new THREE.Mesh(g, landMaterial());
+  const m = landMaterial();
+  tiles.cut(m, positionWorld.xz);
+  const mesh = new THREE.Mesh(g, m);
   mesh.receiveShadow = true;
   mesh.castShadow = true;
   mesh.name = 'temple:land';
@@ -291,6 +399,25 @@ function scrub(): THREE.InstancedMesh {
   mesh.castShadow = true;
   mesh.receiveShadow = true;
   mesh.name = 'temple:scrub';
+  // Each bush dormant (no body: a round or a rocket through its box wakes it, and meets its
+  // leaves), set on the land; a blast sprays it as leaves
+  const hull = new THREE.IcosahedronGeometry(1, 1);
+  for (let i = 0; i < placed; i++) {
+    const points = instancePoints(hull, mesh, i);
+    mesh.getColorAt(i, tint);
+    const green = tint.getHex();
+    const b = bound(points);
+    units.add({
+      name: 'scrub',
+      bounds: b,
+      instances: [[mesh, i]],
+      build: (d) => {
+        slopeUnder(b.min[0] - 4, b.min[2] - 4, b.max[0] + 4, b.max[2] + 4);
+        const on = onLand(points);
+        if (on) d.addConvex({ material: 'scrub', points: on, tint: green, smooth: 1.2 });
+      },
+    });
+  }
   return mesh;
 }
 
@@ -326,6 +453,21 @@ function rocks(): THREE.InstancedMesh {
   mesh.castShadow = true;
   mesh.receiveShadow = true;
   mesh.name = 'temple:rocks';
+  // Each dormant: woken, a boulder of the same rock set on the land
+  for (let i = 0; i < placed; i++) {
+    const points = instancePoints(geo, mesh, i);
+    const b = bound(points);
+    units.add({
+      name: 'rock',
+      bounds: b,
+      instances: [[mesh, i]],
+      build: (d) => {
+        slopeUnder(b.min[0] - 4, b.min[2] - 4, b.max[0] + 4, b.max[2] + 4);
+        const on = onLand(points);
+        if (on) d.addConvex({ material: 'boulder', points: on });
+      },
+    });
+  }
   return mesh;
 }
 
@@ -429,6 +571,29 @@ function boats(): THREE.Group {
     boat.rotation.y = turn;
     boat.name = 'temple:boat';
     g.add(boat);
+    // Dormant: woken, its hull afloat (on a body at the waterline) and its sail on it; broken, what
+    // comes off sinks
+    boat.updateMatrixWorld(true);
+    const at = (p: V3): V3 => new THREE.Vector3(...p).applyMatrix4(boat.matrixWorld).toArray() as V3;
+    const rotation: [number, number, number, number] = [0, Math.sin(turn / 2), 0, Math.cos(turn / 2)];
+    const box = new THREE.Box3().setFromObject(boat);
+    units.add({
+      name: 'boat',
+      bounds: { min: box.min.toArray() as V3, max: box.max.toArray() as V3 },
+      hide: () => {
+        boat.visible = false;
+      },
+      build: (d) => {
+        solids?.addBox({ size: [1.6, 1, 6], position: at([0, -0.7, 0]), rotation, fixed: true, friction: 0.9 });
+        d.addBox({ material: 'timber', size: [1.6, 0.8, 6], position: at([0, 0.2, 0]), rotation, tint: 0x3a3430 });
+        const sailAt: V3[] = [
+          [0, 0.6, -2.2],
+          [0, 7.5, 0.2],
+          [0, 0.6, 2.4],
+        ];
+        d.addConvex({ material: 'sail', points: sailAt.flatMap(([px, py, pz]) => [at([px - 0.03, py, pz]), at([px + 0.03, py, pz])]), tint: 0xf2ece0 });
+      },
+    });
   }
   return g;
 }

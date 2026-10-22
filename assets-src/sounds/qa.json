@@ -470,5 +470,61 @@
   "bullet.wood:1": {
     "url": "https://v3b.fal.media/files/b/0aae9e56/pNiolmy-2D5KIIBQATdhJ_Q0aRDDiN.flac",
     "answer": "1. HEAR: Four separate, dull thunks with wood splintering at 0s, 2s, 4s, and 6s.\n2. PROBLEMS: none\n3. SCORE: 9"
+  },
+  "bird.hit:0": {
+    "url": "https://v3b.fal.media/files/b/0aaf4348/D1DtNkpGlPk7bkzKHcScp_wppbVGhi.flac",
+    "answer": "HEAR: A soft, muffled thwack (0.1s), followed immediately by a frantic, feathery flutter (0.2s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bird.hit:2": {
+    "url": "https://v3b.fal.media/files/b/0aaf4348/4APZnHlcdC8EshJeOLnF6_Wi24KuCT.flac",
+    "answer": "HEAR: 0.0s: A soft, muffled thwack. 0.2s: A very brief, frantic wing flutter with an airy puff.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "bird.hit:1": {
+    "url": "https://v3b.fal.media/files/b/0aaf4357/dxPseVbru_QGDmw1zkhoe_4AEgoy8o.flac",
+    "answer": "1. HEAR: A soft, muffled thwack (~0.1s), a frantic wing flutter (~0.2s-0.6s), and a final feather puff.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "car.door:0": {
+    "url": "https://v3b.fal.media/files/b/0aaf45cb/vkrEpWFDeViqmFt39_xgl_8POwpsOn.flac",
+    "answer": "1. HEAR: 0s: A sharp metallic clunk. 0.1s: A short, heavy creak.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "car.door:2": {
+    "url": "https://v3b.fal.media/files/b/0aaf45dd/bFl9fzDrFsP59mKMMOUu__sSMkvY8J.flac",
+    "answer": "1. HEAR: (0.0s) A single, sharp metallic latch clunk.\n2. PROBLEMS: The door swing and hinge creak are missing.\n3. SCORE: 4"
+  },
+  "car.lid:0": {
+    "url": "https://v3b.fal.media/files/b/0aaf45cb/OiOYrpPqCUbCfxhFEAmwS_QlBV43s8.flac",
+    "answer": "1. HEAR: A sharp metallic clunk (0.0s), then a fast thwump and a tinny, wobbling boing (0.1s).\n2. PROBLEMS: none.\n3. SCORE: 10"
+  },
+  "car.door:1": {
+    "url": "https://v3b.fal.media/files/b/0aaf45dd/8dW4C4vvAHviLsZ5mMRxg_NVabNCpl.flac",
+    "answer": "1. HEAR: (0.0s) A single, hard metallic clunk.\n2. PROBLEMS: none\n3. SCORE: 4"
+  },
+  "car.lid:1": {
+    "url": "https://v3b.fal.media/files/b/0aaf45cb/JtIDaRP-98cwGoBeMSOjB_G9Az4VZW.flac",
+    "answer": "1. HEAR: 0.1s: A hard metallic latch clunk, followed by the wobble and tinny boing of sheet metal.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "tyre.burst:0": {
+    "url": "https://v3b.fal.media/files/b/0aaf45cc/H28bg1SsHuV3f-fb9bocN_UBGQOPfH.flac",
+    "answer": "1. HEAR: A loud, sharp bang (0s), followed by a strong hiss of escaping air that fades out (0-5s).\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "tyre.burst:1": {
+    "url": "https://v3b.fal.media/files/b/0aaf45dd/OJvZ8M-8wZBn2VSsZyUkm_X7OFiuU6.flac",
+    "answer": "1. HEAR: A loud, sharp bang (0s), followed by a strong hiss of air fading out (0-3s).\n2. PROBLEMS: The initial bang is heavily clipped.\n3. SCORE: 7"
+  },
+  "fuel.leak:0": {
+    "url": "https://v3b.fal.media/files/b/0aaf45cc/FETalhwJyrXzuTPgLETpn_04ZAJ7kP.flac",
+    "answer": "1. HEAR: (0:00-0:15) A constant, thin stream of liquid pours and splashes onto a hard surface with gurgling.\n2. PROBLEMS: none\n3. SCORE: 10"
+  },
+  "tyre.burst:2": {
+    "url": "https://v3b.fal.media/files/b/0aaf45cc/o9CJPdEGViUw4GyFT2KzM_QVT6RIoB.flac",
+    "answer": "HEAR: A loud, sharp pop at 0s, followed by a hiss of escaping air that fades away.\nPROBLEMS: none\nSCORE: 10"
+  },
+  "fuel.ignite:1": {
+    "url": "https://v3b.fal.media/files/b/0aaf45cd/bZwJvH7W7snlNjwcXi1N4_4txg5Sjl.flac",
+    "answer": "HEAR: A deep, sudden whoomph of ignition (0s), followed immediately by a roaring, crackling blaze (0.5s).\nPROBLEMS: none\nSCORE: 10"
+  },
+  "fuel.ignite:0": {
+    "url": "https://v3b.fal.media/files/b/0aaf45dd/Zt5Yj7IH70TvkHEkgYU83_EGFZssS0.flac",
+    "answer": "1. HEAR: (0.0s) A deep, sudden whoomph of ignition, immediately followed by (0.1s) a growing roar and crackle of flames.\n2. PROBLEMS: none\n3. SCORE: 10"
   }
 }

@@ -1,11 +1,12 @@
 // PropMesh: a model (a GLB's meshes, say) drawn on solver bodies, every copy of it in one
 // instanced draw per part. Each instance reads its body's pose from the solver's buffer in the
 // vertex shader, as FragmentMesh does, so a car thrown by a blast moves smoothly between readbacks.
-// The model's own materials are kept (maps, roughness, metalness), with its normal map applied in
-// the body's turning frame. Each copy has its own tint, over the whole model or where its colour
-// map's alpha says (a pack's paint mask).
+// The model's own materials are kept (maps, roughness, metalness, a physical one's clear coat), with
+// its normal map applied in the body's turning frame. Each copy has its own tint, over the whole
+// model, where its colour map's alpha says (a pack's paint mask), or on its paint alone (the
+// materials named paint).
 
-import { attribute, cross, instanceIndex, materialColor, mix, normalize, positionGeometry, saturate, storage, texture, transformNormalToView, uv, varying, vec3, vec4 } from 'three/tsl';
+import { attribute, cross, float, instanceIndex, materialColor, mix, normalize, positionGeometry, saturate, storage, texture, transformNormalToView, uv, varying, vec3, vec4 } from 'three/tsl';
 import * as THREE from 'three/webgpu';
 import type { World } from 'three-avbd';
 import { B_POS, B_ROT, BODY_FLOATS } from 'three-avbd/advanced';
@@ -32,7 +33,7 @@ export class PropMesh extends THREE.Group {
    * sits in the model's, inverted: bodies made from hulls sit at their centre of mass, on their
    * principal axes). `tintMask` 'alpha': a copy's tint goes where the colour map's alpha says.
    */
-  constructor(world: World, model: THREE.Object3D, toBody: THREE.Matrix4, options: { capacity?: number; shadows?: boolean; tintMask?: 'alpha' } = {}) {
+  constructor(world: World, model: THREE.Object3D, toBody: THREE.Matrix4, options: { capacity?: number; shadows?: boolean; tintMask?: 'alpha' | 'paint' } = {}) {
     super();
     if (!world.bodyAttribute) throw new Error('PropMesh: the world has no body attribute (create it with a renderer)');
     this.capacity = options.capacity ?? 256;
@@ -67,10 +68,12 @@ export class PropMesh extends THREE.Group {
       const m = toNodeMaterial(material);
       m.positionNode = rotate(rot, positionGeometry).add(pos);
       // The copy's tint, where the mask lets it (alpha written 1/255 for none: a WebP encoder may
-      // change the colour under alpha 0)
+      // change the colour under alpha 0); a part of a masked model without a map isn't paint (a
+      // car's cabin)
       const base = (m.colorNode ?? materialColor) as unknown as Vec4;
-      const amount = options.tintMask === 'alpha' && m.map ? saturate(texture(m.map, uv()).a.sub(1 / 255).mul(255 / 254)) : null;
-      m.colorNode = vec4(base.rgb.mul(amount ? mix(vec3(1, 1, 1), tint, amount) : tint), base.a) as unknown as THREE.Node<'color'>;
+      const amount = options.tintMask === 'alpha' ? (m.map ? saturate(texture(m.map, uv()).a.sub(1 / 255).mul(255 / 254)) : float(0)) : null;
+      // (Painted by name: the rest of the model as it is)
+      if (options.tintMask !== 'paint' || /^paint\b/i.test(material.name)) m.colorNode = vec4(base.rgb.mul(amount ? mix(vec3(1, 1, 1), tint, amount) : tint), base.a) as unknown as THREE.Node<'color'>;
       const n = varying(rotate(rot, attribute<'vec3'>('normal', 'vec3')));
       let normal: Vec3 = normalize(n);
       const tangent = geometry.getAttribute('tangent') ? attribute<'vec4'>('tangent', 'vec4') : null;
@@ -82,6 +85,8 @@ export class PropMesh extends THREE.Group {
         normal = normalize(t.mul(bump.x.mul(s.x)).add(b.mul(bump.y.mul(s.y))).add(normalize(n).mul(bump.z)));
       }
       m.normalNode = transformNormalToView(normal);
+      // A clear coat turns with the body too (its own normal is the model's, unturned)
+      if ((m as THREE.MeshPhysicalNodeMaterial).isMeshPhysicalNodeMaterial) (m as THREE.MeshPhysicalNodeMaterial).clearcoatNormalNode = transformNormalToView(normalize(n));
       const part = new THREE.Mesh(geometry, m);
       part.frustumCulled = false;
       part.castShadow = part.receiveShadow = options.shadows ?? true;
@@ -99,6 +104,14 @@ export class PropMesh extends THREE.Group {
     (this.tints.array as Float32Array).set(tint, 4 * this.slots.length);
     this.slots.push(slot);
     this.sync();
+  }
+
+  /** Tint the copy on body `slot` anew (a car burnt black). */
+  retint(slot: number, tint: [number, number, number]): void {
+    const i = this.instances.get(slot);
+    if (i === undefined) return;
+    (this.tints.array as Float32Array).set(tint, 4 * i);
+    this.tints.needsUpdate = true;
   }
 
   /** Stop drawing the model on body `slot`. */
@@ -129,12 +142,16 @@ export class PropMesh extends THREE.Group {
   }
 }
 
-/** A node material with a standard material's look (the loaders make plain ones). */
+/** What a physical material has over a standard one that's kept (a car's clear coat). */
+const PHYSICAL = ['clearcoat', 'clearcoatRoughness', 'clearcoatMap', 'clearcoatRoughnessMap', 'ior', 'specularIntensity', 'specularColor', 'sheen', 'sheenColor', 'sheenRoughness'] as const;
+
+/** A node material with a standard (or physical) material's look (the loaders make plain ones). */
 function toNodeMaterial(m: THREE.Material): THREE.MeshStandardNodeMaterial {
   if ((m as THREE.NodeMaterial).isNodeMaterial) return (m as THREE.MeshStandardNodeMaterial).clone();
   const s = m as THREE.MeshStandardMaterial;
-  const out = new THREE.MeshStandardNodeMaterial();
-  for (const key of ['color', 'map', 'roughness', 'roughnessMap', 'metalness', 'metalnessMap', 'emissive', 'emissiveMap', 'emissiveIntensity', 'aoMap', 'aoMapIntensity', 'alphaMap', 'transparent', 'opacity', 'alphaTest', 'side', 'vertexColors'] as const) {
+  const physical = (m as THREE.MeshPhysicalMaterial).isMeshPhysicalMaterial;
+  const out = physical ? new THREE.MeshPhysicalNodeMaterial() : new THREE.MeshStandardNodeMaterial();
+  for (const key of ['color', 'map', 'roughness', 'roughnessMap', 'metalness', 'metalnessMap', 'emissive', 'emissiveMap', 'emissiveIntensity', 'aoMap', 'aoMapIntensity', 'alphaMap', 'transparent', 'opacity', 'alphaTest', 'side', 'vertexColors', ...(physical ? PHYSICAL : [])] as const) {
     const v = (s as unknown as Record<string, unknown>)[key];
     if (v === undefined) continue;
     if (v && typeof (v as THREE.Color).isColor === 'boolean') (out[key as 'color'] as THREE.Color).copy(v as THREE.Color);

@@ -1,5 +1,5 @@
 // The temple: Doric, peripteral, 6 × 11 columns, facing east. A stepped crepidoma (the lower two
-// steps and the stylobate static), columns of eight drums with their capitals, the entablature
+// steps and the stylobate anchors: they hold up the temple over the hollow they hide, and break), columns of eight drums with their capitals, the entablature
 // (architrave of two beams, triglyph frieze with its backers, the geison), the coffered walk
 // between the colonnade and the cella, the cella of limestone in courses with marble antae, porches
 // with two columns in antis, a bronze door (one leaf open), and the timber and terracotta roof

@@ -97,13 +97,13 @@ function frameFloor(d: Destruction, f: Frame, cols: Array<[number, number]>, yb:
 }
 
 /**
- * The longest a slab panel may be: static ones (the ground slab) never break or move, so they're as
- * few as can be; from level 3 up, out of sight from the street, they're bigger.
+ * The longest a slab panel may be: the ground slab's (on the ground, under the shops' thresholds)
+ * and, from level 3 up, out of sight from the street, bigger.
  */
-const STATIC = 9;
+const STATIC = 3;
 const panel = (k: number): number => (k >= 3 ? 3 : 2.2);
 
-/** Slab panels of one level from lz0 to D across lx0 … lx1 (static: the ground slab). */
+/** Slab panels of one level from lz0 to D across lx0 … lx1 (`isStatic`: the ground slab, in bigger panels). */
 function slab(d: Destruction, f: Frame, k: number, lx0: number, lx1: number, lz0: number, D: number, isStatic = false): void {
   const W = lx1 - lx0;
   const most = isStatic ? STATIC : panel(k);
@@ -112,7 +112,7 @@ function slab(d: Destruction, f: Frame, k: number, lx0: number, lx1: number, lz0
     for (let j = 0; j < nz; j++) {
       const [x1, x2] = [lx0 + (i * W) / nx, lx0 + ((i + 1) * W) / nx];
       const [z1, z2] = [lz0 + (j * (D - lz0)) / nz, lz0 + ((j + 1) * (D - lz0)) / nz];
-      f.box(d, 'concrete', x1, levelY(k), z1, x2 - x1, TS, z2 - z1, { tint: 0xb8bcc4, static: isStatic });
+      f.box(d, 'concrete', x1, levelY(k), z1, x2 - x1, TS, z2 - z1, { tint: 0xb8bcc4 });
     }
 }
 
@@ -548,7 +548,7 @@ export function towerA(d: Destruction, lot: Lot, seed: number): void {
     // The slab, butting against the band, which runs along the facade
     slab(d, f, k, 0, W, T, D, k === 0);
     const n = runs(W, k === 0 ? STATIC : 2.2);
-    for (let i = 0; i < n; i++) f.box(d, 'tile', (i * W) / n, levelY(k), 0, W / n, TS, T, { ...tile, static: k === 0 });
+    for (let i = 0; i < n; i++) f.box(d, 'tile', (i * W) / n, levelY(k), 0, W / n, TS, T, { ...tile });
   }
   for (let k = 0; k < lot.floors; k++) {
     const yb = levelY(k) + TS;
@@ -670,7 +670,7 @@ export function shophouse(d: Destruction, lot: Lot, seed: number): void {
     slab(d, f, k, 0, W, T + 0.02, D, k === 0);
     if (k === 0) {
       const n = runs(W, STATIC);
-      for (let i = 0; i < n; i++) f.box(d, 'concrete', (i * W) / n, 0, 0, W / n, TS, T + 0.02, { static: true, tint: 0xb8bcc4 });
+      for (let i = 0; i < n; i++) f.box(d, 'concrete', (i * W) / n, 0, 0, W / n, TS, T + 0.02, { tint: 0xb8bcc4 });
       continue;
     }
     const n = runs(W);
@@ -800,7 +800,7 @@ export function endBlock(d: Destruction, seed: number): { arcade: Piece[]; billb
     slab(d, f, k, 0, W, T, D, k === 0);
     if (k === 0) {
       const n = runs(W, STATIC);
-      for (let i = 0; i < n; i++) f.box(d, 'tile', (i * W) / n, 0, 0, W / n, TS, T, { ...tile, static: true });
+      for (let i = 0; i < n; i++) f.box(d, 'tile', (i * W) / n, 0, 0, W / n, TS, T, { ...tile });
       continue;
     }
     for (let s = 1; s < seams.length; s++) {

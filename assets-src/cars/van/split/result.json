@@ -1,0 +1,84 @@
+{
+ "model": "fal-ai/hunyuan-3d/v3.1/part",
+ "input": "public/models/van.glb",
+ "result_files": [
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf4608/phZSiL5oJeGBdjtl8FZD3_part_0.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_0.glb",
+   "file_size": 2346744
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf4608/MHPFzuN1znpM_MJm_ddIP_part_1.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_1.glb",
+   "file_size": 622868
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf4609/UIGoMhHz8eGp3rerfgY3a_part_2.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_2.glb",
+   "file_size": 606852
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf4609/cqB0j3E8q7XyZ6kme1unt_part_3.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_3.glb",
+   "file_size": 642032
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf4609/msqn3aWjRjJkMCHwLdwvv_part_4.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_4.glb",
+   "file_size": 474656
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf460a/SbLPrWAZ8jKK_R_rOYK-__part_5.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_5.glb",
+   "file_size": 565088
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf460a/z8ARigC6i-WhnR3jGlYt8_part_6.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_6.glb",
+   "file_size": 31733496
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf460b/uTodjnrn1S46HUF2J6bO6_part_7.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_7.glb",
+   "file_size": 311028
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf460b/9KK8lA0thG4thUvRsdeOY_part_8.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_8.glb",
+   "file_size": 304264
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf460b/tLHWjKNCaCecvGXplZ7v2_part_9.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_9.glb",
+   "file_size": 614372
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf460c/O1IDXZNb13h7R1362CwSh_part_10.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_10.glb",
+   "file_size": 728464
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf460c/Lwz27ZI0XhOSwLTll_Goc_part_11.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_11.glb",
+   "file_size": 726804
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf460d/5Ex4mQeRcYNs4amEGLFpH_part_12.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_12.glb",
+   "file_size": 5989432
+  }
+ ]
+}

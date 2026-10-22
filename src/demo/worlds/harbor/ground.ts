@@ -1,14 +1,15 @@
 // The yard's ground: the quay's edge with the water beyond it, and the apron, the yard's paving laid
 // as reinforced concrete slabs over a bed of crushed stone (Destruction.addGround): a rocket craters
 // it, the gun chips it. It runs from the quay's edge strip (the kerb, the bollards and the pair of
-// boxes there stand on the fixed deck) to the far blocks, round the crane's rail beams, which stay.
+// boxes there stand on the fixed deck) to the far blocks, round the crane's rail beams (pieces of
+// their own: scenery.ts railBeams).
 
 import type { Destruction, Ground } from '../../../lib/index.ts';
 
 /** Where things are: the quay edge (north of it the water), and the water's level. */
 export const QUAY = { edge: -30, water: -1.8, seabed: -9 };
 
-/** The crane's rail beams: concrete strips flush with the deck along x, a rail down each (they don't break). */
+/** The crane's rail beams: concrete strips flush with the deck along x, a rail down each (pieces on the bed: scenery.ts railBeams). */
 export const BEAMS = { x0: -36, x1: 8, rails: [-21, -1], half: 0.4 };
 
 /**

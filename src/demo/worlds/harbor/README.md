@@ -5,9 +5,12 @@ yellow gantry crane with a 40 ft box hanging from its ropes, a corrugated wareho
 inside, three fuel tanks in a bund, light masts, pallets, drums and vehicles, and dark water beyond
 with a container ship, the far quay's cranes and a lighthouse in the fog. The yard's paving breaks:
 reinforced concrete slabs over crushed stone, which a rocket craters and the machine gun chews.
-The yard answers the gun as it does a rocket: a fuel tank leaks from each hole and, holed enough,
-catches fire; a drum leaks; the gulls on the bollards and the crane go up; the open box's doors
-swing. `?world=harbor`.
+Round it everything stands as scenery until a round or a blast reaches it, then breaks as the yard
+does: the deck round the apron, the quay wall, the ship, the far quay and its cranes, the
+breakwater and its lighthouse, the buoys and the port behind the yard (Round the yard); only the
+water and the sky don't. The yard answers the gun as it does a rocket: a fuel tank leaks from each
+hole and, holed enough, catches fire; a drum leaks; the gulls on the bollards and the crane go up;
+the open box's doors swing. `?world=harbor`.
 
 The plan it was built from is `DESIGN.md`; where the build differs, this file says so.
 
@@ -17,10 +20,10 @@ The plan it was built from is `DESIGN.md`; where the build differs, this file sa
 |---|---|
 | `index.ts` | The definition: sky and look, audio, and the reactions to blasts and to the gun (tipping stacks, splashes, tanks leaking and burning, drums leaking, the open box's doors, booms on landing, gulls, the ship's horn, the crane's beacon, sea fog) |
 | `meta.ts` | The picker card (order 4) |
-| `materials.ts` | The yard's 15 materials (14 drawn; `drum` is for props), and the dust and chip colours (the apron's too) |
+| `materials.ts` | The yard's 16 materials (14 drawn at load; `drum` is for props, `plate` for the ship once it wakes), and the dust and chip colours (the apron's too) |
 | `ground.ts` | Where the quay ends and the water begins, the crane's rail beams, the roofs and drains, and the apron: its areas, depths and bed (`APRON`, `onApron`, `layApron`) |
 | `paving.ts` | The pavement's look at a point on the deck (the drawn deck's and the slabs' alike), its painted lines, drains and oil, and the apron's two materials (`slab`, `gravel`) |
-| `fire.ts` | A burning tank's flames and light (its smoke is the demo's puffs), and the leaks: a stream down from each hole, a pool spreading at its foot (`Leaks`) |
+| `../../fire.ts` | A burning tank's flames and light (its smoke is the demo's puffs), and the leaks: a stream down from each hole, a pool spreading at its foot (`Leaks`); shared since Brick Street's cars burn too |
 | `gulls.ts` | The gulls: perched on the bollards, the crane and the stacks, put up by a blast or the gun, wheeling over the harbour, back once it's quiet |
 | `frame.ts` | A local frame for laying structures out from corner coordinates (so neighbours share faces exactly), and `weaken` (lighter-built joints) |
 | `containers.ts` | The container builder, the yard's blocks, the quay pair and `jolt`, and `tipStacks` |
@@ -29,21 +32,24 @@ The plan it was built from is `DESIGN.md`; where the build differs, this file sa
 | `tanks.ts` | The fuel tanks and the bund |
 | `yard.ts` | Pallets, cartons, light masts, kerb, bollards, barriers, the crane rails' end stops, the site office |
 | `props.ts` | Where the harbor pack's models stand, and the drums' paints |
-| `scenery.ts` | The deck (its fixed body, the bed under the apron, the pavement drawn round it, what a crater shows past the slabs), the crane's rails, quay wall, water, ship, far quay, breakwater, buoys, the port beyond |
+| `scenery.ts` | The deck (its fixed body, the bed under the apron, the pavement drawn round it and in the world in 12 m tiles, `DormantGround`, each laid breakable as the apron is where a blast reaches it: `deckBed`; what a crater shows past the slabs), the crane's rail beams as pieces (`railBeams`), the water, and, each dormant until something reaches it (`dormantScenery`): the quay wall in 12 m lengths with its fenders and ladders, the container ship (its hull in 10 m lengths, the bow, the 552 boxes on its deck, the house), the far quay's three cranes on their dormant quay, the breakwater and its lighthouse, the buoys, the port beyond (box stacks, gantries, light masts, sheds) |
 
 ## How it's built
 
-About 6,800 pieces and 33 props (6,835 bodies: the forklifts and tractors are two each; 261,600
-vertices): the apron's slabs 816, containers 3,620 (54 boxes, 54 or 84 pieces each, the closed
-doors' 212 bars `steel`), steel 1,000 more (the crane, the shed's frame, racking, masts, ladders),
-timber and cardboard 580, cladding and doors 330, tanks and their roofs 220, concrete 165.
+About 6,900 pieces and 33 props (6,907 bodies, counted from the code, not measured: the 6,835
+measured, the forklifts and tractors two each, 261,600 vertices then, and the crane's rail beams'
+72 since): the apron's slabs 816, containers 3,620 (54 boxes, 54 or 84 pieces each, the closed
+doors' 212 bars `steel`), steel about 1,030 more (the crane, the shed's frame, racking, masts,
+ladders, the rails), timber and cardboard 580, cladding and doors 330, tanks and their roofs 220,
+concrete 205 (the rail beams' 40 with it). What stands round the yard adds no pieces until it
+wakes (Round the yard).
 
 - **The apron** (`ground.ts`, `Destruction.addGround`): the yard's paving from 4 m in from the
   quay's edge (z -26) to the far blocks (z 42), x -48 to 48, in five areas round the crane's two
-  rail beams (x -36 to 8, 0.8 m wide), which stay, as does the quay's edge strip with its kerb,
-  bollards and the pair of boxes. Each area is `slab` 0.3 m (reinforced concrete) over `gravel`
-  0.4 m (crushed stone), on the bed at -0.7 m (the deck's fixed body there; `groundAt` gives it on
-  the apron). Slabs are the pavement's own 4 m: west and east of the beams they lie joint to joint
+  rail beams (x -36 to 8, 0.8 m wide: pieces of their own, below); the quay's edge strip with its
+  kerb, bollards and the pair of boxes stays as it was. Each area is `slab` 0.3 m (reinforced
+  concrete) over `gravel` 0.4 m (crushed stone), on the bed at -0.7 m (the deck's fixed body
+  there; `groundAt` gives it on the apron). Slabs are the pavement's own 4 m: west and east of the beams they lie joint to joint
   with its map; between the beams the bands are 3.84 to 4.6 m deep. 408 slabs a layer, all mapped
   from one frame (x 0 on the quay's edge), so the map, its joints and its paint run on across them
   and across the drawn deck round them. Everything in the yard stands on them and bonds to them:
@@ -63,10 +69,16 @@ timber and cardboard 580, cladding and doors 330, tanks and their roofs 220, con
   - `gravel` sprays: no cell of it under 1.2 m is a body (`minBodySize`), so what a blast reaches
     flies as grit, and what it doesn't stands round the pit (`keepSmall`). As bodies, its cells lay
     round a crater as blocks of stone, and filled it.
-  - The deck's fixed body is the bed under the apron, and at 0 round it and under the beams, down to
-    12 m, so nothing slips under them from a crater. Drawn: the bed (crushed stone), the deck's edge
-    all round (its slab over the stone) and the beams' concrete sides, where a crater at the edge
-    shows them.
+  - The deck's fixed body is the bed under the apron (the rail beams stand on it), round it the
+    dormant deck's 12 m tiles (fixed boxes from 0 down to 12 m, so nothing slips under them from a
+    crater; Round the yard) out to 240 m either way and 320 m back, and at 0 past them. Drawn: the
+    bed (crushed stone) and the deck's edge all round (its slab over the stone), where a crater at
+    the edge shows them.
+- **The crane's rail beams** (`railBeams` in `scenery.ts`, laid on the apron's bed before the
+  yard, so the crane stands on them): each a concrete beam from the bed up flush with the deck, in
+  20 blocks of 2.2 m, darker than the rest (`concrete` tinted 0x5e605e), and on it a steel rail
+  standing 7 cm in lengths of 2.05 m (`steel`), but under the crane's bogies, which stand on the
+  beam: 40 blocks and 32 lengths of rail in all. They were fixed bodies, drawn as strips.
 - **Containers** are bonded parts: corner posts in two halves, rails, floor, roof, wall panels in
   two rows, end wall, door leaves and locking bars. The bars are `steel`, 4.8 by 6 cm (8 kg), a
   little darker than the frame, on leaves set in 5 cm (so they stand inside the posts' faces): drawn
@@ -145,7 +157,54 @@ timber and cardboard 580, cladding and doors 330, tanks and their roofs 220, con
   as 16-sided prisms, so drums and reels roll (a lying drum pushed at 3 m/s rolls 3 m and slows).
   The forklifts collide as their body and their forks, the tractors as their chassis and their
   cab (`PropModel.colliders`): what lands on the forks or the deck lies there, not on a hull drawn
-  from the mast or the cab roof.
+  from the mast or the cab roof. Each of the four has its shards (`<name>.shards.glb`): a blast's
+  heart (within 0.85 of its radius) or enough rounds breaks it into them.
+
+## Round the yard
+
+What's round the yard (`scenery.ts`) stands as scenery until something reaches it
+(`Destruction.addDormant`, through `DormantUnits` in `../../dormant.ts` and `DormantGround` in
+`../../dormant-ground.ts`): drawn (instanced where it repeats), and solid as fixed bodies, until a
+round or a blast reaches it; then its instances are hidden, its bodies taken out of the world, and
+it's built as pieces (`awaken`), and what stood on it stands on its pieces. A blast wakes what's
+dormant within 1.25 of its radius, a round the first thing dormant on its way (and goes on into
+its pieces), and a piece that goes from under something dormant wakes it. `build()` makes it all
+dormant (`dormantScenery`) once the yard is up.
+
+- **The deck** round the apron (`deck`): 480 by 320 m in tiles of 12 m, but over the apron, each a
+  fixed box from the deck's top to 12 m down, which rounds strike as the scenery it is. A blast
+  reaching a tile lays it as the apron is laid (`slab` over `gravel` on the bed, mapped from the
+  quay's edge as the apron is, so the paving runs on), cuts the drawn deck away over it, and walls
+  its pit's sides with the crushed stone where it meets a tile still dormant; `groundAt` gives its
+  bed there from then on (`deckBed`).
+- **The quay wall** (`quayWall`): its face from 3 m under the deck up in 40 lengths of 12 m, each
+  dormant. Woken, a length is blocks of `concrete` 2 m long, 1 m high and 0.6 m thick on a ledge
+  (the lowest row wet and dark), with its fenders (`cable`, lying along the wall) and its ladder if
+  it has one (`iron` stiles and rungs). Under it the rest of the wall stays a drawn face, and the
+  ledge a fixed body.
+- **The container ship** (`ship`): its hull under the water a fixed body, and above it 19 lengths of
+  10 m, each dormant with the hatch covers over it. Woken, a length's sides are plating in rows
+  drawn as the hull is (the red boot top 2.6 m up from the water, black, the pale strake under the
+  deck edge, black to the deck), with a bulkhead at its fore end and one across its middle (and at
+  the stern), the deck resting on them and the covers on it. They're `plate` (`materials.ts`): steel
+  drawn 40 cm thick and light for it, bending before it tears, so a blast tears a hole in it (the
+  plate it strikes cut up, the nearest thrown) and the rest stands. The bow wakes in six slices
+  along it. Each of the 552 boxes on its deck (12 bays of 40 ft boxes, 12 across, 3 to 6 tiers) is
+  dormant on its own and woken as the yard's boxes are (`container()`, in its instance's paint),
+  standing on what's under it. The house aft wakes as `cladding`: its walls in storeys (the window
+  bands dark), its roof, the bridge wings and the funnel.
+- **The far quay** (`farQuay`): its three ship-to-shore cranes each dormant (their members fixed
+  boxes; woken, `steel` in lengths of up to 3 m, the booms with them), on a quay of dormant ground
+  in 10 m tiles that a blast lays breakable as the apron is (in 3 m slabs).
+- **The breakwater** wakes as three courses of rock (`concrete` blocks of up to 4 m), and **its
+  lighthouse** as seven courses of eight blocks each (the red band's red), its lantern a `lamp`
+  and its cap concrete.
+- **The buoys** wake as their body and top in `iron`, loose, to sink.
+- **The port beyond** (`farYard`): each of its 651 boxes dormant and woken as the yard's are; the
+  four rubber-tyred gantries and the six light masts woken as `steel` in lengths (a mast's head a
+  `lamp`); the four far sheds and the near one as `cladding` walls round them and a roof (the near
+  one's roof and doors with it).
+- **What doesn't break**: the water and the sky.
 
 ## Look
 
@@ -173,7 +232,8 @@ timber and cardboard 580, cladding and doors 330, tanks and their roofs 220, con
   every 4 cm) and the oil under the vehicles, each pixel by how much of it the line covers (they
   thin out far off rather than flicker). Over the wet, as when they were strips on the deck: the
   water stands round them. They go with the chunks a blast throws and stay on the cells a bullet
-  leaves. Only the yellow line across the two rail beams is still a strip.
+  leaves. The yellow line that crossed the two rail beams as a strip is gone with the strips: the
+  beams are concrete pieces now, and the lane's edge stops at each.
 - Wet patches lie where water would: near the drain grates, along the crane rails and the lane
   edges, fewer elsewhere (a 0.012 noise), none under the shed or the office (`ROOFS`). Their edges
   dull through roughness 0.25 before the middle goes glossy.
@@ -181,8 +241,9 @@ timber and cardboard 580, cladding and doors 330, tanks and their roofs 220, con
   base pack's `concrete_wall_008`, which read olive in shade under the cool grade; the bund,
   plinth and office blocks are tinted `0xb4b8b8`. Each block shows its own patch of the map
   (`uvJitter: 1`), as do the steel members and the pallet boards.
-- The crane rails are 7 cm steel boxes with a bright worn head strip, on a darker concrete beam
-  (x -36 to 8, fixed: the apron is laid round it).
+- The crane rails are 7 cm lengths of `steel` (0x4a4c4e) on a darker concrete beam (x -36 to 8),
+  both pieces (`railBeams`; the apron is laid round the beams); the bright worn head strip went
+  with the drawn rails.
 - The water is opaque, dark (roughness 0.13, `envMapIntensity` 0.3), with five travelling waves in
   its normals, each wave's crests bent by a slow noise, and a fine noise chop; each fades where it
   would be finer than a couple of pixels (it only shimmered). Its normals are computed in the
@@ -247,9 +308,10 @@ cardboard's knock (`wood.impact`) lower. The world plays the rest itself:
   `container.clang`. The 4-high stack's topple plays 1 to 3 booms (8 runs), the crane's four-leg
   collapse 7 to 13, boxes and girders (9 runs). (Not `MaterialSounds.land`: it has no least size, so
   every two-panel section thrown by a blast would boom at half volume or more.)
-- Footsteps by what's underfoot (`footsteps.surface`): `steps.metal` on boxes, the crane, the tanks,
-  the stiles, the office floor and the drums, whole or fallen; `steps.rubble` on any other rubble
-  (concrete, timber, cardboard, glass), on the apron's crushed stone in a crater and on its bed;
+- Footsteps by what's underfoot (`footsteps.surface`): `steps.metal` on boxes, the crane, the
+  ship's plating, the tanks, the stiles, the office floor and the drums, whole or fallen;
+  `steps.rubble` on any other rubble (concrete, timber, cardboard, glass), on the apron's crushed
+  stone in a crater and on its bed;
   `steps.asphalt` (dry) on concrete pieces and under the shed's and the office's roofs (a pallet in
   the shed too); `steps.wet` on the deck elsewhere, the apron's slabs included.
 - The machine gun's strikes (`MaterialSounds.bullet`, each material's): `bullet.metal` on every
@@ -435,10 +497,11 @@ cardboard's knock (`wood.impact`) lower. The world plays the rest itself:
     38), the crane's legs none; the shed's cladding 3 to 6 (from 9); a roller door 7 (from 3), a
     hole punched through its slats; a cast-iron bollard 3 of 36 (from 24: knocked off its base);
     panes, pallets and cartons at the first round (42 of 42 into a loaded pallet, +79 pieces, bits
-    at up to 15 m/s landing within 3 m); props never break (a forklift doesn't move, a cable reel
-    creeps at 0.1 m/s). The fastest piece a burst let go 18 m/s; the farthest came to 29 m from
-    where it was struck (in the burst at the roller door; in the others within 11 m). Frames while
-    firing: mean 17 to 31 ms, as standing on this GPU (17 to 26).
+    at up to 15 m/s landing within 3 m); props never broke then (a forklift doesn't move, a cable
+    reel creeps at 0.1 m/s; they have their shards since: How it's built). The fastest piece a
+    burst let go 18 m/s; the farthest came to 29 m from where it was struck (in the burst at the
+    roller door; in the others within 11 m). Frames while firing: mean 17 to 31 ms, as standing on
+    this GPU (17 to 26).
   - The slab's `minBodySize` 0.3 (after the independent check; a build without it and one with it,
     in turns): 10 s held at a fresh slab (141 rounds), 121 broke something without it, leaving a
     hole of 0.2 m² in a heap of wedges (+99 slab cells standing round it); with it 114, the slab cut
@@ -559,6 +622,8 @@ Scripted from the page (`demo.blast`, `demo.shoot`, `demo.stats()`):
   the bund wall.
 - The cladding uses `harbor_cladding` (its own set) instead of the container texture.
 - One drum model tinted per copy, not one blue drum (and no recoloured copies).
+- The distant scenery breaks (the design has it unbreakable): it stands as scenery until something
+  reaches it (Round the yard). The crane rails are pieces, not strips.
 
 ## Known issues
 

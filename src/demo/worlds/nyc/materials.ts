@@ -4,7 +4,7 @@
 
 import { abs, color, dFdx, dFdy, float, floor, fract, fwidth, hash, length, luminance, materialColor, mix, smoothstep, step, texture, uv, vec2, vec3, vec4 } from 'three/tsl';
 import * as THREE from 'three/webgpu';
-import { type BreakableMaterial, groundPresets, material, pieceFrame, presets, type V3 } from '../../../lib/index.ts';
+import { type BreakableMaterial, groundPresets, material, pieceFrame, presets, type V3, vehiclePresets } from '../../../lib/index.ts';
 import { inside, textured } from '../../textures.ts';
 import { STREET } from './city.ts';
 
@@ -199,6 +199,13 @@ export function demoMaterials(): Record<string, BreakableMaterial> {
     // one loose and it slid off as if light); too small to cut, so a blast throws one whole
     manhole: presets.metal({ surface: manholeSurface(), density: 7, impact: 2e4, inside: 0x5a4a40, uvScale: 2 }),
     foliage: material({ density: 0.3, strength: 3e3, fragmentSize: 0.15, minSize: 0.2, dustSize: 0.4, maxPieces: 4, rubbleLife: 6, surface: new THREE.MeshStandardNodeMaterial({ color: 0xffffff, roughness: 0.9 }), inside: 0x4a6a2a, insideMap: 0 }),
+    // The cars (src/lib/vehicle.ts): painted sheet steel, tinted tempered glass (a round, and it's
+    // gone to small cubes), tyres, plastic bumpers
+    carbody: vehiclePresets.carbody(),
+    // (Tinted, but the cabins show through)
+    carglass: vehiclePresets.carglass({ surface: new THREE.MeshStandardNodeMaterial({ color: 0x3a4c56, roughness: 0.03, metalness: 0.35, transparent: true, opacity: 0.45 }), inside: 0xc8dce4 }),
+    tyre: vehiclePresets.tyre(),
+    bumper: vehiclePresets.bumper(),
     // Lit while it hangs: a lamp knocked down goes dark
     lamp: material({
       density: 0.6,

@@ -10,7 +10,7 @@ import type * as THREE from 'three/webgpu';
 import type { World } from 'three-avbd';
 import type { BreakableMaterial, Destruction, DestructionOptions, Ground, ImpactEvent, MaterialSounds, PropModel, SoundEngine, SoundOptions, V3, Voice } from '../../lib/index.ts';
 import type { DustPalette, Effects, SmokeOptions } from '../effects.ts';
-import type { Burst, BulletHit } from '../gun.ts';
+import type { Burst, BulletHit, Round } from '../gun.ts';
 import type { Sky, SkyOptions } from '../sky.ts';
 import type { HazeOptions, WeatherOptions } from '../weather.ts';
 
@@ -35,6 +35,15 @@ export interface WorldRuntime {
   effects: Effects;
   /** Seconds since it started. */
   time: number;
+  /** What's under a point in the open: the ground, or the top of what stands on it there. */
+  floor(at: V3): number;
+  /**
+   * A blast at `at` as a rocket's is (`radius`: default the world's blastRadius): the Destruction's,
+   * its fireball, soot, sound and shake, and onBlast. For what the world blows up itself: a car's
+   * tank. `throws`: how hard it throws what it lets go (Destruction.explode's speed and spin; a
+   * rocket's 15 and 12).
+   */
+  blast(at: V3, radius?: number, throws?: { speed?: number; spin?: number }): void;
 }
 
 export interface WorldLook {
@@ -125,8 +134,11 @@ export interface WorldDefinition extends WorldMeta {
   /** The height pieces stand on (Destruction's `ground`; default 0; null: none, use static pieces). */
   ground?: number | null;
   /**
-   * What doesn't break: the ground and the far scenery, drawn, and in the world where things land on
-   * it. Its fixed bodies are solid to the player too (walls to walk into, tops to stand on).
+   * What stands as scenery: the ground and what's round the breakable part, drawn, and in the world
+   * where things land on it. What of it should break is made a dormant thing in build() (it wakes as
+   * pieces when a round or a blast reaches it: docs/making-a-world.md); the rest (terrain, water,
+   * sky) never breaks. Its fixed bodies are solid to the player too (walls to walk into, tops to
+   * stand on).
    * Lights: add every light the world will ever use here or in build(), switched off (intensity 0)
    * until wanted. A light added or removed later, or a shadow switched on or off, recompiles every
    * lit material (a frame of over half a second in Brick Street); its intensity, colour and place
@@ -181,6 +193,11 @@ export interface WorldDefinition extends WorldMeta {
   /** Reactions: to blasts, to loose pieces striking things, and each frame. */
   onBlast?(at: V3, radius: number, rt: WorldRuntime): void;
   onImpact?(e: ImpactEvent, rt: WorldRuntime): void;
+  /**
+   * The gun: each round as it flies, from the eye to what it struck (or as far as it goes), before
+   * the strike: for what's in the air on its way, a bird (src/demo/birds.ts). Up to 14 a second.
+   */
+  onRound?(round: Round, rt: WorldRuntime): void;
   /**
    * The gun: each bullet that strikes something (a piece, the scenery or the ground; not the sky or
    * the water), after the strike's chips, mark and sound: a car's alarm, a sign's sparks, a bell's

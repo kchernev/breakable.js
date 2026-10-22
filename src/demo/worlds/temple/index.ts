@@ -15,7 +15,7 @@ import { AREAS, LAYERS, PLACES, SEA, terrain, within } from './layout.ts';
 import { templeMaterials } from './materials.ts';
 import { meta } from './meta.ts';
 import { placeProps } from './props.ts';
-import { buildScenery } from './scenery.ts';
+import { buildScenery, dormantScenery, flatten, plateauBed } from './scenery.ts';
 import { buildAltar, buildFragments, buildPedestals, buildRamp, buildStatueBase, buildStelai, buildTemenos, buildVotive } from './small.ts';
 import { buildStoa } from './stoa.ts';
 import { buildTemple } from './temple.ts';
@@ -201,7 +201,8 @@ const world: WorldDefinition = {
     ]);
   },
   // On the breakable ground, its bed: the slabs over it are found as pieces
-  groundAt: (x, z) => (within(AREAS, x, z) ? LAYERS.bed : terrain(x, z)),
+  // On the plateau where a blast has laid it, its bed too
+  groundAt: (x, z) => (within(AREAS, x, z) ? LAYERS.bed : (plateauBed(x, z) ?? terrain(x, z))),
   // The sea: bullets go into it unseen
   water: (x, z) => terrain(x, z) < SEA,
   // A pit's side where the ground ends is the land's cut (pits() in ground.ts), its earth over its
@@ -227,6 +228,8 @@ const world: WorldDefinition = {
     buildTemenos(k);
     buildFragments(k);
     buildTrees(k);
+    // The rest of the plateau (but under what stands on it), the scrub, the rocks and the boats: scenery until something reaches them
+    dormantScenery(d);
     // Only the statue and the tripods ring: the doors and shields have the material's own sounds
     state.bronze = new Set(placeProps(d, models, votiveTop, statueTop, k.rand));
     return { feet: [29.5, 0, 3.4], look: [-4, 6, -3] };
@@ -266,6 +269,7 @@ const world: WorldDefinition = {
       bronze: { break: 'metal.bend', impact: 'metal.impact.small', heavyImpact: 'metal.impact.small', strain: 'metal.bend', bullet: 'bullet.metal', pitch: { bullet: 0.85 } },
       // Through leaves: a soft rustle and thud, not a thunk
       foliage: { break: 'foliage.break', bullet: 'bullet.dirt', pitch: { bullet: 1.3 } },
+      scrub: { break: 'foliage.break', bullet: 'bullet.dirt', pitch: { bullet: 1.3 } },
       cypress: { break: 'foliage.break', bullet: 'bullet.dirt', pitch: { bullet: 1.3 } },
       bark: { break: 'foliage.break', impact: 'wood.impact', heavyImpact: 'wood.impact', bullet: 'bullet.wood', pitch: { bullet: 0.85 } },
       embers: { break: 'wood.break', impact: 'wood.impact', bullet: 'bullet.wood', pitch: 1.3 },
@@ -275,23 +279,41 @@ const world: WorldDefinition = {
       fill: { impact: 'steps.rubble', debris: 'brick.debris', bullet: 'bullet.dirt', pitch: { bullet: 1.1 } },
       earth: { impact: 'steps.rubble', debris: 'steps.rubble', bullet: 'bullet.dirt' },
       rock: { break: 'concrete.break', impact: 'brick.impact.small', heavyImpact: 'concrete.impact', debris: 'brick.debris', bullet: 'bullet.concrete', pitch: { impact: 0.9, debris: 0.9, bullet: 0.9 } },
+      boulder: { break: 'concrete.break', impact: 'brick.impact.small', heavyImpact: 'concrete.impact', debris: 'brick.debris', bullet: 'bullet.concrete', pitch: { impact: 0.95, debris: 0.95, bullet: 1 } },
+      sail: { bullet: 'bullet.dirt', pitch: { bullet: 1.4 } },
     },
     // Gravel and dry grass on the ground (the earth and the rubble in a crater too), stone on steps,
     // floors, the court's flags, the rock and a crater's bare floor
     footsteps: { hard: 'steps.gravel', surface: (at, material, rubble) => ((material ? !rubble && PAVED.has(material) : at[1] < LAYERS.bed + 0.1 && within(AREAS, at[0], at[2])) ? 'steps.asphalt' : undefined) },
   },
-  dust: { marble: 0xfbf8f2, drum: 0xfbf8f2, triglyph: 0xfbf8f2, ruin: 0xf2eadc, limestone: 0xeee6d4, terracotta: 0xdcc0a8, timber: 0x9a7a58, bronze: 0x8a7a5a, foliage: 0x9aa874, cypress: 0x7d8f62, bark: 0x8a7458, embers: 0x6a625a, paving: 0xf6f2ea, fill: 0xe2dacb, earth: 0xc9ab8c, rock: 0xeee6d4 },
-  chips: { marble: 0xf4f0e6, drum: 0xf4f0e6, triglyph: 0xf4f0e6, ruin: 0xe2d4b8, limestone: 0xcdb88e, terracotta: 0xb0532e, timber: 0x8a6a48, bronze: 0x8a6a3a, foliage: 0x6f7f45, cypress: 0x3e5a32, bark: 0x6a5a48, embers: 0x1e1a18, paving: 0xf0eae0, fill: 0xd6cdbd, earth: 0x8e5e40, rock: 0xd8ccb4 },
+  dust: { marble: 0xfbf8f2, drum: 0xfbf8f2, triglyph: 0xfbf8f2, ruin: 0xf2eadc, limestone: 0xeee6d4, terracotta: 0xdcc0a8, timber: 0x9a7a58, bronze: 0x8a7a5a, foliage: 0x9aa874, scrub: 0x9aa874, cypress: 0x7d8f62, bark: 0x8a7458, embers: 0x6a625a, paving: 0xf6f2ea, fill: 0xe2dacb, earth: 0xc9ab8c, rock: 0xeee6d4, boulder: 0xeee6d4, sail: 0xf2ece0 },
+  chips: { marble: 0xf4f0e6, drum: 0xf4f0e6, triglyph: 0xf4f0e6, ruin: 0xe2d4b8, limestone: 0xcdb88e, terracotta: 0xb0532e, timber: 0x8a6a48, bronze: 0x8a6a3a, foliage: 0x6f7f45, scrub: 0x5a6a3a, cypress: 0x3e5a32, bark: 0x6a5a48, embers: 0x1e1a18, paving: 0xf0eae0, fill: 0xd6cdbd, earth: 0x8e5e40, rock: 0xd8ccb4, boulder: 0xd8ccb4, sail: 0xe8e0d0 },
   // Leaves, timber, metal and ash raise little dust (leaves least: a crown coming down is a little leaf dust)
-  dustAmount: { foliage: 0.12, cypress: 0.12, timber: 0.6, bark: 0.6, bronze: 0.15, embers: 0.3 },
+  dustAmount: { foliage: 0.12, scrub: 0.12, cypress: 0.12, timber: 0.6, bark: 0.6, bronze: 0.15, embers: 0.3 },
   blastRadius: 2.4,
   onStart(rt) {
     rt.destruction.on('landed', (e) => landed(e, rt));
+    // A bird shot down into the sea: a splash
+    const splash = (at: V3) => {
+      if (at[1] > SEA + 0.2) return;
+      rt.effects.puff([at[0], SEA + 0.2, at[2]], { color: 0xf6f8fa, size: 0.8, rise: 1, life: 1.2, opacity: 0.6, velocity: [0, 2, 0] });
+      rt.sound.play('sea.splash', { at, volume: 0.3, pitch: 1.4 });
+    };
+    if (state.flock) state.flock.onLanded = splash;
+    if (state.gulls) state.gulls.onLanded = splash;
   },
   onBlast(at, radius, rt) {
+    flatten(at, radius * 1.2);
+    state.flock?.blast(at, radius, rt);
+    state.gulls?.blast(at, radius, rt);
     hush(1, rt);
     scatter([at], 25, rt);
     if (radius >= 2) echo(rt);
+  },
+  // A jackdaw or a gull in a round's way is shot down
+  onRound(round, rt) {
+    state.flock?.shoot(round, rt);
+    state.gulls?.shoot(round, rt);
   },
   onShot(hit, rt) {
     // The burst going on: the cicadas stop at its first round, and a few rounds in the jackdaws go up
@@ -304,7 +326,7 @@ const world: WorldDefinition = {
     if (state.shots === 3) scatter([hit.at, player(rt)], 30, rt);
     if (hit.piece && state.bronze.has(hit.piece)) ring(hit.piece, hit.at, rt);
     // Leaves off an olive's crown, more where the round broke it
-    if (hit.material === 'foliage') state.leaves?.shed(hit.at, hit.normal, hit.broke ? 10 : 6, floorUnder(hit.at, rt));
+    if (hit.material === 'foliage' || hit.material === 'scrub') state.leaves?.shed(hit.at, hit.normal, hit.broke ? 10 : 6, floorUnder(hit.at, rt));
   },
   onBurst(burst, rt) {
     // The sanctuary answers it as a blast, as loud as it was long: after a tap of the trigger the
@@ -332,8 +354,11 @@ const world: WorldDefinition = {
   update(dt, rt) {
     state.kit?.levers.update(dt);
     state.puffs = Math.max(0, state.puffs - dt * 3);
-    state.flock?.update(dt);
-    state.gulls?.update(dt);
+    // (What the birds shot down fall onto: through the trees, as the leaves do; the sea's top, where
+    // they float)
+    const floor = (at: V3) => Math.max(SEA, floorUnder(at, rt));
+    state.flock?.update(dt, floor);
+    state.gulls?.update(dt, floor);
     state.leaves?.update(dt);
     // The cicadas come back after a quiet spell
     if (state.silenced && rt.time > state.quietUntil) {

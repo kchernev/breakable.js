@@ -48,6 +48,10 @@ in Blender:
   24 points. Then `scripts/assets/packs/temple/props-post.py` graded the statue's and the tripod's
   colour maps toward the world's bronze palette (warmer bronze, blue-green verdigris) and gave the
   bare bronze some metalness. No paid calls in that step.
+- **Shards:** what each prop breaks into (`models/<name>.shards.glb`, listed under `shards` in
+  `models/index.json`) is cut from its own processed mesh by `scripts/assets/shatter-props.py`
+  (Blender): Voronoi cells, their cut faces filled in a duller, darker shade of the prop's colour.
+  No generation; the pieces wear the prop's own materials.
 
 The prompts, settings, seeds and source URLs of every generation are kept next to the raw files in
 `assets-src/packs/temple/props/raw/<name>/` (`concept0.json`, `model.json`); the list and prompts

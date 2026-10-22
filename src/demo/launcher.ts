@@ -366,12 +366,14 @@ export class Launcher implements Weapon {
   private firstHit(from: THREE.Vector3, dir: THREE.Vector3, max: number): { at: V3; normal: V3; distance: number } | null {
     const o = from.toArray() as V3;
     const d = dir.toArray() as V3;
-    const piece = this.destruction.raycast(o, d, max);
-    let first = piece && { at: piece.point, normal: piece.normal, distance: piece.distance };
-    const solid = this.solids?.raycast(o, d, first ? first.distance : max);
+    let first: { at: V3; normal: V3; distance: number } | null = null;
+    const solid = this.solids?.raycast(o, d, max);
     if (solid && solid.distance > 0) first = { at: solid.point, normal: solid.normal, distance: solid.distance };
     const ground = groundHit(this.ground, from, dir, first ? first.distance : max);
     if (ground) first = { at: ground.toArray() as V3, normal: [0, 1, 0], distance: ground.distanceTo(from) };
+    // A piece as near or nearer: what's dormant on the way is woken first, and met as its pieces
+    const piece = this.destruction.wakeAlong(o, d, first ? first.distance + 0.05 : max);
+    if (piece && (!first || piece.distance <= first.distance + 0.05)) first = { at: piece.point, normal: piece.normal, distance: piece.distance };
     return first;
   }
 

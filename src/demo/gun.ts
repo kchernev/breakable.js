@@ -68,6 +68,14 @@ export interface BulletHit {
   broke: boolean;
 }
 
+/** A round as it flies: from the eye along its way, as far as what it struck (the gun's range if nothing). */
+export interface Round {
+  from: V3;
+  direction: V3;
+  /** How far it went (m). */
+  reach: number;
+}
+
 /** A burst of the gun, once it has ended. */
 export interface Burst {
   /** Rounds fired. */
@@ -118,6 +126,8 @@ export class Gun implements Weapon {
   lowered = 0;
   /** Each round fired. */
   onShot: () => void = () => {};
+  /** Each round as it flies, before what it struck (for what's in the air on its way: a bird). */
+  onRound: (round: Round) => void = () => {};
   /** Each bullet that struck something (nothing for the sky or the water). */
   onHit: (hit: BulletHit) => void = () => {};
   /** A burst ended (the trigger let go, or the gun put away). */
@@ -272,6 +282,7 @@ export class Gun implements Weapon {
     if (this.options.player) this.options.player.shake = Math.max(this.options.player.shake, 0.18);
     this.flashTurn = Math.random() * Math.PI * 2;
     this.onShot();
+    this.onRound({ from: eye.toArray() as V3, direction: dir.toArray() as V3, reach: hit?.distance ?? RANGE });
     if (!hit) return;
     this.strikes.push(hit.at);
     this.onHit(hit);

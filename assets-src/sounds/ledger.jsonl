@@ -106,3 +106,41 @@
 {"at":"2026-10-16T14:24:21.918Z","by":"gunsounds","what":"audio QA of metal-before (5 files of bullet.metal joined, 4.8 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
 {"at":"2026-10-16T14:24:30.661Z","by":"gunsounds","what":"audio QA of metal-newtake (5 files of bullet.metal joined, 4.6 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
 {"at":"2026-10-16T14:24:59.235Z","by":"gunsounds","what":"audio QA of metal-all (10 files of bullet.metal joined, 9.2 s, fix round)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-21T11:24:12.694Z","by":"birds","what":"sound take bird.hit:0 (1.5 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T11:24:12.694Z","by":"birds","what":"audio QA of bird.hit:0 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T11:26:42.552Z","by":"birds","what":"sound take bird.hit:1 (1.5 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T11:26:42.552Z","by":"birds","what":"audio QA of bird.hit:1 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T11:26:42.552Z","by":"birds","what":"sound take bird.hit:1 (1.5 s, seed 967451, round 2)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T11:26:42.552Z","by":"birds","what":"audio QA of bird.hit:1 (round 2)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T11:24:11.345Z","by":"birds","what":"sound take bird.hit:2 (1.5 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T11:24:11.345Z","by":"birds","what":"audio QA of bird.hit:2 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:11:14.737Z","by":"cars","what":"sound take car.door:0 (2 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:11:14.737Z","by":"cars","what":"audio QA of car.door:0 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:14:17.253Z","by":"cars","what":"sound take car.door:1 (2 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:14:17.253Z","by":"cars","what":"audio QA of car.door:1 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:14:17.253Z","by":"cars","what":"sound take car.door:1 (2 s, seed 904191, round 2)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:14:17.253Z","by":"cars","what":"audio QA of car.door:1 (round 2)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:14:17.323Z","by":"cars","what":"sound take car.door:2 (2 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:14:17.323Z","by":"cars","what":"audio QA of car.door:2 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:14:17.323Z","by":"cars","what":"sound take car.door:2 (2 s, seed 904192, round 2)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:14:17.323Z","by":"cars","what":"audio QA of car.door:2 (round 2)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:11:15.934Z","by":"cars","what":"sound take car.lid:0 (2 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:11:15.934Z","by":"cars","what":"audio QA of car.lid:0 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:11:15.924Z","by":"cars","what":"sound take car.lid:1 (2 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:11:15.924Z","by":"cars","what":"audio QA of car.lid:1 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:11:25.773Z","by":"cars","what":"sound take tyre.burst:0 (2.5 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:11:25.773Z","by":"cars","what":"audio QA of tyre.burst:0 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:14:19.070Z","by":"cars","what":"sound take tyre.burst:1 (2.5 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:14:19.070Z","by":"cars","what":"audio QA of tyre.burst:1 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:14:19.070Z","by":"cars","what":"sound take tyre.burst:1 (2.5 s, seed 403731, round 2)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:14:19.070Z","by":"cars","what":"audio QA of tyre.burst:1 (round 2)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:11:25.914Z","by":"cars","what":"sound take tyre.burst:2 (2.5 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:11:25.914Z","by":"cars","what":"audio QA of tyre.burst:2 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:11:28.782Z","by":"cars","what":"sound take fuel.leak:0 (10 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:11:28.782Z","by":"cars","what":"audio QA of fuel.leak:0 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.02}
+{"at":"2026-10-21T13:14:18.959Z","by":"cars","what":"sound take fuel.ignite:0 (3.5 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:14:18.959Z","by":"cars","what":"audio QA of fuel.ignite:0 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:14:18.959Z","by":"cars","what":"sound take fuel.ignite:0 (3.5 s, seed 2550, round 2)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:14:18.959Z","by":"cars","what":"audio QA of fuel.ignite:0 (round 2)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}
+{"at":"2026-10-21T13:11:35.704Z","by":"cars","what":"sound take fuel.ignite:1 (3.5 s, round 1)","endpoint":"fal-ai/stable-audio-3/medium/text-to-audio","costUSD":0.0376}
+{"at":"2026-10-21T13:11:35.704Z","by":"cars","what":"audio QA of fuel.ignite:1 (round 1)","endpoint":"fal-ai/audio-understanding","costUSD":0.01}

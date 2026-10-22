@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A bird struck in mid-air: a single soft, muffled, feathery thwack, then a short frantic flutter of wings and a puff of loose feathers, over in under a second. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer, gunshots, gunfire, explosion, chirping, birdsong, squawking",
+  "duration": 1.5,
+  "seed": 967451,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaf4357/dxPseVbru_QGDmw1zkhoe_4AEgoy8o.flac"
+}

@@ -5,8 +5,11 @@ street, with fire escapes, balconies, air conditioners and flower pots on the le
 the roofs, pigeons on the copings, lamp posts, cabs and sedans at the curb, hydrants, litter baskets
 and mailboxes on the sidewalks, and towers beyond. Everything in the two rows breaks, and so does the
 street along them: the road between the curbs (asphalt over earth) and the sidewalks (concrete flags
-over earth), where a rocket leaves a crater and the machine gun digs a hole; the street past the row
-and the towers don't. The street answers the gun as it answers a rocket (Reactions). It is the
+over earth), where a rocket leaves a crater and the machine gun digs a hole. The street past the row
+and the towers round it stand as scenery until a round or a blast reaches them, then break too: the
+street as the stretch does, a tower a section at a time, in storey-high panels (Round the street).
+What doesn't break is the sky and the ground beyond the facades (the sidewalk drawn under and
+behind the rows). The street answers the gun as it answers a rocket (Reactions). It is the
 worked example every new world copies (`docs/making-a-world.md`), so it uses the library and the
 world contract plainly, one feature where it does the most.
 
@@ -15,21 +18,25 @@ world contract plainly, one feature where it does the most.
 | File | What it does |
 |---|---|
 | `meta.ts` | The picker card (order 0). |
-| `index.ts` | The definition: sky and look, materials, sounds, dust and chips, and the reactions to blasts and to the gun (`onBlast`, `onShot`, `onBurst`: car alarms, cars losing their glass, the traffic hushing, sirens, the air conditioners, the lamps, the litter baskets; the pigeons and the water in their own files). |
+| `index.ts` | The definition: sky and look, materials, sounds, dust and chips, and the reactions to blasts and to the gun (`onBlast`, `onRound`, `onShot`, `onBurst`: the traffic hushing, sirens, the air conditioners, the lamps, the litter baskets; the cars (`../../cars.ts`), the pigeons and the water in their own files). |
 | `city.ts` | The buildings, built from boxes the library bonds where they touch: slabs, the facade's piers, sills and lintels, windows (frames, sashes, panes), ledges with AC units and pots, balconies, fire escapes, parapets, water tanks; the lamp posts, the corner sign and the manhole covers; where the breakable street is (`ROAD`, `WALK`). |
 | `materials.ts` | The 18 breakable materials: three bricks, concrete, plaster, glass, painted wood, terracotta, sheet steel, iron, grating, staves, leaves and lamps; the road's asphalt (its double yellow painted on, its sides the aggregate), the sidewalks' flags (each its own, `flagged`; the curb painted on) and the earth under both; the covers' cast iron. |
-| `props.ts` | The base pack's props (`public/models`) placed where nothing stands: cars along both curbs (sedans in several paints), hydrants, litter baskets, mailboxes. |
-| `scenery.ts` | The street in the world (the bed under the breakable stretch, the ground past the facades), the road and sidewalks past the stretch (`groundEnds`: their layers as pieces that never break, drawn as the slabs are), what a crater shows below them (the earth of the bed, the buildings' foundations), the sidewalk drawn beyond the facades, and the towers down and beyond the street (one shader of window grids, some lit; a fixed box each in the world, which rounds and rockets strike). |
+| `props.ts` | The base pack's props (`public/models`) placed where nothing stands: cars along both curbs (sedans in several paints, a GT15 or two in sports colours), cars that come apart (`public/models/cars`) where there are, hydrants, litter baskets, mailboxes. |
+| `scenery.ts` | The street in the world (the bed under the breakable stretch and past it, the ground past the facades), what a crater shows below the slabs (the earth of the bed, the buildings' foundations), the sidewalk drawn beyond the facades, and the road and sidewalks past the stretch to the street's ends (`streetEnds`: 10 m segments of the stretch's layers, standing as pieces that never break, drawn as the slabs are, each dormant until a round or a blast reaches it, then laid as breakable ground as the stretch is). |
+| `towers.ts` | The towers round the street, behind both rows and down it both ways (`skyline`: `Towers`, `../../towers.ts`): a box each, its facade a grid of windows (2.2 m bays, 3.3 m storeys, about one in six lit) on a stone or brick tone of its own; in sections of four storeys (13.2 m), each a fixed box in the world and dormant (`dormantTowers`). Woken, a section's walls come down in panels a storey high and a window bay wide, the top section's with its roof (`towerMaterial`: `tower`, concrete with the facade drawn from where each panel stood, its lit windows going dark once loose). |
 | `water.ts` | The street's water (`Water`): a column from a hydrant's main knocked or shot off it (GPU droplets, the effects' puffs as mist, the fire loop pitched up as its hiss) and the puddle it leaves, which runs off into a hole under any part of it; a rooftop tank leaking from where it's holed, and letting all its water go when it's blown open. |
 | `pigeons.ts` | The pigeons (`Pigeons`): 22 in small groups on the copings, the lamp arms and the fire escapes' and balconies' top rails, put up by the gun or a blast, wheeling over the street, coming back down a while after. Two instanced meshes, moved on the CPU. |
 
-7,886 pieces at load: the street's 752 slabs (the road's 432: asphalt 216, earth 216; the sidewalks'
-320: flags 160, earth 160), the 12 that never break past its ends and 3 manhole covers; 7,100
-breakable in the rows (concrete 2,261, brick 1,369, painted wood 1,068, iron 714, painted brick 486,
-glass 424, plaster 342, grating 212, lamps 107, pots 40, leaves 40, AC units 27, tanks 10) and 19
-props. With seed 7 no building is dark brown brick, so 17 materials are drawn. Besides: 22 pigeons
-(not pieces: two draws) and 26 fixed bodies in the world (the bed, the ground past the facades
-both sides, and 23 towers).
+7,982 pieces at load (counted from the code, not measured: the 7,886 measured before the street
+past the stretch was cut in segments, and 96 more stand-ins): the street's 752 slabs (the road's
+432: asphalt 216, earth 216; the sidewalks' 320: flags 160, earth 160), the 108 that stand in for it
+past its ends (18 segments, six each, which never break: a segment woken is laid anew) and 3
+manhole covers; 7,100 breakable in the rows (concrete 2,261, brick 1,369, painted wood 1,068, iron
+714, painted brick 486, glass 424, plaster 342, grating 212, lamps 107, pots 40, leaves 40, AC units
+27, tanks 10) and 19 props. With seed 7 no building is dark brown brick, so 17 materials are
+drawn. Besides: 22 pigeons (not pieces: two draws) and 100 fixed bodies in the world (the bed, the
+ground past the facades both sides, and the 23 towers' 97 sections). A dormant tower adds no pieces
+until it wakes, and a segment of the street past the stretch none but its stand-ins.
 
 ## How it's built
 
@@ -87,17 +94,20 @@ both sides, and 23 towers).
   thrown past the ground's ends (130 m out) falls and goes the same way, so `killBeyond` stays at
   the library's 1 km.
 - **Props** (the base pack: taxi, sedan, van, hydrant, litter basket, mailbox) rest until a blast or
-  a strike throws them; they never break. The sedan's paint takes a tint (its model has a paint
-  mask, `scripts/assets/props.mjs` `paint`), so it parks in seven paints (`props.ts` `PAINTS`:
-  its own navy, black, red, green, white, beige and gunmetal); this layout shows four of them (red,
-  navy, white and gunmetal).
+  a strike throws them; the hydrant, the litter basket and the mailbox break into their shards
+  (`<name>.shards.glb`) under a blast's heart (within 0.85 of its radius) or enough rounds. The
+  cars parked here are the ones that come apart
+  (`public/models/cars`), modelled by script in Blender (`docs/assets.md`, The cars), their paint
+  white under each copy's tint (`tintMask: 'paint'`): a sedan parks in eight paints (`props.ts`
+  `PAINTS`: its own silver, black, red, navy, white, beige, gunmetal and green), a van in its own
+  white, silver or dark blue, a cab always in its yellow.
 
 ## The street underfoot
 
 - **What breaks**: along the row and 8 m past each end (x -40 to 40), the road between the curbs
   and both sidewalks from the curb to the facades, each laid with `d.addGround` (`index.ts`) on one
   bed 1.2 m under the road (`ROAD.bed`, -1.35 m: the street's fixed body there; `groundAt` gives it
-  on the stretch, `inStretch` in `city.ts`):
+  on the stretch, `inStretch` in `city.ts`, and on the segments past it that have woken, below):
   - the road: 0.3 m of asphalt over 0.9 m of earth, in slabs of about 2.2 m (6 × 36);
   - each sidewalk: concrete flags 0.2 m deep (`paving`: the preset at concrete's density, a blast
     reaching 0.45 of its radius into it rather than stone's 0.35) over 1.15 m of the same earth, in
@@ -123,11 +133,15 @@ both sides, and 23 towers).
 - **What stands on it**: the lamp posts and the corner sign bond to the flag under them and go with
   it; the props rest on the slabs (the cars on the road; the hydrants, litter baskets and mailboxes
   on the flags) and drop into a crater or stay on what's left.
-- **Past the stretch** (`groundEnds` in `scenery.ts`): the same layers to the street's ends as
-  static pieces mapped in the slabs' frames, so the light, the map, the lines and the curb run on,
-  and a crater at the stretch's end shows their edges. Beyond the facades (under the buildings, and
-  past the row's ends) the sidewalk is a drawn plane, its flags on the stretch's joints: where it
-  meets the slabs, along the facade line, is a joint.
+- **Past the stretch** (`streetEnds` in `scenery.ts`): the same layers to the street's ends (x
+  ±130) in segments of 10 m, nine an end, each standing as pieces that never break, mapped in the
+  slabs' frames, so the light, the map, the lines and the curb run on, and a crater at the
+  stretch's end shows their edges. Each segment is dormant (`name: 'street'`): a round or a blast
+  reaching it takes its stand-ins away and lays it as breakable ground as the stretch is (the same
+  layers, `streetGrounds` in `index.ts`), on the same bed, and `groundAt` gives the bed there from
+  then on (`woken` in `index.ts`). Beyond the facades (under the buildings, and past the row's
+  ends) the sidewalk is a drawn plane, its flags on the stretch's joints: where it meets the slabs,
+  along the facade line, is a joint.
 - **What a crater shows** past the slabs: the earth of the bed (a plane at the bed) and, down the
   facade line, the buildings' concrete foundations (planes from the bed up to the sidewalk). The
   ground past the facades is a fixed body 2 m deep, its foot under the bed. A bullet into the bed
@@ -143,6 +157,32 @@ both sides, and 23 towers).
 - **Footsteps**: on the flags and the asphalt `steps.asphalt` (the hard step); on the earth and on
   the bed in a crater, `steps.rubble`.
 - See `docs/changelog/phase-e/ground.md` for how the library lays and breaks a ground.
+
+## Round the street
+
+What frames the street stands as scenery until something reaches it (`Destruction.addDormant`):
+drawn, and solid as fixed bodies, until a round or a blast reaches it; then it's built as pieces
+(`awaken`), and what stood on it stands on its pieces. A blast wakes what's dormant within 1.25 of
+its radius, a round the first thing dormant on its way (and goes on into its pieces), and a piece
+that goes from under something dormant wakes it.
+
+- **The towers** (`towers.ts`, on `../../towers.ts`): 23, as before: six tall behind the far row
+  (30 to 80 m), five lower and further back behind the near row (18 to 40 m, so the sun reaches
+  over them onto the far facades), and six down the street past each end of the row (26 to 86 m).
+  One instanced draw of boxes with the facade shader (a grid of 2.2 m by 3.3 m windows, about one
+  in six lit, on a stone or brick tone a tower), each tower in sections of four storeys (13.2 m,
+  the top one what's left), 97 in all, each a fixed box in the world and dormant.
+- **A section woken**: its stand-in hidden and its box taken out of the world, its walls built as
+  panels 0.3 m thick, a storey high and a window bay wide (the faces along x whole, the ends
+  between them), and the top section's roof in slabs of up to 2.6 m. The sections over it stand on
+  it as scenery until what's under them goes, then wake in turn. The panels' material is `tower`
+  (`towerMaterial`): concrete (`strength` 2,000, `support` 600, at most 10 pieces a break, broken
+  faces `gen_concrete_broken`) with the facade read from each panel's map coordinates, laid in the
+  world's frame (where it stood), and its tint (the tower's tone), so nothing changes as it wakes;
+  the lit windows glow while it stands (`glow: 'standing'`) and go dark once it's loose.
+- **The street past the stretch**: its segments, dormant (The street underfoot).
+- **What doesn't break**: the sky; the bed and the ground beyond the facades (fixed bodies); the
+  sidewalk drawn under and behind the rows; what a crater shows past the slabs.
 
 ## The machine gun here
 
@@ -166,15 +206,17 @@ first round to break a piece is where it gives way):
 - **Holds out**: iron (railings, fire escapes, lamp posts: 47 rounds sweeping and 23 at one post,
   none broke), the grating, and the manhole covers, which only spark, ring and dent (their `impact`
   makes it about 900 rounds at one spot: a cover the gun knocked loose slid 4 m across the road).
-- **Props**: the cars dent and don't move, but their alarms go and their windows burst
-  (Reactions); a litter basket skitters off at the first rounds, spilling paper, and goes over; a
+- **Props**: the cars come apart (Reactions); a litter basket skitters off at the first rounds, spilling paper, and goes over; a
   mailbox is pushed back a metre by 16; a hydrant cracks off its main at the 3rd round and goes over
-  (and, as before, drops and bursts when the flag under it is shot through).
-- **The towers** beyond the street are fixed boxes in the world now (`skyline`): a round fired at
-  one, or out through a building, strikes it as the scenery's stone (`bullet.concrete`, chips, a
-  hole) and its tracer ends there; a rocket goes off on it. Before, they were drawn only: 28 rounds
-  at one struck nothing (now 26 struck it; the other two, the view climbing through the burst, went
-  over its top).
+  (and, as before, drops and bursts when the flag under it is shot through). These were measured
+  before the three had shards: enough rounds now break each into them (not measured).
+- **The towers** round the street wake at the first round into one (fired at it, or out through a
+  building): the section it reaches is built as its panels and the round goes on into them,
+  striking as the towers' concrete (`tower`: `bullet.concrete`, chips, a hole), its tracer ending
+  there (Round the street). How many rounds a panel takes isn't measured. In phase F they were
+  fixed boxes (`skyline` in `scenery.ts` then): 28 rounds at one struck it 26 times as the
+  scenery's stone (the other two, the view climbing through the burst, went over its top); before
+  that they were drawn only and struck nothing.
 - The street hears the gun (Reactions): the hooks this phase (`onShot`, `onBurst`) are where its
   reactions to rounds are.
 
@@ -200,16 +242,18 @@ first round to break a piece is where it gives way):
 - **Bed**: the base pack's `ambience.city` (1.65, quieter up high) and `ambience.wind` (louder up
   high), at the mix's -33 LUFS standing at the start (`docs/changelog/phase-c/sound.md`).
 - **Materials**: the base pack's (`packMaterials`). A section landing whole is heard once
-  (`land`, the `'landed'` event): brick `brick.impact.large`, concrete `concrete.impact`, iron and
-  the cars `metal.impact.large`. Shared sounds at a material's own pitch (`pitch`): plaster 1.15,
+  (`land`, the `'landed'` event): brick `brick.impact.large`, concrete `concrete.impact` (the
+  towers' panels, `tower`, at 0.85), iron and the cars `metal.impact.large`. Shared sounds at a
+  material's own pitch (`pitch`): plaster 1.15,
   pots 1.4, AC units 1.35 (iron's sounds), lamps 1.25 (glass's).
 - **Bullets** (`bullet` in each material's sounds; the gun's strikes are in the base pack): brick,
-  painted brick and pots `bullet.brick` (pots at their 1.4); concrete, the flags (at 1.08), the
-  asphalt (at its 0.85) and plaster (at its 1.15: render cracks, it doesn't thud as brick)
-  `bullet.concrete`; the earth `bullet.dirt` as made (its `pitch` lowers only its strikes and
-  debris); frames and the tanks' staves (at 0.9) `bullet.wood`; leaves `bullet.dirt` at 1.3 (a soft
-  rustle and thud); iron, the cars, the grating (at 1.15), the AC units (at their 1.35) and the
-  covers (at 0.8: heavy, ringing) `bullet.metal`; panes and lamps (at their 1.25) `bullet.glass`.
+  painted brick and pots `bullet.brick` (pots at their 1.4); concrete, the towers' panels, the
+  flags (at 1.08), the asphalt (at its 0.85) and plaster (at its 1.15: render cracks, it doesn't
+  thud as brick) `bullet.concrete`; the earth `bullet.dirt` as made (its `pitch` lowers only its
+  strikes and debris); frames and the tanks' staves (at 0.9) `bullet.wood`; leaves `bullet.dirt` at
+  1.3 (a soft rustle and thud); iron, the cars, the grating (at 1.15), the AC units (at their
+  1.35) and the covers (at 0.8: heavy, ringing) `bullet.metal`; panes and lamps (at their 1.25)
+  `bullet.glass`.
 - **Footsteps** by what's underfoot (`footsteps.surface`): iron (a fire escape's grating, a car's
   roof, a fallen railing) plays `steps.metal`; rubble, and down in a crater the earth and the bed
   under it, `steps.rubble`; the rest (the asphalt, the flags) `steps.asphalt`.
@@ -227,16 +271,19 @@ To blasts (`onBlast`), to the gun (`onShot`: each round that strikes something; 
 burst as it ends), and to what the library sends (`'landed'`, `'state'`, `'impact'`, `'fracture'`).
 Each is bounded: what a 70-round burst sets off is counted in Checks.
 
-- **Car alarms**: a parked car shot sets its own alarm off (the first round into it); a blast of
-  2 m or more, half the time, that of one of the cars within 15 m along the street; a car landing at
-  over 3 m/s (`'landed'`, subscribed in `onStart`), or something heavy coming down on one, its own.
+- **The cars come apart** (`src/lib/vehicle.ts`, `src/demo/cars.ts`; the sedans, cabs, vans and
+  GT15 sports cars of `public/models/cars`, each with its cabin and engine bay): a window goes at a round, a tyre lets the car down onto its rim, five to
+  nine rounds into a door, the hood or the trunk lid spring it open on its hinge; a round on through
+  past the tank holes it and it leaks (`fuel.leak`, a stream and a pool under it), and at its third
+  hole (or a blast reaching it while it leaks, or a rocket into it half the time) it catches
+  (`fuel.ignite`, `fire.loop`, flames up through it, black smoke), and 7–12 s on (1–2.5 s after a
+  rocket into it) the tank goes up: a blast of 3.2 m that throws it gently, tears it open and burns
+  it black, and it burns on 30 s. A blast tears off what of a car is within 0.9 of its radius and
+  springs the latches within 1.8; landing at over 5 m/s bursts a pane or two, over 9 all of them.
+- **Car alarms**: a car shot sets its own alarm off; a blast, often, those of the cars it reaches; a
+  car landing at over 3 m/s, or something heavy coming down on one, its own; never a burning one's.
   Each goes 14–26 s; a car whose alarm has stopped stays quiet for 45 s; two at most at once (a
   third cuts the oldest short: `alarm.car` has two voices).
-- **Glass off a car**: past its 3rd round, each round into a car bursts the window nearest it (the
-  windscreen, the back window or a side window), each once: glass chips and glitter off it
-  (`effects.impact` and `effects.bullet` as glass), `glass.shatter`, then `glass.debris`. A car's
-  first hard landing (over 5 m/s: thrown, dropped, or slammed into another) bursts what it has left.
-  The model's glass stays drawn (Known issues).
 - **The traffic hushes**: a blast, a burst of the gun as it ends, or the gun kept going half a
   second turns the city bed down to a third (`rt.ambience`), and it comes back over 12 s once it has
   been quiet for 20 s. The wind stays.
@@ -317,7 +364,8 @@ folder, `public/packs/nyc/` (credits in `CREDITS.md`):
   a rattle, then a clank 2 s on: laid out clank first (`parts`). Five takes, $0.19
   (`assets-src/packs/nyc/ledger.jsonl`).
 
-The sedan was processed again with `paint: { hue: [195, 255] }` (`PACK` unset: `~/.local/bin/blender
+The base pack's sedan prop (`public/models/sedan.glb`, Meshy's; parked now only where the sedan that
+comes apart doesn't load) was processed again with `paint: { hue: [195, 255] }` (`PACK` unset: `~/.local/bin/blender
 -b --factory-startup --python scripts/assets/process-props.py -- sedan`, from its raw take, no paid
 call): 43 % of its texels are paint, greyed, and `index.json` gives it `tintMask: 'alpha'` and its
 navy as `tint`. Its collider is unchanged. With `grow: 3` (a `process-props.py` paint option) the
@@ -479,9 +527,10 @@ puff.
 - **Window units fall out whole**: a frame's joints are painted wood's (1.4e4), so a window
   leaves a breaking front as one frame with its sash and panes, and a few slide out into the road,
   lying there like picture frames. Not changed: they read as windows torn out.
-- **Tinted sedans keep a few marks**: small light scratches in the paint low on the doors and round
-  the rear window, and the windscreen's white streaks, which the image-to-3D model baked into the
-  glass (on every copy, the navy too).
+- **The sedan prop keeps a few marks** (parked only where the sedan that comes apart doesn't load;
+  that one, modelled by script, has no paint texture to carry them): small light scratches in the
+  paint low on the doors and round the rear window, and the windscreen's white streaks, which the
+  image-to-3D model baked into the glass (on every copy, the navy too).
 - **Slow frames in a collapse** (library and the shared GPU): a fifth to three tenths of the
   frames in the first 10 s after four blasts here are over 40 ms, the worst 66–204 ms (Checks).
   Most of each is GPU; now and then the destruction's own CPU time is 20–38 ms in a single frame
@@ -511,13 +560,15 @@ puff.
 - The hydrants' water collides with nothing but the ground: it falls through cars and balconies. A
   tank's leak ends at its roof's height (each droplet lives as long as its fall), through anything
   in its way (the tank's legs, a parapet).
-- **A car's glass stays drawn**: its windows are part of the model's one mesh, so a window that
-  goes is its glitter, chips and sound; the model still shows it (with the rounds' dents on it).
+- **A car's panels don't crumple**: its parts come off, swing, hang and burn, and the rounds dent
+  and hole them (marks), but a part keeps its shape: a car landing on its roof keeps its roof.
+- **A swinging door passes through its car**: a car's pieces don't collide with each other (its
+  hulls overlap), and a hinge has no stop; a door is sent out, so it seldom swings back in.
 - **The pigeons fly through what's in their way**: they keep above the roofs while they wheel and
   come down onto a perch from the street side, so they seldom meet anything, but nothing stops one
   (a collapsing front, a tower down the street). A rocket's dust hides them as it hides the rest.
 - **A tank blown open by a rocket** lets its water go, but its spray is lost in the blast's dust
   from the street; shot open, it shows.
-- **The towers strike as stone all over**: their windows are drawn in the shader, so a round into
-  one cracks and holes it as concrete, not glass.
+- **The towers strike as concrete all over**: their windows are drawn (on the scenery and on the
+  woken panels alike), so a round into one cracks and holes it as concrete, not glass.
 

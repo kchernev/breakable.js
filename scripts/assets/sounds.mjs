@@ -126,6 +126,29 @@ export const sounds = [
     prompt: fx('A bullet ricocheting off stone: a sharp ping and a high whining whistle flying away, fading quickly.'),
     play: { near: 6, rolloff: 0.8, volume: 0.13, voices: 2, cooldown: 0.2, spacing: 4, pitch: [0.85, 1.15], reverb: 0.3 },
   },
+  // A bird shot out of the air (src/demo/birds.ts): what says it was hit, a round going into
+  // something so light being all but silent. Each take came with two or three, cut apart
+  {
+    name: 'bird.hit',
+    kind: 'slice',
+    count: 3,
+    duration: 1.5,
+    onset: 20,
+    fade: 0.1,
+    negative: `${NO}, gunshots, gunfire, explosion, chirping, birdsong, squawking`,
+    prompt: foley('A bird struck in mid-air: a single soft, muffled, feathery thwack, then a short frantic flutter of wings and a puff of loose feathers, over in under a second.'),
+    play: { near: 10, rolloff: 0.8, volume: 0.4, voices: 3, cooldown: 0.05, pitch: [0.9, 1.15], reverb: 0.3 },
+  },
+
+  // --- Cars coming apart (src/demo/cars.ts) ---
+  // A latch sprung by rounds or a blast: the door swings open; the hood or the trunk lid pops up
+  { name: 'car.door', count: 3, duration: 2, fade: 0.3, prompt: foley('A car door springing open by itself after its lock is shot: a hard metallic clunk of the latch letting go, then the heavy door swinging open with a short creak of its hinges.'), play: { near: 6, rolloff: 0.8, volume: 0.55, voices: 2, cooldown: 0.15, pitch: [0.92, 1.08], reverb: 0.3 } },
+  { name: 'car.lid', count: 2, duration: 2, fade: 0.3, prompt: foley("A car's bonnet springing open: the latch releasing with a hard metallic clunk and the thin sheet-steel lid flying up and wobbling with a tinny boing."), play: { near: 6, rolloff: 0.8, volume: 0.55, voices: 2, cooldown: 0.15, pitch: [0.92, 1.08], reverb: 0.3 } },
+  // A tyre shot: the bang, then its air hissing out
+  { name: 'tyre.burst', count: 3, duration: 2.5, fade: 0.5, negative: `${NO}, gunshots, gunfire`, prompt: fx('A car tyre bursting: one loud sharp bang of the tyre blowing out, then a strong hiss of escaping air fading away.'), play: { near: 8, rolloff: 0.8, volume: 0.7, voices: 2, cooldown: 0.1, pitch: [0.9, 1.1], reverb: 0.35 } },
+  // A holed tank: petrol running out onto the road; then it catches
+  { name: 'fuel.leak', kind: 'loop', count: 1, duration: 10, prompt: foley('Petrol pouring out of a holed car fuel tank: a thin steady stream of liquid splashing and gurgling onto asphalt, close up, constant.'), play: { near: 3, rolloff: 1, volume: 0.35, voices: 2, reverb: 0.15 } },
+  { name: 'fuel.ignite', count: 2, duration: 3.5, fade: 0.8, prompt: fx('Spilled petrol under a car catching fire: a deep sudden whoomph of ignition, then the roar of flames taking hold.'), play: { near: 10, rolloff: 0.7, volume: 0.9, voices: 2, cooldown: 0.5, reverb: 0.4 } },
 
   // --- Blasts ---
   { name: 'explosion.near', count: 4, duration: 6, fade: 0.6, prompt: fx('Massive close-range explosion of a rocket hitting a brick building: deep sub-bass boom and sharp crack, then bricks and debris crumbling and raining down onto a city street, outdoor echo.') },

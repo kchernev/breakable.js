@@ -7,7 +7,7 @@ import type { WorldDefinition } from '../types.ts';
 import { townMaterials } from './materials.ts';
 import { meta } from './meta.ts';
 import { Life } from './life.ts';
-import { BED, HAZE, layStreet, onStreet, scenery, STREET } from './scenery.ts';
+import { BED, dormantScenery, groundBed, HAZE, layStreet, onStreet, scenery, STREET } from './scenery.ts';
 import { buildTown } from './town.ts';
 
 let life: Life | null = null;
@@ -54,13 +54,15 @@ const world: WorldDefinition = {
   ground: 0,
   scenery,
   // On the street, its bed: the slabs over it are found as pieces
-  groundAt: (x, z) => (onStreet(x, z) ? BED : 0),
+  groundAt: (x, z) => (onStreet(x, z) ? BED : (groundBed(x, z) ?? 0)),
   // Past the fog's end (640 m), so the desert floor and the far mesas aren't cut off before it
   far: 700,
   props: ['packs/western/models/'],
   build(d, models) {
     // The street first: what stands on it (rails, troughs, the pumps and wagons) stands on its slabs
     layStreet(d);
+    // The ground round the street, and the desert's and the outskirts' things: scenery until something reaches them
+    dormantScenery(d);
     life = new Life(buildTown(d, models), d);
     console.debug(`western: ${d.stats.pieces} pieces`);
     return { feet: [-33, 0, -2.5], look: [12, 3.5, 1] };
@@ -105,6 +107,12 @@ const world: WorldDefinition = {
       // The street: its clods thud down and hiss where they land, the earth's crunch lower (no
       // stone's sounds: a bullet into them is dirt)
       sand: { impact: 'steps.dirt', debris: 'dust.settle', bullet: 'bullet.dirt' },
+      dirt: { impact: 'steps.dirt', debris: 'dust.settle', bullet: 'bullet.dirt' },
+      // The desert's: brush thuds, a boulder cracks as stone, a cactus as soft wood
+      brush: { settle: 'dust.settle', bullet: 'bullet.dirt', pitch: { bullet: 1.35 } },
+      heap: { impact: 'steps.rubble', debris: 'steps.rubble', bullet: 'bullet.dirt', pitch: { impact: 0.75, debris: 0.75, bullet: 0.85 } },
+      rock: { ...packMaterials.concrete, bullet: 'bullet.concrete' },
+      cactus: { ...packMaterials.wood, bullet: 'bullet.wood', pitch: 1.2 },
       earth: { impact: 'steps.rubble', debris: 'steps.rubble', bullet: 'bullet.dirt', pitch: { impact: 0.75, debris: 0.75, bullet: 0.85 } },
     },
     // Hollow on the boardwalks and floors (and on boards lying in the street), dirt elsewhere; down
@@ -120,18 +128,19 @@ const world: WorldDefinition = {
       },
     },
   },
-  dust: { siding: 0xcbb89a, timber: 0xb8a080, stave: 0xcbb89a, tin: 0x9a948a, adobe: 0xc9a57a, brick: 0xb08a70, stone: 0xd0c0a0, glass: 0xe8f0ee, signpaint: 0xcbb89a, hangboard: 0xcbb89a, paint: 0xcbb89a, hay: 0xd8c27a, iron: 0x8a7a6a, bronze: 0x9a8060, coals: 0x5a5048, sand: 0xd6c2a0, earth: 0xb0947a },
+  dust: { siding: 0xcbb89a, timber: 0xb8a080, stave: 0xcbb89a, tin: 0x9a948a, adobe: 0xc9a57a, brick: 0xb08a70, stone: 0xd0c0a0, glass: 0xe8f0ee, signpaint: 0xcbb89a, hangboard: 0xcbb89a, paint: 0xcbb89a, hay: 0xd8c27a, iron: 0x8a7a6a, bronze: 0x9a8060, coals: 0x5a5048, sand: 0xd6c2a0, dirt: 0xd6c2a0, earth: 0xb0947a, heap: 0xb0947a, brush: 0x8a8a6a, rock: 0xc8a888, cactus: 0x8a9a6a },
   // Adobe, hay and the street go up in clouds; sheet metal and glass hardly any, the bell and the
   // tank's staves none (its roof's boards dropping as the top staves went raised a cloud over it
   // that, seen from under it against the sky, read as smoke; still at a third of it)
-  dustAmount: { adobe: 1.3, hay: 1.5, sand: 2, earth: 1.4, tin: 0.15, iron: 0.1, glass: 0.4, bronze: 0, coals: 0.5, stave: 0 },
+  dustAmount: { adobe: 1.3, hay: 1.5, sand: 2, dirt: 2, earth: 1.4, brush: 0.6, cactus: 0.3, tin: 0.15, iron: 0.1, glass: 0.4, bronze: 0, coals: 0.5, stave: 0 },
   onStart: (rt) => life?.onStart(rt),
   onBlast: (at, radius, rt) => life?.onBlast(at, radius, rt),
+  onRound: (round, rt) => life?.shoot(round, rt),
   onShot: (hit, rt) => life?.onShot(hit, rt),
   onBurst: (burst, rt) => life?.onBurst(burst, rt),
   onImpact: (e, rt) => life?.onImpact(e, rt),
   update: (dt, rt) => life?.update(dt, rt),
-  chips: { siding: 0xd8cbb4, timber: 0x9a8466, stave: 0x9a8466, tin: 0x8a8a84, adobe: 0xb08a60, brick: 0x8a5a44, stone: 0xc8b490, glass: 0xd8ece6, iron: 0x3a3a3a, bronze: 0x8a6a3a, signpaint: 0xc9b89a, hangboard: 0xc9b89a, paint: 0xe8e0d0, hay: 0xd8c070, coals: 0x3a2a24, sand: 0xc4a47c, earth: 0x8a6650 },
+  chips: { siding: 0xd8cbb4, timber: 0x9a8466, stave: 0x9a8466, tin: 0x8a8a84, adobe: 0xb08a60, brick: 0x8a5a44, stone: 0xc8b490, glass: 0xd8ece6, iron: 0x3a3a3a, bronze: 0x8a6a3a, signpaint: 0xc9b89a, hangboard: 0xc9b89a, paint: 0xe8e0d0, hay: 0xd8c070, coals: 0x3a2a24, sand: 0xc4a47c, dirt: 0xc4a47c, earth: 0x8a6650, heap: 0x8a6650, brush: 0x6f7656, rock: 0xa88a6c, cactus: 0x5f7048 },
 };
 
 export default world;

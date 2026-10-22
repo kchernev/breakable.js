@@ -47,6 +47,10 @@ cleaned up in Blender; no photographs, scans or other people's models went into 
   points; the wagon (its bed, a drum across each pair of wheels, its tongue), the pump (post and
   body, lever, spout) and the rocking chair (seat and back, each runner) convex parts welded
   together (`parts` in the list, refitted with `--colliders`). Nothing needed painting out.
+- **Shards:** what each prop breaks into (`models/<name>.shards.glb`, listed under `shards` in
+  `models/index.json`) is cut from its own processed mesh by `scripts/assets/shatter-props.py`
+  (Blender): Voronoi cells, their cut faces filled in a duller, darker shade of the prop's colour.
+  No generation; the pieces wear the prop's own materials.
 
 | Prop | What it is | Size (x × y × z, m) | Triangles |
 |---|---|---|---|

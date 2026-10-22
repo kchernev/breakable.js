@@ -3,17 +3,21 @@
 // town to the chapel, and on along the chapel's south side to where it becomes the road; a rocket
 // leaves a wide, soft crater in a cloud of its dust, the gun pocks it and digs. The slabs are drawn
 // as the ground round them is (dirt(): the paler street, the wheel ruts, the churned middle), each
-// point by where on the street it was laid, so a clod carries its bit of rut away. What doesn't
-// break: the ground round the street (the town's dirt, the road, the desert going off red and tan),
-// the mesas and buttes on the horizon in banded rock, sage, rocks, cacti and telegraph poles in
-// between, a few things on the outskirts (boot hill, a stock pen, a ruined adobe corral, a broken
-// wheel), and a skirt of haze round the horizon in the fog's colour. The sky (Goegap lighting it, a
-// pure noon sky shown, the sun raised to noon) is index.ts's.
+// point by where on the street it was laid, so a clod carries its bit of rut away. The ground round
+// the street, 200 m each way, is laid the same where a blast reaches it (tiles waiting as fixed
+// boxes: DormantGround). What's in the desert stands as scenery until a round or a blast reaches
+// it, then is built as pieces: sage, rocks, cacti and telegraph poles, and on the outskirts boot
+// hill, a stock pen, a ruined adobe corral and a broken wheel. What doesn't break: the desert past
+// 200 m, the mesas and buttes on the horizon in banded rock, and a skirt of haze round the horizon
+// in the fog's colour. The sky (Goegap lighting it, a pure noon sky shown, the sun raised to noon)
+// is index.ts's.
 
 import { abs, attribute, color, float, fract, max, mix, mx_noise_float, normalize, normalMap, normalView, normalWorld, positionWorld, select, smoothstep, step, texture, uv, vec2, vec3 } from 'three/tsl';
 import * as THREE from 'three/webgpu';
-import type { World } from 'three-avbd';
-import { type Destruction, pieceFrame, random } from '../../../lib/index.ts';
+import type { Body, World } from 'three-avbd';
+import { clip, type Destruction, frustum, hullConvex, type Piece, pieceFrame, random, type V3 } from '../../../lib/index.ts';
+import { DormantGround } from '../../dormant-ground.ts';
+import { DormantUnits, Merged } from '../../dormant.ts';
 import { texture as mapOf } from '../../textures.ts';
 
 const base = 'packs/western/textures/';
@@ -21,7 +25,12 @@ const base = 'packs/western/textures/';
 /** The haze's colour: the fog's. */
 export const HAZE = 0xd9c9ad;
 
+/** What stands as scenery until something reaches it (made dormant in build: dormantScenery), and the ground round the street in tiles. */
+const units = new DormantUnits();
+let grounds: DormantGround[] = [];
+
 export function scenery(scene: THREE.Scene, world: World): void {
+  units.units.length = 0;
   streetBed(scene, world);
   ground(scene);
   mesas(scene);
@@ -32,6 +41,24 @@ export function scenery(scene: THREE.Scene, world: World): void {
 }
 
 type Area = [number, number, number, number];
+
+/** The scenery's dormant things (in build: the Destruction is made). */
+export function dormantScenery(d: Destruction): void {
+  units.dormant(d);
+  for (const g of grounds) g.dormant(d);
+}
+
+/** How far round the town the ground is laid breakable where a blast reaches it (x0, z0, x1, z1). */
+const AROUND: Area = [-204, -150, 204, 150];
+
+/** The bed where a blast has laid the ground round the street breakable (the world's groundAt there), else null. */
+export function groundBed(x: number, z: number): number | null {
+  for (const g of grounds) {
+    const b = g.bedAt(x, z);
+    if (b !== null) return b;
+  }
+  return null;
+}
 
 export const STREET = {
   /** The town's ground, and the layers' depths: packed dirt and sand, and the earth under it. */
@@ -145,6 +172,21 @@ export function streetSurface(): THREE.MeshStandardNodeMaterial {
   return m;
 }
 
+/**
+ * The ground round the street where a blast has laid it (its tiles' top layer): on the slabs' tops
+ * the ground as drawn there (dirt(), at the point their map's coordinates give: laid from the
+ * world's origin, a tile per 4 m, v along -z), on their sides crumbled, as the street's.
+ */
+export function groundSurface(): THREE.MeshStandardNodeMaterial {
+  const { normal } = pieceFrame();
+  const look = dirt(uv().x.mul(4), uv().y.mul(-4));
+  const m = new THREE.MeshStandardNodeMaterial({ roughness: 1, normalMap: mapOf('western_dirt_nor_gl', false, base) });
+  const top = step(0.5, normal.y);
+  m.colorNode = mix(texture(mapOf('western_dirt_broken_diff', true, base), uv().mul(4)).rgb, look.color, top);
+  m.roughnessNode = mix(texture(mapOf('western_dirt_broken_arm', false, base), uv().mul(4)).g, look.roughness, top);
+  return m;
+}
+
 /** What the earth's map is multiplied by: browner and a little darker, dug soil in the noon sun. */
 export const EARTH = 0xccc0b4;
 
@@ -157,15 +199,15 @@ export const EARTH = 0xccc0b4;
 function streetBed(scene: THREE.Scene, world: World): void {
   const box = (x0: number, z0: number, x1: number, z1: number, top: number) =>
     world.addBox({ size: [x1 - x0, top + 4, z1 - z0], position: [(x0 + x1) / 2, (top - 4) / 2, (z0 + z1) / 2], fixed: true, friction: 0.9 });
-  const [[ax0, az0, ax1, az1], [, bz0, bx1, bz1]] = STREET.areas;
+  const [[ax0, az0, ax1, az1], [, , bx1, bz1]] = STREET.areas;
   const far = 600;
   for (const [x0, z0, x1, z1] of STREET.areas) box(x0, z0, x1, z1, BED);
-  // North and south of the street, west of it, the chapel's lot, and east of it
-  box(-far, az1, far, far, STREET.top);
-  box(-far, -far, far, az0, STREET.top);
-  box(-far, az0, ax0, az1, STREET.top);
-  box(ax1, bz1, far, az1, STREET.top);
-  box(bx1, bz0, far, bz1, STREET.top);
+  // Past AROUND, the ground's top out to 600 m
+  const [gx0, gz0, gx1, gz1] = AROUND;
+  box(-far, gz1, far, far, STREET.top);
+  box(-far, -far, far, gz0, STREET.top);
+  box(-far, gz0, gx0, gz1, STREET.top);
+  box(gx1, gz0, far, gz1, STREET.top);
 
   const m = new THREE.MeshStandardNodeMaterial({ roughness: 1 });
   const p = positionWorld;
@@ -193,6 +235,36 @@ function streetBed(scene: THREE.Scene, world: World): void {
   const mesh = new THREE.Mesh(g, m);
   mesh.receiveShadow = true;
   scene.add(mesh);
+
+  // Within it, round the street (north and south of it, west of it, east of it, the chapel's lot),
+  // tiles waiting for a blast; under them the bed, drawn, for a crater to show
+  const around: Area[] = [
+    [gx0, az1, gx1, gz1],
+    [gx0, gz0, gx1, az0],
+    [gx0, az0, ax0, az1],
+    [bx1, az0, gx1, az1],
+    [ax1, bz1, bx1, az1],
+  ];
+  grounds = around.map(
+    (area) =>
+      new DormantGround(scene, world, {
+        name: 'desert',
+        area,
+        tile: 12,
+        top: STREET.top,
+        bottom: -4,
+        pit: m,
+        layers: (a) => [{ material: 'dirt', under: 'earth', bed: 'earth', area: a, top: STREET.top, depth: STREET.depth, underDepth: STREET.underDepth, cell: STREET.cell, textureFrame: { position: [0, STREET.top, 0] } }],
+      }),
+  );
+  const bed: number[] = [];
+  for (const [x0, z0, x1, z1] of around) bed.push(x0, BED, z0, x0, BED, z1, x1, BED, z0, x1, BED, z0, x0, BED, z1, x1, BED, z1);
+  const under = new THREE.BufferGeometry();
+  under.setAttribute('position', new THREE.Float32BufferAttribute(bed, 3));
+  under.computeVertexNormals();
+  const floor = new THREE.Mesh(under, m);
+  floor.receiveShadow = true;
+  scene.add(floor);
 }
 
 /** The ground: dirt everywhere, paler in the street and on the road, ruts, red earth and gravel further out (dirt()). Over the street the slabs are drawn instead. */
@@ -203,6 +275,9 @@ function ground(scene: THREE.Scene): void {
   m.colorNode = look.color;
   m.normalNode = normalMap(texture(nor, look.uv), mix(float(1), float(0.4), look.rut));
   m.roughnessNode = look.roughness;
+  // Gone where a blast has laid the ground breakable
+  m.opacityNode = grounds.map((g) => g.hole(positionWorld.xz)).reduce((a, b) => max(a, b)).oneMinus();
+  m.alphaTest = 0.5;
   // A plane 1400 m across with the street cut out of it (a shape's y is the plane's -z)
   const shape = new THREE.Shape([new THREE.Vector2(-700, -700), new THREE.Vector2(700, -700), new THREE.Vector2(700, 700), new THREE.Vector2(-700, 700)]);
   shape.holes.push(new THREE.Path(STREET_OUTLINE.map(([x, z]) => new THREE.Vector2(x, -z))));
@@ -397,7 +472,7 @@ function scrub(scene: THREE.Scene): void {
   for (let i = 0; i < 320; i++) shrubs.setColorAt(i, new THREE.Color(tints[Math.floor(rand() * tints.length)]));
   // Rocks
   const rock = new THREE.DodecahedronGeometry(1, 0);
-  instanced(rock, new THREE.MeshStandardNodeMaterial({ color: 0xa88a6c, roughness: 0.95, flatShading: true }), 70, () => {
+  const rocks = instanced(rock, new THREE.MeshStandardNodeMaterial({ color: 0xa88a6c, roughness: 0.95, flatShading: true }), 70, () => {
     const [x, z] = where(30, 320);
     const s = 0.3 + rand() * rand() * 2.2;
     dummy.position.set(x, s * 0.2, z);
@@ -421,13 +496,77 @@ function scrub(scene: THREE.Scene): void {
     parts.push(out, rise);
   }
   const cactus = mergeGeometries(parts);
-  instanced(cactus, new THREE.MeshStandardNodeMaterial({ color: 0x5f7048, roughness: 0.85 }), 16, () => {
+  const cacti = instanced(cactus, new THREE.MeshStandardNodeMaterial({ color: 0x5f7048, roughness: 0.85 }), 16, () => {
     const [x, z] = where(45, 260);
     const s = 0.7 + rand() * 0.6;
     dummy.position.set(x, 0, z);
     dummy.scale.set(s, s, s);
     dummy.rotation.set(0, rand() * 6.28, 0);
   });
+
+  // Each dormant (no body: a round or a rocket through its box wakes it, and meets its pieces):
+  // a shrub or a rock as the hull of its points, set down on the ground and cut flat there; a
+  // cactus as its trunk and its arms, each out from the trunk and up
+  const m = new THREE.Matrix4();
+  const c = new THREE.Color();
+  const placed = (g: THREE.BufferGeometry, mesh: THREE.InstancedMesh, i: number): V3[] => {
+    mesh.getMatrixAt(i, m);
+    const p = g.attributes.position as THREE.BufferAttribute;
+    const v = new THREE.Vector3();
+    const out: V3[] = [];
+    for (let k = 0; k < p.count; k++) {
+      v.fromBufferAttribute(p, k).applyMatrix4(m);
+      out.push([v.x, v.y, v.z]);
+    }
+    return out;
+  };
+  const lump = (points: V3[], name: string, material: string, mesh: THREE.InstancedMesh, i: number, tint?: number) => {
+    const low = Math.min(...points.map((p) => p[1]));
+    const down = points.map(([x, y, z]): V3 => [x, y - Math.max(0, low), z]);
+    units.add({
+      name,
+      bounds: bound(down),
+      instances: [[mesh, i]],
+      build: (d) => {
+        const shape = hullConvex(down);
+        const cut = shape && clip(shape, [0, -1, 0], -STREET.top);
+        if (cut) d.addConvex({ material, points: cut.faces.flatMap((f) => f.pts), tint });
+      },
+    });
+  };
+  for (let i = 0; i < shrubs.count; i++) {
+    shrubs.getColorAt(i, c);
+    lump(placed(shrub, shrubs, i), 'shrub', 'brush', shrubs, i, c.getHex());
+  }
+  for (let i = 0; i < rocks.count; i++) lump(placed(rock, rocks, i), 'rock', 'rock', rocks, i);
+  for (let i = 0; i < cacti.count; i++) {
+    cacti.getMatrixAt(i, m);
+    const at = new THREE.Matrix4().copy(m);
+    const to = (pts: V3[]): V3[] => pts.map(([x, y, z]) => new THREE.Vector3(x, y, z).applyMatrix4(at).toArray() as V3);
+    const box = (x0: number, y0: number, z0: number, x1: number, y1: number, z1: number): V3[] => [x0, x1].flatMap((x) => [y0, y1].flatMap((y) => [z0, z1].map((z): V3 => [x, y, z])));
+    units.add({
+      name: 'cactus',
+      bounds: bound(placed(cactus, cacti, i)),
+      instances: [[cacti, i]],
+      build: (d) => {
+        const trunk = d.addConvex({ material: 'cactus', points: to(frustum(0.26, 0.22, 4.2, 8)), smooth: 0.9 });
+        for (const [side, y0, up] of [
+          [1, 1.6, 1.3],
+          [-1, 2.3, 1.0],
+        ] as const) {
+          const out = d.addConvex({ material: 'cactus', points: to(box(side * 0.24, y0 - 0.15, -0.15, side * 0.69, y0 + 0.15, 0.15)) });
+          const rise = d.addConvex({ material: 'cactus', points: to(frustum(0.17, 0.16, up + 0.08, 8).map(([x, y, z]): V3 => [side * 0.85 + x, y0 - 0.16 + y, z])), smooth: 0.9 });
+          if (trunk && out) d.bond(trunk, out, 0.06);
+          if (out && rise) d.bond(out, rise, 0.06);
+        }
+      },
+    });
+  }
+}
+
+/** The box round some points. */
+function bound(points: V3[]): { min: V3; max: V3 } {
+  return { min: [0, 1, 2].map((k) => Math.min(...points.map((p) => p[k]))) as V3, max: [0, 1, 2].map((k) => Math.max(...points.map((p) => p[k]))) as V3 };
 }
 
 /** Merge geometries of the same attributes (position, normal, uv) into one. */
@@ -465,6 +604,22 @@ function poles(scene: THREE.Scene): void {
     dummy.rotation.set(Math.sin(x) * 0.04, 0, Math.cos(x * 1.3) * 0.04);
     dummy.updateMatrix();
     mesh.setMatrixAt(i, dummy.matrix);
+    // Dormant: woken, the pole and its arm's two halves either side of it
+    const at = dummy.matrix.clone();
+    const to = (pts: V3[]): V3[] => pts.map(([x, y, z]) => new THREE.Vector3(x, y, z).applyMatrix4(at).toArray() as V3);
+    const corners = to([-0.65, 0.65].flatMap((x) => [0, 7.5].flatMap((y) => [-0.13, 0.13].map((z): V3 => [x, y, z]))));
+    units.add({
+      name: 'pole',
+      bounds: bound(corners),
+      instances: [[mesh, i]],
+      build: (d) => {
+        const pole = d.addConvex({ material: 'timber', points: to(frustum(0.13, 0.1, 7.5, 6)), tint: 0x8a7a66, smooth: 0.9 });
+        for (const side of [1, -1]) {
+          const arm = d.addConvex({ material: 'timber', points: to([0.1, 0.65].flatMap((x) => [6.95, 7.05].flatMap((y) => [-0.05, 0.05].map((z): V3 => [side * x, y, z])))), tint: 0x8a7a66 });
+          if (pole && arm) d.bond(pole, arm, 0.01);
+        }
+      },
+    });
   });
   mesh.castShadow = true;
   scene.add(mesh);
@@ -477,69 +632,129 @@ function block(sx: number, sy: number, sz: number, x: number, y: number, z: numb
   return g;
 }
 
+/** A box's corners (size, centre, turn about y and then a tilt about its own x, as block() lays it; `at` a point in its own frame). */
+function corners(sx: number, sy: number, sz: number, x: number, y: number, z: number, yaw = 0, tilt = 0, at: V3 = [0, 0, 0]): V3[] {
+  const m = new THREE.Matrix4().compose(new THREE.Vector3(x, y, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(tilt, yaw, 0, 'YXZ')), new THREE.Vector3(1, 1, 1));
+  return [-1, 1].flatMap((a) => [-1, 1].flatMap((b) => [-1, 1].map((c): V3 => new THREE.Vector3(at[0] + (a * sx) / 2, at[1] + (b * sy) / 2, at[2] + (c * sz) / 2).applyMatrix4(m).toArray() as V3)));
+}
+
 /**
  * The outskirts, 40-80 m out, so the town doesn't sit in an empty plain: boot hill (a rail fence,
  * crosses and headboards over stony mounds) to the north-west, a stock pen by the west road, a
- * ruined adobe corral and a broken wagon wheel by the east road. Drawn in four merged meshes;
- * the corral's walls are in the physics world, so debris and the player stop at them.
+ * ruined adobe corral and a broken wagon wheel by the east road. Drawn in four merged meshes; each
+ * a dormant thing, woken as its pieces: posts and rails (a rail a little short of the posts, bonded
+ * to them), mounds of earth with their markers bonded on, the corral's wall blocks and lumps, the
+ * wheel's rim in lengths, its spokes, hub and axle. The corral's walls are in the physics world, so
+ * debris and the player stop at them.
  */
 function outskirts(scene: THREE.Scene, world: World): void {
   const rand = random(404);
-  const wood: THREE.BufferGeometry[] = [];
-  const bleached: THREE.BufferGeometry[] = [];
-  const earth: THREE.BufferGeometry[] = [];
-  const mud: THREE.BufferGeometry[] = [];
+  const wood = new Merged();
+  const bleached = new Merged();
+  const earth = new Merged();
+  const mud = new Merged();
+  type Group = { key: number; parts: Array<{ material: string; points: V3[]; tint: number }>; bonds: Array<[number, number]>; bodies: Body[] };
+  let next = 0;
+  const group = (): Group => ({ key: next++, parts: [], bonds: [], bodies: [] });
+  const part = (g: Group, material: string, points: V3[], tint: number) => g.parts.push({ material, points, tint }) - 1;
+  const done = (g: Group, name: string) =>
+    units.add({
+      name,
+      bounds: bound(g.parts.flatMap((p) => p.points)),
+      bodies: g.bodies,
+      hide: () => {
+        for (const m of [wood, bleached, earth, mud]) m.hide(g.key);
+      },
+      build: (d) => {
+        const made: Array<Piece | null> = g.parts.map((p) => {
+          const shape = hullConvex(p.points);
+          // (Nothing in the ground: what reaches into it is cut off at its top)
+          const cut = shape && clip(shape, [0, -1, 0], -STREET.top);
+          return cut ? d.addConvex({ material: p.material, points: cut.faces.flatMap((f) => f.pts), tint: p.tint }) : null;
+        });
+        for (const [a, b] of g.bonds) if (made[a] && made[b]) d.bond(made[a]!, made[b]!, 0.01);
+      },
+    });
+  const WOOD = 0x8a7c6a;
+  // (The woken timber's own map is the weathered grey the drawn wood is flat)
+  const GREY = 0xe0d8cc;
   // A rail fence round a rectangle, posts every ~2 m, a gap for the gate on its first side
-  const fence = (x0: number, z0: number, x1: number, z1: number, h: number) => {
-    const corners: Array<[number, number]> = [
+  const fence = (g: Group, x0: number, z0: number, x1: number, z1: number, h: number) => {
+    const corner: Array<[number, number]> = [
       [x0, z0],
       [x1, z0],
       [x1, z1],
       [x0, z1],
     ];
-    corners.forEach(([ax, az], side) => {
-      const [bx, bz] = corners[(side + 1) % 4];
+    const posts: number[][] = [];
+    const rails: Array<{ part: number; side: number; i: number }> = [];
+    corner.forEach(([ax, az], side) => {
+      const [bx, bz] = corner[(side + 1) % 4];
       const len = Math.hypot(bx - ax, bz - az);
       const yaw = Math.atan2(-(bz - az), bx - ax);
       const n = Math.round(len / 2);
+      posts.push([]);
       for (let i = 0; i < n; i++) {
         const t0 = i / n;
         const t1 = (i + 1) / n;
         const lean = (rand() - 0.5) * 0.12;
-        wood.push(block(0.14, h, 0.14, ax + (bx - ax) * t0, h / 2, az + (bz - az) * t0, rand(), lean));
+        const turn = rand();
+        const [px, pz] = [ax + (bx - ax) * t0, az + (bz - az) * t0];
+        wood.add(g.key, block(0.14, h, 0.14, px, h / 2, pz, turn, lean));
+        posts[side].push(part(g, 'timber', corners(0.14, h, 0.14, px, h / 2, pz, turn, lean), GREY));
         if (side === 0 && i === Math.floor(n / 2)) continue;
         // One rail of two down at one end now and then
         for (const y of [h * 0.45, h * 0.85]) {
           const sag = rand() < 0.12 ? -h * 0.35 : 0;
-          wood.push(block(len / n, 0.1, 0.06, ax + (bx - ax) * (t0 + t1) * 0.5, y + sag / 2, az + (bz - az) * (t0 + t1) * 0.5, yaw, 0));
+          const [rx, ry, rz] = [ax + (bx - ax) * (t0 + t1) * 0.5, y + sag / 2, az + (bz - az) * (t0 + t1) * 0.5];
+          wood.add(g.key, block(len / n, 0.1, 0.06, rx, ry, rz, yaw, 0));
+          rails.push({ part: part(g, 'timber', corners(len / n - 0.24, 0.1, 0.06, rx, ry, rz, yaw, 0), GREY), side, i });
         }
       }
     });
+    // Each rail to the posts at its ends (the last of a side's ends on the next side's first)
+    for (const r of rails) {
+      const n = posts[r.side].length;
+      g.bonds.push([r.part, posts[r.side][r.i]], [r.part, r.i + 1 < n ? posts[r.side][r.i + 1] : posts[(r.side + 1) % 4][0]]);
+    }
   };
 
   // Boot hill, north-west of town
+  const hill = group();
   const [hx, hz] = [-52, 40];
-  fence(hx - 6, hz - 4, hx + 6, hz + 4, 1.1);
+  fence(hill, hx - 6, hz - 4, hx + 6, hz + 4, 1.1);
   for (let i = 0; i < 10; i++) {
     const gx = hx - 4.8 + (i % 5) * 2.4 + (rand() - 0.5) * 0.6;
     const gz = hz - 1.8 + Math.floor(i / 5) * 3.4 + (rand() - 0.5) * 0.4;
     const mound = new THREE.SphereGeometry(1, 9, 5, 0, Math.PI * 2, 0, Math.PI / 2).toNonIndexed();
     mound.scale(0.55, 0.28, 1.05);
     mound.translate(gx, 0, gz + 0.9);
-    earth.push(mound);
+    earth.add(hill.key, mound);
+    const pos = mound.attributes.position as THREE.BufferAttribute;
+    const heap = part(hill, 'heap', Array.from({ length: pos.count }, (_, k): V3 => [pos.getX(k), pos.getY(k), pos.getZ(k)]), 0xa48464);
     const lean = (rand() - 0.5) * 0.3;
     const yaw = (rand() - 0.5) * 0.3;
-    // Sun-bleached markers: crosses, and headboards
+    // Sun-bleached markers: crosses, and headboards, bonded to their mounds (woken, as the signs' plain boards)
     if (rand() < 0.65) {
-      bleached.push(block(0.1, 1.4, 0.07, gx, 0.7, gz, yaw, lean));
-      bleached.push(block(0.62, 0.1, 0.06, gx, 1.0, gz + Math.sin(lean) * 0.3, yaw, lean));
-    } else bleached.push(block(0.5, 0.8, 0.06, gx, 0.4, gz, yaw, lean));
+      bleached.add(hill.key, block(0.1, 1.4, 0.07, gx, 0.7, gz, yaw, lean));
+      bleached.add(hill.key, block(0.62, 0.1, 0.06, gx, 1.0, gz + Math.sin(lean) * 0.3, yaw, lean));
+      const upright = part(hill, 'paint', corners(0.1, 1.4, 0.07, gx, 0.7, gz, yaw, lean), 0xd2c8b6);
+      hill.bonds.push([upright, heap]);
+      for (const side of [1, -1]) hill.bonds.push([part(hill, 'paint', corners(0.26, 0.1, 0.06, gx, 1.0, gz + Math.sin(lean) * 0.3, yaw, lean, [side * 0.18, 0, 0]), 0xd2c8b6), upright]);
+    } else {
+      bleached.add(hill.key, block(0.5, 0.8, 0.06, gx, 0.4, gz, yaw, lean));
+      hill.bonds.push([part(hill, 'paint', corners(0.5, 0.8, 0.06, gx, 0.4, gz, yaw, lean), 0xd2c8b6), heap]);
+    }
   }
+  done(hill, 'boot hill');
 
   // A stock pen by the west road
-  fence(-62, -19, -54, -13, 1.5);
+  const pen = group();
+  fence(pen, -62, -19, -54, -13, 1.5);
+  done(pen, 'stock pen');
 
   // A ruined adobe corral by the east road: walls broken down to stubs, lumps at their feet
+  const corral = group();
   const [cx, cz] = [64, -16];
   const walls: Array<[number, number, number, number]> = [
     [cx - 5, cz - 4, cx + 5, cz - 4],
@@ -555,22 +770,28 @@ function outskirts(scene: THREE.Scene, world: World): void {
       const t = (i + 0.5) / n;
       const h = 0.4 + rand() * 1.3;
       const [x, z] = [ax + (bx - ax) * t, az + (bz - az) * t];
-      mud.push(block(len / n + 0.02, h, 0.45, x, h / 2, z, yaw, 0));
-      world.addBox({ size: [len / n, h, 0.45], position: [x, h / 2, z], rotation: [0, Math.sin(yaw / 2), 0, Math.cos(yaw / 2)], fixed: true, friction: 0.9 });
+      mud.add(corral.key, block(len / n + 0.02, h, 0.45, x, h / 2, z, yaw, 0));
+      part(corral, 'adobe', corners(len / n, h, 0.45, x, h / 2, z, yaw, 0), 0xffffff);
+      corral.bodies.push(world.addBox({ size: [len / n, h, 0.45], position: [x, h / 2, z], rotation: [0, Math.sin(yaw / 2), 0, Math.cos(yaw / 2)], fixed: true, friction: 0.9 })!);
       if (rand() < 0.5) {
         const lump = new THREE.DodecahedronGeometry(0.25 + rand() * 0.2, 0);
         lump.scale(1.2, 0.6, 1);
         lump.translate(x + (rand() - 0.5) * 0.8, 0.08, z + (rand() < 0.5 ? -0.5 : 0.5));
-        mud.push(lump);
+        mud.add(corral.key, lump);
+        const pos = lump.attributes.position as THREE.BufferAttribute;
+        part(corral, 'adobe', Array.from({ length: pos.count }, (_, k): V3 => [pos.getX(k), pos.getY(k), pos.getZ(k)]), 0xffffff);
       }
     }
   }
+  done(corral, 'corral');
 
   // A broken wagon wheel by the east road, spokes missing, and its axle
+  const wreck = group();
   const [wx, wz] = [47, 9];
   const wheel: THREE.BufferGeometry[] = [];
   const rim = new THREE.TorusGeometry(0.62, 0.045, 5, 22, Math.PI * 1.7).toNonIndexed();
   wheel.push(rim);
+  const spokes: number[] = [];
   for (let k = 0; k < 12; k++) {
     if (k === 3 || k === 4 || k === 9) continue;
     const a = (k / 12) * Math.PI * 2;
@@ -578,26 +799,44 @@ function outskirts(scene: THREE.Scene, world: World): void {
     spoke.translate(0, 0.33, 0);
     spoke.rotateZ(a);
     wheel.push(spoke);
+    spokes.push(a);
   }
   const hub = new THREE.CylinderGeometry(0.1, 0.1, 0.16, 8).toNonIndexed();
   hub.rotateX(Math.PI / 2);
   wheel.push(hub);
   // Tipped up on its broken side, a third of the way off the ground
+  const tipped = new THREE.Matrix4().makeTranslation(wx, 0.36, wz).multiply(new THREE.Matrix4().makeRotationY(0.6)).multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2 + 0.6));
   for (const g of wheel) {
-    g.rotateX(-Math.PI / 2 + 0.6);
-    g.rotateY(0.6);
-    g.translate(wx, 0.36, wz);
-    wood.push(g);
+    g.applyMatrix4(tipped);
+    wood.add(wreck.key, g);
   }
-  wood.push(block(1.6, 0.1, 0.1, wx + 1.2, 0.05, wz - 0.6, 0.3, 0));
-
-  const draw = (list: THREE.BufferGeometry[], color: number) => {
-    const mesh = new THREE.Mesh(mergeGeometries(list), new THREE.MeshStandardNodeMaterial({ color, roughness: 0.95, flatShading: true }));
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
-    scene.add(mesh);
+  wood.add(wreck.key, block(1.6, 0.1, 0.1, wx + 1.2, 0.05, wz - 0.6, 0.3, 0));
+  // Woken: the rim in lengths (chords), the spokes from the hub to the rim, the hub, the axle
+  const local = (pts: V3[]): V3[] => pts.map((p) => new THREE.Vector3(...p).applyMatrix4(tipped).toArray() as V3);
+  // (A box in the wheel's plane: centred r out at angle a, `along` long across the radius, `out` long along it)
+  const radial = (r: number, a: number, along: number, out: number, thick: number): V3[] => {
+    const [c, s] = [Math.cos(a), Math.sin(a)];
+    return [-1, 1].flatMap((i) => [-1, 1].flatMap((j) => [-1, 1].map((k): V3 => [(r + (j * out) / 2) * c - ((i * along) / 2) * s, (r + (j * out) / 2) * s + ((i * along) / 2) * c, (k * thick) / 2])));
   };
-  draw(wood, 0x8a7c6a);
+  const lengths: number[] = [];
+  for (let k = 0; k < 17; k++) lengths.push(part(wreck, 'timber', local(radial(0.62 * Math.cos(0.05 * Math.PI), (k + 0.5) * 0.1 * Math.PI, 2 * 0.62 * Math.sin(0.05 * Math.PI), 0.09, 0.09)), GREY));
+  for (let k = 1; k < lengths.length; k++) wreck.bonds.push([lengths[k - 1], lengths[k]]);
+  const nave = part(wreck, 'timber', local(frustum(0.1, 0.1, 0.16, 8).map(([x, y, z]): V3 => [x, z, y - 0.08])), GREY);
+  for (const a of spokes) {
+    // (A spoke runs up its own y, turned a about z: out along (-sin a, cos a))
+    const spoke = part(wreck, 'timber', local(radial(0.3375, a + Math.PI / 2, 0.04, 0.475, 0.03)), GREY);
+    wreck.bonds.push([spoke, nave]);
+    const at = (((a + Math.PI / 2) / (0.1 * Math.PI)) | 0) % 20;
+    if (at < 17) wreck.bonds.push([spoke, lengths[at]]);
+  }
+  part(wreck, 'timber', corners(1.6, 0.1, 0.1, wx + 1.2, 0.05, wz - 0.6, 0.3, 0), GREY);
+  done(wreck, 'wheel');
+
+  const draw = (m: Merged, color: number) => {
+    const mesh = m.build(new THREE.MeshStandardNodeMaterial({ color, roughness: 0.95, flatShading: true }), 'outskirts');
+    if (mesh) scene.add(mesh);
+  };
+  draw(wood, WOOD);
   draw(bleached, 0xd2c8b6);
   draw(earth, 0xa48464);
   draw(mud, 0xc29a72);

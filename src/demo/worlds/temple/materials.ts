@@ -4,11 +4,11 @@
 // the hilltop's earth and the rock under it. Textures from the world's pack
 // (public/packs/temple/textures): made for it, or Poly Haven (CC0).
 
-import { abs, atan, color, float, floor, fract, fwidth, materialColor, max, min, mix, mx_noise_float, positionWorld, select, sin, smoothstep, step, texture, time, uv, vec2, vec3, vec4 } from 'three/tsl';
+import { abs, atan, color, float, floor, fract, fwidth, materialColor, max, min, mix, mx_noise_float, normalWorld, positionWorld, select, sin, smoothstep, step, texture, time, uv, vec2, vec3, vec4 } from 'three/tsl';
 import * as THREE from 'three/webgpu';
 import { type BreakableMaterial, groundPresets, material, type MaterialOptions, pieceFrame, pieceState, presets } from '../../../lib/index.ts';
 import { texture as mapOf, inside, textured } from '../../textures.ts';
-import { bedrock, landLook, rockFace, soilFace } from './land.ts';
+import { BASE, bedrock, landLook, rockFace, soilFace } from './land.ts';
 
 const base = 'packs/temple/textures/';
 
@@ -193,6 +193,15 @@ function earth(): THREE.MeshStandardNodeMaterial {
   return m;
 }
 
+/** The scrub's look on a piece (as scenery.ts draws it): darker underneath and in its hollows. */
+function scrubLook(): THREE.MeshStandardNodeMaterial {
+  const m = new THREE.MeshStandardNodeMaterial({ roughness: 1 });
+  const { position: at } = pieceFrame();
+  const mottle = mx_noise_float(at.mul(3.1)).mul(0.18).add(0.92);
+  m.colorNode = vec3(mix(float(0.45), float(1.05), smoothstep(-0.6, 0.7, normalWorld.y)).mul(mottle));
+  return m;
+}
+
 /** The rock under the earth: bare bedrock on top (a crater's floor), the cliffs' rock in its sides. */
 function rock(): THREE.MeshStandardNodeMaterial {
   const m = new THREE.MeshStandardNodeMaterial({ roughness: 0.9 });
@@ -312,6 +321,13 @@ export function templeMaterials(): Record<string, BreakableMaterial> {
     timber: presets.wood({ density: 0.65, support: 600, impact: 25, surface: textured('rough_wood', { base, color: 0xb09070, roughness: 1.5 }), uvScale: 1.2, uvJitter: 1, inside: 0xc8a47a }),
     bronze: presets.metal({ density: 8.5, impact: 150, plastic: { yieldStress: 1.5e4, bend: 1.4 }, minSize: 0.5, surface: bronze(), inside: 0xc89a5a }),
     foliage: material(leaves(0.7)),
+    // The slopes' olive scrub, woken: leaves as the trees' are, drawn as the scrub is (each bush its
+    // green: its tint; darker underneath, mottled)
+    scrub: material({ ...leaves(0.7), surface: scrubLook(), uvJitter: 0 }),
+    // The slopes' loose rocks, woken: boulders of the marble rock the cliffs are, breaking in chunks
+    boulder: presets.concrete({ density: 2.6, fragmentSize: 0.22, minSize: 0.1, maxPieces: 6, minBodySize: 0.1, surface: textured('marble_rock_02', { base: BASE, color: 0xe8e2d6 }), uvScale: 1, uvJitter: 1, inside: 0xd8ccb8, insideTexture: brokenMarble }),
+    // A boat's sail, woken: light cloth, torn by what reaches it
+    sail: material({ density: 0.15, support: 40, strength: 1500, impact: 2, fragmentSize: 0.8, minSize: 0.4, dustSize: 0.6, minBodySize: 0.4, maxPieces: 4, rubbleLife: 6, surface: new THREE.MeshStandardNodeMaterial({ color: 0xffffff, roughness: 0.9, side: THREE.DoubleSide }), inside: 0xe8e0d0, insideMap: 0 }),
     // The cypresses' scale-like sprays: the same leaves, smaller
     cypress: material(leaves(1.5)),
     // Tough, and a blast reaches it less far than the rest: a hit in the crown strips the leaves

@@ -1,11 +1,15 @@
 // The yard's gulls: a few on the bollards, the crane's girders and the stacks' roofs, three always
 // wheeling over the water. A blast or the gun puts the perched ones up: they jump off away from it,
 // beat up to circle high over the harbour, and come back to their perches once it's been quiet a
-// while. Two instanced meshes (bodies, wings), made with the scenery and drawn from the start.
+// while. One in a round's way or near a blast is shot down (../../birds.ts). Two instanced meshes
+// (bodies, wings), made with the scenery and drawn from the start.
 
 import * as THREE from 'three/webgpu';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import type { V3 } from '../../../lib/index.ts';
+import { blown, Fall, first, reach, struck } from '../../birds.ts';
+import type { Round } from '../../gun.ts';
+import type { WorldRuntime } from '../types.ts';
 
 const WHITE = 0xe8eaea;
 const GREY = 0x8e979c;
@@ -13,6 +17,10 @@ const BLACK = 0x26282a;
 /** How long they keep away after the last noise before heading back (s, and up to as much again at random). */
 const AWAY = 25;
 const HIDDEN = -200;
+/** How near a round passes one to strike it (m); its body's middle over `at`; the way its model faces. */
+const REACH = reach(1.4);
+const MIDDLE = 0.07;
+const FORWARD = new THREE.Vector3(1, 0, 0);
 
 interface Gull {
   at: V3;
@@ -33,6 +41,8 @@ interface Gull {
   goAt: number;
   /** When it next turns its head on its perch. */
   lookAt: number;
+  /** Shot down: falling, then lying (or floating) where it landed. */
+  fall: Fall | null;
 }
 
 /** A gull's body (0.5 m, nose along +x), white with a grey back, and a yellow bill. */
@@ -84,6 +94,8 @@ function wingGeometry(): THREE.BufferGeometry {
 }
 
 export class Gulls {
+  /** One shot down has landed at `at` (on the quay, or on the water: a splash). */
+  onLanded: (at: V3) => void = () => {};
   private readonly gulls: Gull[] = [];
   private readonly bodies: THREE.InstancedMesh;
   private readonly wings: THREE.InstancedMesh;
@@ -92,6 +104,8 @@ export class Gulls {
     const m = new THREE.MeshStandardNodeMaterial({ vertexColors: true, roughness: 0.85, side: THREE.DoubleSide });
     this.bodies = new THREE.InstancedMesh(bodyGeometry(), m, count);
     this.wings = new THREE.InstancedMesh(wingGeometry(), m, count * 2);
+    this.bodies.name = 'harbor:gulls';
+    this.wings.name = 'harbor:gull-wings';
     for (const o of [this.bodies, this.wings]) {
       o.frustumCulled = false;
       o.castShadow = true;
@@ -113,6 +127,7 @@ export class Gulls {
         home: always ? Infinity : 0,
         goAt: 0,
         lookAt: 0,
+        fall: null,
       });
     }
     this.draw();
@@ -136,7 +151,7 @@ export class Gulls {
   /** A loud noise at `from`: those perched or coming in take off away from it, and all keep away a while. */
   scatter(from: V3, time: number, rand: () => number): void {
     for (const g of this.gulls) {
-      if (g.home === Infinity) continue;
+      if (g.home === Infinity || g.fall) continue;
       g.home = Math.max(g.home, time + AWAY * (1 + rand()));
       if (g.mode === 'flying') continue;
       const dx = g.at[0] - from[0];
@@ -152,12 +167,48 @@ export class Gulls {
 
   /** Where one of the gulls in the air is (null: none), for a call to come from. */
   flying(rand: () => number): V3 | null {
-    const up = this.gulls.filter((g) => g.mode !== 'perched');
+    const up = this.gulls.filter((g) => g.mode !== 'perched' && !g.fall);
     return up.length ? up[Math.floor(rand() * up.length)].at : null;
   }
 
-  update(dt: number, time: number, perchOk: (perch: V3) => boolean): void {
+  /** A round across the yard: the first gull in its way, sat or flying, is shot down. */
+  shoot(round: Round, rt: WorldRuntime): void {
+    const i = first(round, this.middles(), REACH);
+    if (i >= 0) this.down(i, new THREE.Vector3(...round.direction).multiplyScalar(2), rt);
+  }
+
+  /** A blast: those near it are blown out of the air (or off their perches). */
+  blast(at: V3, radius: number, rt: WorldRuntime): void {
+    for (const { i, push } of blown(at, radius, this.middles())) this.down(i, push, rt);
+  }
+
+  /** Where each gull's body is (null: shot already). */
+  private middles(): Array<THREE.Vector3 | null> {
+    return this.gulls.map((g) => (g.fall ? null : new THREE.Vector3(g.at[0], g.at[1] + MIDDLE, g.at[2])));
+  }
+
+  /** Gull i struck, pushed by `push` (m/s): feathers and a cry, and down it goes. */
+  private down(i: number, push: THREE.Vector3, rt: WorldRuntime): void {
+    const g = this.gulls[i];
+    const at = new THREE.Vector3(g.at[0], g.at[1] + MIDDLE, g.at[2]);
+    const q = new THREE.Quaternion().setFromEuler(new THREE.Euler(g.roll, g.yaw, this.pitch(g), 'YZX'));
+    g.fall = new Fall(at, new THREE.Vector3(...g.v), q, push, FORWARD, 1.3, 0.07);
+    struck(at, WHITE, 2, rt, 'gulls.call');
+  }
+
+  private pitch(g: Gull): number {
+    return g.mode === 'perched' ? 0.15 : Math.atan2(g.v[1], Math.hypot(g.v[0], g.v[2])) * 0.5;
+  }
+
+  update(dt: number, time: number, perchOk: (perch: V3) => boolean, floor: (at: V3) => number): void {
     for (const g of this.gulls) {
+      if (g.fall) {
+        const was = g.fall.down;
+        g.fall.update(dt, floor);
+        if (g.fall.down && !was) this.onLanded(g.fall.at.toArray() as V3);
+        g.phase += dt * 14;
+        continue;
+      }
       if (g.mode === 'perched') {
         // Now and then it turns its head (the whole bird, a little)
         if (time > g.lookAt) {
@@ -223,15 +274,17 @@ export class Gulls {
     const s = new THREE.Vector3(1, 1, 1);
     const p = new THREE.Vector3();
     this.gulls.forEach((g, i) => {
-      const pitch = g.mode === 'perched' ? 0.15 : Math.atan2(g.v[1], Math.hypot(g.v[0], g.v[2])) * 0.5;
-      e.set(g.roll, g.yaw, pitch, 'YZX');
-      m.compose(p.set(g.at[0], g.at[1] + 0.07, g.at[2]), q.setFromEuler(e), s.set(1, 1, 1));
+      const f = g.fall;
+      if (f) m.compose(f.at, f.q, s.set(1, 1, 1));
+      else m.compose(p.set(g.at[0], g.at[1] + MIDDLE, g.at[2]), q.setFromEuler(e.set(g.roll, g.yaw, this.pitch(g), 'YZX')), s.set(1, 1, 1));
       this.bodies.setMatrixAt(i, m);
-      // Each wing from its shoulder: beating up and down about the body's length, folded back along it on the perch
-      const flap = g.beat * Math.sin(g.phase) * 0.75 + (1 - g.beat) * 0.08;
+      // Each wing from its shoulder: beating up and down about the body's length, folded back along
+      // it on the perch; shot, limp and half folded, a last flutter dying away as it falls, folded lying
+      const flap = f ? 0.3 + 0.6 * Math.sin(g.phase) * Math.exp(-f.t * 1.5) : g.beat * Math.sin(g.phase) * 0.75 + (1 - g.beat) * 0.08;
+      const fold = f ? (f.down ? 1 : 0.35) : g.fold;
       for (const side of [1, -1]) {
-        e.set(-side * flap * (1 - g.fold), -side * g.fold * 1.35, 0, 'YXZ');
-        w.compose(p.set(0.02, 0.035, side * 0.035), q.setFromEuler(e), s.set(1, 1, side * (1 - 0.45 * g.fold)));
+        e.set(-side * flap * (1 - fold), -side * fold * 1.35, 0, 'YXZ');
+        w.compose(p.set(0.02, 0.035, side * 0.035), q.setFromEuler(e), s.set(1, 1, side * (1 - 0.45 * fold)));
         this.wings.setMatrixAt(i * 2 + (side > 0 ? 0 : 1), w.premultiply(m));
       }
     });

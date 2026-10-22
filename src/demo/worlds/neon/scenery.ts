@@ -1,15 +1,20 @@
-// What doesn't break: the street past the alley's breakable ground (wet.ts), the towers that
-// wall the alley in behind both rows, their rooftop billboards, the far skyline with its blinking
-// beacons, the avenue behind the start (shopfronts, awnings, traffic), the lane north and the
-// passage east. The buildings and billboards close by are fixed boxes in the world too, so
-// rockets go off on them and debris and the player stop at them; the far skyline isn't.
+// Round the alley: the street past its breakable ground (wet.ts), the towers that wall it in behind
+// both rows with their rooftop billboards, the far skyline with its blinking beacons, the avenue
+// behind the start (shopfronts, awnings, traffic), the lane north and the passage east. All of it
+// stands as scenery until something reaches it (../../towers.ts, ../../dormant-ground.ts): the
+// towers are fixed boxes in sections, a round or a blast reaching one wakes it into panels in the
+// same look (and the signs, shopfronts and awnings on it into lightboxes, panels and sheets), and a
+// blast reaching the street lays it breakable there. Only the traffic's lights don't break.
 
-import { abs, color, float, floor, fract, max, mix, modelScale, normalWorld, positionGeometry, positionWorld, select, smoothstep, step, texture, transformNormalToView, uniform, uv, vec2, vec3 } from 'three/tsl';
+import { abs, color, float, floor, fract, max, mix, normalWorld, positionWorld, select, smoothstep, step, texture, transformNormalToView, uniform, uv, vec2, vec3 } from 'three/tsl';
 import * as THREE from 'three/webgpu';
-import type { World } from 'three-avbd';
-import { random } from '../../../lib/index.ts';
-import { texture as mapOf, textured } from '../../textures.ts';
+import type { Body, World } from 'three-avbd';
+import { type BreakableMaterial, type Destruction, material, random, type V3 } from '../../../lib/index.ts';
+import { DormantGround } from '../../dormant-ground.ts';
+import { inside, texture as mapOf, textured } from '../../textures.ts';
+import { type FacadeLook, type TowerSpec, Towers } from '../../towers.ts';
 import { glyphAtlas } from './glyphs.ts';
+import { lightbox } from './signs.ts';
 import { FRONT, GROUND, LANE } from './layout.ts';
 import { cellHash, craterWater, wetStreet } from './wet.ts';
 
@@ -63,17 +68,33 @@ function underStreet(scene: THREE.Scene): void {
 
 /**
  * The ground: the wet street drawn everywhere but over the alley's breakable ground (its slabs draw
- * it there), what a crater shows under it, and the ground in the world: the bed under the area, and
- * round it the ground reaching below the bed, so nothing slips under it out of a crater.
+ * it there) and where a blast has laid it breakable round the alley (dormant ground: tiles of the
+ * alley's layers, cut out of the drawing as they're laid), what a crater shows under it, and the
+ * ground in the world: the bed under the area, and round it the tiles (fixed boxes reaching below
+ * the bed, so nothing slips under it out of a crater) but under the towers, which stand on boxes of
+ * their own.
  */
-function ground(scene: THREE.Scene, world: World): void {
+function ground(scene: THREE.Scene, world: World, specs: TowerSpec[]): DormantGround {
   const { x0, x1, bed } = GROUND;
   world.addBox({ size: [x1 - x0, 1, 2 * FRONT], position: [(x0 + x1) / 2, bed - 0.5, 0], fixed: true, friction: 0.8 });
-  const around = (a: number, b: number, c: number, e: number) => world.addBox({ size: [b - a, 1.5, e - c], position: [(a + b) / 2, -0.75, (c + e) / 2], fixed: true, friction: 0.8 });
-  around(-120, x0, -120, 120);
-  around(x1, 120, -120, 120);
-  around(x0, x1, FRONT, 120);
-  around(x0, x1, -120, -FRONT);
+  const within = (x: number, z: number, [c0, d0, c1, d1]: [number, number, number, number]) => x > c0 && x < c1 && z > d0 && z < d1;
+  const footprints = specs.map((t) => [t.x - t.w / 2, t.z - t.d / 2, t.x + t.w / 2, t.z + t.d / 2] as [number, number, number, number]);
+  // The tiles cut along the alley's edges (they meet its ground; those on it are left out) and left
+  // out where their middle is under a tower (it has its own ground box: one only partly under a
+  // tower keeps its box there too, so no ground is missing)
+  const dormant = new DormantGround(scene, world, {
+    name: 'street',
+    area: [-120, -120, 120, 120],
+    tile: 8,
+    cuts: { xs: [x0, x1], zs: [-FRONT, FRONT] },
+    top: 0,
+    bottom: -1.5,
+    friction: 0.8,
+    skip: ([a0, b0, a1, b1]) => [[x0, -FRONT, x1, FRONT] as [number, number, number, number], ...footprints].some((f) => within((a0 + a1) / 2, (b0 + b1) / 2, f)),
+    layers: (area) => [{ material: 'asphalt', under: 'base', bed: 'earth', area, top: 0, depth: GROUND.depth, underDepth: GROUND.underDepth, cell: GROUND.cell, toss: GROUND.toss, textureFrame: { position: [0, 0, 0] } }],
+  });
+  // Under the towers: their ground (their own boxes stand on it)
+  for (const [a0, b0, a1, b1] of footprints) world.addBox({ size: [a1 - a0, 1.5, b1 - b0], position: [(a0 + a1) / 2, -0.75, (b0 + b1) / 2], fixed: true, friction: 0.8 });
   const m = new THREE.MeshStandardNodeMaterial({ metalness: 0 });
   const xz = positionWorld.xz;
   const wet = wetStreet(xz, vec2(xz.x, xz.y.negate()).div(4), float(1), float(1));
@@ -82,6 +103,7 @@ function ground(scene: THREE.Scene, world: World): void {
   m.roughnessNode = wet.roughness;
   m.aoNode = wet.ao;
   m.emissiveNode = wet.emissive;
+  dormant.cut(m, xz);
   // 240 m square, with the area cut out (laid flat: the shape's y is the world's -z), in the world's
   // frame as the slabs are, so its normal is taken as they take it
   const shape = new THREE.Shape([new THREE.Vector2(-120, -120), new THREE.Vector2(120, -120), new THREE.Vector2(120, 120), new THREE.Vector2(-120, 120)]);
@@ -90,28 +112,27 @@ function ground(scene: THREE.Scene, world: World): void {
   plane.receiveShadow = true;
   scene.add(plane);
   underStreet(scene);
+  return dormant;
 }
 
 /**
  * Night facades: a dark body with paler spandrel bands at each floor and a parapet line at the
- * roof, and a grid of windows 1.6 × 3.2 m (as the alley's own; `fine`: 0.9 × 2.5 m on the lower
- * 10 m, for the blocks seen close), about one in ten lit, cool or warm, each with its own level and
- * a curtain or blind across it. LED bands in dashes on some towers, none at street level.
+ * roof, and a grid of windows 1.6 × 3.2 m (as the alley's own; finer, 0.9 × 2.5 m, on the lower
+ * 10 m of the blocks seen close), about one in ten lit, cool or warm, each with its own level and a
+ * curtain or blind across it. LED bands in dashes on some towers, none at street level. A tower's
+ * tone is data, not a colour: its hash (x), its height / 256 (y), finer windows (z).
  */
-function towerMaterial(fine = false): THREE.MeshStandardNodeMaterial {
-  const m = new THREE.MeshStandardNodeMaterial({ roughness: 0.8 });
-  const side = abs(normalWorld.x).greaterThan(0.5);
-  const along = select(side, positionWorld.z, positionWorld.x);
-  const size = fine ? select(positionWorld.y.lessThan(10), vec2(0.9, 2.5), vec2(1.6, 3.2)) : vec2(1.6, 3.2);
-  const cell = vec2(along, positionWorld.y).div(size);
+const nightFacade: FacadeLook = ({ along, y, tone, top }) => {
+  const tower = tone.x;
+  const fine = tone.z.greaterThan(0.5).and(y.lessThan(10));
+  const size = select(fine, vec2(0.9, 2.5), vec2(1.6, 3.2));
+  const cell = vec2(along, y).div(size);
   const f = fract(cell);
   const id = floor(cell);
   // The window: 70 % of the cell's width, 1.5 m tall over a sill
   const isWindow = step(0.15, f.x).mul(step(f.x, 0.85)).mul(step(0.28, f.y)).mul(step(f.y, 0.76));
-  const top = abs(normalWorld.y).greaterThan(0.5);
-  // Height under the roof (the boxes are scaled unit cubes)
-  const fromTop = float(0.5).sub(positionGeometry.y).mul(modelScale.y);
-  const tower = cellHash(floor(positionWorld.x.div(11)), floor(positionWorld.z.div(11)), 7);
+  // Height under the roof
+  const fromTop = tone.y.mul(256).sub(y);
   const salt = floor(tower.mul(997));
   const r = cellHash(id.x, id.y, salt);
   const cool = step(r, 0.035);
@@ -137,12 +158,14 @@ function towerMaterial(fine = false): THREE.MeshStandardNodeMaterial {
   const parapet = step(fromTop, 0.9).mul(0.6).add(step(fromTop, 0.12).mul(0.8));
   const body = wall.mul(float(1).add(spandrel).add(parapet));
   const glass = mix(color(0x0a0d12), color(0x141a24), wy);
-  m.colorNode = select(top, wall.mul(0.8), mix(body, glass, isWindow.mul(step(0.9, fromTop))));
   const lit = color(0xcfe6ff).mul(cool).add(color(0xffc890).mul(warm)).mul(isWindow).mul(step(0.9, fromTop)).mul(lightIn).mul(0.45);
-  m.emissiveNode = select(top, vec3(0), lit.add(bandColor.mul(band).mul(1.2)));
-  m.roughnessNode = mix(float(0.85), float(0.2), isWindow);
-  return m;
-}
+  return {
+    color: select(top, wall.mul(0.8), mix(body, glass, isWindow.mul(step(0.9, fromTop)))),
+    toned: float(0),
+    emissive: select(top, vec3(0), lit.add(bandColor.mul(band).mul(1.2))),
+    roughness: mix(float(0.85), float(0.2), isWindow),
+  };
+};
 
 /** A glowing billboard plane: `cells` atlas cells across from (col, row) (glyphs and pictograms) on a colour, at `strength`. */
 function billboardMaterial(tint: number, col: number, row: number, cells: number, strength: number): THREE.MeshBasicNodeMaterial {
@@ -201,10 +224,11 @@ const SHOP_LIGHTS = [0xffd9a8, 0xffe8c8, 0xd8ecff, 0xffc8dc];
  * shelves) under a glowing fascia with a row of glyphs; a shuttered one is grey slats under a dark
  * fascia.
  */
-function shopfrontMaterial(cells: THREE.DataTexture, first: number, len: number): THREE.MeshBasicNodeMaterial {
+function shopfrontMaterial(cells: THREE.DataTexture, first: number, len: number, place?: THREE.Node<'vec2'>): THREE.MeshBasicNodeMaterial {
   const m = new THREE.MeshBasicNodeMaterial();
-  const s = uv().x.mul(len);
-  const y = uv().y.mul(3.4);
+  // (Along the band and up it in metres: the plane's own uv, or a piece's map coordinates)
+  const s = place ? place.x : uv().x.mul(len);
+  const y = place ? place.y : uv().y.mul(3.4);
   const k = floor(s.div(CELL));
   const f = s.sub(k.mul(CELL));
   const info = texture(cells, vec2(fract(k.add(first + 0.5).div(CELLS)), 0.5));
@@ -251,7 +275,7 @@ function shopfrontMaterial(cells: THREE.DataTexture, first: number, len: number)
  * Shopfronts along a facade line: a band from `a` to `b` (world points at street level, the band
  * facing `facing`), and awnings over some lit ones (added to `awnings`).
  */
-function shopfronts(scene: THREE.Scene, cells: THREE.DataTexture, data: Float32Array, first: number, a: THREE.Vector3, b: THREE.Vector3, facing: number, awnings: THREE.Matrix4[], awningColors: THREE.Color[], rand: () => number): void {
+function shopfronts(scene: THREE.Scene, cells: THREE.DataTexture, data: Float32Array, first: number, a: THREE.Vector3, b: THREE.Vector3, facing: number, awnings: THREE.Matrix4[], awningColors: THREE.Color[], rand: () => number): { mesh: THREE.Mesh; a: THREE.Vector3; b: THREE.Vector3; first: number } {
   const len = a.distanceTo(b);
   const band = new THREE.Mesh(new THREE.PlaneGeometry(len, 3.4), shopfrontMaterial(cells, first, len));
   band.position.copy(a).add(b).multiplyScalar(0.5).setY(1.7);
@@ -268,33 +292,55 @@ function shopfronts(scene: THREE.Scene, cells: THREE.DataTexture, data: Float32A
     awnings.push(new THREE.Matrix4().compose(at, q, new THREE.Vector3(CELL - 0.8, 0.06, 1.1)));
     awningColors.push(new THREE.Color([0xc83a3a, 0x2a6ab0, 0x2a9a6a, 0xd89a2a, 0x8a3ab0][Math.floor(rand() * 5)]));
   }
+  return { mesh: band, a, b, first };
 }
 
 const BILLBOARD_TINTS = [0x22e6ff, 0xff2bd6, 0xffa62b, 0xff3a7a, 0x14ffc8, 0x8a5bff];
 
+/** Something on a tower's face (a sign, a shopfront, an awning, a beacon): it goes with the section it's on, built anew as a piece. */
+interface Attachment {
+  at: [number, number, number];
+  hide: () => void;
+  build?: (d: Destruction) => void;
+}
+
+let towers: Towers | null = null;
+let attachments: Attachment[] = [];
+let street: DormantGround | null = null;
+const BLOCK = { storey: 3.2, bay: 3.2, section: 12.8, wall: 0.3, material: 'block', name: 'blocks', shadows: false };
+
+/** A tower's hash (0–1), from where it stands. */
+const towerHash = (x: number, z: number) => Math.abs((Math.sin(x * 12.9898 + z * 78.233) * 43758.5453) % 1);
+
 export function neonScenery(scene: THREE.Scene, world: World): void {
   nightSky(scene);
-  ground(scene, world);
   const rand = random(5);
-  const tower = towerMaterial();
-  const box = new THREE.BoxGeometry(1, 1, 1);
-  // A building, and a fixed box as drawn (`solid`; not the far skyline's, 60 m off and more, out of play)
-  const place = (x: number, z: number, w: number, d: number, h: number, material = tower, solid = true) => {
-    const m = new THREE.Mesh(box, material);
-    m.scale.set(w, h, d);
-    m.position.set(x, h / 2, z);
-    m.receiveShadow = true;
-    scene.add(m);
-    if (solid) world.addBox({ size: [w, h, d], position: [x, h / 2, z], fixed: true, friction: 0.8 });
-  };
+  const specs: TowerSpec[] = [];
+  attachments = [];
+  // A building (its tone: its hash, its height, finer windows low down)
+  const place = (x: number, z: number, w: number, d: number, h: number, fine = false) => specs.push({ x, z, w, d, h, tone: new THREE.Color().setRGB(towerHash(x, z), h / 256, fine ? 1 : 0, THREE.LinearSRGBColorSpace) });
   const plane = new THREE.PlaneGeometry(1, 1);
-  const sign = (at: THREE.Vector3, w: number, h: number, facing: number, tint: number, strength = 2.2) => {
+  const sign = (at: THREE.Vector3, w: number, h: number, facing: number, tint: number, strength = 2.2, body: Body | null = null) => {
     // Each from its own place in the atlas, so no two read alike
-    const m = new THREE.Mesh(plane, billboardMaterial(tint, Math.floor(rand() * 4), Math.floor(rand() * 2), Math.max(1, Math.round(w / h)), strength));
+    const col = Math.floor(rand() * 4);
+    const row = Math.floor(rand() * 2);
+    const cells = Math.max(1, Math.round(w / h));
+    const m = new THREE.Mesh(plane, billboardMaterial(tint, col, row, cells, strength));
     m.scale.set(w, h, 1);
     m.position.copy(at);
     m.rotation.y = facing;
     scene.add(m);
+    // Woken, a lightbox showing the same cells, facing the same way
+    const n: V3 = [Math.round(Math.sin(facing)), 0, Math.round(Math.cos(facing))];
+    const size: V3 = n[0] ? [0.15, h, w] : [w, h, 0.15];
+    attachments.push({
+      at: [at.x, at.y, at.z],
+      hide: () => {
+        m.visible = false;
+        if (body?.alive) body.remove();
+      },
+      build: (d) => lightbox(d, [at.x - n[0] * 0.07, at.y, at.z - n[2] * 0.07], size, n, tint, h, col, row),
+    });
   };
   // The back rows: towers behind both rows, wide gaps only at the lane
   for (const side of [1, -1]) {
@@ -314,10 +360,10 @@ export function neonScenery(scene: THREE.Scene, world: World): void {
       if (rand() < 0.45) {
         const bw = 6 + rand() * 6;
         const bh = 4 + rand() * 2;
-        // Facing the alley (a plane faces +z unturned): seen from behind, its glyphs would be mirrored
-        sign(new THREE.Vector3(x + w / 2, h + bh / 2 + 1, side * 14.5), bw, bh, side === 1 ? Math.PI : 0, BILLBOARD_TINTS[Math.floor(rand() * BILLBOARD_TINTS.length)]);
         // A thin box, so a rocket at it goes off there
-        world.addBox({ size: [bw, bh, 0.2], position: [x + w / 2, h + bh / 2 + 1, side * 14.5], fixed: true, friction: 0.8 });
+        const body = world.addBox({ size: [bw, bh, 0.2], position: [x + w / 2, h + bh / 2 + 1, side * 14.5], fixed: true, friction: 0.8 })!;
+        // Facing the alley (a plane faces +z unturned): seen from behind, its glyphs would be mirrored
+        sign(new THREE.Vector3(x + w / 2, h + bh / 2 + 1, side * 14.5), bw, bh, side === 1 ? Math.PI : 0, BILLBOARD_TINTS[Math.floor(rand() * BILLBOARD_TINTS.length)], 2.2, body);
       }
       x += w + 0.4;
     }
@@ -338,6 +384,7 @@ export function neonScenery(scene: THREE.Scene, world: World): void {
       glowStrip.position.set(x + 3, 1.6, side * 2.49);
       glowStrip.rotation.y = side === 1 ? Math.PI : 0;
       scene.add(glowStrip);
+      attachments.push({ at: [x + 3, 1.6, side * 2.49], hide: () => (glowStrip.visible = false), build: (d) => void d.addBox({ material: 'lamp', size: [4.5, 2.2, 0.06], position: [x + 3, 1.6, side * 2.53], tint: 0xffc890 }) });
     }
   }
   place(48, 0, 6, 24, 40);
@@ -348,9 +395,8 @@ export function neonScenery(scene: THREE.Scene, world: World): void {
     if (rand() < 0.7) sign(new THREE.Vector3(-45.95, 6 + rand() * 10, z + 6), 8, 4 + rand() * 3, Math.PI / 2, BILLBOARD_TINTS[Math.floor(rand() * 6)], 2.6);
   }
   // Corner blocks on the alley's side of the avenue, past the rows (seen close: finer windows low down)
-  const fine = towerMaterial(true);
-  for (const side of [1, -1]) place(-28, side * 20, 4, 14, 30 + rand() * 20, fine);
-  // Street level on the avenue: shopfronts across it and on the corner blocks, awnings over some
+  for (const side of [1, -1]) place(-28, side * 20, 4, 14, 30 + rand() * 20, true);
+  // Street level on the avenue: shopfronts across it (a band a block) and on the corner blocks, awnings over some
   const data = new Float32Array(CELLS * 4);
   for (let i = 0; i < CELLS; i++) {
     const r = rand();
@@ -358,15 +404,48 @@ export function neonScenery(scene: THREE.Scene, world: World): void {
   }
   const cells = new THREE.DataTexture(data, CELLS, 1, THREE.RGBAFormat, THREE.FloatType);
   cells.needsUpdate = true;
+  shopCells = cells;
   const awnings: THREE.Matrix4[] = [];
   const awningColors: THREE.Color[] = [];
-  shopfronts(scene, cells, data, 0, new THREE.Vector3(-45.97, 0, 60), new THREE.Vector3(-45.97, 0, -60), Math.PI / 2, awnings, awningColors, rand);
-  shopfronts(scene, cells, data, 31, new THREE.Vector3(-30.02, 0, 13), new THREE.Vector3(-30.02, 0, 27), -Math.PI / 2, awnings, awningColors, rand);
-  shopfronts(scene, cells, data, 35, new THREE.Vector3(-30.02, 0, -27), new THREE.Vector3(-30.02, 0, -13), -Math.PI / 2, awnings, awningColors, rand);
-  const sheets = new THREE.InstancedMesh(box, new THREE.MeshStandardNodeMaterial({ roughness: 0.5 }), awnings.length);
+  const bands: Array<{ mesh: THREE.Mesh; a: THREE.Vector3; b: THREE.Vector3; first: number }> = [];
+  for (let k = 0; k < 10; k++) bands.push(shopfronts(scene, cells, data, 3 * k, new THREE.Vector3(-45.97, 0, 60 - 12 * k), new THREE.Vector3(-45.97, 0, 48 - 12 * k), Math.PI / 2, awnings, awningColors, rand));
+  bands.push(shopfronts(scene, cells, data, 31, new THREE.Vector3(-30.02, 0, 13), new THREE.Vector3(-30.02, 0, 27), -Math.PI / 2, awnings, awningColors, rand));
+  bands.push(shopfronts(scene, cells, data, 35, new THREE.Vector3(-30.02, 0, -27), new THREE.Vector3(-30.02, 0, -13), -Math.PI / 2, awnings, awningColors, rand));
+  for (const band of bands) {
+    const mid = band.a.clone().add(band.b).multiplyScalar(0.5);
+    const len = band.a.distanceTo(band.b);
+    const out = band.a.x < -40 ? 1 : -1;
+    // Woken: a panel of the same shopfronts (its map laid from the band's start, a cell `first` on)
+    attachments.push({
+      at: [mid.x, 1.7, mid.z],
+      hide: () => (band.mesh.visible = false),
+      build: (d) =>
+        void d.addBox({
+          material: 'shopfront',
+          size: [0.08, 3.4, len],
+          position: [mid.x + out * 0.02, 1.7, mid.z],
+          textureFrame: { position: [band.a.x, 0, out > 0 ? band.a.z + band.first * CELL : band.a.z - band.first * CELL], rotation: [0, 0, 0, 1] },
+        }),
+    });
+  }
+  const sheets = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshStandardNodeMaterial({ roughness: 0.5 }), awnings.length);
   awnings.forEach((m, i) => {
     sheets.setMatrixAt(i, m);
     sheets.setColorAt(i, awningColors[i]);
+    const p = new THREE.Vector3();
+    const q = new THREE.Quaternion();
+    const sc = new THREE.Vector3();
+    m.decompose(p, q, sc);
+    // (On the face it hangs from: 0.55 m back the way it sticks out, its box's z across the band)
+    const out = new THREE.Vector3(0, 0, 1).applyQuaternion(q).setY(0).normalize();
+    attachments.push({
+      at: [p.x - out.x * 0.55, p.y, p.z - out.z * 0.55],
+      hide: () => {
+        sheets.setMatrixAt(i, new THREE.Matrix4().makeScale(0, 0, 0));
+        sheets.instanceMatrix.needsUpdate = true;
+      },
+      build: (d) => void d.addBox({ material: 'awning', size: [sc.x, sc.y, sc.z], position: [p.x, p.y, p.z], rotation: [q.x, q.y, q.z, q.w], tint: awningColors[i] }),
+    });
   });
   scene.add(sheets);
   // The far skyline, fading into the fog, with red beacons on the tall ones
@@ -381,13 +460,16 @@ export function neonScenery(scene: THREE.Scene, world: World): void {
     if (Math.abs(z) < 40 && x > -44 && x < 60) continue;
     const h = 60 + rand() * 120;
     const w = 14 + rand() * 18;
-    place(x, z, w, 14 + rand() * 18, h, tower, false);
+    place(x, z, w, 14 + rand() * 18, h);
     if (h > 110) {
       const b = new THREE.Mesh(beacon, beaconMat);
       b.position.set(x, h + 0.6, z);
       scene.add(b);
+      attachments.push({ at: [x, h + 0.6, z], hide: () => (b.visible = false), build: (d) => void d.addBox({ material: 'lamp', size: [0.8, 0.8, 0.8], position: [x, h + 0.4, z], tint: 0xff2010 }) });
     }
   }
+  towers = new Towers(scene, world, specs, nightFacade, BLOCK);
+  street = ground(scene, world, specs);
   // Traffic on the avenue: headlights one way, tail lights the other
   const head = new THREE.MeshBasicNodeMaterial({ color: new THREE.Color(0xfff2d8).multiplyScalar(6) });
   const tail = new THREE.MeshBasicNodeMaterial({ color: new THREE.Color(0xff2010).multiplyScalar(5) });
@@ -409,6 +491,43 @@ export function neonScenery(scene: THREE.Scene, world: World): void {
     scene.add(g);
     life.cars.push({ mesh: g, x, dir, speed: 9 + rand() * 6, z: g.position.z });
   }
+}
+
+/**
+ * The scenery as dormant things, once the Destruction is made: each tower's sections (and what's
+ * on each: on its faces, or over its roof if it's the top), the street round the alley.
+ */
+export function dormantScenery(d: Destruction): void {
+  towers?.dormant(d, (t, y0, y1) => {
+    const top = y1 >= t.h - 1e-6;
+    const on = attachments.filter(({ at: [x, y, z] }) => Math.abs(x - t.x) <= t.w / 2 + 0.7 && Math.abs(z - t.z) <= t.d / 2 + 0.7 && y >= y0 - 1e-6 && (y < y1 || top));
+    return { hide: () => on.forEach((a) => a.hide()), build: (dd) => on.forEach((a) => a.build?.(dd)) };
+  });
+  street?.dormant(d);
+}
+
+/** The street's bed where a blast has laid it breakable round the alley, else null (the world's groundAt). */
+export const streetBed = (x: number, z: number): number | null => street?.bedAt(x, z) ?? null;
+
+/** The blocks' pieces: their night facades as the scenery's, crumbling as render does. */
+export function blockMaterial(): BreakableMaterial {
+  if (!towers) throw new Error('neon: blocks before the scenery');
+  return towers.material({ inside: 0x6a6670, insideTexture: inside('gen_concrete_broken', 1.2), strength: 2000 });
+}
+
+/** The shopfronts' cells (made with the scenery). */
+let shopCells: THREE.DataTexture | null = null;
+
+/**
+ * A shopfront panel's look: the bands' (shopfrontMaterial) read from its map's coordinates (laid
+ * from its band's start, a cell `first` on, in metres along the band, up from the street), lit.
+ */
+export function shopfrontPiece(): BreakableMaterial {
+  if (!shopCells) throw new Error('neon: shopfronts before the scenery');
+  const band = shopfrontMaterial(shopCells, 0, 1, uv());
+  const surface = new THREE.MeshStandardNodeMaterial({ color: 0x000000, roughness: 0.4 });
+  surface.emissiveNode = band.colorNode as THREE.Node<'color'>;
+  return material({ density: 1.2, strength: 3e3, support: 40, impact: 3, shatter: true, reach: 1.5, fragmentSize: 0.3, minSize: 0.08, minBodySize: 0.12, dustSize: 0.2, maxPieces: 6, rubbleLife: 4, surface, glow: 'standing', inside: 0x2a2a30, insideMap: 0, uvScale: 1, uvJitter: 0 });
 }
 
 /** The scenery's motion: beacons blink (1 s, 0.15 s on), cars go by. */

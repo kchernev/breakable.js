@@ -14,6 +14,10 @@ Blender:
   centre, decimated to the triangle budget, textures shrunk and stored as WebP, plus a convex
   collider of at most 24 points per prop. The 3D model invented a maker-style badge on the sedan's
   trunk and pseudo-lettering on the taxi's; both were painted over in the textures.
+- **Shards:** what the street furniture breaks into (`<name>.shards.glb`, listed under `shards` in
+  `index.json`) is cut from its own processed mesh by `scripts/assets/shatter-props.py` (Blender):
+  Voronoi cells, their cut faces filled in a duller, darker shade of the prop's colour. No
+  generation; the pieces wear the prop's own materials.
 
 The prompts, settings, seeds and source URLs of every generation are recorded next to the raw files
 in `assets-src/props/raw/<name>/` (`concept<i>.json`, `model.json`); the pipeline is

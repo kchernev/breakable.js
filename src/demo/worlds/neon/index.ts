@@ -14,7 +14,7 @@ import { footstep, onBlast, onBurst, onImpact, onShot, peelFacades, pointLights,
 import { glow, neonMaterials } from './materials.ts';
 import { meta } from './meta.ts';
 import { placeProps } from './props.ts';
-import { neonScenery } from './scenery.ts';
+import { blockMaterial, dormantScenery, neonScenery, shopfrontPiece, streetBed } from './scenery.ts';
 import { bridge, cables, clutter, gate, lanternGroups, lanternString, slotPipes, transformerBox, vendingMachines } from './street.ts';
 import { collectStrips, groundMaterials, layGround } from './wet.ts';
 
@@ -36,7 +36,7 @@ const world: WorldDefinition = {
     smoke: { color: 0x8c949e, life: 0.75 },
     dustPalette: { colors: [0x9aa4ae, 0x8a929c, 0xb2b8be], blend: 0.6 },
   },
-  materials: () => ({ ...neonMaterials(), ...groundMaterials() }),
+  materials: () => ({ ...neonMaterials(), ...groundMaterials(), block: blockMaterial(), shopfront: shopfrontPiece() }),
   ground: 0,
   scenery(scene, world, sky) {
     neonScenery(scene, world);
@@ -44,11 +44,14 @@ const world: WorldDefinition = {
     // The moon's shadows don't show in a narrow alley at night: spare their pass
     sky.sun.castShadow = false;
   },
-  // On the alley's breakable ground, its bed: the slabs over it are found as pieces
-  groundAt: (x, z) => (onGround(x, z) ? GROUND.bed : 0),
+  // On the alley's breakable ground (and where a blast has laid the street round it breakable), its
+  // bed: the slabs over it are found as pieces
+  groundAt: (x, z) => (onGround(x, z) ? GROUND.bed : (streetBed(x, z) ?? 0)),
   props: ['packs/neon/models/'],
   build(d, models) {
     layGround(d);
+    // Round the alley: scenery until something reaches it
+    dormantScenery(d);
     glow.watch(d);
     peelFacades(d);
     LOTS.forEach((lot, i) => (lot.type === 'A' ? towerA(d, lot, 101 + i * 17) : shophouse(d, lot, 101 + i * 17)));
@@ -86,6 +89,9 @@ const world: WorldDefinition = {
     // tubes and lamps pop higher than panes, paper thuds, plastic knocks
     materials: {
       concrete: { ...packMaterials.concrete, land: 'concrete.impact', bullet: 'bullet.concrete' },
+      // The towers round the alley: render over concrete
+      block: { ...packMaterials.concrete, land: 'concrete.impact', bullet: 'bullet.brick', pitch: { land: 0.85 } },
+      shopfront: { break: 'glass.shatter', debris: 'glass.debris', bullet: 'bullet.glass' },
       // Glazed tile's chips clink: glass debris, lower
       tile: { ...packMaterials.concrete, break: 'tile.break', debris: 'glass.debris', land: 'concrete.impact', bullet: 'bullet.brick', pitch: { debris: 0.7, bullet: 1.2 } },
       render: { ...packMaterials.brick, land: 'brick.impact.large', bullet: 'bullet.brick' },
@@ -110,10 +116,10 @@ const world: WorldDefinition = {
     },
     footsteps: { hard: 'steps.wet', rubble: 'steps.rubble', land: 'player.land', surface: footstep },
   },
-  dust: { asphalt: 0x6e737a, base: 0xaab4c0, earth: 0x5e564c, concrete: 0xaab4c0, tile: 0xaab4c0, render: 0xb8b8b4, glass: 0xc8dce8, neon: 0xd8f4ff, lightbox: 0xe8e8f0, signbox: 0x6a6a6a, steel: 0x5a5a5a, grate: 0x5a5a5a, shutter: 0x7a807a, lamp: 0xe8eef4, lantern: 0x8a2a1a, awning: 0x9aa0a8, wood: 0x7a6048 },
+  dust: { asphalt: 0x6e737a, base: 0xaab4c0, earth: 0x5e564c, concrete: 0xaab4c0, block: 0x8a909a, shopfront: 0xc8d0d8, tile: 0xaab4c0, render: 0xb8b8b4, glass: 0xc8dce8, neon: 0xd8f4ff, lightbox: 0xe8e8f0, signbox: 0x6a6a6a, steel: 0x5a5a5a, grate: 0x5a5a5a, shutter: 0x7a807a, lamp: 0xe8eef4, lantern: 0x8a2a1a, awning: 0x9aa0a8, wood: 0x7a6048 },
   // Thin sheet, tubes, glass and paper raise little dust; the wet street not much
-  dustAmount: { asphalt: 0.5, base: 0.8, earth: 0.3, neon: 0.3, lightbox: 0.4, glass: 0.4, lamp: 0.4, lantern: 0.4, awning: 0.3, signbox: 0.3, shutter: 0.2, steel: 0.15, grate: 0.15, wood: 0.6 },
-  chips: { asphalt: 0x5a5752, base: 0x9a968e, earth: 0x3e352c, concrete: 0x8a8780, tile: 0xe8eef2, render: 0xd0c8b8, glass: 0xbcd8e6, neon: 0xeaffff, lightbox: 0xf2f2f8, signbox: 0x40444a, steel: 0x4a4e54, grate: 0x4a4e54, shutter: 0x8a908a, lamp: 0xf0f4f8, lantern: 0xc8281e, awning: 0x5a7a9a, wood: 0x6a4a30 },
+  dustAmount: { shopfront: 0.3, asphalt: 0.5, base: 0.8, earth: 0.3, neon: 0.3, lightbox: 0.4, glass: 0.4, lamp: 0.4, lantern: 0.4, awning: 0.3, signbox: 0.3, shutter: 0.2, steel: 0.15, grate: 0.15, wood: 0.6 },
+  chips: { asphalt: 0x5a5752, base: 0x9a968e, earth: 0x3e352c, concrete: 0x8a8780, block: 0x2a2e38, shopfront: 0x3a3a44, tile: 0xe8eef2, render: 0xd0c8b8, glass: 0xbcd8e6, neon: 0xeaffff, lightbox: 0xf2f2f8, signbox: 0x40444a, steel: 0x4a4e54, grate: 0x4a4e54, shutter: 0x8a908a, lamp: 0xf0f4f8, lantern: 0xc8281e, awning: 0x5a7a9a, wood: 0x6a4a30 },
   onBlast,
   onImpact,
   onShot,

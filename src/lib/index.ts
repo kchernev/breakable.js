@@ -1,7 +1,7 @@
 // Breakable.js: real-time destruction for Three.js (WebGPU) on three-avbd's GPU rigid bodies.
 
-export { Destruction, Piece, Bond } from './destruction.ts';
-export type { DestructionOptions, ExplosionOptions, ExplosionResult, PieceOptions, PieceState, Pose, PropModel, PropOptions, RayHit, ShotHit, DustEvent, DebrisEvent, ImpactEvent, StateEvent, LandedEvent, BondTolerance, Hinge } from './destruction.ts';
+export { Destruction, Dormant, Piece, Bond } from './destruction.ts';
+export type { DestructionOptions, DormantOptions, ExplosionOptions, ExplosionResult, PieceOptions, PieceState, Pose, PropModel, PropOptions, RayHit, ShotHit, DustEvent, DebrisEvent, ImpactEvent, StateEvent, LandedEvent, BondTolerance, Hinge } from './destruction.ts';
 export { bulletPush, bulletsToBreak, materialKind } from './bullets.ts';
 export type { MaterialKind } from './bullets.ts';
 export { material, presets } from './materials.ts';
@@ -24,4 +24,6 @@ export { loadSoundPack, packSettings, packMaterials } from './sound-pack.ts';
 export { PropMesh } from './prop-mesh.ts';
 export { loadPropPack } from './prop-pack.ts';
 export type { PropPackEntry } from './prop-pack.ts';
+export { addVehicle, loadVehicles, Vehicle, vehicleModel, vehicleOf, vehiclePresets } from './vehicle.ts';
+export type { VehicleEntry, VehicleHooks, VehicleModel, VehicleOptions, VehiclePartEntry, VehiclePartRole } from './vehicle.ts';
 export * from './shapes.ts';

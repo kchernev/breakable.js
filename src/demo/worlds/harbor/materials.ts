@@ -190,6 +190,21 @@ export function harborMaterials(): Record<string, BreakableMaterial> {
       uvScale: 1,
       uvJitter: 1,
     }),
+    // The ship's plating, bulkheads and deck: plate drawn 40 cm thick, lighter than it looks. A blast
+    // tears a hole in it (the plate it strikes cut up, the nearest thrown), the rest stands
+    plate: presets.metal({
+      density: 0.5,
+      support: 200,
+      impact: 150,
+      plastic: { yieldStress: 8e3, bend: 1.0 },
+      fragmentSize: 0.7,
+      minSize: 0.4,
+      maxPieces: 6,
+      surface: paintedSteel(0.25),
+      inside: steelInside,
+      uvScale: 1,
+      uvJitter: 1,
+    }),
     // Yields at once and hardly ever tears: rope lengths act as links
     cable: presets.metal({
       density: 2,
@@ -303,5 +318,5 @@ export function harborMaterials(): Record<string, BreakableMaterial> {
 }
 
 /** Dust each material makes (over the world's grey palette, index.ts), and its chips. */
-export const dust: Record<string, number> = { container: 0x8a7e74, steel: 0x8a8a84, cladding: 0x9a9e9c, rollerDoor: 0x9a9e9c, tank: 0xb8b6b0, roof: 0x9a9894, iron: 0x6a6a68, concrete: 0xb4b0a8, slab: 0xb4b0a8, gravel: 0x9a9890, wood: 0xc8b08a, cardboard: 0xb89a72, glass: 0xe0eef4, cable: 0x6a6a68 };
-export const chips: Record<string, number> = { container: 0x5a524c, steel: 0x4a4c4e, cladding: 0xa0a4a2, rollerDoor: 0xa0a4a2, tank: 0xd8d4cc, roof: 0xb8b8b0, concrete: 0x9a968e, slab: 0x9a968e, gravel: 0x6e6c68, wood: 0xb89a6c, cardboard: 0xa47c52, glass: 0xd6eaf2, iron: 0x3a3a38, cable: 0x3a3a38, lamp: 0xf0e8d8, beacon: 0xc03020 };
+export const dust: Record<string, number> = { container: 0x8a7e74, steel: 0x8a8a84, plate: 0x8a8a84, cladding: 0x9a9e9c, rollerDoor: 0x9a9e9c, tank: 0xb8b6b0, roof: 0x9a9894, iron: 0x6a6a68, concrete: 0xb4b0a8, slab: 0xb4b0a8, gravel: 0x9a9890, wood: 0xc8b08a, cardboard: 0xb89a72, glass: 0xe0eef4, cable: 0x6a6a68 };
+export const chips: Record<string, number> = { container: 0x5a524c, steel: 0x4a4c4e, plate: 0x4a4c4e, cladding: 0xa0a4a2, rollerDoor: 0xa0a4a2, tank: 0xd8d4cc, roof: 0xb8b8b0, concrete: 0x9a968e, slab: 0x9a968e, gravel: 0x6e6c68, wood: 0xb89a6c, cardboard: 0xa47c52, glass: 0xd6eaf2, iron: 0x3a3a38, cable: 0x3a3a38, lamp: 0xf0e8d8, beacon: 0xc03020 };

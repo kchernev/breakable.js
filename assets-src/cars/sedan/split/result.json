@@ -1,0 +1,72 @@
+{
+ "model": "fal-ai/hunyuan-3d/v3.1/part",
+ "input": "public/models/sedan.glb",
+ "result_files": [
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf44df/rnZ5Lx_UJhuHnxWNaLFUU_part_0.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_0.glb",
+   "file_size": 416408
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf44e0/jpH_zFCEbbCPkq6MjC1k6_part_1.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_1.glb",
+   "file_size": 876996
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf44e0/_hg2TpeBaAtOdgpc-O5QQ_part_2.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_2.glb",
+   "file_size": 901844
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf44e1/_QBqA6YhkApGzsdCxAmEB_part_3.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_3.glb",
+   "file_size": 889752
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf44e1/pOVH-MWKe6pcw78vZdunL_part_4.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_4.glb",
+   "file_size": 26711576
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf44e2/_7dy8nLFdFa4KBOyhec2n_part_5.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_5.glb",
+   "file_size": 798772
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf44e2/2eH1dymCi7RTz44MPcTZw_part_6.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_6.glb",
+   "file_size": 255960
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf44e2/2S9FglhHvXQmwDz5d51s7_part_7.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_7.glb",
+   "file_size": 461684
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf44e3/KrqlQXe_Ye1FetwWbZPPe_part_8.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_8.glb",
+   "file_size": 875080
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf44e3/71tf74Ze586ajdcptGapW_part_9.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_9.glb",
+   "file_size": 790640
+  },
+  {
+   "url": "https://v3b.fal.media/files/b/0aaf44e3/Ct4JhtREE3lS8TK1icceH_part_10.glb",
+   "content_type": "application/octet-stream",
+   "file_name": "part_10.glb",
+   "file_size": 438964
+  }
+ ]
+}

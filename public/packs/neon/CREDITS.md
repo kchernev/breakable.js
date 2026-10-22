@@ -44,6 +44,10 @@ scaled to real size in metres, decimated, WebP textures, a convex collider of 12
 of the scooter, the crates and the bin made tintable per copy, an emissive map for the cart's bulb)
 and finished by this pack's `scripts/assets/packs/neon/props-post.py`: the made-up lettering Tripo
 drew on the scooter's licence plate is painted over, and the cart's wheels get painted spokes.
+What each prop breaks into (`models/<name>.shards.glb`, listed under `shards` in `models/index.json`)
+is cut from its own processed mesh by `scripts/assets/shatter-props.py` (Blender): Voronoi cells,
+their cut faces filled in a duller, darker shade of the prop's colour. No generation; the pieces wear
+the prop's own materials.
 
 The plastic crates (`crates`, `crate`) are procedural: geometry and textures written by
 `scripts/assets/packs/neon/crates.py` (numpy), then processed the same way. The other colours in

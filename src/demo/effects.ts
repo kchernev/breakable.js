@@ -1629,6 +1629,40 @@ export class Effects {
     this.emitBit();
   }
 
+  /**
+   * A bird struck at `at`: a burst of its feathers in `color`, drifting down and fluttering on the
+   * air onto what's under it, and a quick puff of down that shows the hit from afar. `size`: the
+   * bird's span over a pigeon's.
+   */
+  feathers(at: V3, color: THREE.ColorRepresentation, size = 1): void {
+    const [x, y, z] = at;
+    const lands = this.floorOff(at, _n.set(0, 1, 0));
+    const tint = new THREE.Color(color);
+    const b = this.bp;
+    // Feathers, a few centimetres across: its colour, and paler (the down under it)
+    const white = _t.setRGB(1, 1, 1);
+    const n = Math.round(rand(24, 34) * Math.min(1.6, size) * this.lod(x, y, z) * this.bitLoad());
+    for (let i = 0; i < n; i++) {
+      randUnit(_d);
+      const sp = rand(0.8, 3.2);
+      this.setBit(x + _d.x * 0.06 * size, y + _d.y * 0.06 * size, z + _d.z * 0.06 * size, _d.x * sp, _d.y * sp + 0.6, _d.z * sp);
+      this.bit(rand(6, 10), FLAKE, rand(0.03, 0.055) * Math.sqrt(size), rand(2.5, 3.5), rand(0.05, 0.1));
+      this.shade(b, _c.copy(tint).lerp(white, rand(0.2, 0.65)), rand(0.85, 1.15));
+      b.floor = lands;
+      this.emitBit();
+    }
+    const p = this.sp;
+    const puffs = Math.round(rand(3, 5) * this.load());
+    for (let i = 0; i < puffs; i++) {
+      randUnit(_d).multiplyScalar(rand(0.3, 1.2));
+      this.setPuff(x, y, z, _d.x, _d.y, _d.z);
+      this.look(rand(0.5, 0.9), 0.15 * size, rand(0.6, 0.9) * size, 0.12, rand(-0.6, 0.6), rand(0.5, 0.65));
+      this.moves(3, 0, 0.1, 0.02, 0.6);
+      this.shade(p, _c.copy(tint).lerp(white, 0.6), rand(0.95, 1.1));
+      this.emitPuff();
+    }
+  }
+
   /** A tracer round's streak, flying from `from` (the muzzle) to `to` (where it struck, or far along its way). */
   tracer(from: V3, to: V3): void {
     this.tracers.add(from, to);

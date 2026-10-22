@@ -34,7 +34,7 @@ export function townWall(kit: Kit): void {
  * A parapet `h` tall and `t` thick along u in `f` (outer face at w = 0), merlons on it with
  * crenels between, limestone coping over both.
  */
-function battlements(kit: Kit, f: Frame, length: number, h: number, t: number, merlon = 0.88): void {
+export function battlements(kit: Kit, f: Frame, length: number, h: number, t: number, merlon = 0.88): void {
   for (const [a, b] of pairs(split(0, length, 1.9))) kit.box(f, 'rubble', a, 0, 0, b - a, h, t, { tint: vary(0xffffff, 0.04, kit.rand) });
   const cope = 0.12;
   const pitch = 1.8;
@@ -160,34 +160,42 @@ export function tower(kit: Kit): void {
   const top = n * h;
   ring(kit, c, ri, ro, top, 0.25, 12, 0, 'oak', 0x9a8070);
   // The cone: 4 layers of 12, the lowest resting on the wall plate, the top in wedges to the point
-  const y0 = top + 0.25;
   const apex = 18.5;
-  const ro0 = 4.4;
-  const outer = (y: number) => (ro0 * (apex - y)) / (apex - y0);
-  const layers = split(y0, apex, (apex - y0) / 4);
-  const tile = 0xc8a898;
+  const wedges = cone(kit, c, top + 0.25, apex, 4.4, 3.6, 4, 0xc8a898);
+  // An iron finial on the point
+  const finial = kit.hull(c, 'iron', cylinder(0.05, 0.9, 6), 0, apex, 0);
+  for (const w of wedges.slice(0, 4)) kit.bond(finial, w, 0.005);
+  kit.close();
+}
+
+/**
+ * A tiled cone in frame `c` from `y0` (radius `r0`) to its point at `apex`: `layers` layers of 12
+ * shell pieces 0.24 thick (the lowest reaching in to `rib`, onto what it rests on), the top in
+ * wedges to the point. Returns the wedges.
+ */
+export function cone(kit: Kit, c: Frame, y0: number, apex: number, r0: number, rib: number, layers: number, tint: number): P[] {
+  const outer = (y: number) => (r0 * (apex - y)) / (apex - y0);
+  const lines = split(y0, apex, (apex - y0) / layers);
   const wedges: P[] = [];
-  for (let l = 0; l < 4; l++) {
-    const [ya, yb] = [layers[l], layers[l + 1]];
+  for (let l = 0; l < layers; l++) {
+    const [ya, yb] = [lines[l], lines[l + 1]];
+    const last = l === layers - 1;
     for (let i = 0; i < 12; i++) {
       const a0 = (i * Math.PI) / 6;
       const a1 = a0 + Math.PI / 6;
       const pts: V3[] = [];
       for (const a of [a0, a1]) {
         const [ca, sa] = [Math.cos(a), Math.sin(a)];
-        const rib = l === 0 ? 3.6 : outer(ya) - 0.24;
-        pts.push([rib * ca, ya, rib * sa], [outer(ya) * ca, ya, outer(ya) * sa]);
-        if (l < 3) pts.push([(outer(yb) - 0.24) * ca, yb, (outer(yb) - 0.24) * sa], [outer(yb) * ca, yb, outer(yb) * sa]);
+        const r = l === 0 ? rib : outer(ya) - 0.24;
+        pts.push([r * ca, ya, r * sa], [outer(ya) * ca, ya, outer(ya) * sa]);
+        if (!last) pts.push([(outer(yb) - 0.24) * ca, yb, (outer(yb) - 0.24) * sa], [outer(yb) * ca, yb, outer(yb) * sa]);
       }
-      if (l === 3) pts.push([0, apex, 0]);
-      const p = kit.hull(c, 'tile', pts, 0, 0, 0, { tint: vary(tile, 0.04, kit.rand) });
-      if (l === 3) wedges.push(p);
+      if (last) pts.push([0, apex, 0]);
+      const p = kit.hull(c, 'tile', pts, 0, 0, 0, { tint: vary(tint, 0.04, kit.rand) });
+      if (last) wedges.push(p);
     }
   }
-  // An iron finial on the point
-  const finial = kit.hull(c, 'iron', cylinder(0.05, 0.9, 6), 0, apex, 0);
-  for (const w of wedges.slice(0, 4)) kit.bond(finial, w, 0.005);
-  kit.close();
+  return wedges;
 }
 
 function pairs(xs: number[]): Array<[number, number]> {

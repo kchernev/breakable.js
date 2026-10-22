@@ -95,6 +95,11 @@ Everything breakable fits in x -32 … 37 and z -21 … 20 (69 × 41 m).
 
 ### Unbreakable scenery
 
+(Since built, most of this breaks: the rest of the town, the trees and the windmill, and the cobbles
+round the square, stand as scenery until a round or a blast reaches them, then are built as pieces.
+Only the country itself (the fields, the hills, the roads) and the haze don't. See the README's
+"The scenery round the town".)
+
 - **Ground:** cobbles over the whole town (Poly Haven `cobblestone_floor_001`, 2.4 m tile). A dirt
   road goes out of the gate to the north and out of the south-west gap. In physics: one fixed box
   with its top at y = 0 and about 300 m across.
@@ -395,7 +400,7 @@ Each material starts from a preset or from `material()`.
 | boards | `presets.wood` | density 0.6; support 120; strength 1.2e4; impact 14; fragmentSize 0.25; maxPieces 10; uvScale 1 | Poly Haven planks: pick from `brown_planks_04` / `old_planks_02` / `medieval_wood` by looking | inside 0xc7a27a |
 | tile | `material()` | density 1.9; friction 0.55 (broken tiles slide off a 50° slope); support 18 (pegged tiles: a hole spreads a little, and big damage slides whole rows); compression 60; strength 4e3 (sections shatter on landing); impact 6 (anything falling on a roof breaks it); fragmentSize 0.18, minSize 0.07, dustSize 0.08, minBodySize 0.06; maxPieces 16; rubbleLife 10; uvScale 0.385 | Poly Haven `clay_roof_tiles_03` (2.6 m). Check the rows run along the ridge, and turn the slab's frame if not. | inside 0xc0704a, base `gen_brick_broken` at 2 |
 | glass | `presets.glass` | reach 2 (small leaded panes); surface 0x4a5a44, opacity 0.7, roughness 0.15, with a diamond came lattice from a canvas texture made in code (like Brick Street's grating) | code | — |
-| bronze | `presets.metal` | density 1.6 (the bell is a solid hull, so about 0.8 t); impact 1e5, strength 1e6, support 1e5, minSize 3 (never fractures), dustSize 0.01, no plastic; colour 0x9a7440, metalness 1, roughness 0.35 | plain | inside 0xc8a060 |
+| bronze | `presets.metal` | density 1.6 (the bell is a solid hull, so about 0.8 t); impact 1e5, strength 1e6, support 1e5, minSize 3 (never fractures), dustSize 0.01, no plastic; colour 0x9a7440, metalness 1, roughness 0.35. (Now minSize 0.3 and maxPieces 4: rounds only ring it, a blast cracks it in a few pieces.) | plain | inside 0xc8a060 |
 | iron | `presets.metal` | defaults, uvScale 1 | base `gen_iron_painted`, colour 0x8a8580 | inside 0x5a4a40 |
 | cloth | `material()` | density 0.25; support 40; strength 2e3; impact 3; fragmentSize 0.3, minSize 0.25, dustSize 0.5 (shreds near a blast), minBodySize 0.2; maxPieces 4; rubbleLife 8; uvScale 1.5 | `medieval_canvas` (0.5 m), tinted per stall | insideMap 0.8 |
 | hay | `material()` | density 0.15; support 20; strength 1.5e3; impact 2; fragmentSize 0.3, minSize 0.2, dustSize 0.6 (bursts to chaff); minBodySize 0.25; maxPieces 5; rubbleLife 12; uvScale 1.2 | `medieval_hay` (1 m) | inside 0xd8b860, insideMap 0.8 |
@@ -482,7 +487,8 @@ Also reused from the base pack: `gen_brick_broken` (tile insides) and `gen_iron_
 
 Each is one concept image at 1536 × 1024 with the base `concept()` studio text, then image-to-3D.
 Props rest until thrown and never break, so the things that should break (crates, hay, stall
-counters) are pieces, not props.
+counters) are pieces, not props. (Since then the props have shards and break: under a blast's heart
+or enough rounds.)
 
 | Name | What | Real size (fit) | Mass | How many, where | Sound material |
 |---|---|---|---|---|---|

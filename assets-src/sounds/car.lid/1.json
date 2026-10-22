@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "A car's bonnet springing open: the latch releasing with a hard metallic clunk and the thin sheet-steel lid flying up and wobbling with a tinny boing. Close-up foley, dry, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 2,
+  "seed": 755261,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaf45cb/JtIDaRP-98cwGoBeMSOjB_G9Az4VZW.flac"
+}

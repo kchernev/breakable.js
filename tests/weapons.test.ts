@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import * as THREE from 'three/webgpu';
-import { type BulletHit, type Burst, Gun, type GunOptions } from '../src/demo/gun.ts';
+import { type BulletHit, type Burst, Gun, type GunOptions, type Round } from '../src/demo/gun.ts';
 import { Launcher } from '../src/demo/launcher.ts';
 import { type SolidBody, Solids } from '../src/demo/player.ts';
 import { groundKind, gunHooks, waterOf, Weapons } from '../src/demo/weapons.ts';
@@ -392,6 +392,29 @@ test('the world hears the gun: each bullet that strikes, after its strike; each 
   plain.gun.burst(3);
   run(plain.gun, 0.5);
   assert.deepEqual([struck, echoes], [3, 1]);
+});
+
+test('each round as it flies, before its strike: from the eye, along its way, as far as what it struck (into the sky, the whole range); the world gets it', () => {
+  const { gun } = make();
+  const order: string[] = [];
+  const rounds: Round[] = [];
+  const rt = { time: 0 } as WorldRuntime;
+  gunHooks(gun, { onRound: (r: Round, w: WorldRuntime) => (assert.equal(w, rt), rounds.push(r), void order.push('round')) }, rt, () => order.push('strike'));
+  // Two at the wall 20 m off
+  gun.burst(2);
+  run(gun, 0.3);
+  assert.deepEqual(order, ['round', 'strike', 'round', 'strike']);
+  for (const r of rounds) {
+    assert.deepEqual(r.from, [0, 1.6, 0]);
+    assert.ok(Math.abs(Math.hypot(...r.direction) - 1) < 1e-9 && r.direction[2] < -0.99, `${r.direction}`);
+    assert.ok(Math.abs(r.reach - 20) < 0.05, `to the wall: ${r.reach}`);
+  }
+  // One up into the sky: no strike, but the round all the same, as far as the gun reaches
+  gun.burst(1);
+  run(gun, 0.3, 0.6);
+  assert.deepEqual(order.slice(4), ['round']);
+  assert.equal(rounds[2].reach, 400);
+  assert.ok(rounds[2].direction[1] > 0.5);
 });
 
 test("down in a pit through a breakable ground: its floor strikes as its bed, its sides as the layer there or what the world says; the scenery over it as stone", () => {

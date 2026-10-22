@@ -83,6 +83,11 @@ Trees (x, z, height):
 
 ### Unbreakable scenery (scenery())
 
+(Since built, not all of it: the plateau is laid breakable where a blast reaches it, the steps are
+anchors that break, and the olive scrub, the loose rocks and the boats are built as pieces once a
+round or a blast reaches them. The land off the plateau, the sea and the islands don't break. See
+the README's "Round the sanctuary".)
+
 - **Plateau**: a ground mesh of the dry grass texture (`temple_ground`, 4 m tile) mixed by noise
   with bare pale bedrock (Poly Haven `marble_rock_01` or `marble_cliff_03`, see 4), more rock near
   the cliff edges and where feet wear it (round the temple, along the sacred way). Physics: fixed
@@ -131,7 +136,8 @@ General rules for all of it (from Brick Street and the library):
 - Per-piece `tint` for variety: marble blocks ±4% warm/cool (`0xffffff`, `0xf6f0e6`, `0xfbf8f2`,
   `0xefe9de`), limestone ±6%.
 - Static pieces: the stylobates and platform slabs only. They never break and hold up what stands
-  on them.
+  on them. (Now anchors: they hold up what stands on them as the ground does, but break. The steps
+  and the ramp this file makes scenery are anchors too; where it says static, read anchor.)
 
 ### 2.1 Temple (Doric, peripteral, 6 × 11 columns)
 
@@ -449,7 +455,8 @@ in this order; if one fails or the budget runs short, drop from the bottom.
 | `lion` | Archaic marble lion seated on its haunches, weathered white-grey marble with ochre patina, on a rectangular marble plinth. | length 1.9 | 2.5 | 2, flanking the foot of the ramp (12.6, 0, -8), (12.6, 0, 0), facing east | `marble` |
 
 4 concept images (of the 12) and 4 Meshy generations. Set `yaw` so each front faces -Z, then turn
-it in placement. Props don't break: they are thrown whole and make their material's sounds.
+it in placement. Props don't break: they are thrown whole and make their material's sounds. (Since
+then they have shards and break under a blast's heart or enough rounds.)
 
 ## 6. Sounds
 

@@ -18,6 +18,8 @@ export const yawQ = (a: number): Q => quatFromAxisAngle([0, 1, 0], a);
 export interface PieceOpts {
   tint?: number;
   static?: boolean;
+  /** Holds up what's on it as the ground does, but breaks (PieceOptions.anchor): a platform's slabs over its hollow. */
+  anchor?: boolean;
   bond?: boolean;
   /** Faces meeting at less than this (radians) shade as one smooth surface. */
   smooth?: number;
@@ -59,18 +61,18 @@ export class Kit {
     const size: V3 = [max[0] - min[0] - GAP, max[1] - min[1], max[2] - min[2] - GAP];
     if (size[0] <= 1e-4 || size[1] <= 1e-4 || size[2] <= 1e-4) return null;
     const position: V3 = [(min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2];
-    return this.d.addBox({ material, size, position, tint: o.tint ?? this.tint(material), static: o.static, bond: o.bond });
+    return this.d.addBox({ material, size, position, tint: o.tint ?? this.tint(material), static: o.static, anchor: o.anchor, bond: o.bond });
   }
 
   /** A turned box: centre, full size, rotation. Its texture frame is turned with it. */
   tbox(material: string, position: V3, size: V3, rotation: Q, o: PieceOpts & { texture?: Pose } = {}): Piece | null {
-    return this.d.addBox({ material, size: [size[0] - GAP, size[1], size[2] - GAP], position, rotation, tint: o.tint ?? this.tint(material), static: o.static, bond: o.bond, textureFrame: o.texture });
+    return this.d.addBox({ material, size: [size[0] - GAP, size[1], size[2] - GAP], position, rotation, tint: o.tint ?? this.tint(material), static: o.static, anchor: o.anchor, bond: o.bond, textureFrame: o.texture });
   }
 
   /** The hull of points in the world; its texture frame at their middle, upright (or turned by `rotation`). */
   hull(material: string, points: V3[], o: PieceOpts & { rotation?: Q; texture?: Pose } = {}): Piece | null {
     const textureFrame = o.texture ?? { position: centre(points), rotation: o.rotation ?? IDENTITY };
-    return this.d.addConvex({ material, points, tint: o.tint ?? this.tint(material), static: o.static, bond: o.bond, smooth: o.smooth, textureFrame });
+    return this.d.addConvex({ material, points, tint: o.tint ?? this.tint(material), static: o.static, anchor: o.anchor, bond: o.bond, smooth: o.smooth, textureFrame });
   }
 }
 

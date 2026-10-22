@@ -8,7 +8,7 @@ import { type BreakableMaterial, groundPresets, material, pieceFrame, presets } 
 import { inside, texture, textured } from '../../textures.ts';
 import { random } from '../../../lib/index.ts';
 import { ATLAS, signAtlas } from './signs.ts';
-import { EARTH, streetSurface } from './scenery.ts';
+import { EARTH, groundSurface, streetSurface } from './scenery.ts';
 
 const base = 'packs/western/textures/';
 
@@ -153,12 +153,12 @@ export function townMaterials(): Record<string, BreakableMaterial> {
       minSize: 0.45,
       inside: 0x5a4a40,
     }),
-    // The chapel's bell: never breaks, rings when it lands
+    // The chapel's bell: rounds only ring it, and it rings when it lands; a blast at it cracks it in a few
     bronze: presets.metal({
       density: 8,
       impact: 1e9,
-      minSize: 3,
-      maxPieces: 1,
+      minSize: 0.2,
+      maxPieces: 4,
       plastic: undefined,
       surface: new THREE.MeshStandardNodeMaterial({ color: 0xa0783c, metalness: 1, roughness: 0.35 }),
       inside: 0x8a6a3a,
@@ -236,6 +236,52 @@ export function townMaterials(): Record<string, BreakableMaterial> {
     // in its own dug look. Their bits too small to be bodies beyond a blast's reach stand, so a
     // crater's rim stays whole
     sand: groundPresets.sand({ surface: streetSurface(), uvScale: 0.25, reach: 0.75, fragmentSize: 0.35, minBodySize: 0.5, dustSize: 0.45, maxPieces: 14, keepSmall: true, inside: 0xffffff, insideTexture: inside('western_dirt_broken', 1, { base }) }),
+    // The ground round the street, where a blast has laid it: as the street's, drawn as the ground there
+    dirt: groundPresets.sand({ surface: groundSurface(), uvScale: 0.25, uvJitter: 0, reach: 0.75, fragmentSize: 0.35, minBodySize: 0.5, dustSize: 0.45, maxPieces: 14, keepSmall: true, inside: 0xffffff, insideTexture: inside('western_dirt_broken', 1, { base }) }),
+    // The desert's sage and creosote (each its own grey-green: its tint): light, it bursts
+    brush: material({
+      density: 0.1,
+      support: 30,
+      compression: 40,
+      strength: 700,
+      impact: 3,
+      fragmentSize: 0.35,
+      minSize: 0.18,
+      dustSize: 0.3,
+      minBodySize: 0.2,
+      maxPieces: 5,
+      rubbleLife: 6,
+      surface: new THREE.MeshStandardNodeMaterial({ color: 0xffffff, roughness: 1, flatShading: true }),
+      inside: 0x6f7656,
+      insideMap: 0,
+    }),
+    // Its rocks: sandstone boulders
+    rock: presets.concrete({
+      density: 2.3,
+      fragmentSize: 0.3,
+      minSize: 0.12,
+      maxPieces: 8,
+      surface: new THREE.MeshStandardNodeMaterial({ color: 0xa88a6c, roughness: 0.95, flatShading: true }),
+      inside: 0xc8a888,
+      insideMap: 0,
+    }),
+    // Saguaro: green skin over pale wet flesh, soft as wood goes
+    cactus: presets.wood({
+      density: 0.5,
+      support: 80,
+      strength: 4e3,
+      impact: 8,
+      fragmentSize: 0.25,
+      minSize: 0.1,
+      maxPieces: 5,
+      minBodySize: 0.1,
+      dustSize: 0.08,
+      surface: new THREE.MeshStandardNodeMaterial({ color: 0x5f7048, roughness: 0.85 }),
+      inside: 0xb8c890,
+      insideMap: 0,
+    }),
+    // Boot hill's mounds: stony earth heaped up (each its tint), soft
+    heap: groundPresets.earth({ surface: new THREE.MeshStandardNodeMaterial({ color: 0xffffff, roughness: 0.95, flatShading: true }), uvScale: 1, minBodySize: 0.3, dustSize: 0.35, maxPieces: 8, inside: 0x8a6a50, insideMap: 0 }),
     earth: groundPresets.earth({ surface: textured('western_earth', { base, color: EARTH }), uvScale: 1, reach: 0.45, minBodySize: 0.4, dustSize: 0.35, maxPieces: 12, keepSmall: true, inside: EARTH, insideTexture: inside('western_earth', 1, { base }) }),
     // The forge's coals: glowing while they lie in the hearth, dark once knocked out of it
     coals: material({

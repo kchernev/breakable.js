@@ -27,18 +27,22 @@ export function layGround(d: Destruction): Ground[] {
   ];
 }
 
+/** The plateau (x0, z0, x1, z1): flat at 0, the breakable ground's areas in it, the rest tiles waiting for a blast (scenery.ts). */
+export const PLATEAU: Area = [-34, -30, 40, 30];
+
 /**
- * The plateau in the physics world: boxes 4 m deep, their top at the land's 0, and at the bed under
- * the breakable ground. Cut along the areas' edges, each column's runs carried on into the next
- * while they're the same.
+ * The plateau in the physics world under the breakable ground: boxes 4 m deep, their top at its
+ * bed. Cut along the areas' edges, each column's runs carried on into the next while they're the
+ * same. (The rest of the plateau is tiles, each its box until a blast lays it: scenery.ts.)
  */
 export function plateau(world: World): void {
-  const [X0, Z0, X1, Z1] = [-34, -30, 40, 30];
+  const [X0, Z0, X1, Z1] = PLATEAU;
   const xs = [...new Set([X0, X1, ...AREAS.flatMap(([x0, , x1]) => [x0, x1])])].sort((a, b) => a - b);
   const zs = [...new Set([Z0, Z1, ...AREAS.flatMap(([, z0, , z1]) => [z0, z1])])].sort((a, b) => a - b);
   type Run = { x0: number; z0: number; z1: number; bed: boolean };
   const box = (r: Run, x1: number) => {
-    const top = r.bed ? LAYERS.bed : 0;
+    if (!r.bed) return;
+    const top = LAYERS.bed;
     world.addBox({ size: [x1 - r.x0, top + 4, r.z1 - r.z0], position: [(r.x0 + x1) / 2, (top - 4) / 2, (r.z0 + r.z1) / 2], fixed: true, friction: 0.8 });
   };
   let open: Run[] = [];
@@ -109,17 +113,24 @@ export function pits(): THREE.Mesh {
     const [p, q] = ix > 0 || iz < 0 ? [[bx, bz], [ax, az]] : [[ax, az], [bx, bz]];
     quad([p[0], bed, p[1]], [q[0], bed, q[1]], [q[0], 0, q[1]], [p[0], 0, p[1]], [ix, 0, iz]);
   }
+  // Under the plateau's tiles too, a little lower (a tile's crater shows it)
+  const [X0, Z0, X1, Z1] = PLATEAU;
+  quad([X0, bed - 0.003, Z0], [X0, bed - 0.003, Z1], [X1, bed - 0.003, Z1], [X1, bed - 0.003, Z0], [0, 1, 0]);
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
   g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3));
-  const m = new THREE.MeshStandardNodeMaterial({ roughness: 0.95 });
-  const p = positionWorld;
-  // Along a cut and up it: the earth over the rock; the bed, bare rock seen from above
-  const along = vec2(select(normalWorld.x.abs().greaterThan(0.5), p.z, p.x), p.y);
-  const cut = select(p.y.greaterThan(-LAYERS.earth), soilFace(along), rockFace(along));
-  m.colorNode = select(normalWorld.y.greaterThan(0.5), bedrock(p), cut);
-  const mesh = new THREE.Mesh(g, m);
+  const mesh = new THREE.Mesh(g, pitMaterial());
   mesh.receiveShadow = true;
   mesh.name = 'temple:pits';
   return mesh;
+}
+
+/** A crater's sides and floor: along a cut and up it the earth over the rock; the bed, bare rock seen from above. */
+export function pitMaterial(): THREE.MeshStandardNodeMaterial {
+  const m = new THREE.MeshStandardNodeMaterial({ roughness: 0.95 });
+  const p = positionWorld;
+  const along = vec2(select(normalWorld.x.abs().greaterThan(0.5), p.z, p.x), p.y);
+  const cut = select(p.y.greaterThan(-LAYERS.earth), soilFace(along), rockFace(along));
+  m.colorNode = select(normalWorld.y.greaterThan(0.5), bedrock(p), cut);
+  return m;
 }

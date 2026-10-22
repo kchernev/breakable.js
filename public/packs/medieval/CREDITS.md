@@ -93,6 +93,10 @@ were used:
   scaled to real size in metres, origin at the bottom centre, textures shrunk and stored as WebP; its
   colliders fitted again with `--colliders`: 12 points standing on four, the barrel a 16-sided drum
   (32 points: it rolls).
+- **Shards:** what each prop breaks into (`models/<name>.shards.glb`, listed under `shards` in
+  `models/index.json`) is cut from its own processed mesh by `scripts/assets/shatter-props.py`
+  (Blender): Voronoi cells, their cut faces filled in a duller, darker shade of the prop's colour.
+  No generation; the pieces wear the prop's own materials.
 
 The prompts are in `scripts/assets/packs/medieval/props.mjs`; each generation's settings, seed and
 source URLs are next to its raw files in `assets-src/packs/medieval/props/raw/<name>/` (`concept0.json`,

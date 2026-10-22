@@ -35,7 +35,7 @@ export class FakeBody {
   readonly world: FakeWorld;
   /** Impulses given it (applyImpulse), in order. */
   readonly impulses: V3[] = [];
-  constructor(world: FakeWorld, index: number, o: { position?: V3; rotation?: Q; fixed?: boolean; velocity?: V3; size?: V3; group?: number; collidesWith?: number }, hull: { vertices: Float32Array } | null = null) {
+  constructor(world: FakeWorld, index: number, o: { position?: V3; rotation?: Q; fixed?: boolean; velocity?: V3; angularVelocity?: V3; size?: V3; group?: number; collidesWith?: number }, hull: { vertices: Float32Array } | null = null) {
     this.world = world;
     this.group = o.group ?? 1;
     this.collidesWith = o.collidesWith ?? 0xffffffff;
@@ -47,6 +47,7 @@ export class FakeBody {
     this.position = o.position ?? [0, 0, 0];
     this.rotation = o.rotation ?? [0, 0, 0, 1];
     this.velocity = o.velocity ?? [0, 0, 0];
+    this.angularVelocity = o.angularVelocity ?? [0, 0, 0];
   }
   setFixed(fixed: boolean): void {
     this.fixed = fixed;
@@ -108,12 +109,12 @@ export class FakeWorld {
   readonly made: FakeBody[] = [];
   readonly joints: FakeJoint[] = [];
   removed = 0;
-  addBox(o: { position?: V3; rotation?: Q; fixed?: boolean; velocity?: V3; size?: V3; group?: number; collidesWith?: number }, hull: { vertices: Float32Array } | null = null): FakeBody {
+  addBox(o: { position?: V3; rotation?: Q; fixed?: boolean; velocity?: V3; angularVelocity?: V3; size?: V3; group?: number; collidesWith?: number }, hull: { vertices: Float32Array } | null = null): FakeBody {
     const b = new FakeBody(this, this.made.length, o, hull);
     this.made.push(b);
     return b;
   }
-  addHull(o: { shape: { center: number[]; rotation: number[]; vertices: Float32Array }; position?: V3; rotation?: Q; fixed?: boolean; velocity?: V3; density?: number }): FakeBody {
+  addHull(o: { shape: { center: number[]; rotation: number[]; vertices: Float32Array }; position?: V3; rotation?: Q; fixed?: boolean; velocity?: V3; angularVelocity?: V3; density?: number }): FakeBody {
     // As World.addHull: the points' frame placed as asked, the body at the shape's centre of mass, on its principal axes
     const p = o.position ?? [0, 0, 0];
     const q = o.rotation ?? [0, 0, 0, 1];

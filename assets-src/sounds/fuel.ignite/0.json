@@ -1,0 +1,9 @@
+{
+  "model": "fal-ai/stable-audio-3/medium/text-to-audio",
+  "prompt": "Spilled petrol under a car catching fire: a deep sudden whoomph of ignition, then the roar of flames taking hold. Sound effect, no music.",
+  "negative_prompt": "music, melody, singing, speech, voices, talking, dialogue, beeps, synthesizer",
+  "duration": 3.5,
+  "seed": 2550,
+  "output_format": "flac",
+  "url": "https://v3b.fal.media/files/b/0aaf45dd/Zt5Yj7IH70TvkHEkgYU83_EGFZssS0.flac"
+}

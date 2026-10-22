@@ -125,7 +125,7 @@ const footstep = player.onStep;
 const landing = player.onLand;
 player.onStep = (on, speed) => (footstep(on, speed), weapons.footfall(speed));
 player.onLand = (speed) => (landing(speed), weapons.footfall(speed));
-const rt: WorldRuntime = { scene, camera, destruction, sound: audio.engine, ambience: audio.ambience, effects, time: 0 };
+const rt: WorldRuntime = { scene, camera, destruction, sound: audio.engine, ambience: audio.ambience, effects, time: 0, floor: floorUnder, blast: (at, radius, throws) => blast(at, [0, 1, 0], radius, undefined, throws) };
 // The world starts once its sounds have loaded (or failed to)
 audio.ready.catch((e: Error) => console.warn('Sounds:', e.message)).then(() => def.onStart?.(rt));
 
@@ -136,11 +136,11 @@ const DUST = def.dust;
 const dustAmount = (material: string) => def.dustAmount?.[material] ?? 1;
 const RADIUS = def.blastRadius ?? 2.3;
 
-function blast(at: V3, normal: V3, radius = RADIUS, rocket?: THREE.Object3D): void {
+function blast(at: V3, normal: V3, radius = RADIUS, rocket?: THREE.Object3D, throws: { speed?: number; spin?: number } = {}): void {
   // Just off the surface, so it reaches into the wall rather than starting inside it
   const p: V3 = [at[0] + normal[0] * 0.15, at[1] + normal[1] * 0.15, at[2] + normal[2] * 0.15];
   // What's already falling is cut too: a rocket into a falling section breaks it
-  destruction.explode({ at: p, radius, speed: 15, spin: 12, loose: true });
+  destruction.explode({ at: p, radius, speed: throws.speed ?? 15, spin: throws.spin ?? 12, loose: true });
   effects.explosion(p, normal, (1.35 * radius) / 2.3);
   // Soot where it went off, but not on the water (it would lie on it, within a metre of the blast)
   if (!water?.(at[0], at[2]) || at[1] > def.groundAt(at[0], at[2]) + 1) effects.scorch(at, normal, radius);
@@ -202,12 +202,25 @@ gunHooks(gun, def, rt, (h) => {
 
 const canvas = renderer.domElement;
 const overlay = document.getElementById('overlay')!;
+const hint = document.getElementById('hint')!;
+const locked = () => document.pointerLockElement === canvas;
+/** The card over the world, open or closed; closed and not playing, a line says how to. */
+function card(open: boolean): void {
+  overlay.classList.toggle('hidden', !open);
+  hint.classList.toggle('hidden', open || locked());
+}
+// Set once the world's ready; when the lock was last let go (ms)
+let ready = false;
+let unlockedAt = -Infinity;
 canvas.addEventListener('click', () => {
-  if (document.pointerLockElement !== canvas) canvas.requestPointerLock();
+  if (!locked()) canvas.requestPointerLock();
 });
 document.addEventListener('pointerlockchange', () => {
-  overlay.classList.toggle('hidden', document.pointerLockElement === canvas);
-  if (document.pointerLockElement !== canvas) weapons.trigger(false);
+  card(!locked());
+  if (!locked()) {
+    weapons.trigger(false);
+    unlockedAt = performance.now();
+  }
 });
 overlay.addEventListener('click', () => canvas.requestPointerLock());
 // The left button fires (the gun while it's held), the wheel switches
@@ -220,6 +233,12 @@ addEventListener('mouseup', (e) => e.button === 0 && weapons.trigger(false));
 canvas.addEventListener('wheel', (e) => document.pointerLockElement === canvas && weapons.scroll(e.deltaMode ? e.deltaY * 100 : e.deltaY, e.timeStamp), { passive: true });
 addEventListener('keydown', (e) => {
   if (e.repeat) return;
+  // Esc lets go of the mouse and opens the card (the browser's doing); again, it closes it. Not
+  // back into play: Esc can't take the mouse, a click on the world does. (Not the Esc that let go)
+  if (e.code === 'Escape' && ready && !locked() && performance.now() - unlockedAt > 300) {
+    (document.activeElement as HTMLElement | null)?.blur();
+    card(overlay.classList.contains('hidden'));
+  }
   if (e.code === 'KeyR') location.reload();
   if (e.code === 'KeyM') audio.mute = !audio.mute;
   if (e.code === 'Digit1') weapons.select('launcher');
@@ -296,9 +315,12 @@ pipeline.outputNode = final;
 // the solver's on its first step (the hull narrowphase, once the first hulls reach it), the
 // particles' kernels
 say('Shaders…');
+// (And those of materials only what wakes uses: a piece of each, out of sight while the frames are drawn)
+const warmed = destruction.warm();
 world.step();
 effects.update(0);
 await compileFrames();
+warmed();
 
 /**
  * Draw two frames with nothing culled, and wait for the GPU to have made what they drew with. In the
@@ -377,7 +399,10 @@ renderer.setAnimationLoop(() => {
   }
 });
 say('');
-document.getElementById('overlay')!.title = 'Click to play';
+overlay.title = 'Click to play';
+ready = true;
+// Loaded: the card goes (Esc brings it back, for the worlds)
+if (!locked()) card(false);
 
 addEventListener('resize', () => {
   camera.aspect = solidCamera.aspect = innerWidth / innerHeight;

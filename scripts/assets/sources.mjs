@@ -36,10 +36,10 @@ const KINDS = ['props', 'sounds', 'sounds-rejected', 'textures'];
 
 const folders = async (dir) => (await readdir(dir, { withFileTypes: true })).filter((d) => d.isDirectory()).map((d) => d.name).sort();
 
-/** The archives: the base pack's folders together, then each world's pack (and the kit). */
+/** The archives: the base pack's folders together (the cars' splits and sources too), then each world's pack (and the kit, the cars' insides). */
 async function archives() {
   const of = (dir) => KINDS.map((k) => `${dir}/${k}`);
-  return [{ name: 'base', dirs: of(SRC) }, ...(await folders(`${SRC}/packs`)).map((p) => ({ name: p, dirs: of(`${SRC}/packs/${p}`) }))];
+  return [{ name: 'base', dirs: [...of(SRC), `${SRC}/cars`] }, ...(await folders(`${SRC}/packs`)).map((p) => ({ name: p, dirs: of(`${SRC}/packs/${p}`) }))];
 }
 
 /** Every file under `dirs` that git doesn't keep, sorted. */

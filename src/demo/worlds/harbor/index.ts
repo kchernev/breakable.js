@@ -11,7 +11,7 @@ import type { BulletHit } from '../../gun.ts';
 import type { WorldDefinition, WorldRuntime } from '../types.ts';
 import { type Box, buildContainers, jolt, pickPaint, type QuayPair, tipStacks } from './containers.ts';
 import { buildCrane, type Crane } from './crane.ts';
-import { Fires, type Leak, type LeakOptions, Leaks } from './fire.ts';
+import { Fires, type Leak, type LeakOptions, Leaks } from '../../fire.ts';
 import { Frame } from './frame.ts';
 import { Gulls } from './gulls.ts';
 import { chips, dust, harborMaterials } from './materials.ts';
@@ -19,7 +19,7 @@ import { meta } from './meta.ts';
 import { placeProps } from './props.ts';
 import { APRON, BEAMS, layApron, onApron, QUAY, roofed } from './ground.ts';
 import { apronMaterials } from './paving.ts';
-import { type Scenery, scenery, SHIP } from './scenery.ts';
+import { deckBed, dormantScenery, railBeams, type Scenery, scenery, SHIP } from './scenery.ts';
 import { BUND, buildTanks, type Tank } from './tanks.ts';
 import { buildWarehouse } from './warehouse.ts';
 import { barriers, bollard, CARTON, CARTONS, kerb, loadedPallet, mast, office, pallet, railStops } from './yard.ts';
@@ -341,8 +341,8 @@ function topAt(x: number, z: number, rt: WorldRuntime): V3 | null {
   return h && h.normal[1] > 0.7 ? [x, h.point[1], z] : null;
 }
 
-/** Materials that ring as steel underfoot: boxes, the crane, the tanks, the stiles, the office's floor, the drums. */
-const METAL = new Set(['container', 'steel', 'cladding', 'rollerDoor', 'tank', 'roof', 'iron', 'drum']);
+/** Materials that ring as steel underfoot: boxes, the crane, the ship, the tanks, the stiles, the office's floor, the drums. */
+const METAL = new Set(['container', 'steel', 'plate', 'cladding', 'rollerDoor', 'tank', 'roof', 'iron', 'drum']);
 /** Fuel smoke. */
 const SOOT = 0x1c1a18;
 
@@ -380,7 +380,8 @@ const world: WorldDefinition = {
   },
   // The water's surface past the quay edge (a rocket goes off on it); on the apron its bed (the slabs
   // over it are found as pieces); the player keeps to the quay
-  groundAt: (x, z) => (z < QUAY.edge ? QUAY.water : onApron(x, z) ? APRON.bed : 0),
+  // (round it, where a blast has laid the deck breakable, its bed there)
+  groundAt: (x, z) => (z < QUAY.edge ? QUAY.water : onApron(x, z) ? APRON.bed : (deckBed(x, z) ?? 0)),
   walkable: (_x, z) => z > QUAY.edge + 0.3,
   // The harbour: bullets go into it unseen, blasts leave no soot on it
   water: (_x, z) => z < QUAY.edge,
@@ -393,7 +394,11 @@ const world: WorldDefinition = {
   props: ['packs/harbor/models/'],
   build(d, models) {
     layApron(d);
+    // The crane's rail beams on the apron's bed (the crane stands on them)
+    railBeams(d);
     buildYard(d);
+    // Round the yard: scenery until something reaches it
+    dormantScenery(d);
     placeProps(d, models);
     // A collapse anywhere may leave a box on two posts: look for it while things come down
     d.on('collapse', () => (tipUntil = Math.max(tipUntil, time + 1)));
@@ -436,6 +441,8 @@ const world: WorldDefinition = {
         rollerDoor: sheet,
         roof: { ...sheet, pitch: { break: 0.95, impact: 1.05, bullet: 1.05 } },
         steel,
+        // The ship's plating: heavy plate, lower than a girder
+        plate: { ...steel, pitch: { bullet: 0.8, impact: 0.85 } },
         cable: { break: 'metal.bend', impact: 'chain.rattle', heavyImpact: 'chain.rattle', debris: 'chain.rattle', bullet: 'bullet.metal', pitch: { bullet: 0.8 } },
         // Cast iron: duller and lower
         iron: { break: 'metal.bend', impact: 'metal.impact.small', heavyImpact: 'metal.impact.large', bullet: 'bullet.metal', pitch: 0.75 },
@@ -456,8 +463,15 @@ const world: WorldDefinition = {
   dust,
   chips,
   // Steel and sheet raise a little grit, not a masonry cloud
-  dustAmount: { container: 0.15, steel: 0.15, cable: 0.1, tank: 0.1, roof: 0.1, cladding: 0.25, rollerDoor: 0.25, iron: 0.3 },
+  dustAmount: { container: 0.15, steel: 0.15, plate: 0.15, cable: 0.1, tank: 0.1, roof: 0.1, cladding: 0.25, rollerDoor: 0.25, iron: 0.3 },
   onStart(rt) {
+    // One shot down into the harbour lands with a splash, and floats
+    if (gulls)
+      gulls.onLanded = (at) => {
+        if (at[2] >= QUAY.edge) return;
+        rt.effects.dust([at[0], QUAY.water + 0.2, at[2]], 0.6, 0xdfe6e8);
+        rt.sound.play('water.splash', { at, volume: 0.35, pitch: 1.4 });
+      };
     // The gulls to their perches, a perch each, in an order of their own
     const rand = random(29);
     const perches = PERCHES.map(([x, z]) => topAt(x, z, rt)).filter((p): p is V3 => !!p);
@@ -478,6 +492,7 @@ const world: WorldDefinition = {
   },
   onBlast(at, radius, rt) {
     noise += radius;
+    gulls?.blast(at, radius, rt);
     loud(at, rt);
     // Near the crane's hoist, the ropes rattle
     if (crane && Math.hypot(at[0] - crane.hoist[0], at[1] - crane.hoist[1], at[2] - crane.hoist[2]) < 15) rattle(rt);
@@ -516,6 +531,8 @@ const world: WorldDefinition = {
       }
     }
   },
+  // A gull in a round's way is shot down
+  onRound: (round, rt) => gulls?.shoot(round, rt),
   onShot(hit, rt) {
     loud(hit.at, rt);
     const p = hit.piece;
@@ -565,7 +582,7 @@ const world: WorldDefinition = {
     const beacon = rt.destruction.materials.beacon.surface as THREE.MeshStandardNodeMaterial;
     beacon.emissiveIntensity = time % 2 < 1 ? 8 : 0.2;
     // The gulls wheel and come back; a call now and then from one in the air (else somewhere overhead)
-    gulls?.update(dt, time, (perch) => Math.abs((topAt(perch[0], perch[2], rt)?.[1] ?? -9) - perch[1]) < 0.08);
+    gulls?.update(dt, time, (perch) => Math.abs((topAt(perch[0], perch[2], rt)?.[1] ?? -9) - perch[1]) < 0.08, rt.floor);
     if (time > state.gullsAt) {
       state.gullsAt = time + 8 + Math.random() * 12;
       const a = Math.random() * Math.PI * 2;

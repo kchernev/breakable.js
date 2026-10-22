@@ -2,10 +2,13 @@
 // The gun or a blast puts them all up, the nearest first, with a clatter of wings from where most of
 // them went; they wheel over the street while the noise goes on, and a while after it stops come back
 // down by ones and twos to wherever there's still somewhere to sit. A perch knocked out from under
-// one sends it up too. Two instanced meshes (the bodies, and the wings beating), moved on the CPU.
+// one sends it up too. One in a round's way, sat or flying, or near a blast, is shot down (../../birds.ts).
+// Two instanced meshes (the bodies, and the wings beating), moved on the CPU.
 
 import * as THREE from 'three/webgpu';
 import type { Destruction, Piece, V3 } from '../../../lib/index.ts';
+import { blown, Fall, first, reach, struck } from '../../birds.ts';
+import type { Round } from '../../gun.ts';
 import type { WorldRuntime } from '../types.ts';
 import { STREET } from './city.ts';
 
@@ -22,6 +25,9 @@ const WHEEL: [number, number] = [15, 5];
 const LAP = 16;
 /** A wingbeat (rad/s: about 6 a second). */
 const BEAT = 38;
+/** How near a round passes one to strike it (m); the way its model faces. */
+const REACH = reach(0.68);
+const FORWARD = new THREE.Vector3(0, 0, 1);
 
 interface Perch {
   at: V3;
@@ -46,6 +52,8 @@ interface Bird {
   /** Where it keeps in the flock, and when it comes back down (rt.time). */
   slot: THREE.Vector3;
   home: number;
+  /** Shot down: falling, then lying where it landed. */
+  fall: Fall | null;
 }
 
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
@@ -82,7 +90,7 @@ export class Pigeons {
       for (const perch of row.slice(0, Math.min(BIRDS - this.birds.length, 2 + Math.floor(Math.random() * 4)))) {
         perch.taken = true;
         const yaw = perch.facing + rand(-0.6, 0.6);
-        this.birds.push({ state: 'perched', perch, p: new THREE.Vector3(...perch.at), v: new THREE.Vector3(), yaw, pitch: 0, bank: 0, wait: rand(1, 6), phase: rand(0, 6), slot: new THREE.Vector3(rand(-4, 4), rand(-1.5, 1.5), rand(-2.5, 2.5)), home: 0 });
+        this.birds.push({ state: 'perched', perch, p: new THREE.Vector3(...perch.at), v: new THREE.Vector3(), yaw, pitch: 0, bank: 0, wait: rand(1, 6), phase: rand(0, 6), slot: new THREE.Vector3(rand(-4, 4), rand(-1.5, 1.5), rand(-2.5, 2.5)), home: 0, fall: null });
       }
     }
     // Blue-grey mostly, a few darker or brown, now and then a white one
@@ -114,6 +122,7 @@ export class Pigeons {
     let first = Infinity;
     const at = new THREE.Vector3();
     for (const b of this.birds) {
+      if (b.fall) continue;
       if (b.state === 'flying' || b.state === 'landing') b.home = rt.time + AWAY + Math.random() * BACK;
       if (b.state === 'landing') {
         b.perch.taken = false;
@@ -130,12 +139,40 @@ export class Pigeons {
     if (n >= 3) rt.sound.play('pigeons.scatter', { at: at.divideScalar(n).toArray() as V3, delay: first });
   }
 
+  /** A round down the street: the first bird in its way, sat or flying, is shot down. */
+  shoot(round: Round, rt: WorldRuntime): void {
+    const i = first(round, this.birds.map((b) => (b.fall ? null : middle(b))), REACH);
+    if (i >= 0) this.down(i, new THREE.Vector3(...round.direction).multiplyScalar(2.5), rt);
+  }
+
+  /** A blast: those near it are blown out of the air (or off their perches). */
+  blast(at: V3, radius: number, rt: WorldRuntime): void {
+    for (const { i, push } of blown(at, radius, this.birds.map((b) => (b.fall ? null : middle(b))))) this.down(i, push, rt);
+  }
+
+  /** Bird i struck, pushed by `push` (m/s): feathers, and down it goes; its perch is free. */
+  private down(i: number, push: THREE.Vector3, rt: WorldRuntime): void {
+    const b = this.birds[i];
+    if (b.state !== 'flying') {
+      // Off its perch, out over the street (a round from below would only pin it to the wall)
+      b.perch.taken = false;
+      if (b.state !== 'landing') push.multiplyScalar(0.2).add(_t.set(b.perch.out[0] * rand(1.5, 2.5), rand(1, 2), b.perch.out[1] * rand(1.5, 2.5)));
+    }
+    b.fall = new Fall(b.p, b.v, _q.setFromEuler(_e.set(b.pitch, b.yaw, b.bank, 'YXZ')), push, FORWARD, 1.35, 0.05);
+    struck(middle(b), this.bodies.getColorAt(i, new THREE.Color()), 1, rt);
+  }
+
   update(dt: number, rt: WorldRuntime): void {
     this.time += dt;
     this.lap += (dt * Math.PI * 2) / LAP;
     // Where the flock is making for: round an ellipse over the street, rising and falling a little
     const centre = new THREE.Vector3(this.over + Math.cos(this.lap) * WHEEL[0], HIGH + Math.sin(this.time * 0.4) * 2, Math.sin(this.lap) * WHEEL[1]);
     for (const b of this.birds) {
+      if (b.fall) {
+        b.fall.update(dt, rt.floor);
+        b.phase += dt * BEAT;
+        continue;
+      }
       if (b.state === 'perched') {
         // Its perch gone from under it: up it goes. Else now and then it turns a little where it sits
         if (b.perch.piece.state !== 'fixed') {
@@ -224,12 +261,16 @@ export class Pigeons {
   /** Each bird's body where it is, and its wings folded, beating, gliding or held up to land. */
   private draw(): void {
     this.birds.forEach((b, i) => {
-      _q.setFromEuler(_e.set(b.pitch, b.yaw, b.bank, 'YXZ'));
-      _m.compose(b.p, _q, ONE);
+      const f = b.fall;
+      if (f) _m.compose(f.at, f.q, ONE);
+      else _m.compose(b.p, _q.setFromEuler(_e.set(b.pitch, b.yaw, b.bank, 'YXZ')), ONE);
       this.bodies.setMatrixAt(i, _m);
       for (const side of [1, -1]) {
         _w.makeTranslation(side * 0.035, 0.1, 0.03);
-        if (b.state === 'perched' || b.state === 'startled') {
+        if (f && !f.down) {
+          // Shot: half spread and limp, a last flutter dying away as it falls
+          _w.scale(_s.set(side, 1, 1)).multiply(_r.makeRotationZ(0.35 + 0.7 * Math.sin(b.phase * 0.45) * Math.exp(-f.t * 1.5)));
+        } else if (f || b.state === 'perched' || b.state === 'startled') {
           // Folded back along its body, drooping a little
           _w.multiply(_r.makeRotationY((side * Math.PI) / 2 - side * 0.1)).multiply(_r.makeRotationZ(-side * 0.25)).scale(_s.set(side * 0.7, 0.7, 0.7));
         } else {
@@ -265,6 +306,11 @@ export class Pigeons {
     if (size[2] > 0.9 && size[0] < 0.15) spots(min[2], max[2], (z) => [mid[0], max[1], z], () => (Math.random() < 0.5 ? 1 : -1) * (Math.PI / 2));
     if (size[0] > 0.9 && size[2] < 0.15) spots(min[0], max[0], (x) => [x, max[1], mid[2]], () => (Math.random() < 0.5 ? 0 : Math.PI));
   }
+}
+
+/** Where a bird's body is (its middle, over its feet), to be struck. */
+function middle(b: Bird): THREE.Vector3 {
+  return new THREE.Vector3(0, 0.1, 0).applyEuler(_e.set(b.pitch, b.yaw, b.bank, 'YXZ')).add(b.p);
 }
 
 /** A pigeon sat (its feet at the origin, facing +z): a plump body tipped up a little, its head, a fan of a tail; darker at the head and tail. */
